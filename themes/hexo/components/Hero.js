@@ -59,12 +59,12 @@ const Hero = props => {
                 {/* 站点标题 */}
                 <div className='font-black text-4xl md:text-5xl shadow-text'>{siteInfo?.title}</div>
                 {/* 站点欢迎语 */}
-                <div className='mt-2 h-12 items-center text-center font-medium shadow-text text-lg'>
+                <div className='mt-6 h-12 items-center text-center font-medium shadow-text text-lg'>
                     <span id='typed' />
                 </div>
 
                 {/* 首页导航大按钮 */}
-                {CONFIG.HOME_NAV_BUTTONS && <NavButtonGroup {...props} />}
+                {/* {CONFIG.HOME_NAV_BUTTONS && <NavButtonGroup {...props} />} */}
 
                 {/* 滚动按钮 */}
                 <div onClick={scrollToWrapper} className="z-10 cursor-pointer w-full text-center py-4 text-3xl absolute bottom-10 text-white">

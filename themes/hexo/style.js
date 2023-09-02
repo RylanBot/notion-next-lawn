@@ -15,19 +15,26 @@ const Style = () => {
     }
   
     /*  菜单下划线动画 */
-    #theme-hexo .menu-link {
-        text-decoration: none;
-        background-image: linear-gradient(#928CEE, #928CEE);
-        background-repeat: no-repeat;
-        background-position: bottom center;
-        background-size: 0 2px;
-        transition: background-size 100ms ease-in-out;
-    }
+    // #theme-hexo .menu-link {
+    //     text-decoration: none;
+    //     background-image: linear-gradient(#928CEE, #928CEE);
+    //     background-repeat: no-repeat;
+    //     background-position: bottom center;
+    //     background-size: 0 2px;
+    //     transition: background-size 100ms ease-in-out;
+    // }
     
     #theme-hexo .menu-link:hover {
         background-size: 100% 2px;
         color: #928CEE;
     }
+    
+    // 自定义菜单颜色
+    #theme-hexo .menu-title:hover {
+        background-size: 100% 2px;
+        color: #87d1ff;
+    }
+
 
     /* 设置了从上到下的渐变黑色 */
     #theme-hexo .header-cover::before {
