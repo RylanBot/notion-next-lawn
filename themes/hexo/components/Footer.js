@@ -5,7 +5,7 @@ import BLOG from '@/blog.config'
 const Footer = ({ title }) => {
   const d = new Date()
   const currentYear = d.getFullYear()
-  const copyrightDate = (function() {
+  const copyrightDate = (function () {
     if (Number.isInteger(BLOG.SINCE) && BLOG.SINCE < currentYear) {
       return BLOG.SINCE + '-' + currentYear
     }
@@ -18,20 +18,26 @@ const Footer = ({ title }) => {
     >
       {/* <DarkModeButton/> */}
 
-      <i className='fas fa-copyright' /> {`${copyrightDate}`} 
+      <i className='fas fa-copyright' /> {`${copyrightDate}`}
       <span>
         {/* <i className='mx-1 animate-pulse fas fa-heart'/> <a href={BLOG.LINK} className='underline font-bold  dark:text-gray-300 '>{BLOG.AUTHOR}</a> */}
-      <br/>
+        <br />
 
-      {BLOG.BEI_AN && <><i className='fas fa-shield-alt' /> <a href='https://beian.miit.gov.cn/' className='mr-2'>{BLOG.BEI_AN}</a><br/></>}
+        {/* 备案 */}
+        {BLOG.BEI_AN && <><i className='fas fa-shield-alt' /> <a href='https://beian.miit.gov.cn/' className='mr-2'>{BLOG.BEI_AN}</a><br /></>}
 
-      {/* <span className='hidden busuanzi_container_site_pv'>
+        {/* 游览量 */}
+        {/* <span className='hidden busuanzi_container_site_pv'>
             <i className='fas fa-eye'/><span className='px-1 busuanzi_value_site_pv'> </span>  
-      </span> */}
-      <span className='pl-2 hidden busuanzi_container_site_uv'>
-        <i className='fas fa-users'/> 这个网站已经有 <span className='px-1 busuanzi_value_site_uv'></span> 位访客 </span>
+        </span> */}
+
+        {/* 访客数 */}
+        {/* <span className='pl-2 hidden busuanzi_container_site_uv'>
+          <i className='fas fa-users' /> 这个网站已经有 <span className='px-1 busuanzi_value_site_uv'></span> 位访客
+        </span> */}
+
         {/* <h1 className='text-xs pt-4 text-light-400 dark:text-gray-400'>{title} {BLOG.BIO && <>|</>} {BLOG.BIO}</h1> */}
-        <p className='text-xs pt-2 text-light-500 dark:text-gray-500'>Powered by <a href='https://github.com/tangly1024/NotionNext' className='dark:text-gray-300'>NotionNext {BLOG.VERSION}</a>.</p></span><br/>
+        <p className='text-xs pt-2 text-light-500 dark:text-gray-500'>Powered by <a href='https://github.com/tangly1024/NotionNext' className='dark:text-gray-300'>NotionNext {BLOG.VERSION}</a>.</p></span><br />
 
     </footer>
   )
