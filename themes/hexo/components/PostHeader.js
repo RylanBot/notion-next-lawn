@@ -1,10 +1,9 @@
+import LazyImage from '@/components/LazyImage'
+import NotionIcon from '@/components/NotionIcon'
+import { formatDateFmt } from '@/lib/formatDate'
+import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
 import TagItemMini from './TagItemMini'
-import { useGlobal } from '@/lib/global'
-import NotionIcon from '@/components/NotionIcon'
-import LazyImage from '@/components/LazyImage'
-import { formatDateFmt } from '@/lib/formatDate'
-import { siteConfig } from '@/lib/config'
 
 export default function PostHeader ({ post, siteInfo }) {
   const { locale } = useGlobal()
@@ -53,24 +52,31 @@ export default function PostHeader ({ post, siteInfo }) {
             <div className='flex justify-center dark:text-gray-200 text-opacity-70'>
               {post?.type !== 'Page' && (
                 <>
-                  {post?.publishDay && (
-                    <Link
-                      href={`/archive#${formatDateFmt(
-                        post?.publishDate,
-                        'yyyy-MM'
-                      )}`}
-                      passHref
-                      className='pl-1 mr-2 cursor-pointer hover:underline'
-                    >
-                      {locale.COMMON.POST_TIME}: {post?.publishDay}
-                    </Link>
-                  )}
+                  <>
+                    {post?.publishDay && (
+                      <>
+                        <span>{locale.COMMON.POST_TIME}: </span>
+                        <Link
+                          href={`/archive#${formatDateFmt(
+                            post?.publishDate,
+                            'yyyy-MM'
+                          )}`}
+                          passHref
+                          className='pl-1 mr-2 cursor-pointer hover:underline'
+                        >
+                          {post.publishDay}
+                        </Link>
+                      </>
+                    )}
+                  </>
                 </>
               )}
               {/* 最后更新 */}
-              {/* <div className='pl-1 mr-2'>
-                {locale.COMMON.LAST_EDITED_TIME}: {post.lastEditedDay}
-              </div> */}
+              {post?.finished_date && post?.finished_date !== 'Invalid Date' && (
+                <div className='pl-1 mr-2'>
+                  {locale.COMMON.LAST_EDITED_TIME}: {post.finished_date}
+                </div>
+              )}
             </div>
 
             {/* 次查看 */}
