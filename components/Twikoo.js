@@ -1,6 +1,6 @@
+import { useEffect } from 'react'
 import { siteConfig } from '@/lib/config'
 // import { loadExternalResource } from '@/lib/utils'
-import { useEffect } from 'react'
 
 /**
  * Giscus评论 @see https://giscus.app/zh-CN
@@ -27,7 +27,7 @@ const Twikoo = ({ isDarkMode }) => {
     }
   }, [isDarkMode])
   return (
-        <div id="twikoo"></div>
+    <div id="twikoo"></div>
   )
 }
 
