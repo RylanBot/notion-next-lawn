@@ -88,11 +88,11 @@ export default function LazyImage({
     imgProps.style = style
   }
   return (<>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img {...imgProps} />
-        {/* 预加载 */}
-        {priority && <Head>
-            <link rel='preload' as='image' src={src} />
-        </Head>}
-    </>)
+    {/* eslint-disable-next-line @next/next/no-img-element */}
+    <img {...imgProps} />
+    {/* 预加载 */}
+    {priority && <Head>
+      <link rel='prefetch' as='image' src={src} />
+    </Head>}
+  </>)
 }

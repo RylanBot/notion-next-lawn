@@ -63,15 +63,15 @@ const Player = () => {
       />
       {meting
         ? <meting-js
-            fixed="true"
-            type="playlist"
-            preload="auto"
-            lrc-type={siteConfig('MUSIC_PLAYER_METING_LRC_TYPE')}
-            autoplay={autoPlay}
-            order={siteConfig('MUSIC_PLAYER_ORDER')}
-            server={siteConfig('MUSIC_PLAYER_METING_SERVER')}
-            id={siteConfig('MUSIC_PLAYER_METING_ID')}
-          />
+          fixed="true"
+          type="playlist"
+          prefetch="auto"
+          lrc-type={siteConfig('MUSIC_PLAYER_METING_LRC_TYPE')}
+          autoplay={autoPlay}
+          order={siteConfig('MUSIC_PLAYER_ORDER')}
+          server={siteConfig('MUSIC_PLAYER_METING_SERVER')}
+          id={siteConfig('MUSIC_PLAYER_METING_ID')}
+        />
         : <div ref={ref} data-player={player} />
       }
     </div>
