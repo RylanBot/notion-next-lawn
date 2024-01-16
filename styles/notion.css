@@ -12,20 +12,20 @@
   --bg-color: #fff;
   --bg-color-0: rgba(135, 131, 120, 0.15);
   --bg-color-1: rgb(247, 246, 243);
-  --bg-color-2: rgba(135, 131, 120, 0.15);
+  --bg-color-2: rgba(135, 131, 120, 0.1);
 
   --select-color-0: rgb(46, 170, 220);
   --select-color-1: rgba(45, 170, 219, 0.3);
   --select-color-2: #ffffff;
 
-  --notion-red: rgb(224, 62, 62);
-  --notion-pink: rgb(173, 26, 114);
-  --notion-blue: rgb(11, 110, 153);
-  --notion-purple: rgb(105, 64, 165);
-  --notion-teal: rgb(15, 123, 108);
-  --notion-yellow: rgb(223, 171, 1);
-  --notion-orange: rgb(217, 115, 13);
-  --notion-brown: rgb(100, 71, 58);
+  --notion-red: rgb(255, 57, 57);
+  --notion-pink: rgb(255, 108, 182);
+  --notion-blue: rgb(30, 182, 255);
+  --notion-purple: rgb(180, 104, 255);
+  --notion-teal: rgb(75, 209, 139);
+  --notion-yellow: rgb(237, 175, 0)
+  --notion-orange: rgb(255, 153, 51);
+  --notion-brown: rgb(177, 126, 99);
   --notion-gray: rgb(155, 154, 151);
 
   --notion-red_background: rgb(251, 228, 228);
@@ -403,7 +403,7 @@ summary > .notion-h {
 .notion-h1 {
   font-size: 1.575em;
   margin-top: 1.08em;
-  @apply border-b w-full;
+  /* @apply border-b w-full; */
 }
 .notion-h2 {
   @apply w-full;
@@ -559,8 +559,9 @@ summary > .notion-h {
   word-break: break-word;
   text-decoration: inherit;
   border-bottom: 0.05em solid !important;
+  padding-bottom: 2px;
   border-color: var(--fg-color-2);
-  opacity: 0.7;
+  opacity: 0.6;
   transition: border-color 100ms ease-in, opacity 100ms ease-in;
 }
 
@@ -580,7 +581,7 @@ summary > .notion-h {
 .notion-page-link {
   display: flex;
   color: var(--fg-color);
-  text-decoration: underline;
+  text-decoration: none;
   width: 100%;
   height: 30px;
   margin: 1px 0;
@@ -642,6 +643,7 @@ svg.notion-page-icon {
 
 .notion-inline-underscore {
   text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 .notion-list {
@@ -713,6 +715,8 @@ svg.notion-page-icon {
   height: auto !important;
   max-height: 100%;
   margin: auto;
+  border-radius: 5px;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15);
 }
 
 .notion-asset-wrapper iframe {

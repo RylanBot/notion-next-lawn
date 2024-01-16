@@ -200,6 +200,7 @@ const LayoutSlug = props => {
                 }}
             />
         </div>}
+        {/* 跳转评论按钮 */}
         <JumpToCommentButton />
     </>
 
@@ -219,9 +220,9 @@ const LayoutSlug = props => {
                         {/* 分享 */}
                         <ShareBar post={post} />
                         {post?.type === 'Post' && <>
-                            {/* <ArticleCopyright {...props} /> */}
-                            {/* <ArticleRecommend {...props} /> */}
-                            {/* <ArticleAdjacent {...props} /> */}
+                            <ArticleCopyright {...props} />
+                            <ArticleRecommend {...props} />
+                            <ArticleAdjacent {...props} />
                         </>}
 
                     </article>
