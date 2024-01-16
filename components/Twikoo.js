@@ -1,5 +1,7 @@
 import { useEffect } from 'react'
+
 import { siteConfig } from '@/lib/config'
+import { useGlobal } from '@/lib/global'
 // import { loadExternalResource } from '@/lib/utils'
 
 /**
@@ -13,7 +15,9 @@ const Twikoo = ({ isDarkMode }) => {
   const envId = siteConfig('COMMENT_TWIKOO_ENV_ID')
   const el = siteConfig('COMMENT_TWIKOO_ELEMENT_ID', '#twikoo')
 
-  const lang = siteConfig('LANG')
+  // const lang = siteConfig('LANG')
+  const { lang } = useGlobal()
+
   useEffect(() => {
     const twikoo = window?.twikoo
     if (typeof twikoo !== 'undefined' && twikoo && typeof twikoo.init === 'function') {
