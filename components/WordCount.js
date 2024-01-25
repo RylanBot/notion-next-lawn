@@ -1,4 +1,4 @@
-import { useGlobal } from '@/lib/global'
+// import { useGlobal } from '@/lib/global'
 import { useEffect } from 'react'
 
 /**
@@ -6,22 +6,24 @@ import { useEffect } from 'react'
  * @returns
  */
 export default function WordCount() {
-  const { locale } = useGlobal()
+  // const { locale } = useGlobal()
   useEffect(() => {
     countWords()
   })
 
-  return <span id='wordCountWrapper' className='flex gap-3 font-light'>
-        <span className='flex whitespace-nowrap items-center'>
-            <i className='pl-1 pr-2 fas fa-file-word' />
-            <span id='wordCount'>0</span>
-        </span>
-        <span className='flex whitespace-nowrap items-center'>
+  return (
+    <span id='wordCountWrapper' className='flex gap-3 font-light'>
+      <span className='flex whitespace-nowrap items-center'>
+        <i className='pl-1 pr-2 fas fa-file-word' />
+        <span id='wordCount'>0</span>
+      </span>
+      {/* <span className='flex whitespace-nowrap items-center'>
             <i className='mr-1 fas fa-clock' />
             <span></span>
             <span id='readTime'>0</span>&nbsp;{locale.COMMON.MINUTE}
-        </span>
+        </span> */}
     </span>
+  )
 }
 
 /**
@@ -32,7 +34,7 @@ function countWords() {
   const wordCount = fnGetCpmisWords(articleText)
   // 阅读速度 300-500每分钟
   document.getElementById('wordCount').innerHTML = wordCount
-  document.getElementById('readTime').innerHTML = Math.floor(wordCount / 400) + 1
+  // document.getElementById('readTime').innerHTML = Math.floor(wordCount / 400) + 1
   const wordCountWrapper = document.getElementById('wordCountWrapper')
   wordCountWrapper.classList.remove('hidden')
 }

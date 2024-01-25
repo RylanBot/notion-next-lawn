@@ -1,5 +1,6 @@
 import LazyImage from '@/components/LazyImage'
 import NotionIcon from '@/components/NotionIcon'
+import WordCount from '@/components/WordCount'
 import { formatDateFmt } from '@/lib/formatDate'
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
@@ -60,7 +61,7 @@ export default function PostHeader({ post, siteInfo }) {
                 <>
                   <>
                     {post?.publishDay && (
-                      <>
+                      <span className="mx-2">
                         <span>{locale.COMMON.POST_TIME}: </span>
                         <Link
                           href={`/archive#${formatDateFmt(
@@ -68,22 +69,25 @@ export default function PostHeader({ post, siteInfo }) {
                             'yyyy-MM'
                           )}`}
                           passHref
-                          className='pl-1 mr-2 cursor-pointer hover:underline'
+                          className='cursor-pointer hover:underline'
                         >
                           {post.publishDay}
                         </Link>
-                      </>
+                      </span>
                     )}
                   </>
                 </>
               )}
               {/* 最后更新 */}
               {post?.finished_date && post?.finished_date !== 'Invalid Date' && (
-                <div className='pl-1 mr-2'>
+                <div className='mx-2'>
                   {locale.COMMON.LAST_EDITED_TIME}: {post.finished_date}
                 </div>
               )}
             </div>
+
+            {/* 文章字数 */}
+            <span className='mx-2'><WordCount /></span>
 
             {/* 次查看 */}
             {/* {JSON.parse(siteConfig('ANALYTICS_BUSUANZI_ENABLE')) && (
