@@ -1,4 +1,4 @@
-// import { useGlobal } from '@/lib/global'
+import { useGlobal } from '@/lib/global'
 import { useEffect } from 'react'
 
 /**
@@ -6,7 +6,7 @@ import { useEffect } from 'react'
  * @returns
  */
 export default function WordCount() {
-  // const { locale } = useGlobal()
+  const { locale } = useGlobal()
   useEffect(() => {
     countWords()
   })
@@ -14,8 +14,10 @@ export default function WordCount() {
   return (
     <span id='wordCountWrapper' className='flex gap-3 font-light'>
       <span className='flex whitespace-nowrap items-center'>
-        <i className='pl-1 pr-2 fas fa-file-word' />
-        <span id='wordCount'>0</span>
+        <span className='mx-2'>
+          <i className='fas fa-file-word pr-2' />
+          {locale.COMMON.WORD_COUNT}: <span id='wordCount'>0</span>
+        </span>
       </span>
       {/* <span className='flex whitespace-nowrap items-center'>
             <i className='mr-1 fas fa-clock' />

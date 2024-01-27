@@ -1,9 +1,7 @@
 import LazyImage from '@/components/LazyImage'
 import NotionIcon from '@/components/NotionIcon'
 import WordCount from '@/components/WordCount'
-import { formatDateFmt } from '@/lib/formatDate'
 import { useGlobal } from '@/lib/global'
-import Link from 'next/link'
 import TagItemMini from './TagItemMini'
 
 export default function PostHeader({ post, siteInfo }) {
@@ -36,15 +34,9 @@ export default function PostHeader({ post, siteInfo }) {
           <div className='mb-3 flex justify-center'>
             {post.category && (
               <>
-                <Link
-                  href={`/category/${post.category}`}
-                  passHref
-                  legacyBehavior
-                >
-                  <div className='cursor-pointer px-2 py-1 mb-2 border rounded-sm dark:border-white text-sm font-medium hover:underline duration-200 shadow-text-md text-white'>
+               <div className='px-2 py-1 mb-2 border rounded-sm dark:border-white text-sm font-medium duration-200 shadow-text-md text-white'>
                     {post.category}
                   </div>
-                </Link>
               </>
             )}
           </div>
@@ -61,18 +53,9 @@ export default function PostHeader({ post, siteInfo }) {
                 <>
                   <>
                     {post?.publishDay && (
-                      <span className="mx-2">
-                        <span>{locale.COMMON.POST_TIME}: </span>
-                        <Link
-                          href={`/archive#${formatDateFmt(
-                            post?.publishDate,
-                            'yyyy-MM'
-                          )}`}
-                          passHref
-                          className='cursor-pointer hover:underline'
-                        >
-                          {post.publishDay}
-                        </Link>
+                      <span className="mx-3">
+                        <i className="fas fa-hourglass-half pr-2"></i>
+                        <span>{locale.COMMON.POST_TIME}: {post.publishDay}</span>
                       </span>
                     )}
                   </>
@@ -80,7 +63,8 @@ export default function PostHeader({ post, siteInfo }) {
               )}
               {/* 最后更新 */}
               {post?.finished_date && post?.finished_date !== 'Invalid Date' && (
-                <div className='mx-2'>
+                <div className='mx-3'>
+                  <i className="far fa-calendar-check pr-2"></i>
                   {locale.COMMON.LAST_EDITED_TIME}: {post.finished_date}
                 </div>
               )}
