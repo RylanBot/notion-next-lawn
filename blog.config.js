@@ -367,9 +367,13 @@ const BLOG = {
 
   // 万维广告
   AD_WWADS_ID: process.env.NEXT_PUBLIC_WWAD_ID || null, // https://wwads.cn/ 创建您的万维广告单元ID
-  AD_WWADS_BLOCK_DETECT: process.env.NEXT_PUBLIC_WWADS_AD_BLOCK_DETECT || false, // 是否开启WWADS广告屏蔽插件检测,开启后会在广告位上以文字提示 @see https://github.com/bytegravity/whitelist-wwads
+  AD_WWADS_BLOCK_DETECT: process.env.NEXT_PUBLIC_WWADS_AD_BLOCK_DETECT || false,  // 是否开启WWADS广告屏蔽插件检测,开启后会在广告位上以文字提示 @see https://github.com/bytegravity/whitelist-wwads
 
   // END<----营收相关
+
+  // 页面点赞按钮（id / secret-api-token 获取方法：https://app.lyket.dev/signup）
+  LYKET_LIKE_BUTTON: process.env.NEXT_PUBLIC_LYKET_LIKE_BUTTON || false, 
+  LYKET_LIKE_ID: process.env.NEXT_PUBLIC_LYKET_LIKE_ID || '', 
 
   // 自定义配置notion数据库字段名
   NOTION_PROPERTY_NAME: {
