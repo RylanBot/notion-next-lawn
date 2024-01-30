@@ -159,6 +159,12 @@ nav {
   @apply text-blue-700;
 }
 
+/* 输入框背景图片 */
+.tk-input textarea {
+  background-size: contain;
+  height: 105px !important;
+}
+
 /* twikoo 内置的 element-ui 加载样式 */
 .el-loading-spinner {
   @apply flex justify-center items-center;
@@ -167,11 +173,6 @@ nav {
 /* 直接修改 svg 的 stroke 会被覆盖，只好用滤镜变色 */
 .el-loading-spinner .path {
   filter: hue-rotate(35deg);
-}
-
-/* twikoo 内置的 element-ui 加载样式 */
-.el-loading-spinner {
-  @apply flex justify-center items-center;
 }
 
 /* Webmention style */
