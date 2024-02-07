@@ -1187,8 +1187,21 @@ code[class*='language-'] {
 }
 
 .notion-to-do-checked {
-  text-decoration: line-through;
-  opacity: 0.375;
+  /* text-decoration: line-through; */
+  /* opacity: 0.375; */
+}
+
+div[class*="notion-property-checkbox-checked"] {
+  display: flex;
+  align-items: center;
+  justify-align: cener;
+  background-color: lightblue;
+}
+
+div[class*="notion-property-checkbox-checked"] svg {
+  margin: 2.5px;
+  margin-left: 2px;
+  margin-bottom: 3.5px;
 }
 
 .notion-to-do-body {
