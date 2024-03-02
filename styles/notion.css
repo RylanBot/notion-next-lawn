@@ -1934,6 +1934,8 @@ svg + .notion-page-title-text {
 }
 
 .notion-table-cell {
+  display: flex;
+  align-items: center; 
   min-height: 32px;
   padding: 5px 8px 6px;
   font-size: 14px;
@@ -1968,10 +1970,10 @@ svg + .notion-page-title-text {
   white-space: pre-wrap;
 }
 
-.notion-table-cell-select,
+/* .notion-table-cell-select,
 .notion-table-cell-multi_select {
   padding: 7px 8px 0;
-}
+} */
 
 .notion-simple-table {
   @apply whitespace-nowrap overflow-x-auto block w-full border-0 !important;
@@ -1983,13 +1985,38 @@ svg + .notion-page-title-text {
 
 .notion-quote {
   display: block;
+  text-align: center;
   white-space: pre-wrap;
   word-break: break-word;
-  margin: 12px 0;
-  padding: 0.2em 0.9em;
-  font-size: 1em;
-  border: 1px dashed;
-  border-left: 5px solid;
+  margin: 12px auto !important;
+  padding: 0.75em 0.9em;
+  padding-bottom: 0.35em;
+  font-size: 1.1em;
+  border: none;
+  /* border: 1px dashed;
+  border-left: 5px solid; */
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  width: 99%;
+}
+
+
+.notion-quote > div::before,
+.notion-quote > div::after {
+  font-weight: 800;
+}
+
+.notion-quote > div:first-child::before {
+  content: "“";
+  font-size: 2em;
+  float: left;
+  padding-right: 0.2em;
+}
+
+.notion-quote > div:last-child::after {
+  content: '”';
+  font-size: 1.75em;
+  float: right;
 }
 
 .notion-asset-wrapper-pdf > div {
