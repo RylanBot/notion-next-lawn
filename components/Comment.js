@@ -35,12 +35,12 @@ const GitalkComponent = dynamic(
   },
   { ssr: false }
 )
-const UtterancesComponent = dynamic(
-  () => {
-    return import('@/components/Utterances')
-  },
-  { ssr: false }
-)
+// const UtterancesComponent = dynamic(
+//   () => {
+//     return import('@/components/Utterances')
+//   },
+//   { ssr: false }
+// )
 const GiscusComponent = dynamic(
   () => {
     return import('@/components/Giscus')
@@ -72,7 +72,7 @@ const Comment = ({ siteInfo, frontMatter, className }) => {
   const COMMENT_VALINE_APP_ID = siteConfig('COMMENT_VALINE_APP_ID')
   const COMMENT_GISCUS_REPO = siteConfig('COMMENT_GISCUS_REPO')
   const COMMENT_CUSDIS_APP_ID = siteConfig('COMMENT_CUSDIS_APP_ID')
-  const COMMENT_UTTERRANCES_REPO = siteConfig('COMMENT_UTTERRANCES_REPO')
+  // const COMMENT_UTTERRANCES_REPO = siteConfig('COMMENT_UTTERRANCES_REPO')
   const COMMENT_GITALK_CLIENT_ID = siteConfig('COMMENT_GITALK_CLIENT_ID')
   const COMMENT_WEBMENTION_ENABLE = siteConfig('COMMENT_WEBMENTION_ENABLE')
 
@@ -158,11 +158,11 @@ const Comment = ({ siteInfo, frontMatter, className }) => {
           </div>
         )}
 
-        {COMMENT_UTTERRANCES_REPO && (
+        {/* {COMMENT_UTTERRANCES_REPO && (
           <div key='Utterance'>
             <UtterancesComponent issueTerm={frontMatter.id} className='px-2' />
           </div>
-        )}
+        )} */}
 
         {COMMENT_GITALK_CLIENT_ID && (
           <div key='GitTalk'>
