@@ -56,6 +56,18 @@ const PrismMac = () => {
     })
   }, [router, isDarkMode])
 
+  useEffect(() => {
+    const observer = new MutationObserver((mutationsList) => {
+      for (const mutation of mutationsList) {
+        if (mutation.type === 'childList') {
+          renderCustomCode();
+        }
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+    return () => observer.disconnect();
+  }, []);
+
   return <></>
 }
 
@@ -83,7 +95,7 @@ const loadPrismThemeCSS = (isDarkMode, prismThemeSwitch, prismThemeDarkPath, pri
   }
 }
 
-/*
+/**
  * 将代码块转为可折叠对象
  */
 const renderCollapseCode = (codeCollapse, codeCollapseExpandDefault) => {
@@ -139,7 +151,7 @@ const renderCollapseCode = (codeCollapse, codeCollapseExpandDefault) => {
 /**
  * 将mermaid语言 渲染成图片
  */
-const renderMermaid = async(mermaidCDN) => {
+const renderMermaid = async (mermaidCDN) => {
   const observer = new MutationObserver(async mutationsList => {
     for (const m of mutationsList) {
       if (m.target.className === 'notion-code language-mermaid') {
@@ -174,6 +186,69 @@ const renderMermaid = async(mermaidCDN) => {
   if (document.querySelector('#notion-article')) {
     observer.observe(document.querySelector('#notion-article'), { attributes: true, subtree: true })
   }
+}
+
+/**
+ * @author https://github.com/RylanBot/
+ * 代码块类型为 Html, CSS, JS
+ * 且第一行出现注释 <!-- custom -->, \* custom *\, // custom
+ * (第二个对应 css 注释写法, 这里无法正常打出, notion 代码块中正常使用左斜杠 / 即可)
+ * (空格不能少)
+ * 则自动替换，将内容替换为实际代码执行
+ */
+const renderCustomCode = () => {
+  const toolbars = document.querySelectorAll('div.code-toolbar');
+
+  const processCodeElement = (codeElement, language) => {
+    const firstChild = codeElement.firstChild;
+    if (firstChild && firstChild.classList.contains('comment')) {
+      const firstComment = firstChild.textContent || '';
+      const isCustom = {
+        html: firstComment.includes('<!-- custom -->'),
+        css: firstComment.includes('/* custom */'),
+        javascript: firstComment.includes('// custom')
+      }[language];
+
+      if (isCustom) {
+        // 获取代码原始内容
+        const textArea = document.createElement('textarea');
+        textArea.innerHTML = codeElement.textContent;
+        const originalCode = textArea.value;
+
+        let newElement;
+        switch (language) {
+          case 'html':
+            newElement = document.createElement('div');
+            newElement.innerHTML = originalCode;
+            break;
+          case 'css':
+            newElement = document.createElement('style');
+            newElement.textContent = originalCode;
+            break;
+          case 'javascript':
+            newElement = document.createElement('script');
+            newElement.textContent = originalCode;
+            break;
+        }
+
+        const toolbarParent = codeElement.closest('div.code-toolbar').parentNode;
+        if (toolbarParent) {
+          toolbarParent.insertBefore(newElement, codeElement.closest('div.code-toolbar'));
+          toolbarParent.removeChild(codeElement.closest('div.code-toolbar'));
+        }
+      }
+    }
+  };
+
+  toolbars.forEach((toolbarEl) => {
+    const codeHtml = toolbarEl.querySelector('code.language-html');
+    const codeCss = toolbarEl.querySelector('code.language-css');
+    const codeJs = toolbarEl.querySelector('code.language-javascript');
+
+    if (codeHtml) processCodeElement(codeHtml, 'html');
+    if (codeCss) processCodeElement(codeCss, 'css');
+    if (codeJs) processCodeElement(codeJs, 'javascript');
+  });
 }
 
 function renderPrismMac(codeLineNumbers) {
