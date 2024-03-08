@@ -219,6 +219,7 @@ const renderCustomCode = () => {
         switch (language) {
           case 'html':
             newElement = document.createElement('div');
+            newElement.style.width = '100%';
             newElement.innerHTML = originalCode;
             break;
           case 'css':
