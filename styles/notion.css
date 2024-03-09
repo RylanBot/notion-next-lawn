@@ -1990,12 +1990,12 @@ svg + .notion-page-title-text {
   word-break: break-word;
   margin: 12px auto !important;
   padding: 0.75em 0.9em;
-  padding-bottom: 0.35em;
+  padding-bottom: 0.5em;
   font-size: 1.1em;
   border: none;
   /* border: 1px dashed;
   border-left: 5px solid; */
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 3px rgb(127, 127, 127);
   border-radius: 5px;
   width: 99%;
 }
@@ -2008,15 +2008,16 @@ svg + .notion-page-title-text {
 
 .notion-quote > div:first-child::before {
   content: "“";
-  font-size: 2em;
+  font-size: 1.5em;
   float: left;
   padding-right: 0.2em;
 }
 
 .notion-quote > div:last-child::after {
   content: '”';
-  font-size: 1.75em;
+  font-size: 1.25em;
   float: right;
+  padding-left: 0.2em;
 }
 
 .notion-asset-wrapper-pdf > div {
@@ -2111,4 +2112,8 @@ code.language-mermaid {
 /* 竖屏视频高度bug */
 figure.notion-asset-wrapper.notion-asset-wrapper-video > div {
   height: 100% !important;
+}
+
+.notion-gallery {
+  margin: 0px 5px;
 }
