@@ -3,6 +3,7 @@ import NotionIcon from '@/components/NotionIcon'
 import WordCount from '@/components/WordCount'
 import { useGlobal } from '@/lib/global'
 import TagItemMini from './TagItemMini'
+import WavesArea from './WavesArea'
 
 export default function PostHeader({ post, siteInfo }) {
   const { locale, fullWidth } = useGlobal()
@@ -34,9 +35,9 @@ export default function PostHeader({ post, siteInfo }) {
           <div className='mb-3 flex justify-center'>
             {post.category && (
               <>
-               <div className='px-2 py-1 mb-2 border rounded-sm dark:border-white text-sm font-medium duration-200 shadow-text-md text-white'>
-                    {post.category}
-                  </div>
+                <div className='px-2 py-1 mb-2 border rounded-sm dark:border-white text-sm font-medium duration-200 shadow-text-md text-white'>
+                  {post.category}
+                </div>
               </>
             )}
           </div>
@@ -93,6 +94,8 @@ export default function PostHeader({ post, siteInfo }) {
           </div>
         </div>
       </header>
+      
+      <WavesArea/>
     </div>
   )
 }
