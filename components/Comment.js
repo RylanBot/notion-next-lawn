@@ -91,7 +91,7 @@ const Comment = ({ siteInfo, frontMatter, className }) => {
       document
         ?.getElementById('comment')
         ?.scrollIntoView({ block: 'start', behavior: 'smooth' })
-    }, 1000)
+    }, 10000)
   }
 
   if (!frontMatter) {
@@ -101,10 +101,10 @@ const Comment = ({ siteInfo, frontMatter, className }) => {
         <div className="fixed inset-0 bg-white z-10 dark:bg-zinc-950"></div>
         <div className="fixed inset-0 flex justify-center items-center z-50">
           {/* 闪烁动画 */}
-          <div className="relative p-2 border-8 border-slate-200 dark:border-slate-50 rounded-full" style={{ width: '50vmin', height: '50vmin' }}>
+          <div className="relative border-8 border-slate-200 dark:border-slate-400 rounded-full" style={{ width: '50vmin', height: '50vmin' }}>
             <LazyImage
               src="./favicon.png"
-              className="animate-blink relative rounded-full w-full h-full"
+              className="animate-blink relative rounded-full w-full h-full bg-white"
             />
             {/* 小圆形固定在大圆形的右下角 */}
             <div className="absolute bottom-0 right-0 h-10 w-10 mb-1 mr-1 md:h-12 md:w-12 md:mb-2 md:mr-2 lg:h-16 lg:w-16 lg:mb-4 lg:mr-4 bg-green-500 rounded-full border-4 border-slate-200"></div>

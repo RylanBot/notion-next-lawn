@@ -279,22 +279,26 @@ const Layout404 = props => {
       if (isBrowser) {
         const article = document.getElementById('notion-article')
         if (!article) {
-          router.push('/').then(() => {
-            // console.log('找不到页面', router.asPath)
-          })
+          // router.push('/').then(() => {
+          //   // console.log('找不到页面', router.asPath)
+          // })
         }
       }
-    }, 3000)
+    }, 10000)
   })
   return (
         <>
             <div className="text-black w-full h-screen text-center justify-center content-center items-center flex flex-col">
                 <div className="dark:text-gray-200">
-                    <h2 className="inline-block border-r-2 border-gray-600 mr-2 px-3 py-2 align-top">
+                    <h2 className="inline-block border-r-2 border-gray-500 mr-2 px-3 py-2 align-top">
                         404
                     </h2>
                     <div className="inline-block text-left h-32 leading-10 items-center">
-                        <h2 className="m-0 p-0">页面未找到</h2>
+                        <h2 className="m-0 p-0">
+                          <span className="px-3 border-r-2 border-gray-500">页面不存在</span>
+                          <span className="px-3 border-r-2 border-gray-500">渲染超时</span>
+                          <span className="px-3">尝试重新打开</span>
+                        </h2>
                     </div>
                 </div>
             </div>
