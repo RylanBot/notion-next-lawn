@@ -45,8 +45,8 @@
   --notion-blue_background_co: rgba(195, 233, 250, 0.92);
   --notion-purple_background_co: rgba(231, 212, 255, 0.85);
   --notion-teal_background_co: rgba(183, 249, 185, 0.56);
-  --notion-yellow_background_co: rgba(251, 251, 169, 0.81);
-  --notion-orange_background_co: rgba(255, 223, 196, 0.87)
+  --notion-yellow_background_co: rgba(250, 234, 170, 0.87);
+  --notion-orange_background_co: rgba(250, 210, 180, 0.87);
   --notion-brown_background_co: rgba(176, 160, 149, 0.65);
   --notion-gray_background_co: rgba(201, 201, 200, 0.63);
   --notion-green_background_co: rgba(186, 250, 228, 0.74);
@@ -2100,13 +2100,10 @@ code.language-mermaid {
 
 /* 表格头 */
 .notion-simple-table tr:first-child td {
-  /* background-color: #f5f6f8; */
-  background-color: transparent;
-  /* @apply text-left font-bold dark:bg-gray-800 !important; */
 }
 
 .notion-simple-table td {
-  border: 1px solid var(#eee) !important;
+  border: 1px solid gray !important;
 }
 
 /* 竖屏视频高度bug */
