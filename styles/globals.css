@@ -271,18 +271,3 @@ a.avatar-wrapper {
   -webkit-user-select: none;
   -ms-user-select: none;
 }
-
-/* 自定义 Loading 动画 */
-@keyframes blink {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
-}
-
-.animate-blink {
-  animation: blink 1.25s ease-in-out infinite;
-}

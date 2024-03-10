@@ -159,10 +159,12 @@ const LayoutIndex = (props) => {
  * @returns
  */
 const LayoutPostList = (props) => {
-  return <div className='pt-8'>
-        <SlotBar {...props} />
-        {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
+  return (
+    <div>
+      <SlotBar {...props} />
+      {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
     </div>
+  )
 }
 
 /**
