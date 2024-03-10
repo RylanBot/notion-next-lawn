@@ -61,35 +61,39 @@ const Catalog = ({ toc }) => {
     return <></>
   }
 
-  return <div className='px-3 py-1'>
-    <div className='w-full'><i className='mr-1 fas fa-stream' />{locale.COMMON.TABLE_OF_CONTENTS}</div>
-    <div className='w-full py-3'>
-      <Progress />
-    </div>
-    <div className='overflow-y-auto max-h-36 lg:max-h-96 overscroll-none scroll-hidden' ref={tRef}>
-      <nav className='h-full  text-black'>
-        {toc.map((tocItem) => {
-          const id = uuidToId(tocItem.id)
-          tocIds.push(id)
-          return (
-            <a
-              key={id}
-              href={`#${id}`}
-              className={`notion-table-of-contents-item duration-300 transform font-light dark:text-gray-200
+  return (
+    <div className='px-3 py-1'>
+      <div className='w-full pb-2 font-bold text-lg'>
+        {/* <i className='mr-1 fas fa-stream' /> */}
+        {locale.COMMON.TABLE_OF_CONTENTS}
+      </div>
+      <div className='w-full pb-2'>
+        <Progress />
+      </div>
+      <div className='overflow-y-auto max-h-36 lg:max-h-96 overscroll-none scroll-hidden' ref={tRef}>
+        <nav className='h-full  text-black'>
+          {toc.map((tocItem) => {
+            const id = uuidToId(tocItem.id)
+            tocIds.push(id)
+            return (
+              <a
+                key={id}
+                href={`#${id}`}
+                className={`notion-table-of-contents-item duration-300 transform font-light dark:text-gray-200
             notion-table-of-contents-item-indent-level-${tocItem.indentLevel} `}
-            >
-              <span style={{ display: 'inline-block', marginLeft: tocItem.indentLevel * 16 }}
-                className={`${activeSection === id && ' font-bold text-indigo-400'}`}
               >
-                {tocItem.text}
-              </span>
-            </a>
-          )
-        })}
-      </nav>
-
+                <span style={{ display: 'inline-block', marginLeft: tocItem.indentLevel * 16 }}
+                  className={`${activeSection === id && ' font-bold text-indigo-400'}`}
+                >
+                  {tocItem.text}
+                </span>
+              </a>
+            )
+          })}
+        </nav>
+      </div>
     </div>
-  </div>
+  )
 }
 
 export default Catalog
