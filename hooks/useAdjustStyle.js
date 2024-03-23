@@ -51,10 +51,13 @@ const useAdjustStyle = () => {
         };
     }, [isDarkMode]);
 
-    // 强行移除 notion-x 表格表头第一行样式
+    // 强行移除 react-notion-x 表格表头第一行样式
     useEffect(() => {
         for (let i = 0; i < document.styleSheets.length; i++) {
             const styleSheet = document.styleSheets[i];
+            if (styleSheet.href && styleSheet.href.includes('fonts.googleapis.com')) {
+                continue; // 忽略指定样式表，避免访问报错
+            }
             try {
                 const rules = styleSheet.cssRules;
                 for (let j = 0; j < rules.length; j++) {

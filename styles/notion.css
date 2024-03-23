@@ -2100,7 +2100,7 @@ code.language-mermaid {
 .notion-simple-table-row {
 }
 
-/* 表格头 */
+/* @Deprecated 表格头（在这写了也不会生效）*/
 .notion-simple-table tr:first-child td {
 }
 
