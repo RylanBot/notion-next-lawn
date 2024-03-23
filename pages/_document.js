@@ -20,10 +20,10 @@ class MyDocument extends Document {
           </>}
 
           {BLOG.FONT_URL?.map((fontUrl, index) => {
-            if (fontUrl.endsWith('.css')) {
+            if (fontUrl.includes('css')) {
               return <link key={index} rel="stylesheet" href={fontUrl} />
             } else {
-              return <link key={index} rel="prefetch" href={fontUrl} as="font" type="font/woff2" />
+              return <link key={index} rel="preload" href={fontUrl} as="font" type="font/woff2" />
             }
           })}
         </Head>
