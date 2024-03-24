@@ -20,6 +20,9 @@ module.exports = {
           'light-gray': '#e5e5e5'
         }
       },
+      backgroundImage: {
+        'rainbow-divider-dark': 'linear-gradient(90deg, #101414 0%, #101414 50%, transparent 50%, transparent 100%)',
+      },
       maxWidth: {
         side: '14rem',
         '9/10': '90%'

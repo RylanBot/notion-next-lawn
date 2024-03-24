@@ -548,22 +548,76 @@ summary > .notion-h {
 }
 
 .notion-hr {
-  height: 2px;
-  background: linear-gradient(to right, 
-    transparent,
-    var(--notion-red_background),
-    var(--notion-orange_background),
-    var(--notion-yellow_background),
-    var(--notion-green_background),
-    var(--notion-blue_background),
-    var(--notion-pink_background),
-    var(--notion-purple_background),
-    transparent
-  );
   width: 100%;
-  margin: 20px auto;
-  padding: 0;
+  height: 1px;
+  display: block;
+  position: relative;
+  margin-bottom: 0em;
+  padding: 2em 0;
+
+  &:after,
+  &:before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 1px;
+      bottom: 50%;
+      left: 0;
+  }
+
+  &:before {
+      background: linear-gradient(90deg, white 0%, white 50%, transparent 50%, transparent 100%);
+      @apply dark:bg-rainbow-divider-dark;
+      background-size: 15px;
+      background-position: center;
+      z-index: 1;
+  }
+
+  &:after {
+      transition: opacity 0.3s ease, animation 0.3s ease;
+      background: linear-gradient(
+          to right, 
+          #62efab 5%, 
+          #F2EA7D 15%, 
+          #F2EA7D 25%, 
+          #FF8797 35%, 
+          #FF8797 45%, 
+          #e1a4f4 55%, 
+          #e1a4f4 65%, 
+          #82fff4 75%, 
+          #82fff4 85%, 
+          #62efab 95%);
+      background-size: 200%;
+      background-position: 0%;
+      animation: bar 15s linear infinite;
+  }
+
+  @keyframes bar {
+      0% { background-position: 0%; }
+      100% { background-position: 200%; }
+  }
 }
+
+/* .notion-hr {
+	width: 100%;
+	height: 1px;
+	background-repeat:repeat-x;
+	background: linear-gradient(to right, 
+	#eb5252, 
+	#f78f2f,
+	#f4c151,
+	#75d850, 
+	#6284FF, 
+	#eb5252
+ 	);
+	animation: rainbow 10s linear infinite;
+	background-size: 200% 100% !important;
+}
+
+@keyframes rainbow{
+	0% {background-position: 0;}
+	100% {background-position: 800% 0;}
+} */
 
 .notion-link {
   color: inherit;
