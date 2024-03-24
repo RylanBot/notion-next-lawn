@@ -7,6 +7,7 @@
   height: 100%;
   z-index: 10000;
   background: white;
+  @apply dark:bg-zinc-950;
 }
 
 #nprogress .spinner {
@@ -22,13 +23,14 @@
   height: 50vmin;
   border-radius: 50%;
   border: 8px solid #e2e8f0;
+  @apply dark:border-slate-400;
   overflow: hidden;
 }
 
 #nprogress .spinner::before {
   content: '';
-  width: 45vmin;
-  height: 45vmin;
+  width: 50vmin;
+  height: 50vmin;
   border-radius: 50%;
   background-color: white;
   position: absolute;

@@ -7,14 +7,16 @@ import { useEffect } from 'react'
  */
 export default function LoadingProgress() {
   const router = useRouter()
-  // 加载进度条
+
   useEffect(() => {
     const handleStart = (url) => {
-      NProgress.start()
+      NProgress.start();
+      document.body.style.overflow = 'hidden';
     }
 
     const handleStop = () => {
-      NProgress.done()
+      NProgress.done();
+      document.body.style.overflow = '';
     }
 
     router.events.on('routeChangeStart', handleStart)

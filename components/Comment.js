@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 
 import LazyImage from '@/components/LazyImage'
 import Tabs from '@/components/Tabs'
@@ -35,18 +36,21 @@ const GitalkComponent = dynamic(
   },
   { ssr: false }
 )
+
 // const UtterancesComponent = dynamic(
 //   () => {
 //     return import('@/components/Utterances')
 //   },
 //   { ssr: false }
 // )
+
 const GiscusComponent = dynamic(
   () => {
     return import('@/components/Giscus')
   },
   { ssr: false }
 )
+
 const WebMentionComponent = dynamic(
   () => {
     return import('@/components/WebMention')
@@ -76,22 +80,26 @@ const Comment = ({ siteInfo, frontMatter, className }) => {
   const COMMENT_GITALK_CLIENT_ID = siteConfig('COMMENT_GITALK_CLIENT_ID')
   const COMMENT_WEBMENTION_ENABLE = siteConfig('COMMENT_WEBMENTION_ENABLE')
 
-  if (isSearchEngineBot()) {
-    return null
-  }
+  useEffect(() => {
+    // 当连接中有特殊参数时跳转到评论区
+    if (
+      isBrowser && ('giscus' in router.query || router.query.target === 'comment')) {
+      setTimeout(() => {
+        const url = router.asPath.replace('?target=comment', '')
+        history.replaceState({}, '', url)
+        document
+          ?.getElementById('comment')
+          ?.scrollIntoView({ block: 'start', behavior: 'smooth' })
+      }, 10000)
+    }
 
-  // 当连接中有特殊参数时跳转到评论区
-  if (
-    isBrowser &&
-    ('giscus' in router.query || router.query.target === 'comment')
-  ) {
-    setTimeout(() => {
-      const url = router.asPath.replace('?target=comment', '')
-      history.replaceState({}, '', url)
-      document
-        ?.getElementById('comment')
-        ?.scrollIntoView({ block: 'start', behavior: 'smooth' })
-    }, 10000)
+    if (!frontMatter) {
+      document.body.style.overflow = 'hidden';
+    }
+  }, [frontMatter, router.query])
+
+  if (isSearchEngineBot()) {
+    return;
   }
 
   if (!frontMatter) {
