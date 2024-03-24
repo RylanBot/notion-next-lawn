@@ -770,6 +770,10 @@ svg.notion-page-icon {
   height: auto !important;
 }
 
+.notion-asset-wrapper-image img{
+  margin: 0 1px !important;
+}
+
 .notion-asset-wrapper-full {
   /* max-width: 100vw; */
 }
