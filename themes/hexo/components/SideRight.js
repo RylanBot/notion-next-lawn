@@ -1,17 +1,20 @@
 import { useEffect, useState } from 'react'
 
+import dynamic from 'next/dynamic'
+
+import CONFIG from '../config'
+import { AnalyticsCard } from './AnalyticsCard'
+import Announcement from './Announcement'
 import Card from './Card'
+import Catalog from './Catalog'
 import CategoryGroup from './CategoryGroup'
+import { InfoCard } from './InfoCard'
 import LatestPostsGroup from './LatestPostsGroup'
 import TagGroups from './TagGroups'
-import Catalog from './Catalog'
-import { InfoCard } from './InfoCard'
-import { AnalyticsCard } from './AnalyticsCard'
-import CONFIG from '../config'
-import dynamic from 'next/dynamic'
-import Announcement from './Announcement'
+
 import Live2D from '@/components/Live2D'
 import { siteConfig } from '@/lib/config'
+import { useGlobal } from '@/lib/global'
 
 const HexoRecentComments = dynamic(() => import('./HexoRecentComments'))
 const FaceBookPage = dynamic(
@@ -38,19 +41,21 @@ export default function SideRight(props) {
     currentTag, showCategory, showTag, rightAreaSlot, notice
   } = props
 
-  const [activeTab, setActiveTab] = useState('info');
+  const { locale } = useGlobal();
 
-  // 文章全屏处理
-  if (post && post?.fullWidth) {
-    return null
-  }
+  const [activeTab, setActiveTab] = useState('info');
 
   useEffect(() => {
     setActiveTab('info');
     if (post && post.toc && post.toc.length > 1) {
       setActiveTab('toc');
     }
-  }, [post?.toc])
+  }, [post])
+
+  // 文章全屏处理
+  if (post && post?.fullWidth) {
+    return null
+  }
 
   return (
     <div id='sideRight' className='p-2 max-lg:mt-8'>
@@ -102,12 +107,12 @@ export default function SideRight(props) {
           </Card>
         )}
 
-        {siteConfig('HEXO_WIDGET_LATEST_POSTS', null, CONFIG)
-          && latestPosts && latestPosts.length > 0 && (
+        {siteConfig('HEXO_WIDGET_LATEST_POSTS', null, CONFIG) &&
+          latestPosts && latestPosts.length > 0 && (
             <Card>
               <LatestPostsGroup {...props} />
             </Card>
-          )}
+        )}
 
         <Announcement post={notice} className="mt-8" />
 

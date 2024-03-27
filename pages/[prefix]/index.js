@@ -1,16 +1,19 @@
-import BLOG from '@/blog.config'
-import { getPostBlocks } from '@/lib/notion'
-import { getGlobalData } from '@/lib/notion/getNotionData'
 import { useEffect, useState } from 'react'
-import { idToUuid } from 'notion-utils'
+
 import { useRouter } from 'next/router'
-import { getNotion } from '@/lib/notion/getNotion'
-import { getPageTableOfContents } from '@/lib/notion/getPageTableOfContents'
-import { getLayoutByTheme } from '@/themes/theme'
+
 import md5 from 'js-md5'
-import { isBrowser } from '@/lib/utils'
+import { idToUuid } from 'notion-utils'
+
+import BLOG from '@/blog.config'
 import { uploadDataToAlgolia } from '@/lib/algolia'
 import { siteConfig } from '@/lib/config'
+import { getPostBlocks } from '@/lib/notion'
+import { getNotion } from '@/lib/notion/getNotion'
+import { getGlobalData } from '@/lib/notion/getNotionData'
+import { getPageTableOfContents } from '@/lib/notion/getPageTableOfContents'
+import { isBrowser } from '@/lib/utils'
+import { getLayoutByTheme } from '@/themes/theme'
 
 /**
  * 根据notion的slug访问页面
@@ -55,14 +58,9 @@ const Slug = props => {
     }
 
     // 文章加密
-    if (post?.password && post?.password !== '') {
-      setLock(true)
-    } else {
-      setLock(false)
-      if (!lock && post?.blockMap?.block) {
-        post.content = Object.keys(post.blockMap.block).filter(key => post.blockMap.block[key]?.value?.parent_id === post.id)
-        post.toc = getPageTableOfContents(post, post.blockMap)
-      }
+    if (!lock && post?.blockMap?.block) {
+      post.content = Object.keys(post.blockMap.block)
+      post.toc = getPageTableOfContents(post, post.blockMap)
     }
   }, [post])
 
