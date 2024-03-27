@@ -201,7 +201,7 @@ const renderCustomCode = () => {
 
   const processCodeElement = (codeElement, language) => {
     const firstChild = codeElement.firstChild;
-    if (firstChild && firstChild.classList.contains('comment')) {
+    if (firstChild?.classList?.contains('comment')) {
       const firstComment = firstChild.textContent || '';
       const isCustom = {
         html: firstComment.includes('<!-- custom -->'),
