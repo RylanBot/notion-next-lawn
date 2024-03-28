@@ -1,5 +1,5 @@
-import { siteConfig } from '@/lib/config'
 import LazyImage from '@/components/LazyImage'
+import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 // import Image from 'next/image'
 import Link from 'next/link'
@@ -45,9 +45,9 @@ const LatestPostsGroup = ({ latestPosts, siteInfo }) => {
                     </div>
                     <div
                         className={
-                            (selected ? ' text-indigo-400 ' : 'dark:text-gray-400 ') +
-                            ' text-sm overflow-x-hidden hover:text-indigo-600 px-2 duration-200 w-full rounded ' +
-                            ' hover:text-indigo-400 cursor-pointer items-center flex'
+                            (selected ? ' text-teal-400 ' : 'dark:text-gray-400 ') +
+                            ' text-sm overflow-x-hidden hover:text-teal-500 px-2 duration-200 w-full rounded ' +
+                            ' hover:text-teal-400 cursor-pointer items-center flex'
                         }
                     >
                         <div>

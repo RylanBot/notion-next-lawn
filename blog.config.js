@@ -46,16 +46,15 @@ const BLOG = {
   // START ************网站字体*****************
 
   FONT_STYLE: process.env.NEXT_PUBLIC_FONT_STYLE || 'font-sans', // ['font-serif','font-sans'] 两种可选，分别是衬线和无衬线: 参考 https://www.jianshu.com/p/55e410bd2115
-  // 字体CSS 例如 https://npm.elemecdn.com/lxgw-wenkai-webfont@1.6.0/style.css
+  // 字体 CSS
   FONT_URL: [
-    // 'https://npm.elemecdn.com/lxgw-wenkai-webfont@1.6.0/style.css',
+    'https://npm.elemecdn.com/lxgw-wenkai-webfont@1.6.0/style.css',
     'https://fonts.googleapis.com/css?family=Bitter&display=swap',
     'https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300&display=swap',
     'https://fonts.googleapis.com/css2?family=Noto+Serif+SC&display=swap'
   ],
-  // 无衬线字体 例如'"LXGW WenKai"'
+  // 无衬线字体
   FONT_SANS: [
-    // '"LXGW WenKai"',
     '"PingFang SC"',
     '-apple-system',
     'BlinkMacSystemFont',
@@ -75,16 +74,17 @@ const BLOG = {
   ],
   // 衬线字体 例如'"LXGW WenKai"'
   FONT_SERIF: [
-    // '"LXGW WenKai"',
+    '"LXGW WenKai"',
+    'Bitter',
     '"Noto Serif SC"',
-//     '"Times New Roman"',
-//     'Bitter',
-//     'SimSun',
-//     'Times',
-//     'serif',
-//     '"Segoe UI Emoji"',
-//     '"Segoe UI Symbol"',
-//     '"Apple Color Emoji"'
+    '"LXGW WenKai"',
+    '"Times New Roman"',
+    'SimSun',
+    'Times',
+    'serif',
+    '"Segoe UI Emoji"',
+    '"Segoe UI Symbol"',
+    '"Apple Color Emoji"'
   ],
   FONT_AWESOME: process.env.NEXT_PUBLIC_FONT_AWESOME_PATH || 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css', // font-awesome 字体图标地址; 可选 /css/all.min.css ， https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/6.0.0/css/all.min.css
 
@@ -245,7 +245,6 @@ const BLOG = {
   // ----> 评论互动 可同时开启多个支持 WALINE VALINE GISCUS CUSDIS UTTERRANCES GITALK
 
   COMMENT_HIDE_SINGLE_TAB: process.env.NEXT_PUBLIC_COMMENT_HIDE_SINGLE_TAB || false,
-  
   // artalk 评论插件
   COMMENT_ARTALK_SERVER: process.env.NEXT_PUBLIC_COMMENT_ARTALK_SERVER || '', // ArtalkServert后端地址 https://artalk.js.org/guide/deploy.html
   COMMENT_ARTALK_JS: process.env.NEXT_PUBLIC_COMMENT_ARTALK_JS || 'https://cdnjs.cloudflare.com/ajax/libs/artalk/2.5.5/Artalk.js', // ArtalkServert js cdn
@@ -353,7 +352,7 @@ const BLOG = {
         process.env.NEXT_PUBLIC_SEO_BAIDU_SITE_VERIFICATION || '', // Remove the value or replace it with your own google site verification code
 
   // 微软 Clarity 站点分析
-  CLARITY_ID: process.env.NEXT_PUBLIC_CLARITY_ID || null , // 只需要复制Clarity脚本中的ID部分，ID是一个十位的英文数字组合
+  CLARITY_ID: process.env.NEXT_PUBLIC_CLARITY_ID || null, // 只需要复制Clarity脚本中的ID部分，ID是一个十位的英文数字组合
 
   // <---- 站点统计
 
@@ -369,13 +368,13 @@ const BLOG = {
 
   // 万维广告
   AD_WWADS_ID: process.env.NEXT_PUBLIC_WWAD_ID || null, // https://wwads.cn/ 创建您的万维广告单元ID
-  AD_WWADS_BLOCK_DETECT: process.env.NEXT_PUBLIC_WWADS_AD_BLOCK_DETECT || false,  // 是否开启WWADS广告屏蔽插件检测,开启后会在广告位上以文字提示 @see https://github.com/bytegravity/whitelist-wwads
+  AD_WWADS_BLOCK_DETECT: process.env.NEXT_PUBLIC_WWADS_AD_BLOCK_DETECT || false, // 是否开启WWADS广告屏蔽插件检测,开启后会在广告位上以文字提示 @see https://github.com/bytegravity/whitelist-wwads
 
   // END<----营收相关
 
   // 页面点赞按钮（id / secret-api-token 获取方法：https://app.lyket.dev/signup）
-  LYKET_LIKE_BUTTON: process.env.NEXT_PUBLIC_LYKET_LIKE_BUTTON || false, 
-  LYKET_LIKE_ID: process.env.NEXT_PUBLIC_LYKET_LIKE_ID || '', 
+  LYKET_LIKE_BUTTON: process.env.NEXT_PUBLIC_LYKET_LIKE_BUTTON || false,
+  LYKET_LIKE_ID: process.env.NEXT_PUBLIC_LYKET_LIKE_ID || '',
 
   // 自定义配置notion数据库字段名
   NOTION_PROPERTY_NAME: {

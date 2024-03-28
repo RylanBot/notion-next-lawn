@@ -1,5 +1,5 @@
+import { siteConfig } from '@/lib/config';
 import { useState } from 'react';
-import { siteConfig } from '@/lib/config'
 
 /**
  * Tabs切换标签
@@ -21,7 +21,7 @@ const Tabs = ({ className, children }) => {
         <ul className="flex justify-center space-x-5 pb-4 dark:text-gray-400 text-gray-600 overflow-auto">
           {validChildren.map((item, index) => (
             <li key={index}
-              className={`${currentTab === index ? 'font-black border-b-2 border-red-600 text-red-600 animate__animated animate__jello' : 'font-extralight cursor-pointer'} text-sm font-sans`}
+              className={`${currentTab === index ? 'font-black border-b-2 border-teal-600 text-teal-600 animate__animated animate__jello' : 'font-extralight cursor-pointer'} text-sm`}
               onClick={() => setCurrentTab(index)}>
               {item.key}
             </li>

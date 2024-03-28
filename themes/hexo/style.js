@@ -1,10 +1,9 @@
 /* eslint-disable react/no-unknown-property */
 /**
- * 这里的css样式只对当前主题生效
- * 主题客制化css
- * @returns
+ * 这里的 css 样式只对当前主题生效
+ * 主题客制化 css
  */
-const Style = () => {
+export const Style = () => {
   return (<style jsx global>{`
     // 底色
     body{
@@ -26,15 +25,13 @@ const Style = () => {
     
     #theme-hexo .menu-link:hover {
         background-size: 100% 2px;
-        color: #928CEE;
-    }
-    
-    // 自定义菜单颜色
-    #theme-hexo .menu-title:hover {
-        background-size: 100% 2px;
-        color: #87d1ff;
     }
 
+    // 自定义菜单
+    #theme-hexo .menu-title:hover {
+        background-size: 100% 2px;
+        color: #76d7c0;
+    }
 
     /* 设置了从上到下的渐变黑色 */
     #theme-hexo .header-cover::before {
@@ -68,16 +65,12 @@ const Style = () => {
     }
 
     ::-webkit-scrollbar-thumb {
-        background-color: #49b1f5;
+        background-color: #2fb596;
     }
 
     * {
         scrollbar-width:thin;
-        scrollbar-color: #49b1f5 transparent
+        scrollbar-color: #2fb596 transparent
     }
-    
-
   `}</style>)
 }
-
-export { Style }

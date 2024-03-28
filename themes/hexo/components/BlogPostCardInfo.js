@@ -1,8 +1,8 @@
-import NotionPage from '@/components/NotionPage'
-import Link from 'next/link'
-import TagItemMini from './TagItemMini'
-import TwikooCommentCount from '@/components/TwikooCommentCount'
-import { siteConfig } from '@/lib/config'
+import NotionPage from '@/components/NotionPage';
+import TwikooCommentCount from '@/components/TwikooCommentCount';
+import { siteConfig } from '@/lib/config';
+import Link from 'next/link';
+import TagItemMini from './TagItemMini';
 // import { formatDateFmt } from '@/lib/formatDate'
 
 /**
@@ -11,35 +11,31 @@ import { siteConfig } from '@/lib/config'
  * @returns
  */
 export const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary }) => {
-    return <div className={`flex flex-col justify-between lg:p-6 p-4  ${showPageCover && !showPreview ? 'md:w-7/12 w-full md:max-h-60' : 'w-full'}`}>
+  return <div className={`flex flex-col justify-between lg:p-6 p-4  ${showPageCover && !showPreview ? 'md:w-7/12 w-full md:max-h-64' : 'w-full'}`}>
         <div>
             {/* 标题 */}
             <Link
                 href={`${siteConfig('SUB_PATH', '')}/${post.slug}`}
                 passHref
-                className={`line-clamp-2 replace cursor-pointer text-2xl ${showPreview ? 'text-center' : ''
-                    } leading-tight font-normal text-gray-600 dark:text-gray-100 hover:text-indigo-700 dark:hover:text-indigo-400`}>
-
-                <span className='menu-link '>{post.title}</span>
-
+                className={`line-clamp-2 replace cursor-pointer text-2xl ${showPreview ? 'text-center' : ''} 
+                leading-tight font-semibold text-teal-500 hover:text-teal-400 dark:text-teal-400 dark:hover:text-teal-300`}>
+                <span className='menu-link'>{post.title}</span>
             </Link>
 
             {/* 分类 */}
             {post?.category && <div
-                className={`flex mt-2 items-center ${showPreview ? 'justify-center' : 'justify-start'
-                    } flex-wrap dark:text-gray-500 text-gray-400 `}
+                className={`flex mt-2 items-center ${showPreview ? 'justify-center' : 'justify-start'}
+                flex-wrap dark:text-gray-500 text-gray-400`}
             >
                 <Link
                     href={`/category/${post.category}`}
                     passHref
-                    className="cursor-pointer font-light text-sm menu-link hover:text-indigo-700 dark:hover:text-indigo-400 transform">
-
+                    className="cursor-pointer font-light text-sm menu-link hover:text-teal-500 dark:hover:text-teal-400 transform">
                     <i className="mr-1 far fa-folder" />
                     {post.category}
-
                 </Link>
 
-                <TwikooCommentCount className='text-sm hover:text-indigo-700 dark:hover:text-indigo-400' post={post} />
+                <TwikooCommentCount className='text-sm hover:text-teal-500 dark:hover:text-teal-400' post={post} />
             </div>}
 
             {/* 摘要 */}
@@ -77,12 +73,13 @@ export const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary
                     <i className="far fa-calendar-alt mr-1" />
                     {post?.publishDay || post.lastEditedDay}
                 </Link> */}
-                <span className="font-light text-sm leading-4 mr-3">
+                <span className="font-light text-sm leading-7 mr-3">
                     <i className="far fa-calendar-alt mr-1" />
                     {post?.publishDay}
                     {post.finished_date && (<> - {post.finished_date} </>)}
                 </span>
 
+                {/* Tag */}
                 <div className="md:flex-nowrap flex-wrap md:justify-start inline-block">
                     <div>
                         {' '}
@@ -93,5 +90,5 @@ export const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary
                 </div>
             </div>
         </div>
-    </div>
-}
+    </div>;
+};

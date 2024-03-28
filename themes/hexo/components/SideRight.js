@@ -62,13 +62,13 @@ export default function SideRight(props) {
       {post && post.toc && post.toc.length > 1 &&
         <div className="lg:w-64 flex justify-center items-center mb-4">
           <button
-            className={`w-1/2 px-4 py-1 rounded mr-2 ${activeTab === 'toc' ? 'bg-indigo-400 text-white' : 'bg-gray-200 text-gray-700'}`}
+            className={`w-1/2 px-4 py-1 rounded mr-2 ${activeTab === 'toc' ? 'bg-teal-500 text-white' : 'bg-gray-200 text-gray-700'}`}
             onClick={() => setActiveTab('toc')}
           >
             <i className='fas fa-stream' />
           </button>
           <button
-            className={`w-1/2 px-4 py-1 rounded ${activeTab === 'info' ? 'bg-indigo-400 text-white' : 'bg-gray-200 text-gray-700'}`}
+            className={`w-1/2 px-4 py-1 rounded ${activeTab === 'info' ? 'bg-teal-500 text-white' : 'bg-gray-200 text-gray-700'}`}
             onClick={() => setActiveTab('info')}
           >
             <i class="fas fa-seedling" />

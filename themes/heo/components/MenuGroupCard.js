@@ -1,5 +1,5 @@
-import Link from 'next/link'
 import { useGlobal } from '@/lib/global'
+import Link from 'next/link'
 import CONFIG from '../config'
 
 const MenuGroupCard = (props) => {
@@ -24,7 +24,7 @@ const MenuGroupCard = (props) => {
                             <Link title={link.to}
                                 href={link.to}
                                 target={link?.to?.indexOf('http') === 0 ? '_blank' : '_self'}
-                                className={'w-full flex items-center justify-between py-1 hover:scale-105 duration-200 transform dark:hover:text-indigo-400 hover:text-indigo-600 px-2 cursor-pointer'}>
+                                className={'w-full flex items-center justify-between py-1 hover:scale-105 duration-200 transform dark:hover:text-teal-400 hover:text-teal-500 px-2 cursor-pointer'}>
                                 <>
                                     <div>{link.name} :</div>
                                     <div className='font-semibold'>{link.slot}</div>

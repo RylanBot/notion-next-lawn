@@ -50,7 +50,7 @@ const Utterances = ({ issueTerm, layout }) => {
     <div id="comments" className='utterances'>
       {isLoading && (
         <div className="flex justify-center items-center m-8">
-          <div className="animate-spin rounded-full h-8 w-8 border-2 border-indigo-400 border-t-transparent"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-2 border-teal-400 border-t-transparent"></div>
         </div>
       )}
     </div>

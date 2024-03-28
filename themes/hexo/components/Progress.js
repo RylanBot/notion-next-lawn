@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
 import { isBrowser } from '@/lib/utils'
+import { useEffect, useState } from 'react'
 
 /**
  * 顶部页面阅读进度条
@@ -30,7 +30,7 @@ const Progress = ({ targetRef, showPercent = true }) => {
   return (
     <div className="h-4 w-full shadow-2xl bg-gray-700 rounded-sm">
       <div
-        className="h-4 bg-indigo-500 duration-200 rounded-sm"
+        className="h-4 bg-teal-500 duration-200 rounded-sm"
         style={{ width: `${percent}%` }}
       >
         {showPercent && (

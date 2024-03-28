@@ -18,7 +18,7 @@ const SocialButton = () => {
         <i className='fab fa-telegram transform hover:scale-125 duration-150'/>
       </a>}
       {siteConfig('CONTACT_LINKEDIN') && <a target='_blank' rel='noreferrer' href={siteConfig('CONTACT_LINKEDIN')} title={'linkedIn'} >
-        <i className='transform hover:scale-125 duration-150 fab fa-linkedin dark:hover:text-indigo-400 hover:text-indigo-600'/>
+        <i className='transform hover:scale-125 duration-150 fab fa-linkedin dark:hover:text-teal-400 hover:text-teal-500'/>
       </a>}
       {siteConfig('CONTACT_WEIBO') && <a target='_blank' rel='noreferrer' title={'weibo'} href={siteConfig('CONTACT_WEIBO')} >
         <i className='fab fa-weibo transform hover:scale-125 duration-150'/>

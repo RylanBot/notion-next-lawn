@@ -6,40 +6,40 @@
  *  2. 更多说明参考此[文档](https://docs.tangly1024.com/article/notionnext-heo)
  */
 
-import CONFIG from './config'
-import CommonHead from '@/components/CommonHead'
-import { useEffect, useState } from 'react'
-import Footer from './components/Footer'
-import SideRight from './components/SideRight'
-import NavBar from './components/NavBar'
-import { useGlobal } from '@/lib/global'
-import BlogPostListPage from './components/BlogPostListPage'
-import BlogPostListScroll from './components/BlogPostListScroll'
-import Hero from './components/Hero'
-import { useRouter } from 'next/router'
-import SearchNav from './components/SearchNav'
-import BlogPostArchive from './components/BlogPostArchive'
-import { ArticleLock } from './components/ArticleLock'
-import PostHeader from './components/PostHeader'
 import Comment from '@/components/Comment'
+import CommonHead from '@/components/CommonHead'
+import { AdSlot } from '@/components/GoogleAdsense'
+import { HashTag } from '@/components/HeroIcons'
+import LazyImage from '@/components/LazyImage'
+import replaceSearchResult from '@/components/Mark'
 import NotionPage from '@/components/NotionPage'
+import ShareBar from '@/components/ShareBar'
+import WWAds from '@/components/WWAds'
+import { siteConfig } from '@/lib/config'
+import { useGlobal } from '@/lib/global'
+import { Transition } from '@headlessui/react'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 import ArticleAdjacent from './components/ArticleAdjacent'
 import ArticleCopyright from './components/ArticleCopyright'
+import { ArticleLock } from './components/ArticleLock'
 import ArticleRecommend from './components/ArticleRecommend'
-import ShareBar from '@/components/ShareBar'
-import Link from 'next/link'
+import BlogPostArchive from './components/BlogPostArchive'
+import BlogPostListPage from './components/BlogPostListPage'
+import BlogPostListScroll from './components/BlogPostListScroll'
 import CategoryBar from './components/CategoryBar'
-import { Transition } from '@headlessui/react'
-import { Style } from './style'
-import { NoticeBar } from './components/NoticeBar'
-import { HashTag } from '@/components/HeroIcons'
-import LatestPostsGroup from './components/LatestPostsGroup'
 import FloatTocButton from './components/FloatTocButton'
-import replaceSearchResult from '@/components/Mark'
-import LazyImage from '@/components/LazyImage'
-import WWAds from '@/components/WWAds'
-import { AdSlot } from '@/components/GoogleAdsense'
-import { siteConfig } from '@/lib/config'
+import Footer from './components/Footer'
+import Hero from './components/Hero'
+import LatestPostsGroup from './components/LatestPostsGroup'
+import NavBar from './components/NavBar'
+import { NoticeBar } from './components/NoticeBar'
+import PostHeader from './components/PostHeader'
+import SearchNav from './components/SearchNav'
+import SideRight from './components/SideRight'
+import CONFIG from './config'
+import { Style } from './style'
 
 /**
  * 基础布局 采用上中下布局，移动端使用顶部侧边导航栏
@@ -430,12 +430,12 @@ const LayoutCategoryIndex = props => {
               >
                 <div
                   className={
-                    'group mr-5 mb-5 flex flex-nowrap items-center border bg-white text-2xl rounded-xl dark:hover:text-white px-4 cursor-pointer py-3 hover:text-white hover:bg-indigo-600 transition-all hover:scale-110 duration-150'
+                    'group mr-5 mb-5 flex flex-nowrap items-center border bg-white text-2xl rounded-xl dark:hover:text-white px-4 cursor-pointer py-3 hover:text-white hover:bg-teal-500 transition-all hover:scale-110 duration-150'
                   }
                 >
                   <HashTag className={'w-5 h-5 stroke-gray-500 stroke-2'} />
                   {category.name}
-                  <div className="bg-[#f1f3f8] ml-1 px-2 rounded-lg group-hover:text-indigo-600 ">
+                  <div className="bg-[#f1f3f8] ml-1 px-2 rounded-lg group-hover:text-teal-500 ">
                     {category.count}
                   </div>
                 </div>
@@ -475,12 +475,12 @@ const LayoutTagIndex = props => {
               >
                 <div
                   className={
-                    'group flex flex-nowrap items-center border bg-white text-2xl rounded-xl dark:hover:text-white px-4 cursor-pointer py-3 hover:text-white hover:bg-indigo-600 transition-all hover:scale-110 duration-150'
+                    'group flex flex-nowrap items-center border bg-white text-2xl rounded-xl dark:hover:text-white px-4 cursor-pointer py-3 hover:text-white hover:bg-teal-500 transition-all hover:scale-110 duration-150'
                   }
                 >
                   <HashTag className={'w-5 h-5 stroke-gray-500 stroke-2'} />
                   {tag.name}
-                  <div className="bg-[#f1f3f8] ml-1 px-2 rounded-lg group-hover:text-indigo-600 ">
+                  <div className="bg-[#f1f3f8] ml-1 px-2 rounded-lg group-hover:text-teal-500 ">
                     {tag.count}
                   </div>
                 </div>
@@ -493,14 +493,6 @@ const LayoutTagIndex = props => {
 }
 
 export {
-  CONFIG as THEME_CONFIG,
-  LayoutBase,
-  LayoutIndex,
-  LayoutSearch,
-  LayoutArchive,
-  LayoutSlug,
-  Layout404,
-  LayoutCategoryIndex,
-  LayoutPostList,
-  LayoutTagIndex
+    Layout404, LayoutArchive, LayoutBase, LayoutCategoryIndex, LayoutIndex, LayoutPostList, LayoutSearch, LayoutSlug, LayoutTagIndex, CONFIG as THEME_CONFIG
 }
+

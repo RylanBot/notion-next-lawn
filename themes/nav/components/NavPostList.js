@@ -23,8 +23,8 @@ const NavPostList = (props) => {
                         href={`/category/${category.name}`}
                         passHref
                         className={(selected
-                          ? 'hover:text-black dark:hover:text-gray bg-indigo-600 text-black '
-                          : 'dark:text-gray-400 text-gray-500 hover:text-black dark:hover:text-white hover:bg-indigo-600') +
+                          ? 'hover:text-black dark:hover:text-gray bg-teal-500 text-black '
+                          : 'dark:text-gray-400 text-gray-500 hover:text-black dark:hover:text-white hover:bg-teal-500') +
                             '  text-sm w-full items-center duration-300 px-2  cursor-pointer py-1 font-light'}>
 
                         <div> <i className={`mr-2 fas ${selected ? 'fa-folder-open' : 'fa-folder'}`} />{category.name}({category.count})</div>
