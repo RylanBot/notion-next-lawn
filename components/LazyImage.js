@@ -1,6 +1,6 @@
-import { siteConfig } from '@/lib/config'
-import Head from 'next/head'
-import React, { useEffect, useRef, useState } from 'react'
+// import { siteConfig } from '@/lib/config'
+import Head from 'next/head';
+import { useEffect, useRef, useState } from 'react';
 
 /**
  * 图片懒加载
@@ -20,79 +20,99 @@ export default function LazyImage({
   onLoad,
   style
 }) {
-  const imageRef = useRef(null)
-  const [imageLoaded, setImageLoaded] = useState(false)
+  const imageRef = useRef(null);
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  const generatePlaceholderURL = (text, width, height) => {
+    const minDimension = Math.min(width || 440, height || 320);
+    const characterWidth = 0.5;
+    const totalCharacterWidth = text.length * characterWidth;
+    const fontSize = Math.floor(minDimension / totalCharacterWidth);
+
+    const placeholderText = encodeURIComponent(text);
+    const sizeParam = (width && height) ? `${width}x${height}` : (width || (height ? `${height}x${height}` : '440x320'));
+
+    return `https://fakeimg.pl/${sizeParam}/?text=${placeholderText}&font=lobster&font_size=${fontSize}`;
+  };
+
   if (!placeholderSrc) {
-    placeholderSrc = siteConfig('IMG_LAZY_LOAD_PLACEHOLDER')
+    // placeholderSrc = siteConfig('IMG_LAZY_LOAD_PLACEHOLDER');
+    placeholderSrc = generatePlaceholderURL("Rylan's Blog", width, height);
   }
 
   const handleImageLoad = () => {
-    setImageLoaded(true)
+    setImageLoaded(true);
     if (typeof onLoad === 'function') {
-      onLoad() // 触发传递的onLoad回调函数
+      onLoad();
     }
-  }
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const lazyImage = entry.target
-            lazyImage.src = src
-            observer.unobserve(lazyImage)
+            const lazyImage = entry.target;
+            lazyImage.src = src;
+            observer.unobserve(lazyImage);
           }
-        })
+        });
       },
-      { rootMargin: '50px 0px' } // Adjust the rootMargin as needed to trigger the loading earlier or later
-    )
+      { rootMargin: '100px 0px' }
+    );
 
     if (imageRef.current) {
-      observer.observe(imageRef.current)
+      observer.observe(imageRef.current);
     }
 
     return () => {
       if (imageRef.current) {
-        observer.unobserve(imageRef.current)
+        observer.unobserve(imageRef.current);
       }
-    }
-  }, [src])
+    };
+  }, [src]);
 
-  // 动态添加width、height和className属性，仅在它们为有效值时添加
   const imgProps = {
     ref: imageRef,
     src: imageLoaded ? src : placeholderSrc,
     alt: alt,
-    onLoad: handleImageLoad
-  }
+    onLoad: handleImageLoad,
+    className: imageLoaded ? 'transition-opacity' : 'animate-pulse'
+  };
 
   if (id) {
-    imgProps.id = id
+    imgProps.id = id;
   }
 
   if (title) {
-    imgProps.title = title
+    imgProps.title = title;
   }
 
   if (width && width !== 'auto') {
-    imgProps.width = width
+    imgProps.width = width;
   }
 
   if (height && height !== 'auto') {
-    imgProps.height = height
+    imgProps.height = height;
   }
+
   if (className) {
-    imgProps.className = className
+    imgProps.className = `${imgProps.className} ${className}`;
   }
+
   if (style) {
-    imgProps.style = style
+    imgProps.style = style;
   }
-  return (<>
-    {/* eslint-disable-next-line @next/next/no-img-element */}
-    <img {...imgProps} />
-    {/* 预加载 */}
-    {priority && <Head>
-      <link rel='prefetch' as='image' src={src} />
-    </Head>}
-  </>)
+
+  return (
+    <>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img {...imgProps} />
+      {priority && (
+        <Head>
+          <link rel='prefetch' as='image' href={src} />
+        </Head>
+      )}
+    </>
+  );
 }

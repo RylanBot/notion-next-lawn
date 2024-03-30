@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react'
+
 import Typed from 'typed.js'
-import CONFIG from '../config'
-import NavButtonGroup from './NavButtonGroup'
-import { useGlobal } from '@/lib/global'
+
 import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
+import { useGlobal } from '@/lib/global'
+
+import CONFIG from '../config'
+import NavButtonGroup from './NavButtonGroup'
 
 let wrapperTop = 0
 
@@ -32,7 +35,7 @@ const Hero = props => {
           backSpeed: 50,
           backDelay: 200,
           showCursor: true,
-          smartBackspace: true,
+          smartBackspace: true
         })
       )
     }
@@ -53,7 +56,7 @@ const Hero = props => {
   return (
         <header
             id="header" style={{ zIndex: 1 }}
-            className="w-full h-screen relative bg-black"
+            className="bg-black w-full h-screen relative"
         >
             <div className="text-white absolute bottom-0 flex flex-col h-full items-center justify-center w-full ">
                 {/* 站点标题 */}
@@ -74,7 +77,7 @@ const Hero = props => {
             </div>
 
             <LazyImage id='header-cover' src={siteInfo?.pageCover}
-                className={`header-cover w-full h-screen object-cover object-center ${siteConfig('HEXO_HOME_NAV_BACKGROUND_IMG_FIXED', null, CONFIG) ? 'fixed' : ''}`} 
+                className={`header-cover w-full h-screen object-cover object-center ${siteConfig('HEXO_HOME_NAV_BACKGROUND_IMG_FIXED', null, CONFIG) ? 'fixed' : ''}`}
             />
         </header>
   )
