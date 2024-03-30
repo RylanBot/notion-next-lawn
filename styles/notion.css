@@ -2026,7 +2026,7 @@ svg + .notion-page-title-text {
 } */
 
 .notion-simple-table {
-  @apply whitespace-nowrap overflow-x-auto block w-full border-0 !important;
+  @apply whitespace-nowrap overflow-x-auto block w-full border-0 my-4 !important;
 }
 
 .notion-asset-wrapper-pdf > div {
