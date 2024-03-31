@@ -1,10 +1,8 @@
-import CONFIG from '../config'
-import { siteConfig } from '@/lib/config'
+import { siteConfig } from '@/lib/config';
+import CONFIG from '../config';
 
 /**
  * 跳转到评论区
- * @returns {JSX.Element}
- * @constructor
  */
 const JumpToCommentButton = () => {
   if (!siteConfig('HEXO_WIDGET_TO_COMMENT', null, CONFIG)) {

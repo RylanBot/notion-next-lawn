@@ -58,7 +58,7 @@ export default function LazyImage({
           }
         });
       },
-      { rootMargin: '100px 0px' }
+      { rootMargin: '300px 0px' }
     );
 
     if (imageRef.current) {

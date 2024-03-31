@@ -1,34 +1,34 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 
-import dynamic from 'next/dynamic'
+import dynamic from 'next/dynamic';
 
-import CONFIG from '../config'
-import { AnalyticsCard } from './AnalyticsCard'
-import Announcement from './Announcement'
-import Card from './Card'
-import Catalog from './Catalog'
-import CategoryGroup from './CategoryGroup'
-import { InfoCard } from './InfoCard'
-import LatestPostsGroup from './LatestPostsGroup'
-import TagGroups from './TagGroups'
+import CONFIG from '../config';
+import { AnalyticsCard } from './AnalyticsCard';
+import Announcement from './Announcement';
+import Card from './Card';
+import Catalog from './Catalog';
+import CategoryGroup from './CategoryGroup';
+import { InfoCard } from './InfoCard';
+import LatestPostsGroup from './LatestPostsGroup';
+import TagGroups from './TagGroups';
 
-import Live2D from '@/components/Live2D'
-import { siteConfig } from '@/lib/config'
-import { useGlobal } from '@/lib/global'
+import Live2D from '@/components/Live2D';
+import { siteConfig } from '@/lib/config';
+import { useGlobal } from '@/lib/global';
 
-const HexoRecentComments = dynamic(() => import('./HexoRecentComments'))
+const HexoRecentComments = dynamic(() => import('./HexoRecentComments'));
 const FaceBookPage = dynamic(
   () => {
-    let facebook = <></>
+    let facebook = <></>;
     try {
-      facebook = import('@/components/FacebookPage')
+      facebook = import('@/components/FacebookPage');
     } catch (err) {
-      console.error(err)
+      console.error(err);
     }
-    return facebook
+    return facebook;
   },
   { ssr: false }
-)
+);
 
 /**
  * Hexo主题右侧栏
@@ -39,7 +39,7 @@ export default function SideRight(props) {
   const {
     post, currentCategory, categories, latestPosts, tags,
     currentTag, showCategory, showTag, rightAreaSlot, notice
-  } = props
+  } = props;
 
   const { locale } = useGlobal();
 
@@ -50,11 +50,11 @@ export default function SideRight(props) {
     if (post && post.toc && post.toc.length > 1) {
       setActiveTab('toc');
     }
-  }, [post])
+  }, [post]);
 
   // 文章全屏处理
   if (post && post?.fullWidth) {
-    return null
+    return null;
   }
 
   return (
@@ -82,6 +82,7 @@ export default function SideRight(props) {
           </Card>
         }
       </div>
+
       <div className={`lg:w-64 info-card ${activeTab !== 'info' && 'hidden'}`}>
         <InfoCard {...props} />
 
@@ -120,11 +121,13 @@ export default function SideRight(props) {
           <HexoRecentComments />
         }
 
-        <div className='mt-12'>
-          {rightAreaSlot}
-          <FaceBookPage />
-          <Live2D />
-        </div>
+        <FaceBookPage />
+      </div>
+
+      {/* sticky 元素应该是可滚动元素的直接子元素，否则不生效 */}
+      <div className={`lg:w-64 sticky top-96 pl-8 pt-20 ${activeTab !== 'info' && 'hidden'}`}>
+        {rightAreaSlot}
+        <Live2D />
       </div>
     </div>
   );

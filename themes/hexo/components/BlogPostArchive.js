@@ -1,16 +1,14 @@
-import Link from 'next/link'
-import { siteConfig } from '@/lib/config'
+import { siteConfig } from '@/lib/config';
+import Link from 'next/link';
 
 /**
  * 博客归档列表
  * @param posts 所有文章
  * @param archiveTitle 归档标题
- * @returns {JSX.Element}
- * @constructor
  */
 const BlogPostArchive = ({ posts = [], archiveTitle }) => {
   if (!posts || posts.length === 0) {
-    return <></>
+    return <></>;
   } else {
     return (
       <div>
@@ -42,8 +40,8 @@ const BlogPostArchive = ({ posts = [], archiveTitle }) => {
           ))}
         </ul>
       </div>
-    )
+    );
   }
-}
+};
 
-export default BlogPostArchive
+export default BlogPostArchive;

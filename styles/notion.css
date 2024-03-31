@@ -787,6 +787,8 @@ svg.notion-page-icon {
 
 .notion-text {
   width: 100%;
+  overflow-x: auto;
+  white-space: normal;
   white-space: pre-wrap;
   word-break: break-word;
   padding: 3px 2px !important;
@@ -2029,10 +2031,6 @@ svg + .notion-page-title-text {
   @apply whitespace-nowrap overflow-x-auto block w-full border-0 my-4 !important;
 }
 
-.notion-asset-wrapper-pdf > div {
-  display: block !important;
-}
-
 .notion-quote {
   display: block;
   text-align: center;
@@ -2069,20 +2067,9 @@ svg + .notion-page-title-text {
   float: right;
   /* 适配 Noto Serif SC 字体 */
   /* padding-top: 0.35em; */
-  /* 适配 Bitter 字体 */
-  padding-top: 0.15em; 
+  /* 适配 lxgw-wenkai-webfont 字体 */
+  padding-top: 0.25em; 
   opacity: 0.5;
-}
-
-.notion-asset-wrapper-pdf > div {
-  width: unset !important;
-}
-
-/* pdf预览适配页面 */
-.react-pdf__Page__canvas,
-.react-pdf__Page__textContent {
-  width: 100% !important;
-  height: auto !important;
 }
 
 /* simple table设置 */
@@ -2158,6 +2145,18 @@ code.language-mermaid {
 
 .notion-simple-table td {
   border: 1px solid gray !important;
+}
+
+.notion-asset-wrapper-pdf > div {
+  display: block !important;
+  width: unset !important;
+}
+
+/* pdf预览适配页面 */
+.react-pdf__Page__canvas,
+.react-pdf__Page__textContent {
+  width: 100% !important;
+  height: auto !important;
 }
 
 /* 竖屏视频高度bug */

@@ -167,11 +167,11 @@ nav {
   filter: hue-rotate(315deg);
 }
 
-.el-input__inner:focus{
+.el-input__inner:focus {
   border-color: var(--twikoo-teal) !important;
 }
 
-.el-textarea__inner:focus{
+.el-textarea__inner:focus {
   border-color: var(--twikoo-teal) !important;
 }
 
@@ -179,17 +179,17 @@ nav {
   color: var(--twikoo-teal);
 }
 
-.tk-preview{
+.tk-preview {
   border: 1px var(--twikoo-teal) solid !important;
   background-color: #f0f9eb !important;
   color: var(--twikoo-teal) !important;
 }
 
-.tk-preview :hover{
+.tk-preview :hover {
   color: #2f8d77 !important;
 }
 
-.tk-send{
+.tk-send {
   background-color: var(--twikoo-teal) !important;
   border: none !important;
 }
@@ -300,4 +300,9 @@ a.avatar-wrapper {
   user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
+}
+
+.header-text-shadow {
+  text-shadow: 2px 4px 5px rgba(0, 0, 0, 0.5),
+    0px -2px 10px rgba(255, 255, 255, 0.5);
 }

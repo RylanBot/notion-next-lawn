@@ -1,4 +1,4 @@
-import { siteConfig } from '@/lib/config'
+import { siteConfig } from '@/lib/config';
 
 const Footer = ({ title }) => {
   const d = new Date()

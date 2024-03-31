@@ -1,9 +1,11 @@
-import { useRouter } from 'next/router'
-import Card from './Card'
-import SocialButton from './SocialButton'
-import MenuGroupCard from './MenuGroupCard'
-import LazyImage from '@/components/LazyImage'
-import { siteConfig } from '@/lib/config'
+import { useRouter } from 'next/router';
+
+import LazyImage from '@/components/LazyImage';
+import { siteConfig } from '@/lib/config';
+
+import Card from './Card';
+import MenuGroupCard from './MenuGroupCard';
+import SocialButton from './SocialButton';
 
 /**
  * 社交信息卡

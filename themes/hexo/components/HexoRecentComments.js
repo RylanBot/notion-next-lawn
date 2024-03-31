@@ -1,9 +1,12 @@
-import { useEffect, useState } from 'react'
-import { siteConfig } from '@/lib/config'
-import Card from '@/themes/hexo/components/Card'
-import { useGlobal } from '@/lib/global'
-import Link from 'next/link'
-import { RecentComments } from '@waline/client'
+import { useEffect, useState } from 'react';
+
+import Link from 'next/link';
+
+import { siteConfig } from '@/lib/config';
+import { useGlobal } from '@/lib/global';
+import Card from '@/themes/hexo/components/Card';
+
+import { RecentComments } from '@waline/client';
 
 /**
  * @see https://waline.js.org/guide/get-started.html
@@ -39,7 +42,6 @@ const HexoRecentComments = (props) => {
                     <Link href={{ pathname: comment.url, hash: comment.objectId, query: { target: 'comment' } }}>--{comment.nick}</Link>
                 </div>
             </div>)}
-
         </Card>
   )
 }

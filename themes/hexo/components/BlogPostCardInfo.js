@@ -1,9 +1,11 @@
+import Link from 'next/link';
+
+// import { formatDateFmt } from '@/lib/formatDate'
 import NotionPage from '@/components/NotionPage';
 import TwikooCommentCount from '@/components/TwikooCommentCount';
 import { siteConfig } from '@/lib/config';
-import Link from 'next/link';
+
 import TagItemMini from './TagItemMini';
-// import { formatDateFmt } from '@/lib/formatDate'
 
 /**
  * 博客列表的文字内容
@@ -82,7 +84,6 @@ export const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary
                 {/* Tag */}
                 <div className="md:flex-nowrap flex-wrap md:justify-start inline-block">
                     <div>
-                        {' '}
                         {post.tagItems?.map(tag => (
                             <TagItemMini key={tag.name} tag={tag} />
                         ))}

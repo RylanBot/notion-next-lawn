@@ -1,26 +1,26 @@
-import { useGlobal } from '@/lib/global'
+import { useGlobal } from '@/lib/global';
 
 /**
  * 文章波浪动画
  */
 export default function WavesArea() {
-    const { isDarkMode } = useGlobal()
-    const color = isDarkMode ? '#000000' : '#f5f5f5'
+  const { isDarkMode } = useGlobal();
+  const color = isDarkMode ? '#000000' : '#f5f5f5';
 
-    return (
-        <section className="main-hero-waves-area waves-area w-full absolute left-0 z-10 bottom-0">
-            <svg className="waves-svg w-full h-[60px]" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shapeRendering="auto">
-                <defs>
-                    <path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path>
-                </defs>
-                <g className="parallax">
-                    <use href="#gentle-wave" x="48" y="0"></use>
-                    <use href="#gentle-wave" x="48" y="3"></use>
-                    <use href="#gentle-wave" x="48" y="5"></use>
-                    <use href="#gentle-wave" x="48" y="7"></use>
-                </g>
-            </svg>
-            <style jsx global>{`
+  return (
+    <section className="main-hero-waves-area waves-area w-full absolute left-0 z-10 bottom-0">
+      <svg className="waves-svg w-full h-[60px]" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shapeRendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path>
+        </defs>
+        <g className="parallax">
+          <use href="#gentle-wave" x="48" y="0"></use>
+          <use href="#gentle-wave" x="48" y="3"></use>
+          <use href="#gentle-wave" x="48" y="5"></use>
+          <use href="#gentle-wave" x="48" y="7"></use>
+        </g>
+      </svg>
+      <style jsx global>{`
                 /* Animation */
 
                 .parallax > use {
@@ -59,7 +59,7 @@ export default function WavesArea() {
                   }
                 }
             `}
-            </style>
-        </section>
-    )
+      </style>
+    </section>
+  );
 }

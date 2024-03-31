@@ -5,6 +5,9 @@ import { useEffect, useState } from 'react'
 import CONFIG from '../config'
 import { siteConfig } from '@/lib/config'
 
+/**
+ * 文字版权信息
+ */
 export default function ArticleCopyright () {
   const router = useRouter()
   const [path, setPath] = useState(siteConfig('LINK') + router.asPath)

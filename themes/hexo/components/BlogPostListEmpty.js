@@ -2,8 +2,6 @@ import { useGlobal } from '@/lib/global'
 
 /**
  * 空白博客 列表
- * @returns {JSX.Element}
- * @constructor
  */
 const BlogPostListEmpty = ({ currentSearch }) => {
   const { locale } = useGlobal()

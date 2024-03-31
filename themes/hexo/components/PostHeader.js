@@ -1,23 +1,26 @@
-import LazyImage from '@/components/LazyImage'
-import NotionIcon from '@/components/NotionIcon'
-import WordCount from '@/components/WordCount'
-import { useGlobal } from '@/lib/global'
-import TagItemMini from './TagItemMini'
-import WavesArea from './WavesArea'
+import Link from 'next/link';
+
+import LazyImage from '@/components/LazyImage';
+import NotionIcon from '@/components/NotionIcon';
+import WordCount from '@/components/WordCount';
+import { useGlobal } from '@/lib/global';
+
+import TagItemMini from './TagItemMini';
+import WavesArea from './WavesArea';
 
 export default function PostHeader({ post, siteInfo }) {
-  const { locale, fullWidth } = useGlobal()
+  const { locale, fullWidth } = useGlobal();
 
   if (!post) {
-    return <></>
+    return <></>;
   }
 
   // 文章全屏隐藏标头
   if (fullWidth) {
-    return <div className='my-8' />
+    return <div className='my-8' />;
   }
 
-  const headerImage = post?.pageCover ? post.pageCover : siteInfo?.pageCover
+  const headerImage = post?.pageCover ? post.pageCover : siteInfo?.pageCover;
 
   return (
     <div id='header' className='w-full h-96 relative md:flex-shrink-0 z-10'>
@@ -32,22 +35,27 @@ export default function PostHeader({ post, siteInfo }) {
         className='bg-black bg-opacity-70 absolute top-0 w-full h-96 py-10 flex justify-center items-center '
       >
         <div className='mt-10'>
+          {/* 分类 */}
           <div className='mb-3 flex justify-center'>
             {post.category && (
               <>
-                <div className='px-2 py-1 mb-2 border rounded-sm dark:border-white text-sm font-medium duration-200 shadow-text-md text-white'>
+                <Link
+                  href={`/category/${post.category}`}
+                  passHref
+                  className="cursor-pointer px-2 py-1 mb-2 rounded-sm text-sm font-medium text-white border border-white hover:border-teal-300 hover:text-teal-300 duration-200 shadow-text-md">
                   {post.category}
-                </div>
+                </Link>
               </>
             )}
           </div>
 
-          {/* 文章Title */}
+          {/* 文章 Title */}
           <div className='leading-snug font-bold xs:text-4xl sm:text-4xl md:text-5xl md:leading-snug text-4xl shadow-text-md flex justify-center text-center text-white'>
             <NotionIcon icon={post.pageIcon} className='text-4xl mx-1' />
             {post.title}
           </div>
 
+          {/* 发布时间 */}
           <section className='flex-wrap shadow-text-md flex text-sm justify-center mt-4 text-white dark:text-gray-400 font-light leading-8'>
             <div className='flex justify-center dark:text-gray-200 text-opacity-70'>
               {post?.type !== 'Page' && (
@@ -94,8 +102,8 @@ export default function PostHeader({ post, siteInfo }) {
           </div>
         </div>
       </header>
-      
-      <WavesArea/>
+
+      <WavesArea />
     </div>
-  )
+  );
 }

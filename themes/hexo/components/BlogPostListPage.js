@@ -1,15 +1,14 @@
-import BlogPostCard from './BlogPostCard'
-import PaginationNumber from './PaginationNumber'
-import { siteConfig } from '@/lib/config'
-import BlogPostListEmpty from './BlogPostListEmpty'
+import { siteConfig } from '@/lib/config';
+
+import BlogPostCard from './BlogPostCard';
+import BlogPostListEmpty from './BlogPostListEmpty';
+import PaginationNumber from './PaginationNumber';
 
 /**
  * 文章列表分页表格
  * @param page 当前页
  * @param posts 所有文章
  * @param tags 所有标签
- * @returns {JSX.Element}
- * @constructor
  */
 const BlogPostListPage = ({ page = 1, posts = [], postCount, siteInfo }) => {
   const totalPage = Math.ceil(postCount / parseInt(siteConfig('POSTS_PER_PAGE')))

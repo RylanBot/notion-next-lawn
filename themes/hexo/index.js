@@ -1,43 +1,47 @@
-import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
-import Comment from '@/components/Comment'
-import CommonHead from '@/components/CommonHead'
-import LyketLikeButton from '@/components/LyketLikeButton'
-import replaceSearchResult from '@/components/Mark'
-import NotionPage from '@/components/NotionPage'
-import ShareBar from '@/components/ShareBar'
-import { siteConfig } from '@/lib/config'
-import { useGlobal } from '@/lib/global'
-import { isBrowser } from '@/lib/utils'
-import { Transition } from '@headlessui/react'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { createContext, useContext, useEffect, useRef } from 'react'
-import ArticleAdjacent from './components/ArticleAdjacent'
-import ArticleCopyright from './components/ArticleCopyright'
-import { ArticleLock } from './components/ArticleLock'
-import ArticleRecommend from './components/ArticleRecommend'
-import BlogPostArchive from './components/BlogPostArchive'
-import BlogPostListPage from './components/BlogPostListPage'
-import BlogPostListScroll from './components/BlogPostListScroll'
-import Card from './components/Card'
-import Footer from './components/Footer'
-import Hero from './components/Hero'
-import JumpToCommentButton from './components/JumpToCommentButton'
-import PostHeader from './components/PostHeader'
-import RightFloatArea from './components/RightFloatArea'
-import SearchNav from './components/SearchNav'
-import SideRight from './components/SideRight'
-import SlotBar from './components/SlotBar'
-import TagItemMini from './components/TagItemMini'
-import TocDrawer from './components/TocDrawer'
-import TocDrawerButton from './components/TocDrawerButton'
-import TopNav from './components/TopNav'
-import CONFIG from './config'
-import { Style } from './style'
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { createContext, useContext, useEffect, useRef } from 'react';
+
+import AlgoliaSearchModal from '@/components/AlgoliaSearchModal';
+import Comment from '@/components/Comment';
+import CommonHead from '@/components/CommonHead';
+import replaceSearchResult from '@/components/Mark';
+import NotionPage from '@/components/NotionPage';
+import ShareBar from '@/components/ShareBar';
+
+import ArticleAdjacent from './components/ArticleAdjacent';
+import ArticleCopyright from './components/ArticleCopyright';
+import { ArticleLock } from './components/ArticleLock';
+import ArticleRecommend from './components/ArticleRecommend';
+import BlogPostArchive from './components/BlogPostArchive';
+import BlogPostListPage from './components/BlogPostListPage';
+import BlogPostListScroll from './components/BlogPostListScroll';
+import Card from './components/Card';
+import Footer from './components/Footer';
+import Hero from './components/Hero';
+import JumpToCommentButton from './components/JumpToCommentButton';
+import PostHeader from './components/PostHeader';
+import RightFloatArea from './components/RightFloatArea';
+import SearchNav from './components/SearchNav';
+import SideRight from './components/SideRight';
+import SlotBar from './components/SlotBar';
+import TagItemMini from './components/TagItemMini';
+import TocDrawer from './components/TocDrawer';
+import TocDrawerButton from './components/TocDrawerButton';
+import TopNav from './components/TopNav';
+
+import { siteConfig } from '@/lib/config';
+import { useGlobal } from '@/lib/global';
+import { isBrowser } from '@/lib/utils';
+
+import { Transition } from '@headlessui/react';
+
+import CONFIG from './config';
+import { Style } from './style';
 
 // 主题全局状态
-const ThemeGlobalHexo = createContext()
-export const useHexoGlobal = () => useContext(ThemeGlobalHexo)
+const ThemeGlobalHexo = createContext();
+export const useHexoGlobal = () => useContext(ThemeGlobalHexo);
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -46,32 +50,32 @@ export const useHexoGlobal = () => useContext(ThemeGlobalHexo)
  * @constructor
  */
 const LayoutBase = props => {
-  const { post, children, slotTop, meta, className } = props
-  const { onLoading, fullWidth } = useGlobal()
+  const { post, children, slotTop, meta, className } = props;
+  const { onLoading, fullWidth } = useGlobal();
 
-  const router = useRouter()
+  const router = useRouter();
   const headerSlot = post
     ? <PostHeader {...props} />
     : (router.route === '/' && siteConfig('HEXO_HOME_BANNER_ENABLE', null, CONFIG)
-        ? <Hero {...props} />
-        : null)
+      ? <Hero {...props} />
+      : null);
 
-  const drawerRight = useRef(null)
-  const tocRef = isBrowser ? document.getElementById('article-wrapper') : null
+  const drawerRight = useRef(null);
+  const tocRef = isBrowser ? document.getElementById('article-wrapper') : null;
 
   const floatSlot = <>
     {post?.toc?.length > 1 && <div className="block lg:hidden">
       <TocDrawerButton
         onClick={() => {
-          drawerRight?.current?.handleSwitchVisible()
+          drawerRight?.current?.handleSwitchVisible();
         }}
       />
     </div>}
     <JumpToCommentButton />
-  </>
+  </>;
 
   // Algolia搜索框
-  const searchModal = useRef(null)
+  const searchModal = useRef(null);
 
   return (
     <ThemeGlobalHexo.Provider value={{ searchModal }}>
@@ -140,8 +144,8 @@ const LayoutBase = props => {
         <Footer title={siteConfig('TITLE')} />
       </div>
     </ThemeGlobalHexo.Provider>
-  )
-}
+  );
+};
 
 /**
  * 首页
@@ -150,8 +154,8 @@ const LayoutBase = props => {
  * @returns
  */
 const LayoutIndex = (props) => {
-  return <LayoutPostList {...props} className='pt-8' />
-}
+  return <LayoutPostList {...props} className='pt-8' />;
+};
 
 /**
  * 博客列表
@@ -164,8 +168,8 @@ const LayoutPostList = (props) => {
       <SlotBar {...props} />
       {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
     </div>
-  )
-}
+  );
+};
 
 /**
  * 搜索
@@ -173,9 +177,9 @@ const LayoutPostList = (props) => {
  * @returns
  */
 const LayoutSearch = props => {
-  const { keyword } = props
-  const router = useRouter()
-  const currentSearch = keyword || router?.query?.s
+  const { keyword } = props;
+  const router = useRouter();
+  const currentSearch = keyword || router?.query?.s;
 
   useEffect(() => {
     if (currentSearch) {
@@ -186,9 +190,9 @@ const LayoutSearch = props => {
           element: 'span',
           className: 'text-red-500 border-b border-dashed'
         }
-      })
+      });
     }
-  })
+  });
 
   return (
     <div className='pt-8'>
@@ -196,8 +200,8 @@ const LayoutSearch = props => {
         ? <SearchNav {...props} />
         : <div id="posts-wrapper"> {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}  </div>}
     </div>
-  )
-}
+  );
+};
 
 /**
  * 归档
@@ -205,7 +209,7 @@ const LayoutSearch = props => {
  * @returns
  */
 const LayoutArchive = (props) => {
-  const { archivePosts } = props
+  const { archivePosts } = props;
   return <div className='pt-8'>
     <Card className='w-full'>
       <div className="mb-10 pb-20 bg-white md:p-12 p-3 min-h-full dark:bg-hexo-black-gray">
@@ -218,8 +222,8 @@ const LayoutArchive = (props) => {
         ))}
       </div>
     </Card>
-  </div>
-}
+  </div>;
+};
 
 /**
  * 文章详情
@@ -227,7 +231,7 @@ const LayoutArchive = (props) => {
  * @returns
  */
 const LayoutSlug = props => {
-  const { post, lock, validPassword } = props
+  const { post, lock, validPassword } = props;
   return (
     <>
       <div className="article w-full lg:hover:shadow rounded-t-xl lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray lg:border-2 border-teal-600 dark:border-teal-500">
@@ -239,9 +243,6 @@ const LayoutSlug = props => {
             <section className='px-5 justify-center mx-auto max-w-2xl lg:max-w-full'>
               {post && <NotionPage post={post} />}
             </section>
-
-            {/* 点赞 */}
-            {post?.type === 'Page' && post?.id && <LyketLikeButton id={post.id} />}
 
             {/* 分享 */}
             <ShareBar post={post} />
@@ -262,8 +263,8 @@ const LayoutSlug = props => {
         }
       </div>
     </>
-  )
-}
+  );
+};
 
 /**
  * 404
@@ -275,15 +276,15 @@ const Layout404 = props => {
     // 延时3秒如果加载失败就返回首页
     setTimeout(() => {
       if (isBrowser) {
-        const article = document.getElementById('notion-article')
+        const article = document.getElementById('notion-article');
         if (!article) {
           // router.push('/').then(() => {
           //   // console.log('找不到页面', router.asPath)
           // })
         }
       }
-    }, 10000)
-  })
+    }, 10000);
+  });
   return (
     <>
       <div className="text-black w-full h-screen text-center justify-center content-center items-center flex flex-col">
@@ -301,8 +302,8 @@ const Layout404 = props => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
 /**
  * 分类列表
@@ -310,8 +311,8 @@ const Layout404 = props => {
  * @returns
  */
 const LayoutCategoryIndex = props => {
-  const { categoryOptions } = props
-  const { locale } = useGlobal()
+  const { categoryOptions } = props;
+  const { locale } = useGlobal();
   return (
     <div className='mt-8'>
       <Card className="w-full min-h-screen">
@@ -326,13 +327,13 @@ const LayoutCategoryIndex = props => {
                   <i className="mr-4 fas fa-folder" />  {category.name}({category.count})
                 </div>
               </Link>
-            )
+            );
           })}
         </div>
       </Card>
     </div>
-  )
-}
+  );
+};
 
 /**
  * 标签列表
@@ -340,8 +341,8 @@ const LayoutCategoryIndex = props => {
  * @returns
  */
 const LayoutTagIndex = props => {
-  const { tagOptions } = props
-  const { locale } = useGlobal()
+  const { tagOptions } = props;
+  const { locale } = useGlobal();
   return (
     <div className='mt-8'>
       <Card className='w-full'>
@@ -355,6 +356,7 @@ const LayoutTagIndex = props => {
         </div>
       </Card>
     </div>
-  )
-}
-export { Layout404, LayoutArchive, LayoutBase, LayoutCategoryIndex, LayoutIndex, LayoutPostList, LayoutSearch, LayoutSlug, LayoutTagIndex, CONFIG as THEME_CONFIG }
+  );
+};
+export { Layout404, LayoutArchive, LayoutBase, LayoutCategoryIndex, LayoutIndex, LayoutPostList, LayoutSearch, LayoutSlug, LayoutTagIndex, CONFIG as THEME_CONFIG };
+

@@ -1,5 +1,8 @@
-import Card from './Card'
+import Card from './Card';
 
+/**
+ * 不蒜子统计
+ */
 export function AnalyticsCard (props) {
   const { postCount } = props
   return <Card>

@@ -1,7 +1,8 @@
-import { useGlobal } from '@/lib/global'
-import { siteConfig } from '@/lib/config'
-import { MenuItemCollapse } from './MenuItemCollapse'
-import CONFIG from '../config'
+import { siteConfig } from '@/lib/config';
+import { useGlobal } from '@/lib/global';
+
+import CONFIG from '../config';
+import { MenuItemCollapse } from './MenuItemCollapse';
 
 export const MenuListSide = (props) => {
   const { customNav, customMenu } = props

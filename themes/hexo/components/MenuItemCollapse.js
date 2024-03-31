@@ -1,11 +1,10 @@
-import Collapse from '@/components/Collapse'
-import Link from 'next/link'
-import { useState } from 'react'
+import Link from 'next/link';
+import { useState } from 'react';
+
+import Collapse from '@/components/Collapse';
 
 /**
  * 折叠菜单
- * @param {*} param0
- * @returns
  */
 export const MenuItemCollapse = (props) => {
   const { link } = props
