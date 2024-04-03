@@ -23,12 +23,12 @@ const CusdisComponent = dynamic(
   { ssr: false }
 )
 
-const TwikooCompenent = dynamic(
-  () => {
-    return import('@/components/Twikoo')
-  },
-  { ssr: false }
-)
+// const TwikooCompenent = dynamic(
+//   () => {
+//     return import('@/components/Twikoo')
+//   },
+//   { ssr: false }
+// )
 
 const GitalkComponent = dynamic(
   () => {
@@ -71,7 +71,7 @@ const Comment = ({ siteInfo, frontMatter, className }) => {
   const router = useRouter()
 
   const COMMENT_ARTALK_SERVER = siteConfig('COMMENT_ARTALK_SERVER')
-  const COMMENT_TWIKOO_ENV_ID = siteConfig('COMMENT_TWIKOO_ENV_ID')
+  // const COMMENT_TWIKOO_ENV_ID = siteConfig('COMMENT_TWIKOO_ENV_ID')
   const COMMENT_WALINE_SERVER_URL = siteConfig('COMMENT_WALINE_SERVER_URL')
   const COMMENT_VALINE_APP_ID = siteConfig('COMMENT_VALINE_APP_ID')
   const COMMENT_GISCUS_REPO = siteConfig('COMMENT_GISCUS_REPO')
@@ -136,11 +136,11 @@ const Comment = ({ siteInfo, frontMatter, className }) => {
           </div>
         )}
 
-        {COMMENT_TWIKOO_ENV_ID && (
+        {/* {COMMENT_TWIKOO_ENV_ID && (
           <div key='Twikoo'>
             <TwikooCompenent />
           </div>
-        )}
+        )} */}
 
         {COMMENT_WALINE_SERVER_URL && (
           <div key='Waline'>

@@ -4,6 +4,8 @@
 
 :root {
   --twikoo-teal: #55ae99;
+  --waline-theme-color: #55ae99 !important;
+  --waline-avatar-radius: 3px !important;
 }
 
 .wrapper {
@@ -63,10 +65,12 @@ nav {
   .sticky-nav-full {
     @apply max-w-full border-b border-opacity-50 border-gray-200 dark:border-gray-600 dark:border-opacity-50;
   }
+
   .header-name {
     display: block;
     transition: all 0.5s cubic-bezier(0.4, 0, 0, 1);
   }
+
   .sticky-nav-full .header-name {
     @apply dark:text-gray-300 text-gray-600;
   }
@@ -97,7 +101,8 @@ nav {
 .scroll-hidden {
   -ms-overflow-style: none;
   overflow: -moz-scrollbars-none;
-  scrollbar-width: none; /* firefox */
+  scrollbar-width: none;
+  /* firefox */
 }
 
 .scroll-hidden::-webkit-scrollbar {
@@ -158,7 +163,8 @@ nav {
   margin: -0.125em 0.25em;
 }
 
-/* ----- twikoo START----- */
+/* ----- twikoo START ----- */
+
 .el-loading-spinner {
   @apply flex justify-center items-center;
 }
@@ -208,7 +214,32 @@ nav {
   background-size: contain;
   height: 105px !important;
 }
-/* ----- twikoo END----- */
+
+/* ----- twikoo END ----- */
+
+/* ----- waline START -----*/
+
+.wl-header {
+  font-size: 1.1em !important;
+}
+
+.wl-header input {
+  font-size: 0.75em !important;
+}
+
+.wl-reaction-list {
+  padding-top: 12px !important;
+}
+
+#wl-edit {
+  background: url('https://s2.loli.net/2024/01/30/pyLsmawvQ8hT4CH.png') 100%
+    100% no-repeat;
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+  background-position: right bottom !important;
+}
+
+/* ----- waline END -----*/
 
 /* Webmention style */
 .webmention-block {
@@ -245,9 +276,6 @@ nav {
   margin-right: 0.2rem;
 }
 
-/* .webmention-counts .counts > span {
-  margin-right: .8rem;
-} */
 .webmention-counts .counts > span:not(:last-child):after {
   content: ' • ';
 }

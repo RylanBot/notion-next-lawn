@@ -2037,7 +2037,7 @@ svg + .notion-page-title-text {
   white-space: pre-wrap;
   word-break: break-word;
   margin: 12px auto !important;
-  padding: 0.5em 0.9em 0.1em !important;
+  padding: 0.5em 0.9em !important;
   padding-bottom: 0.05em;
   font-size: 1em;
   border: none;
@@ -2065,10 +2065,6 @@ svg + .notion-page-title-text {
   content: '\f10e';
   font-size: 1.25em;
   float: right;
-  /* 适配 Noto Serif SC 字体 */
-  /* padding-top: 0.35em; */
-  /* 适配 lxgw-wenkai-webfont 字体 */
-  padding-top: 0.25em; 
   opacity: 0.5;
 }
 
