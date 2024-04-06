@@ -2053,6 +2053,10 @@ svg + .notion-page-title-text {
   font-weight: 800;
 }
 
+.notion-quote > div:first-child{
+  padding-top: 0.3em;
+}
+
 .notion-quote > div:first-child::before {
   /* font-family: 'FontAwesome';
   content: "\f10d";
@@ -2066,6 +2070,12 @@ svg + .notion-page-title-text {
   font-size: 1.25em;
   float: right;
   opacity: 0.5;
+}
+
+.notion-quote > .notion-list{
+  display: flex;
+  justify-content: center;
+  item-align: center;
 }
 
 /* simple table设置 */
