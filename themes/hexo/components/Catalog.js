@@ -64,14 +64,13 @@ const Catalog = ({ toc }) => {
   return (
     <div className='px-3 py-1'>
       <div className='w-full pb-2 font-bold text-lg'>
-        {/* <i className='mr-1 fas fa-stream' /> */}
         {locale.COMMON.TABLE_OF_CONTENTS}
       </div>
       <div className='w-full pb-2'>
         <Progress />
       </div>
-      <div className='overflow-y-auto max-h-36 lg:max-h-96 overscroll-none scroll-hidden' ref={tRef}>
-        <nav className='h-full  text-black'>
+      <div className='overflow-y-auto max-h-36 lg:max-h-full overscroll-none scroll-hidden' ref={tRef}>
+        <nav className='h-full text-black'>
           {toc.map((tocItem) => {
             const id = uuidToId(tocItem.id);
             tocIds.push(id);
@@ -84,7 +83,7 @@ const Catalog = ({ toc }) => {
                 title={tocItem.text}
               >
                 <span style={{ display: 'inline-block', marginLeft: tocItem.indentLevel * 16 }}
-                  className={`${activeSection === id && ' font-bold text-teal-600 dark:text-teal-400'} truncate`}
+                  className={`${activeSection === id && 'font-bold text-teal-600 dark:text-teal-400'} truncate`}
                 >
                   {tocItem.text}
                 </span>

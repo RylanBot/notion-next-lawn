@@ -75,7 +75,7 @@ export default function SideRight(props) {
           </button>
         </div>
       }
-      <div className={`lg:w-64 toc-card sticky top-20 ${activeTab !== 'toc' && 'hidden'}`}>
+      <div className={`lg:w-64 toc-card sticky top-32 ${activeTab !== 'toc' && 'hidden'}`}>
         {post && post.toc && post.toc.length > 1 &&
           <Card>
             <Catalog toc={post.toc} />
