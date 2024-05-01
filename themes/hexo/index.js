@@ -4,7 +4,6 @@ import { createContext, useContext, useEffect, useRef } from 'react';
 
 import AlgoliaSearchModal from '@/components/AlgoliaSearchModal';
 import Comment from '@/components/Comment';
-import CommonHead from '@/components/CommonHead';
 import replaceSearchResult from '@/components/Mark';
 import NotionPage from '@/components/NotionPage';
 import ShareBar from '@/components/ShareBar';
@@ -50,15 +49,15 @@ export const useHexoGlobal = () => useContext(ThemeGlobalHexo);
  * @constructor
  */
 const LayoutBase = props => {
-  const { post, children, slotTop, meta, className } = props;
+  const { post, children, slotTop, className } = props;
   const { onLoading, fullWidth } = useGlobal();
 
   const router = useRouter();
   const headerSlot = post
     ? <PostHeader {...props} />
     : (router.route === '/' && siteConfig('HEXO_HOME_BANNER_ENABLE', null, CONFIG)
-      ? <Hero {...props} />
-      : null);
+        ? <Hero {...props} />
+        : null);
 
   const drawerRight = useRef(null);
   const tocRef = isBrowser ? document.getElementById('article-wrapper') : null;
@@ -79,9 +78,9 @@ const LayoutBase = props => {
 
   return (
     <ThemeGlobalHexo.Provider value={{ searchModal }}>
-      <div id='theme-hexo'>
-        {/* 网页SEO */}
-        <CommonHead meta={meta} />
+      <div id='theme-hexo' className={`${siteConfig('FONT_STYLE')} dark:bg-black scroll-smooth`}>
+
+        {/* 特定主题 CSS */}
         <Style />
 
         {/* 顶部导航 */}
@@ -106,7 +105,6 @@ const LayoutBase = props => {
         <main id="wrapper" className={`${siteConfig('HEXO_HOME_BANNER_ENABLE', null, CONFIG) ? '' : 'pt-16'} bg-hexo-background-gray dark:bg-black w-full py-8 md:px-8 lg:px-24 min-h-screen relative`}>
           <div id="container-inner" className={(JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE')) ? 'flex-row-reverse' : '') + ' w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10'} >
             <div className={`${className || ''} w-full ${fullWidth ? '' : 'max-w-4xl'} h-full overflow-hidden`}>
-
               <Transition
                 show={!onLoading}
                 appear={true}
@@ -359,4 +357,3 @@ const LayoutTagIndex = props => {
   );
 };
 export { Layout404, LayoutArchive, LayoutBase, LayoutCategoryIndex, LayoutIndex, LayoutPostList, LayoutSearch, LayoutSlug, LayoutTagIndex, CONFIG as THEME_CONFIG };
-
