@@ -271,7 +271,6 @@ const LayoutSlug = props => {
  */
 const Layout404 = props => {
   useEffect(() => {
-    // 延时3秒如果加载失败就返回首页
     setTimeout(() => {
       if (isBrowser) {
         const article = document.getElementById('notion-article');
@@ -288,7 +287,7 @@ const Layout404 = props => {
       <div className="text-black w-full h-screen text-center justify-center content-center items-center flex flex-col">
         <div className="dark:text-gray-200">
           <h2 className="inline-block border-r-2 border-gray-500 mr-2 px-3 py-2 align-top">
-            404
+            Error
           </h2>
           <div className="inline-block text-left h-32 leading-10 items-center">
             <h2 className="m-0 p-0">
