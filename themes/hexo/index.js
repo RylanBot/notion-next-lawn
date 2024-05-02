@@ -208,7 +208,7 @@ const LayoutSearch = props => {
  */
 const LayoutArchive = (props) => {
   const { archivePosts } = props;
-  return <div className='pt-8'>
+  return <div className='pt-16 mx-2 mb-2'>
     <Card className='w-full'>
       <div className="mb-10 pb-20 bg-white md:p-12 p-3 min-h-full dark:bg-hexo-black-gray">
         {Object.keys(archivePosts).map(archiveTitle => (
@@ -312,8 +312,8 @@ const LayoutCategoryIndex = props => {
   const { categoryOptions } = props;
   const { locale } = useGlobal();
   return (
-    <div className='mt-8'>
-      <Card className="w-full min-h-screen">
+    <div className='pt-16 mx-2 mb-2'>
+      <Card className="w-full">
         <div className="dark:text-gray-200 mb-5 mx-3">
           <i className="mr-4 fas fa-th" />  {locale.COMMON.CATEGORY}:
         </div>
@@ -342,7 +342,7 @@ const LayoutTagIndex = props => {
   const { tagOptions } = props;
   const { locale } = useGlobal();
   return (
-    <div className='mt-8'>
+    <div className='pt-16 mx-2 mb-2'>
       <Card className='w-full'>
         <div className="dark:text-gray-200 mb-5 ml-4">
           <i className="mr-4 fas fa-tag" /> {locale.COMMON.TAGS}:
@@ -356,4 +356,5 @@ const LayoutTagIndex = props => {
     </div>
   );
 };
+
 export { Layout404, LayoutArchive, LayoutBase, LayoutCategoryIndex, LayoutIndex, LayoutPostList, LayoutSearch, LayoutSlug, LayoutTagIndex, CONFIG as THEME_CONFIG };
