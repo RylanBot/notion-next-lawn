@@ -510,7 +510,8 @@
 
 /* 图片懒加载占位动画 */
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
@@ -520,4 +521,57 @@
 
 .animate-pulse {
   animation: pulse 2s infinite;
+}
+
+@keyframes rainbow-animation {
+  0%,
+  100% {
+    background-position: 0 0;
+  }
+
+  50% {
+    background-position: 100% 0;
+  }
+}
+
+.rainbow-text {
+  color: transparent;
+  background: linear-gradient(
+    to right,
+    #62efab 5%,
+    #f2ea7d 15%,
+    #f2ea7d 25%,
+    #ff8797 35%,
+    #ff8797 45%,
+    #e1a4f4 55%,
+    #e1a4f4 65%,
+    #82fff4 75%,
+    #82fff4 85%,
+    #62efab 95%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: rainbow-animation 6s ease-in-out infinite;
+  background-size: 400% 100%;
+  font-size: 24px;
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-30px);
+  }
+  60% {
+    transform: translateY(-15px);
+  }
+}
+
+#tranvellings:hover {
+  animation: bounce 0.5s infinite;
 }

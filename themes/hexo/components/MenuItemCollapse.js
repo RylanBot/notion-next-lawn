@@ -29,8 +29,8 @@ export const MenuItemCollapse = (props) => {
         <div className='w-full px-8 py-3 text-left dark:bg-hexo-black-gray' onClick={toggleShow} >
             {!hasSubMenu && <Link
                 href={link?.to} target={link?.to?.indexOf('http') === 0 ? '_blank' : '_self'}
-                className="font-extralight  flex justify-between pl-2 pr-4 dark:text-gray-200 no-underline tracking-widest pb-1">
-                <span className=' transition-all items-center duration-200'>{link?.icon && <i className={link.icon + ' mr-4'} />}{link?.name}</span>
+                className="font-extralight flex justify-between pl-2 pr-4 dark:text-gray-200 no-underline tracking-widest pb-1">
+                <span className='transition-all items-center duration-200'>{link?.icon && <i className={link.icon + ' mr-4'} />}{link?.name}</span>
             </Link>}
             {hasSubMenu && <div
                 onClick={hasSubMenu ? toggleOpenSubMenu : null}

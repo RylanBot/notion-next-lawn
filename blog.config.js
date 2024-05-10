@@ -372,9 +372,8 @@ const BLOG = {
 
   // END<----营收相关
 
-  // 页面点赞按钮（id / secret-api-token 获取方法：https://app.lyket.dev/signup）
-  LYKET_LIKE_BUTTON: process.env.NEXT_PUBLIC_LYKET_LIKE_BUTTON || false,
-  LYKET_LIKE_ID: process.env.NEXT_PUBLIC_LYKET_LIKE_ID || '',
+  // 友链接力
+  TRAVELLING_LINK: process.env.NEXT_TRAVELLING_LINK || true,
 
   // 自定义配置notion数据库字段名
   NOTION_PROPERTY_NAME: {

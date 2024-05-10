@@ -54,7 +54,7 @@ export const Style = () => {
         color: #2dd4bf;
     }
 
-    #theme-hexo .header-text-shadow .menu-title:hover {
+    #theme-hexo .menu-title:hover {
         background-size: 100% 2px;
         color: #68f2cd;
     }

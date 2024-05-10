@@ -4,6 +4,7 @@ import throttle from 'lodash.throttle';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useRef, useState } from 'react';
+
 import CONFIG from '../config';
 import CategoryGroup from './CategoryGroup';
 import Logo from './Logo';
@@ -22,14 +23,14 @@ let windowTop = 0;
  * @returns
  */
 const TopNav = props => {
-  const searchDrawer = useRef();
   const { tags, currentTag, categories, currentCategory } = props;
-  const { locale } = useGlobal();
-  const { isDarkMode } = useGlobal();
+  const showSearchButton = siteConfig('HEXO_MENU_SEARCH', false, CONFIG);
+
+  const { locale, isDarkMode } = useGlobal();
   const router = useRouter();
 
+  const searchDrawer = useRef();
   const [isOpen, changeShow] = useState(false);
-  const showSearchButton = siteConfig('HEXO_MENU_SEARCH', false, CONFIG);
 
   const toggleMenuOpen = () => {
     changeShow(!isOpen);
@@ -52,28 +53,36 @@ const TopNav = props => {
 
   const scrollTrigger = useCallback(throttle(() => {
     const scrollS = window.scrollY;
+
     const nav = document.querySelector('#sticky-nav');
     const header = document.querySelector('#header');
-    // 是否将导航栏透明
-    const navTransparent = (scrollS < document.documentElement.clientHeight - 12 && router.route === '/') || scrollS < 300; // 透明导航条的条件
+    const menuTitle = document.querySelectorAll('.menu-title');
+
+    const navTransparent = (scrollS < document.documentElement.clientHeight - 12 && router.route === '/') || scrollS < 300;
 
     if (header && navTransparent) {
       nav && nav.classList.replace('bg-white', 'bg-none');
-      nav && nav.classList.replace('text-black', 'text-white');
+      nav && nav.classList.replace('text-gray', 'text-white');
       nav && nav.classList.replace('border', 'border-transparent');
       nav && nav.classList.replace('drop-shadow-md', 'shadow-none');
       nav && nav.classList.replace('dark:bg-hexo-black-gray', 'transparent');
-      nav && nav.classList.add('header-text-shadow');
     } else {
       nav && nav.classList.replace('bg-none', 'bg-white');
-      nav && nav.classList.replace('text-white', 'text-black');
+      nav && nav.classList.replace('text-white', 'text-gray');
       nav && nav.classList.replace('border-transparent', 'border');
       nav && nav.classList.replace('shadow-none', 'drop-shadow-md');
       nav && nav.classList.replace('transparent', 'dark:bg-hexo-black-gray');
-      nav && nav.classList.remove('header-text-shadow');
     }
 
-    const showNav = scrollS <= windowTop || scrollS < 5 || (header && scrollS <= header.clientHeight);// 非首页无大图时影藏顶部 滚动条置顶时隐藏
+    menuTitle && menuTitle.forEach((menu) => {
+      if (!isDarkMode && header && window.scrollY < header.clientHeight) {
+        menu.parentNode.classList.add('dark');
+      } else {
+        menu.parentNode.classList.remove('dark');
+      }
+    });
+
+    const showNav = scrollS <= windowTop || scrollS < 5 || (header && scrollS <= header.clientHeight); // 非首页无大图时影藏顶部 滚动条置顶时隐藏
     if (!showNav) {
       nav && nav.classList.replace('top-0', '-top-20');
       windowTop = scrollS;
@@ -81,21 +90,8 @@ const TopNav = props => {
       nav && nav.classList.replace('-top-20', 'top-0');
       windowTop = scrollS;
     }
-    navDarkMode();
   }, throttleMs)
   );
-
-  const navDarkMode = () => {
-    const nav = document.getElementById('sticky-nav');
-    const header = document.querySelector('#header');
-    if (!isDarkMode && nav && header) {
-      if (window.scrollY < header.clientHeight) {
-        nav?.classList?.add('dark');
-      } else {
-        nav?.classList?.remove('dark');
-      }
-    }
-  };
 
   const searchDrawerSlot = <>
     {categories && (
@@ -149,7 +145,9 @@ const TopNav = props => {
         <div className='mr-1 flex justify-end items-center text-xl'>
           <div className='hidden lg:flex'> <MenuListTop {...props} /></div>
           <div onClick={toggleMenuOpen} className='w-8 justify-center items-center h-8 cursor-pointer flex lg:hidden'>
-            {isOpen ? <i className='fas fa-times' /> : <i className='fas fa-bars' />}
+            <span className='menu-title text-gray-700 dark:text-gray-200'>
+              {isOpen ? <i className='fas fa-times' /> : <i className='fas fa-bars' />}
+            </span>
           </div>
           {showSearchButton && <SearchButton />}
         </div>
