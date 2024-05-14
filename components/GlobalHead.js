@@ -229,7 +229,7 @@ const getSEOMeta = (props, router, global) => {
       return {
         title: post
           ? `${post?.title} | ${siteInfo?.title}`
-          : `${siteInfo?.title} | loading`,
+          : `Loading... | ${siteConfig('TITLE')}`,
         description: post?.summary,
         type: post?.type,
         slug: post?.slug,

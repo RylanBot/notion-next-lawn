@@ -270,18 +270,6 @@ const LayoutSlug = props => {
  * @returns
  */
 const Layout404 = props => {
-  useEffect(() => {
-    setTimeout(() => {
-      if (isBrowser) {
-        const article = document.getElementById('notion-article');
-        if (!article) {
-          // router.push('/').then(() => {
-          //   // console.log('找不到页面', router.asPath)
-          // })
-        }
-      }
-    }, 10000);
-  });
   return (
     <>
       <div className="text-black w-full h-screen text-center justify-center content-center items-center flex flex-col">
