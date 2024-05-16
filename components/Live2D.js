@@ -1,7 +1,8 @@
 /* eslint-disable no-undef */
-import { siteConfig } from '@/lib/config';
-import { useGlobal } from '@/lib/global';
 import { useEffect, useState } from 'react';
+
+import { useGlobal } from '@/hooks/useGlobal';
+import { siteConfig } from '@/lib/config';
 
 export default function Live2D() {
   const { theme, switchTheme } = useGlobal();

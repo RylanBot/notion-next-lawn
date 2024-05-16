@@ -34,7 +34,6 @@ const VConsole = dynamic(() => import('@/components/VConsole'), { ssr: false });
 const CustomContextMenu = dynamic(() => import('@/components/CustomContextMenu'), { ssr: false });
 const DisableCopy = dynamic(() => import('@/components/DisableCopy'), { ssr: false });
 const AdBlockDetect = dynamic(() => import('@/components/AdBlockDetect'), { ssr: false });
-const LoadingProgress = dynamic(() => import('@/components/LoadingProgress'), { ssr: false });
 const AosAnimation = dynamic(() => import('@/components/AOSAnimation'), { ssr: false });
 
 /**
@@ -157,7 +156,6 @@ const ExternalPlugin = (props) => {
     {AD_WWADS_BLOCK_DETECT && <AdBlockDetect />}
     {TIANLI_KEY && <TianLiGPT />}
     <VConsole />
-    <LoadingProgress />
     <AosAnimation />
     {ANALYTICS_51LA_ID && ANALYTICS_51LA_CK && <LA51 />}
 

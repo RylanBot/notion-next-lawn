@@ -3,7 +3,7 @@ import Link from 'next/link';
 import LazyImage from '@/components/LazyImage';
 import NotionIcon from '@/components/NotionIcon';
 import WordCount from '@/components/WordCount';
-import { useGlobal } from '@/lib/global';
+import { useGlobal } from '@/hooks/useGlobal';
 
 import TagItemMini from './TagItemMini';
 import WavesArea from './WavesArea';

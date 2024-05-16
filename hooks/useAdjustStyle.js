@@ -1,4 +1,4 @@
-import { useGlobal } from '@/lib/global';
+import { useGlobal } from '@/hooks/useGlobal';
 import { useEffect } from 'react';
 
 const useAdjustStyle = () => {

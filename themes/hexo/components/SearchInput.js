@@ -1,66 +1,70 @@
-import { useRouter } from 'next/router'
-import { useImperativeHandle, useRef, useState } from 'react'
-import { useGlobal } from '@/lib/global'
-let lock = false
+import { useRouter } from 'next/router';
+import { useImperativeHandle, useRef, useState } from 'react';
+
+import { useGlobal } from '@/hooks/useGlobal';
+
+let lock = false;
 
 const SearchInput = props => {
-  const { currentSearch, cRef, className } = props
-  const [onLoading, setLoadingState] = useState(false)
-  const router = useRouter()
-  const searchInputRef = useRef()
-  const { locale } = useGlobal()
+  const { currentSearch, cRef, className } = props;
+  const { locale } = useGlobal();
+
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const searchInputRef = useRef();
+
   useImperativeHandle(cRef, () => {
     return {
       focus: () => {
-        searchInputRef?.current?.focus()
+        searchInputRef?.current?.focus();
       }
-    }
-  })
+    };
+  });
 
   const handleSearch = () => {
-    const key = searchInputRef.current.value
+    const key = searchInputRef.current.value;
     if (key && key !== '') {
-      setLoadingState(true)
+      setLoading(true);
       router.push({ pathname: '/search/' + key }).then(r => {
-        setLoadingState(false)
-      })
+        setLoading(false);
+      });
       // location.href = '/search/' + key
     } else {
-      router.push({ pathname: '/' }).then(r => {})
+      router.push({ pathname: '/' }).then(r => { });
     }
-  }
+  };
   const handleKeyUp = e => {
     if (e.keyCode === 13) {
       // 回车
-      handleSearch(searchInputRef.current.value)
+      handleSearch(searchInputRef.current.value);
     } else if (e.keyCode === 27) {
       // ESC
-      cleanSearch()
+      cleanSearch();
     }
-  }
+  };
   const cleanSearch = () => {
-    searchInputRef.current.value = ''
-  }
+    searchInputRef.current.value = '';
+  };
 
-  const [showClean, setShowClean] = useState(false)
+  const [showClean, setShowClean] = useState(false);
   const updateSearchKey = val => {
     if (lock) {
-      return
+      return;
     }
-    searchInputRef.current.value = val
+    searchInputRef.current.value = val;
 
     if (val) {
-      setShowClean(true)
+      setShowClean(true);
     } else {
-      setShowClean(false)
+      setShowClean(false);
     }
-  }
-  function lockSearchInput () {
-    lock = true
+  };
+  function lockSearchInput() {
+    lock = true;
   }
 
-  function unLockSearchInput () {
-    lock = false
+  function unLockSearchInput() {
+    lock = false;
   }
 
   return (
@@ -85,9 +89,8 @@ const SearchInput = props => {
         onClick={handleSearch}
       >
         <i
-          className={`hover:text-black transform duration-200 text-gray-500 dark:text-gray-200 cursor-pointer fas ${
-            onLoading ? 'fa-spinner animate-spin' : 'fa-search'
-          }`}
+          className={`hover:text-black transform duration-200 text-gray-500 dark:text-gray-200 cursor-pointer fas ${loading ? 'fa-spinner animate-spin' : 'fa-search'
+            }`}
         />
       </div>
 
@@ -100,7 +103,7 @@ const SearchInput = props => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default SearchInput
+export default SearchInput;

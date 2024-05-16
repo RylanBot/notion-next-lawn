@@ -1,18 +1,20 @@
-'use strict'
+'use strict';
 
-import { useEffect } from 'react'
-import { loadExternalResource } from '@/lib/utils'
-import { useRouter } from 'next/router'
-import { siteConfig } from '@/lib/config'
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+
+import { siteConfig } from '@/lib/config';
+import { loadExternalResource } from '@/lib/utils';
+
 const Ackee = () => {
-  const router = useRouter()
-  const server = siteConfig('ANALYTICS_ACKEE_DATA_SERVER')
-  const domainId = siteConfig('ANALYTICS_ACKEE_DOMAIN_ID')
+  const router = useRouter();
+  const server = siteConfig('ANALYTICS_ACKEE_DATA_SERVER');
+  const domainId = siteConfig('ANALYTICS_ACKEE_DOMAIN_ID');
 
   // 或者使用其他依赖数组，根据需要执行 handleAckee
   useEffect(() => {
-    handleAckeeCallback()
-  }, [router])
+    handleAckeeCallback();
+  }, [router]);
 
   // handleAckee 函数
   const handleAckeeCallback = () => {
@@ -39,13 +41,13 @@ const Ackee = () => {
                 */
         ignoreOwnVisits: false
       }
-    )
-  }
+    );
+  };
 
-  return null
-}
+  return null;
+};
 
-export default Ackee
+export default Ackee;
 
 /**
  * Function to use Ackee.
@@ -56,30 +58,30 @@ export default Ackee
  * @param {?Object} options - Ackee options.
  */
 const handleAckee = async function (pathname, environment, options = {}) {
-  await loadExternalResource(siteConfig('ANALYTICS_ACKEE_TRACKER'), 'js')
-  const ackeeTracker = window.ackeeTracker
+  await loadExternalResource(siteConfig('ANALYTICS_ACKEE_TRACKER'), 'js');
+  const ackeeTracker = window.ackeeTracker;
 
-  const instance = ackeeTracker?.create(environment.server, options)
+  const instance = ackeeTracker?.create(environment.server, options);
 
   if (instance == null) {
-    console.warn('Skipped record creation because useAckee has been called in a non-browser environment')
-    return
+    console.warn('Skipped record creation because useAckee has been called in a non-browser environment');
+    return;
   }
 
   const hasPathname = (
     pathname != null && pathname !== ''
-  )
+  );
 
   if (hasPathname === false) {
-    console.warn('Skipped record creation because useAckee has been called without pathname')
-    return
+    console.warn('Skipped record creation because useAckee has been called without pathname');
+    return;
   }
 
-  const attributes = ackeeTracker?.attributes(options.detailed)
-  const url = new URL(pathname, location)
+  const attributes = ackeeTracker?.attributes(options.detailed);
+  const url = new URL(pathname, location);
 
   return instance.record(environment.domainId, {
     ...attributes,
     siteLocation: url.href
-  }).stop
-}
+  }).stop;
+};

@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
-import { siteConfig } from '@/lib/config'
-import { useGlobal } from '@/lib/global'
+import { useGlobal } from '@/hooks/useGlobal';
+import { siteConfig } from '@/lib/config';
+import { useEffect, useState } from 'react';
 
 /**
  * 评论插件

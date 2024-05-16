@@ -1,4 +1,4 @@
-import { useGlobal } from '@/lib/global';
+import { useGlobal } from '@/hooks/useGlobal';
 import dynamic from 'next/dynamic';
 
 const NotionPage = dynamic(() => import('@/components/NotionPage'));

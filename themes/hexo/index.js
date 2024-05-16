@@ -29,8 +29,8 @@ import TocDrawer from './components/TocDrawer';
 import TocDrawerButton from './components/TocDrawerButton';
 import TopNav from './components/TopNav';
 
+import { useGlobal } from '@/hooks/useGlobal';
 import { siteConfig } from '@/lib/config';
-import { useGlobal } from '@/lib/global';
 import { isBrowser } from '@/lib/utils';
 
 import { Transition } from '@headlessui/react';

@@ -1,9 +1,9 @@
-import { useGlobal } from '@/lib/global'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
-import CONFIG from '../config'
-import { siteConfig } from '@/lib/config'
+import { useGlobal } from '@/hooks/useGlobal';
+import { siteConfig } from '@/lib/config';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import CONFIG from '../config';
 
 /**
  * 文字版权信息

@@ -1,5 +1,5 @@
-import { useGlobal } from '@/lib/global'
-import { useEffect, useRef } from 'react'
+import { useGlobal } from '@/hooks/useGlobal';
+import { useEffect, useRef } from 'react';
 
 /**
  * 加密文章校验组件

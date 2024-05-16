@@ -1,8 +1,8 @@
-import busuanzi from '@/lib/busuanzi'
-import { useRouter } from 'next/router'
-import { useGlobal } from '@/lib/global'
+import { useGlobal } from '@/hooks/useGlobal';
+import busuanzi from '@/lib/busuanzi';
+import { useRouter } from 'next/router';
 // import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import { useEffect } from 'react';
 
 let path = ''
 

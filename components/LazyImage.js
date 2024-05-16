@@ -145,7 +145,7 @@ const adjustImgSize = (src, maxWidth) => {
  * 生成自定义的占位图片
  */
 const generatePlaceholder = (width, height) => {
-  const text = "Rylan's Blog";
+  const text = `${siteConfig('AUTHOR')}'s Blog`;
   const placeholderText = encodeURIComponent(text);
 
   const minDimension = Math.min(width || 440, height || 320);

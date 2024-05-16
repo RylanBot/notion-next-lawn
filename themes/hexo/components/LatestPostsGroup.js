@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import LazyImage from '@/components/LazyImage';
+import { useGlobal } from '@/hooks/useGlobal';
 import { siteConfig } from '@/lib/config';
-import { useGlobal } from '@/lib/global';
 
 /**
  * 最新文章列表

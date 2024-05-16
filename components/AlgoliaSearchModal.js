@@ -1,10 +1,10 @@
-import { useState, useImperativeHandle, useRef } from 'react'
-import algoliasearch from 'algoliasearch'
-import replaceSearchResult from '@/components/Mark'
-import Link from 'next/link'
-import { useGlobal } from '@/lib/global'
-import throttle from 'lodash/throttle'
-import { siteConfig } from '@/lib/config'
+import replaceSearchResult from '@/components/Mark';
+import { useGlobal } from '@/hooks/useGlobal';
+import { siteConfig } from '@/lib/config';
+import algoliasearch from 'algoliasearch';
+import throttle from 'lodash/throttle';
+import Link from 'next/link';
+import { useImperativeHandle, useRef, useState } from 'react';
 
 /**
  * 结合 Algolia 实现的弹出式搜索框

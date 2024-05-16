@@ -1,5 +1,5 @@
 import { siteConfig } from '@/lib/config'
-import { useGlobal } from '@/lib/global'
+import { useGlobal } from '@/hooks/useGlobal'
 import { useRouter } from 'next/router'
 import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
 import { useRef } from 'react'

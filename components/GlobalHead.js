@@ -2,8 +2,8 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
+import { useGlobal } from '@/hooks/useGlobal';
 import { siteConfig } from '@/lib/config';
-import { useGlobal } from '@/lib/global';
 import { loadExternalResource } from '@/lib/utils';
 
 /**

@@ -1,9 +1,12 @@
-import { useGlobal } from '@/lib/global'
-import Link from 'next/link'
-import { useEffect, useRef } from 'react'
-import Card from './Card'
-import SearchInput from './SearchInput'
-import TagItemMini from './TagItemMini'
+
+import Link from 'next/link';
+import { useEffect, useRef } from 'react';
+
+import { useGlobal } from '@/hooks/useGlobal';
+
+import Card from './Card';
+import SearchInput from './SearchInput';
+import TagItemMini from './TagItemMini';
 
 /**
  * 搜索页面的导航

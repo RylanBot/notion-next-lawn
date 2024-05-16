@@ -1,10 +1,9 @@
-import { getGlobalData } from '@/lib/notion/getNotionData'
-import React from 'react'
-import { useGlobal } from '@/lib/global'
-import BLOG from '@/blog.config'
-import { useRouter } from 'next/router'
-import { getLayoutByTheme } from '@/themes/theme'
-import { siteConfig } from '@/lib/config'
+import BLOG from '@/blog.config';
+import { useGlobal } from '@/hooks/useGlobal';
+import { siteConfig } from '@/lib/config';
+import { getGlobalData } from '@/lib/notion/getNotionData';
+import { getLayoutByTheme } from '@/themes/theme';
+import { useRouter } from 'next/router';
 
 /**
  * 分类首页

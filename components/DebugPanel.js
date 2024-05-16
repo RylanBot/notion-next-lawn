@@ -1,52 +1,54 @@
-import { useEffect, useState } from 'react'
-import Select from './Select'
-import { useGlobal } from '@/lib/global'
-import { THEMES } from '@/themes/theme'
-import { useRouter } from 'next/router'
-import { siteConfigMap } from '@/lib/config'
-import { getQueryParam } from '@/lib/utils'
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+
+import { useGlobal } from '@/hooks/useGlobal';
+import { siteConfigMap } from '@/lib/config';
+import { getQueryParam } from '@/lib/utils';
+import { THEMES } from '@/themes/theme';
+
+import Select from './Select';
 
 /**
  *
  * @returns 调试面板
  */
 const DebugPanel = () => {
-  const [show, setShow] = useState(false)
-  const { theme, switchTheme, locale } = useGlobal()
-  const router = useRouter()
-  const currentTheme = getQueryParam(router.asPath, 'theme') || theme
-  const [siteConfig, updateSiteConfig] = useState({})
+  const [show, setShow] = useState(false);
+  const { theme, switchTheme, locale } = useGlobal();
+  const router = useRouter();
+  const currentTheme = getQueryParam(router.asPath, 'theme') || theme;
+  const [siteConfig, updateSiteConfig] = useState({});
 
   // 主题下拉框
-  const themeOptions = THEMES?.map(t => ({ value: t, text: t }))
+  const themeOptions = THEMES?.map(t => ({ value: t, text: t }));
 
   useEffect(() => {
-    updateSiteConfig(Object.assign({}, siteConfigMap()))
-  }, [])
+    updateSiteConfig(Object.assign({}, siteConfigMap()));
+  }, []);
 
   function toggleShow() {
-    setShow(!show)
+    setShow(!show);
   }
 
   function handleChangeDebugTheme() {
-    switchTheme()
+    switchTheme();
   }
 
   function handleUpdateDebugTheme(newTheme) {
-    const query = { ...router.query, theme: newTheme }
-    router.push({ pathname: router.pathname, query })
+    const query = { ...router.query, theme: newTheme };
+    router.push({ pathname: router.pathname, query });
   }
 
   function filterResult(text) {
     switch (text) {
       case 'true':
-        return <span className='text-green-500'>true</span>
+        return <span className='text-green-500'>true</span>;
       case 'false':
-        return <span className='text-red-500'>false</span>
+        return <span className='text-red-500'>false</span>;
       case '':
-        return '-'
+        return '-';
     }
-    return text
+    return text;
   }
 
   return (
@@ -82,7 +84,7 @@ const DebugPanel = () => {
                     </div>
 
                     <div className='p-2'>
-                        <i className='fas fa-times' onClick={toggleShow}/>
+                        <i className='fas fa-times' onClick={toggleShow} />
                     </div>
                 </div>
 
@@ -123,6 +125,6 @@ const DebugPanel = () => {
 
             </div>
         </>
-  )
-}
-export default DebugPanel
+  );
+};
+export default DebugPanel;

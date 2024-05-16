@@ -2,9 +2,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
+import { useGlobal } from '@/hooks/useGlobal';
 import useWindowSize from '@/hooks/useWindowSize';
 import { siteConfig } from '@/lib/config';
-import { useGlobal } from '@/lib/global';
 import { saveDarkModeToCookies, THEMES } from '@/themes/theme';
 
 /**

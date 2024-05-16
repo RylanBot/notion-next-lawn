@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import Typed from 'typed.js';
 
 import LazyImage from '@/components/LazyImage';
+import { useGlobal } from '@/hooks/useGlobal';
 import { siteConfig } from '@/lib/config';
-import { useGlobal } from '@/lib/global';
 
 import CONFIG from '../config';
 import NavButtonGroup from './NavButtonGroup';
@@ -19,7 +19,7 @@ const Hero = props => {
   const { siteInfo } = props;
 
   const [typed, changeType] = useState();
-  const { locale } = useGlobal();
+  const { locale, setOnLoading } = useGlobal();
 
   const GREETING_WORDS = siteConfig('GREETING_WORDS').split(',');
 
@@ -57,6 +57,10 @@ const Hero = props => {
     };
   }, []);
 
+  useEffect(() => {
+    setOnLoading(true);
+  }, []);
+
   return (
     <header
       id="header" style={{ zIndex: 1 }}
@@ -82,9 +86,8 @@ const Hero = props => {
       </div>
 
       {/* 首页大图 */}
-      <LazyImage id='header-cover' src={siteInfo?.pageCover}
-        className={`header-cover w-full h-screen object-cover object-center
-                ${siteConfig('HEXO_HOME_NAV_BACKGROUND_IMG_FIXED', null, CONFIG) ? 'fixed' : ''}`}
+      <LazyImage id='hexo-header-cover' src={siteInfo?.pageCover} onLoad={() => setOnLoading(false)}
+        className={`header-cover w-full h-screen object-cover object-center ${siteConfig('HEXO_HOME_NAV_BACKGROUND_IMG_FIXED', null, CONFIG) ? 'fixed' : ''}`}
       />
     </header>
   );

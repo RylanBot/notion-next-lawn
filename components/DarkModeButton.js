@@ -1,6 +1,6 @@
-import { useGlobal } from '@/lib/global'
-import { Moon, Sun } from './HeroIcons'
-import { useImperativeHandle } from 'react'
+import { useGlobal } from '@/hooks/useGlobal';
+import { useImperativeHandle } from 'react';
+import { Moon, Sun } from './HeroIcons';
 
 /**
  * 深色模式按钮

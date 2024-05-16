@@ -1,23 +1,22 @@
 import { useRouter } from 'next/router';
 import { useCallback, useMemo } from 'react';
 
+import 'aos/dist/aos.css'; // You can also use <link> for styles
+import 'react-notion-x/src/styles.css';
+
 import '@/styles/animate.css'; // @see https://animate.style/
 import '@/styles/globals.css';
+import '@/styles/notion.css'; //  重写部分样式
 import '@/styles/nprogress.css';
 import '@/styles/utility-patterns.css';
 
-// core styles shared by all of react-notion-x (required)
-import 'aos/dist/aos.css'; // You can also use <link> for styles
-import 'react-notion-x/src/styles.css';
-import '@/styles/notion.css'; //  重写部分样式
-
-import { GlobalContextProvider } from '@/lib/global';
-import { getQueryParam } from '@/lib/utils';
-
-import ExternalPlugins from '@/components/ExternalPlugins'; // 各种扩展插件，这个要阻塞引入
+import ExternalPlugins from '@/components/ExternalPlugins';
 import GlobalHead from '@/components/GlobalHead';
+import LoadingProgress from '@/components/LoadingProgress';
 
 import { THEME } from '@/blog.config';
+import { GlobalContextProvider } from '@/hooks/useGlobal';
+import { getQueryParam } from '@/lib/utils';
 import { getGlobalLayoutByTheme } from '@/themes/theme';
 
 const MyApp = ({ Component, pageProps }) => {
@@ -37,6 +36,7 @@ const MyApp = ({ Component, pageProps }) => {
 
   return (
     <GlobalContextProvider {...pageProps}>
+      <LoadingProgress />
       <GLayout {...pageProps}>
         <GlobalHead {...pageProps} />
         <Component {...pageProps} />

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
+import { useGlobal } from '@/hooks/useGlobal';
 import { siteConfig } from '@/lib/config';
-import { useGlobal } from '@/lib/global';
 
 import CONFIG from '../config';
 

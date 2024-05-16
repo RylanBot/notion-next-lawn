@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import throttle from 'lodash.throttle';
 import { uuidToId } from 'notion-utils';
 
-import { useGlobal } from '@/lib/global';
+import { useGlobal } from '@/hooks/useGlobal';
 
 import Progress from './Progress';
 

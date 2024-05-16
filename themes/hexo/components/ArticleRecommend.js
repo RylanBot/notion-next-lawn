@@ -1,8 +1,8 @@
 import Link from 'next/link';
 
 import LazyImage from '@/components/LazyImage';
+import { useGlobal } from '@/hooks/useGlobal';
 import { siteConfig } from '@/lib/config';
-import { useGlobal } from '@/lib/global';
 
 import CONFIG from '../config';
 

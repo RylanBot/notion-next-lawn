@@ -1,6 +1,6 @@
-import { siteConfig } from '@/lib/config'
-import { useGlobal } from '@/lib/global'
-import Giscus from '@giscus/react'
+import { useGlobal } from '@/hooks/useGlobal';
+import { siteConfig } from '@/lib/config';
+import Giscus from '@giscus/react';
 
 /**
  * Giscus评论 @see https://giscus.app/zh-CN
