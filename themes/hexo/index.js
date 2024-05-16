@@ -302,7 +302,7 @@ const LayoutCategoryIndex = props => {
     <div className='pt-16 mx-2 mb-2'>
       <Card className="w-full">
         <div className="dark:text-gray-200 mb-5 mx-3">
-          <i className="mr-4 fas fa-th" />  {locale.COMMON.CATEGORY}:
+          <i className="mr-2 fas fa-th" />  {locale.COMMON.CATEGORY}
         </div>
         <div id="category-list" className="duration-200 flex flex-wrap mx-8">
           {categoryOptions?.map(category => {
@@ -332,7 +332,7 @@ const LayoutTagIndex = props => {
     <div className='pt-16 mx-2 mb-2'>
       <Card className='w-full'>
         <div className="dark:text-gray-200 mb-5 ml-4">
-          <i className="mr-4 fas fa-tag" /> {locale.COMMON.TAGS}:
+          <i className="mr-2 fas fa-tag" /> {locale.COMMON.TAGS}
         </div>
         <div id="tags-list" className="duration-200 flex flex-wrap ml-8">
           {tagOptions.map(tag => <div key={tag.name} className="p-2">

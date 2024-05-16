@@ -17,14 +17,13 @@ export function InfoCard(props) {
 
   const router = useRouter();
   const pathname = router.pathname;
-  const specialPath = ['/page/[page]', '/tag', '/archive', '/category', '/search', '/404'];
+  const specialPath = ['/page/[page]', '/tag', '/tag/[tag]', '/category', '/category/[category]', '/archive', '/search', '/404'];
   const specialClass = specialPath.includes(pathname) ? 'md:pt-14' : '';
 
   return (
     <div className={specialClass}>
       <Card className={className}>
         <div className='flex justify-center items-center py-6'>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
           <LazyImage src={siteInfo?.icon} className='rounded-full' width={120} alt={siteConfig('AUTHOR')} />
         </div>
         <div className='font-medium text-center text-xl pb-4'>{siteConfig('AUTHOR')}</div>
