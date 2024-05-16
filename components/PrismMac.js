@@ -1,19 +1,18 @@
-import { useEffect } from 'react'
-import Prism from 'prismjs'
-// 所有语言的prismjs 使用autoloader引入
-// import 'prismjs/plugins/autoloader/prism-autoloader'
-import 'prismjs/plugins/toolbar/prism-toolbar'
-import 'prismjs/plugins/toolbar/prism-toolbar.min.css'
-import 'prismjs/plugins/show-language/prism-show-language'
-import 'prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard'
-import 'prismjs/plugins/line-numbers/prism-line-numbers'
-import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+
+import Prism from 'prismjs';
+import 'prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard';
+import 'prismjs/plugins/line-numbers/prism-line-numbers';
+import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
+import 'prismjs/plugins/show-language/prism-show-language';
+import 'prismjs/plugins/toolbar/prism-toolbar';
+import 'prismjs/plugins/toolbar/prism-toolbar.min.css';
 
 // mermaid图
-import { loadExternalResource } from '@/lib/utils'
-import { useRouter } from 'next/navigation'
-import { useGlobal } from '@/lib/global'
-import { siteConfig } from '@/lib/config'
+import { siteConfig } from '@/lib/config';
+import { useGlobal } from '@/lib/global';
+import { loadExternalResource } from '@/lib/utils';
 
 /**
  * 代码美化相关
@@ -86,7 +85,7 @@ const loadPrismThemeCSS = (isDarkMode, prismThemeSwitch, prismThemeDarkPath, pri
       PRISM_PREVIOUS = prismThemeDarkPath
     }
     const previousTheme = document.querySelector(`link[href="${PRISM_PREVIOUS}"]`)
-    if (previousTheme) {
+    if (previousTheme && previousTheme.parentNode && previousTheme.parentNode.contains(previousTheme)) {
       previousTheme.parentNode.removeChild(previousTheme)
     }
     loadExternalResource(PRISM_THEME, 'css')
@@ -192,8 +191,8 @@ const renderMermaid = async (mermaidCDN) => {
  * @author https://github.com/RylanBot/
  * 代码块类型为 Html, CSS, JS
  * 且第一行出现注释 <!-- custom -->, \* custom *\, // custom
- * (第二个对应 css 注释写法, 这里无法正常打出, notion 代码块中正常使用左斜杠 / 即可)
- * (空格不能少)
+ * 1. 第二个对应 css 注释写法, 这里无法正常打出, notion 代码块中正常使用左斜杠 / 即可
+ * 2. 空格不能少
  * 则自动替换，将内容替换为实际代码执行
  */
 const renderCustomCode = () => {
@@ -268,7 +267,6 @@ function renderPrismMac(codeLineNumbers) {
     }
   }
   // 重新渲染之前检查所有的多余text
-
   try {
     Prism.highlightAll()
   } catch (err) {

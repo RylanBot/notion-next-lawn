@@ -1,7 +1,10 @@
 /* eslint-disable */
-import { useEffect } from 'react'
+import { useEffect } from 'react';
 const id = 'canvasRibbon'
 
+/**
+ * 静态彩带特效
+ */
 const Ribbon = () => {
  const destroyRibbon = ()=>{
     const ribbon = document.getElementById(id)

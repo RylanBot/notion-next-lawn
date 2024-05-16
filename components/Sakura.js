@@ -1,10 +1,14 @@
 /* eslint-disable */
-import { useEffect } from 'react'
+import { useEffect } from 'react';
 const id = 'canvas_sakura'
+
+/**
+ * 樱花飘落特效
+ */
 const Sakura = () => {
   const destroySakura = ()=>{
     const sakura = document.getElementById(id)
-    if(sakura && sakura.parentNode){
+    if(sakura && sakura.parentNode && sakura.parentNode.contains(sakura)){
       sakura.parentNode.removeChild(sakura)
     }
   }

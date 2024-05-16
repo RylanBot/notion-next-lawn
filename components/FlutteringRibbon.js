@@ -1,12 +1,16 @@
 /* eslint-disable */
-import { useEffect } from 'react'
+import { useEffect } from 'react';
 const  id = 'canvasFlutteringRibbon'
+
+/**
+ * 动态彩带特效
+ */
 export const FlutteringRibbon = () => {
-     const destroyRibbon = ()=>{
+    const destroyRibbon = ()=>{
     const ribbon = document.getElementById(id)
-      if(ribbon && ribbon.parentNode){
+    if (ribbon && ribbon.parentNode && ribbon.parentNode.contains(ribbon)) {
         ribbon.parentNode.removeChild(ribbon)
-      }
+    }
   }
   
   useEffect(() => {
@@ -18,7 +22,6 @@ export const FlutteringRibbon = () => {
 }
 
 export default FlutteringRibbon
-
 
 /**
  * 创建连接点
