@@ -57,6 +57,7 @@ const PrismMac = () => {
   }, [router, isDarkMode]);
 
   useEffect(() => {
+    setOnLoading(true);
     const observer = new MutationObserver((mutationsList) => {
       for (const mutation of mutationsList) {
         if (mutation.type === 'childList') {
@@ -66,9 +67,7 @@ const PrismMac = () => {
         }
       }
     });
-
     observer.observe(document.body, { childList: true, subtree: true });
-    setOnLoading(true);
     return () => observer.disconnect();
   }, []);
 

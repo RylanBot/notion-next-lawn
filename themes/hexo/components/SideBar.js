@@ -1,8 +1,7 @@
-import { siteConfig } from '@/lib/config'
-import LazyImage from '@/components/LazyImage'
-import { useRouter } from 'next/router'
-import MenuGroupCard from './MenuGroupCard'
-import { MenuListSide } from './MenuListSide'
+import LazyImage from '@/components/LazyImage';
+import { siteConfig } from '@/lib/config';
+import MenuGroupCard from './MenuGroupCard';
+import { MenuListSide } from './MenuListSide';
 
 /**
  * 侧边抽屉
@@ -12,14 +11,12 @@ import { MenuListSide } from './MenuListSide'
  * @constructor
  */
 const SideBar = (props) => {
-  const { siteInfo } = props
-  const router = useRouter()
+  const { siteInfo } = props;
   return (
         <div id='side-bar'>
             <div className="h-52 w-full flex justify-center">
                 <div>
-                    <div onClick={() => { router.push('/') }}
-                        className='justify-center items-center flex hover:rotate-45 py-6 hover:scale-105 dark:text-gray-100  transform duration-200 cursor-pointer'>
+                    <div className='flex justify-center items-center py-6 dark:text-gray-100'>
                         <LazyImage src={siteInfo?.icon} className='rounded-full' width={80} alt={siteConfig('AUTHOR')} />
                     </div>
                     <MenuGroupCard {...props} />
@@ -27,7 +24,7 @@ const SideBar = (props) => {
             </div>
             <MenuListSide {...props} />
         </div>
-  )
-}
+  );
+};
 
-export default SideBar
+export default SideBar;

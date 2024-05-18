@@ -2,6 +2,12 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { createContext, useContext, useEffect, useRef } from 'react';
 
+import { Transition } from '@headlessui/react';
+
+import { useGlobal } from '@/hooks/useGlobal';
+import { siteConfig } from '@/lib/config';
+import { isBrowser } from '@/lib/utils';
+
 import AlgoliaSearchModal from '@/components/AlgoliaSearchModal';
 import Comment from '@/components/Comment';
 import replaceSearchResult from '@/components/Mark';
@@ -29,26 +35,19 @@ import TocDrawer from './components/TocDrawer';
 import TocDrawerButton from './components/TocDrawerButton';
 import TopNav from './components/TopNav';
 
-import { useGlobal } from '@/hooks/useGlobal';
-import { siteConfig } from '@/lib/config';
-import { isBrowser } from '@/lib/utils';
-
-import { Transition } from '@headlessui/react';
+import { Style } from './style';
 
 import CONFIG from './config';
-import { Style } from './style';
+export { CONFIG as THEME_CONFIG };
 
 // 主题全局状态
 const ThemeGlobalHexo = createContext();
 export const useHexoGlobal = () => useContext(ThemeGlobalHexo);
 
 /**
- * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
- * @param props
- * @returns {JSX.Element}
- * @constructor
+ * 基础布局
  */
-const LayoutBase = props => {
+export const LayoutBase = props => {
   const { post, children, slotTop, className } = props;
   const { onLoading, fullWidth } = useGlobal();
 
@@ -83,9 +82,6 @@ const LayoutBase = props => {
         {/* 特定主题 CSS */}
         <Style />
 
-        {/* 顶部导航 */}
-        <TopNav {...props} />
-
         {/* 顶部嵌入 */}
         <Transition
           show={!onLoading}
@@ -98,6 +94,7 @@ const LayoutBase = props => {
           leaveTo="opacity-0 translate-y-16"
           unmount={false}
         >
+          <TopNav {...props} />
           {headerSlot}
         </Transition>
 
@@ -122,7 +119,6 @@ const LayoutBase = props => {
                 {children}
               </Transition>
             </div>
-
             {/* 右侧栏 */}
             <SideRight {...props} />
           </div>
@@ -146,21 +142,16 @@ const LayoutBase = props => {
 };
 
 /**
- * 首页
- * 是一个博客列表，嵌入一个Hero大图
- * @param {*} props
- * @returns
+ * 首页（博客列表，嵌入一个Hero大图）
  */
-const LayoutIndex = (props) => {
+export const LayoutIndex = (props) => {
   return <LayoutPostList {...props} className='pt-8' />;
 };
 
 /**
  * 博客列表
- * @param {*} props
- * @returns
  */
-const LayoutPostList = (props) => {
+export const LayoutPostList = (props) => {
   return (
     <div>
       <SlotBar {...props} />
@@ -171,10 +162,8 @@ const LayoutPostList = (props) => {
 
 /**
  * 搜索
- * @param {*} props
- * @returns
  */
-const LayoutSearch = props => {
+export const LayoutSearch = props => {
   const { keyword } = props;
   const router = useRouter();
   const currentSearch = keyword || router?.query?.s;
@@ -203,10 +192,8 @@ const LayoutSearch = props => {
 
 /**
  * 归档
- * @param {*} props
- * @returns
  */
-const LayoutArchive = (props) => {
+export const LayoutArchive = (props) => {
   const { archivePosts } = props;
   return <div className='pt-16 mx-2 mb-2'>
     <Card className='w-full'>
@@ -225,10 +212,8 @@ const LayoutArchive = (props) => {
 
 /**
  * 文章详情
- * @param {*} props
- * @returns
  */
-const LayoutSlug = props => {
+export const LayoutSlug = props => {
   const { post, lock, validPassword } = props;
   return (
     <>
@@ -266,10 +251,8 @@ const LayoutSlug = props => {
 
 /**
  * 404
- * @param {*} props
- * @returns
  */
-const Layout404 = props => {
+export const Layout404 = props => {
   return (
     <>
       <div className="text-black w-full h-screen text-center justify-center content-center items-center flex flex-col">
@@ -292,10 +275,8 @@ const Layout404 = props => {
 
 /**
  * 分类列表
- * @param {*} props
- * @returns
  */
-const LayoutCategoryIndex = props => {
+export const LayoutCategoryIndex = props => {
   const { categoryOptions } = props;
   const { locale } = useGlobal();
   return (
@@ -322,10 +303,8 @@ const LayoutCategoryIndex = props => {
 
 /**
  * 标签列表
- * @param {*} props
- * @returns
  */
-const LayoutTagIndex = props => {
+export const LayoutTagIndex = props => {
   const { tagOptions } = props;
   const { locale } = useGlobal();
   return (
@@ -343,5 +322,3 @@ const LayoutTagIndex = props => {
     </div>
   );
 };
-
-export { Layout404, LayoutArchive, LayoutBase, LayoutCategoryIndex, LayoutIndex, LayoutPostList, LayoutSearch, LayoutSlug, LayoutTagIndex, CONFIG as THEME_CONFIG };
