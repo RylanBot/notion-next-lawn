@@ -130,7 +130,7 @@ const renderCollapseCode = (codeCollapse, codeCollapseExpandDefault) => {
     panelWrapper.appendChild(panel);
     collapseWrapper.appendChild(panelWrapper);
 
-    if (codeBlock && codeBlock.parentNode) {
+    if (codeBlock && codeBlock.parentNode && codeBlock.parentNode.contains(codeBlock)) {
       codeBlock.parentNode.insertBefore(collapseWrapper, codeBlock);
       panel.appendChild(codeBlock);
     }

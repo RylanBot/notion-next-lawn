@@ -11,6 +11,7 @@ import { getPostBlocks } from '@/lib/notion';
 import { getNotion } from '@/lib/notion/getNotion';
 import { getGlobalData } from '@/lib/notion/getNotionData';
 import { getPageTableOfContents } from '@/lib/notion/getPageTableOfContents';
+import { isBrowser } from '@/lib/utils';
 import { getLayoutByTheme } from '@/themes/theme';
 
 /**
@@ -23,11 +24,8 @@ const Slug = props => {
   const { post, siteInfo } = props;
   const router = useRouter();
 
-  // 文章锁 🔐
   const [lock, setLock] = useState(post?.password && post?.password !== '');
-
-  // 重试机制 🐢
-  const [retryCount, setRetryCount] = useState(0);
+  const [reloaded, setReloaded] = useState(false);
 
   const validPassword = passInput => {
     const encrypt = md5(post.slug + passInput);
@@ -41,32 +39,29 @@ const Slug = props => {
   // 文章加载
   useEffect(() => {
     if (!post) {
-      const timer = setTimeout(() => {
-        if (typeof window !== 'undefined') {
+      const timeout = setTimeout(() => {
+        if (isBrowser) {
           const article = document.getElementById('notion-article');
-          if (!article) {
-            if (retryCount < 3) {
-              setRetryCount(retryCount + 1);
-              window.location.reload();
-            } else {
-              clearInterval(timer);
-              router.push('/404').then(() => {
-                console.warn('找不到页面', router.asPath);
-              });
-            }
+          if (!article && !reloaded) {
+            setReloaded(true);
+            console.warn('Try to reload: ', router.asPath);
+            router.replace(router.asPath);
+          } else {
+            router.push('/404').then(() => {
+              console.warn('Fail to load: ', router.asPath);
+            });
           }
         }
-      }, 10 * 1000);
+      }, siteConfig('POST_WAITING_TIME_FOR_404') * 1000);
 
-      return () => clearTimeout(timer);
+      return () => clearTimeout(timeout);
     }
 
-    // 文章加密
     if (!lock && post?.blockMap?.block) {
       post.content = Object.keys(post.blockMap.block);
       post.toc = getPageTableOfContents(post, post.blockMap);
     }
-  }, [post, retryCount]);
+  }, [post, router]);
 
   const meta = {
     title: post ? `${post?.title} | ${siteConfig('TITLE')}` : `Loading... ｜ ${siteConfig('TITLE')}`,
