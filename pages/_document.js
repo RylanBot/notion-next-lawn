@@ -9,7 +9,7 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <Html lang={BLOG.LANG}>
+      <Html lang={BLOG.LANG} translate='no'>
         <Head>
           <link rel='icon' href={`${BLOG.BLOG_FAVICON}`} />
           {/* 预加载字体 */}
