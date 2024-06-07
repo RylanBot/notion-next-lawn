@@ -70,7 +70,7 @@ export default function SideRight(props) {
             className={`w-1/2 px-4 py-1 rounded ${activeTab === 'info' ? 'bg-teal-500 text-white' : 'bg-gray-200 text-gray-700'}`}
             onClick={() => setActiveTab('info')}
           >
-            <i class="fas fa-seedling" />
+            <i className="fas fa-seedling" />
           </button>
         </div>
       }
