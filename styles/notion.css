@@ -759,6 +759,10 @@ svg.notion-page-icon {
   margin-bottom: 0;
 }
 
+.notion-list-disc>.notion-list-disc{
+  list-style-type: circle;
+}
+
 .notion-list-numbered {
   list-style-type: decimal;
   padding-inline-start: 1.6em;
