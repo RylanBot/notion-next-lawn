@@ -50,7 +50,7 @@ export default function PostHeader({ post, siteInfo }) {
           </div>
 
           {/* 文章 Title */}
-          <div className='leading-snug font-bold xs:text-4xl sm:text-4xl md:text-5xl md:leading-snug text-4xl shadow-text-md flex justify-center text-center text-white'>
+          <div className='px-1 leading-snug font-bold text-2xl md:text-5xl shadow-text-md flex justify-center text-center text-white'>
             <NotionIcon icon={post.pageIcon} className='text-4xl mx-1' />
             {post.title}
           </div>
