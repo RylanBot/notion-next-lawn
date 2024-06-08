@@ -30,6 +30,10 @@ function scanSubdirectories(directory) {
 // 扫描项目 /themes下的目录名
 const themes = scanSubdirectories(path.resolve(__dirname, 'themes'))
 module.exports = withBundleAnalyzer({
+  reactStrictMode: !BLOG.isProd,
+  eslint: {
+    ignoreDuringBuilds: true
+  },
   images: {
     // 图片压缩
     formats: ['image/avif', 'image/webp'],
