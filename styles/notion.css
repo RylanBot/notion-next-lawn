@@ -12,7 +12,7 @@
   --bg-color: #fff;
   --bg-color-0: rgba(135, 131, 120, 0.15);
   --bg-color-1: rgb(247, 246, 243);
-  --bg-color-2: rgba(135, 131, 120, 0.1);
+  --bg-color-2: rgba(135, 131, 120, 0.15);
 
   --select-color-0: rgb(46, 170, 220);
   --select-color-1: rgba(45, 170, 219, 0.3);
@@ -48,9 +48,9 @@
   --notion-yellow_background_co: rgba(250, 234, 170, 0.87);
   --notion-orange_background_co: rgba(250, 210, 180, 0.87);
   --notion-brown_background_co: rgba(176, 160, 149, 0.65);
-  --notion-gray_background_co: rgba(201, 201, 200, 0.63);
+  --notion-gray_background_co: rgba(241, 241, 239, 0.3);
   --notion-green_background_co: rgba(186, 250, 228, 0.74);
-  --notion-default_background_co: rgba(221, 224, 213, 0.9);
+  --notion-default_background_co: rgba(227, 226, 224, 0.3);
 
   --notion-item-blue: rgba(0, 120, 223, 0.2);
   --notion-item-orange: rgba(245, 93, 0, 0.2);

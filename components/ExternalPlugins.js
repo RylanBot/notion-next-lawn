@@ -11,7 +11,7 @@ import LA51 from './LA51';
 import TianLiGPT from './TianliGPT';
 import WebWhiz from './Webwhiz';
 
-import { CUSTOM_EXTERNAL_CSS, CUSTOM_EXTERNAL_JS, IMG_SHADOW } from '@/blog.config';
+import { CUSTOM_EXTERNAL_CSS, CUSTOM_EXTERNAL_JS } from '@/blog.config';
 
 const TwikooCommentCounter = dynamic(() => import('@/components/TwikooCommentCounter'), { ssr: false });
 const DebugPanel = dynamic(() => import('@/components/DebugPanel'), { ssr: false });
@@ -92,11 +92,6 @@ const ExternalPlugin = (props) => {
     // 静态导入本地自定义样式
     loadExternalResource('/css/custom.css', 'css');
     loadExternalResource('/js/custom.js', 'js');
-
-    // 自动添加图片阴影
-    if (IMG_SHADOW) {
-      loadExternalResource('/css/img-shadow.css', 'css');
-    }
 
     // 导入外部自定义脚本
     if (CUSTOM_EXTERNAL_JS && CUSTOM_EXTERNAL_JS.length > 0) {
