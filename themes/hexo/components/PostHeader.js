@@ -56,8 +56,8 @@ export default function PostHeader({ post, siteInfo }) {
           </div>
 
           {/* 发布时间 */}
-          <section className='flex-wrap shadow-text-md flex text-sm justify-center mt-4 text-white dark:text-gray-400 font-light leading-8'>
-            <div className='flex justify-center dark:text-gray-200 text-opacity-70'>
+          <section className='flex-wrap shadow-text-md flex text-sm justify-center mt-4 text-white font-light leading-8'>
+            <div className='flex justify-center'>
               {post?.type !== 'Page' && (
                 <>
                   <>
