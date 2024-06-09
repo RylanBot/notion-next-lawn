@@ -8,7 +8,7 @@ import { siteConfig } from '@/lib/config';
 /**
  * 最新文章列表
  * @param posts 所有文章数据
- * @param sliceCount 截取展示的数量 默认6
+ * @param sliceCount 截取展示的数量
  * @constructor
  */
 const LatestPostsGroup = ({ latestPosts, siteInfo }) => {
@@ -28,10 +28,10 @@ const LatestPostsGroup = ({ latestPosts, siteInfo }) => {
           {locale.COMMON.LATEST_POSTS}
         </div>
       </div>
+
       {latestPosts.map(post => {
         const selected =
           currentPath === `${siteConfig('SUB_PATH', '')}/${post.slug}`
-
         const headerImage = post?.pageCoverThumbnail
           ? post.pageCoverThumbnail
           : siteInfo?.pageCover
@@ -50,13 +50,17 @@ const LatestPostsGroup = ({ latestPosts, siteInfo }) => {
                 className='object-cover w-full h-full'
               />
             </div>
-            <div
-              className={`${selected ? 'text-teal-400' : 'dark:text-gray-400'} 
-                    text-sm overflow-x-hidden px-2 duration-200 w-full rounded hover:text-teal-400 cursor-pointer items-center flex`}
-            >
+            <div className='overflow-x-hidden px-2 duration-200 w-full rounded cursor-pointer items-center flex'>
               <div className='w-full'>
-                <div className='line-clamp-2 menu-link'>{post.title}</div>
-                <div className='text-gray-500 text-xs'>{post.publishDay}</div>
+                <div
+                  className={`${selected && 'text-teal-500 dark:text-teal-400'} 
+                   dark:text-gray-200 hover:text-teal-500 dark:hover:text-teal-400 text-sm line-clamp-2 menu-link`}
+                >
+                  {post.title}
+                </div>
+                <div className='text-gray-400 dark:text-gray-500 text-xs'>
+                  {post.publishDay}
+                </div>
               </div>
             </div>
           </Link>
