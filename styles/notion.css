@@ -1490,6 +1490,7 @@ div[class*="notion-property-checkbox-checked"] svg {
   -webkit-user-select: all;
   -moz-user-select: all;
   user-select: all;
+  overflow: hidden;
 }
 
 .notion-equation-block {
