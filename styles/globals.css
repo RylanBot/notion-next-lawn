@@ -115,11 +115,6 @@ nav {
   backdrop-filter: blur(10px);
 }
 
-.medium-zoom-overlay {
-  background: none !important;
-  /* background: rgba(0, 0, 0, 0.01) none repeat scroll 0% 0% !important; */
-}
-
 .shadow-text {
   text-shadow: 0.1em 0.1em 0.2em black;
 }
