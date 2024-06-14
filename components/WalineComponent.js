@@ -1,31 +1,32 @@
-import { useRouter } from 'next/router';
-import { createRef, useEffect } from 'react';
+import { useRouter } from 'next/router'
+import { createRef, useEffect } from 'react'
 
-import { init } from '@waline/client';
-import '@waline/client/dist/waline.css';
+import { init } from '@waline/client'
+import '@waline/client/dist/waline.css'
 
-import { siteConfig } from '@/lib/config';
-import { loadLangFromCookies } from '@/lib/lang';
+import { siteConfig } from '@/lib/config'
+import { loadLangFromCookies } from '@/lib/lang'
 
-const path = '';
-let waline = null;
-/**
- * @see https://waline.js.org/guide/get-started.html
- * @param {*} props
- * @returns
- */
-const WalineComponent = (props) => {
-  const containerRef = createRef();
-  const router = useRouter();
+let waline = null
+let controller = null
+
+const WalineComponent = props => {
+  const containerRef = createRef()
+  const router = useRouter()
 
   const updateWaline = url => {
-    if (url !== path && waline) {
-      waline.update(props);
+    if (url !== '' && waline) {
+      waline.update(props)
     }
-  };
+  }
 
   useEffect(() => {
-    if (!waline) {
+    const initWaline = () => {
+      if (waline) {
+        waline.destroy()
+      }
+
+      controller = new AbortController()
       waline = init({
         ...props,
         el: containerRef.current,
@@ -51,50 +52,29 @@ const WalineComponent = (props) => {
         login: 'disable',
         search: false,
         imageUploader: false,
-        requiredMeta: ['nick']
-      });
+        requiredMeta: ['nick'],
+        signal: controller.signal // 将信号传递给 Waline
+      })
     }
 
-    // 跳转评论
-    router.events.on('routeChangeComplete', updateWaline);
-    const anchor = window.location.hash;
-    if (anchor) {
-      // 选择需要观察变动的节点
-      const targetNode = document.getElementsByClassName('wl-cards')[0];
+    router.events.on('routeChangeStart', () => {
+      if (controller) {
+        controller.abort() // 中止正在进行的请求
+      }
+    })
 
-      // 当观察到变动时执行的回调函数
-      const mutationCallback = (mutations) => {
-        for (const mutation of mutations) {
-          const type = mutation.type;
-          if (type === 'childList') {
-            const anchorElement = document.getElementById(anchor.substring(1));
-            if (anchorElement && anchorElement.className === 'wl-item') {
-              anchorElement.scrollIntoView({ block: 'end', behavior: 'smooth' });
-              setTimeout(() => {
-                anchorElement.classList.add('animate__animated');
-                anchorElement.classList.add('animate__bounceInRight');
-                observer.disconnect();
-              }, 300);
-            }
-          }
-        }
-      };
-
-      // 观察子节点变化
-      const observer = new MutationObserver(mutationCallback);
-      observer.observe(targetNode, { childList: true });
-    }
+    initWaline()
 
     return () => {
       if (waline) {
-        waline.destroy();
-        waline = null;
+        waline.destroy()
+        waline = null
       }
-      router.events.off('routeChangeComplete', updateWaline);
-    };
-  }, []);
+      router.events.off('routeChangeComplete', updateWaline)
+    }
+  }, [])
 
-  return <div ref={containerRef} />;
-};
+  return <div ref={containerRef} />
+}
 
-export default WalineComponent;
+export default WalineComponent
