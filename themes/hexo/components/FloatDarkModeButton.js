@@ -4,7 +4,7 @@ import { saveDarkModeToCookies } from '@/themes/theme';
 import CONFIG from '../config';
 
 export default function FloatDarkModeButton () {
-  const { isDarkMode, updateDarkMode } = useGlobal()
+  const { isDarkMode, locale, updateDarkMode } = useGlobal()
 
   if (!siteConfig('HEXO_WIDGET_DARK_MODE', null, CONFIG)) {
     return <></>
@@ -21,10 +21,9 @@ export default function FloatDarkModeButton () {
   }
 
   return (
-    <div
-      onClick={handleChangeDarkMode}
-      className={'justify-center items-center w-7 h-7 text-center transform hover:scale-105 duration-200'
-      }
+    <div onClick={handleChangeDarkMode}
+      className={'justify-center items-center w-7 h-7 text-center transform hover:scale-105 duration-200'}
+      title={`${isDarkMode ? locale.MENU.LIGHT_MODE : locale.MENU.DARK_MODE}`}
     >
       <i id="darkModeButton" className={`${isDarkMode ? 'fa-sun' : 'fa-moon'} fas text-xs`}/>
     </div>
