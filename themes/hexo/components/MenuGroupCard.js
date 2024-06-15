@@ -32,7 +32,6 @@ const MenuGroupCard = (props) => {
           return (
             <Link
               key={`${link.to}`}
-              title={link.to}
               href={link.to}
               target={link?.to?.indexOf('http') === 0 ? '_blank' : '_self'}
               className={'py-1.5 my-1 px-2 duration-300 text-base justify-center items-center cursor-pointer'}>
