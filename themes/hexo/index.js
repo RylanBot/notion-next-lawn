@@ -21,6 +21,7 @@ import ArticleRecommend from './components/ArticleRecommend';
 import BlogPostArchive from './components/BlogPostArchive';
 import BlogPostListPage from './components/BlogPostListPage';
 import BlogPostListScroll from './components/BlogPostListScroll';
+import ButtonRandomPost from './components/ButtonRandomPost';
 import Card from './components/Card';
 import Footer from './components/Footer';
 import Hero from './components/Hero';
@@ -40,7 +41,6 @@ import { Style } from './style';
 import CONFIG from './config';
 export { CONFIG as THEME_CONFIG };
 
-// 主题全局状态
 const ThemeGlobalHexo = createContext();
 export const useHexoGlobal = () => useContext(ThemeGlobalHexo);
 
@@ -62,14 +62,14 @@ export const LayoutBase = props => {
   const tocRef = isBrowser ? document.getElementById('article-wrapper') : null;
 
   const floatSlot = <>
-    {post?.toc?.length > 1 && <div className="block lg:hidden">
-      <TocDrawerButton
-        onClick={() => {
-          drawerRight?.current?.handleSwitchVisible();
-        }}
-      />
-    </div>}
+    {post?.toc?.length > 1 &&
+      <>
+        <TocDrawerButton onClick={() => drawerRight?.current?.handleSwitchVisible()}/>
+        <TocDrawer post={post} cRef={drawerRight} targetRef={tocRef} />
+      </>
+    }
     <JumpToCommentButton />
+    <ButtonRandomPost {...props} />
   </>;
 
   // Algolia搜索框
@@ -123,10 +123,6 @@ export const LayoutBase = props => {
             <SideRight {...props} />
           </div>
         </main>
-
-        <div className='block lg:hidden'>
-          <TocDrawer post={post} cRef={drawerRight} targetRef={tocRef} />
-        </div>
 
         {/* 悬浮菜单 */}
         <RightFloatArea floatSlot={floatSlot} />

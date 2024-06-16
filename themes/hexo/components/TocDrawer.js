@@ -2,11 +2,7 @@ import Catalog from './Catalog'
 import { useImperativeHandle, useState } from 'react'
 
 /**
- * 目录抽屉栏
- * @param toc
- * @param post
- * @returns {JSX.Element}
- * @constructor
+ * PC 端目录抽屉栏
  */
 const TocDrawer = ({ post, cRef }) => {
   // 暴露给父组件 通过cRef.current.handleMenuClick 调用
@@ -20,8 +16,7 @@ const TocDrawer = ({ post, cRef }) => {
     switchShowDrawer(!showDrawer)
   }
   return <>
-    <div className='fixed top-0 right-0 z-40 '>
-      {/* 悬浮目录 */}
+    <div className='fixed top-0 right-0 z-40 lg:hidden'>
       <div
         className={(showDrawer ? 'animate__slideInRight ' : ' -mr-72 animate__slideOutRight') +
         ' shadow-card animate__animated animate__faster' +

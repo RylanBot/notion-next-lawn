@@ -1,23 +1,21 @@
-import { useGlobal } from '@/hooks/useGlobal';
 import { siteConfig } from '@/lib/config';
 
 import CONFIG from '../config';
 
 /**
- * 点击召唤目录抽屉
- * 当屏幕下滑500像素后会出现该控件
- * @param props 父组件传入props
- * @returns {JSX.Element}
- * @constructor
+ * 移动端目录抽屉
  */
-const TocDrawerButton = (props) => {
-  const { locale } = useGlobal();
+const TocDrawerButton = props => {
   if (!siteConfig('HEXO_WIDGET_TOC', null, CONFIG)) {
-    return <></>;
+    return <></>
   }
-  return (<div onClick={props.onClick} className='py-2 px-3 cursor-pointer transform duration-200 flex justify-center items-center w-7 h-7 text-center' title={locale.POST.TOP} >
-    <i className='fas fa-list-ol text-xs' />
-  </div>);
-};
+  return (
+    <div onClick={props.onClick}
+      className="cursor-pointer transform duration-200 flex justify-center items-center text-center lg:hidden"
+    >
+      <i className="fas fa-list-ol text-xs" />
+    </div>
+  )
+}
 
-export default TocDrawerButton;
+export default TocDrawerButton

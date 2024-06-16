@@ -324,3 +324,31 @@ a.avatar-wrapper {
   -webkit-user-select: none;
   -ms-user-select: none;
 }
+
+.right-float-tooltip-parent {
+  @apply cursor-pointer hover:bg-opacity-10 rounded-full flex justify-center items-center duration-200 transition-all relative
+}
+
+/* 默认情况下隐藏 Tooltip */
+.right-float-tooltip {
+  @apply hidden text-xs absolute w-16 transform -translate-x-full bg-teal-500 dark:bg-teal-600 text-white p-2 rounded-md transition-opacity duration-200;
+}
+
+/* 仅在非触摸设备上应用悬停效果 */
+@media (hover: hover) and (pointer: fine) {
+  .group:hover .right-float-tooltip {
+    @apply block;
+  }
+}
+
+.right-float-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent;
+  @apply border-l-teal-500 dark:border-l-teal-600
+}

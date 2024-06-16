@@ -10,7 +10,6 @@ export default function FloatDarkModeButton () {
     return <></>
   }
 
-  // 用户手动设置主题
   const handleChangeDarkMode = () => {
     const newStatus = !isDarkMode
     saveDarkModeToCookies(newStatus)
@@ -22,10 +21,12 @@ export default function FloatDarkModeButton () {
 
   return (
     <div onClick={handleChangeDarkMode}
-      className={'justify-center items-center w-7 h-7 text-center transform hover:scale-105 duration-200'}
-      title={`${isDarkMode ? locale.MENU.LIGHT_MODE : locale.MENU.DARK_MODE}`}
+      className='group right-float-tooltip-parent'
     >
-      <i id="darkModeButton" className={`${isDarkMode ? 'fa-sun' : 'fa-moon'} fas text-xs`}/>
+      <i id='darkModeButton' className={`${isDarkMode ? 'fa-sun' : 'fa-moon'} fas text-xs`}/>
+      <span className='right-float-tooltip -left-[17px]'>
+        {`${isDarkMode ? locale.MENU.LIGHT_MODE : locale.MENU.DARK_MODE}`}
+      </span>
     </div>
   )
 }

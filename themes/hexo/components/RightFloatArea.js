@@ -6,11 +6,8 @@ import JumpToTopButton from './JumpToTopButton';
 
 /**
  * 悬浮在右下角的按钮，当页面向下滚动100px时会出现
- * @param {*} param0
- * @returns
  */
 export default function RightFloatArea({ floatSlot }) {
-  // 右下角显示悬浮按钮
   const [showFloatButton, switchShow] = useState(false)
   const scrollListener = useCallback(throttle(() => {
     const targetRef = document.getElementById('wrapper')
@@ -35,16 +32,12 @@ export default function RightFloatArea({ floatSlot }) {
   return (
     <div className={`${showFloatButton ? 'opacity-100' : 'invisible opacity-0'} 
       duration-300 transition-all bottom-12 right-1 fixed justify-end z-20 rounded-sm
-      text-white bg-teal-500 dark:bg-teal-600 lg:scale-125 lg:mr-2`}
+      text-white bg-teal-500 dark:bg-teal-600 py-2 lg:scale-125 lg:mr-2`}
     >
-      <div className={'justify-center flex flex-col items-center cursor-pointer'}>
-
+      <div className={'justify-center flex flex-col items-center cursor-pointer space-y-2'}>
         <FloatDarkModeButton />
-
         {floatSlot}
-
         <JumpToTopButton />
-
       </div>
     </div >
   )
