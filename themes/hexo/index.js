@@ -2,8 +2,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 
-import { Transition } from '@headlessui/react';
-
 import { useGlobal } from '@/hooks/useGlobal';
 import { siteConfig } from '@/lib/config';
 import { isBrowser } from '@/lib/utils';
@@ -83,41 +81,17 @@ export const LayoutBase = props => {
         <Style />
 
         {/* 顶部嵌入 */}
-        <Transition
-          show={!onLoading}
-          appear={true}
-          enter="transition ease-in-out duration-700 transform order-first"
-          enterFrom="opacity-0 -translate-y-16"
-          enterTo="opacity-100"
-          leave="transition ease-in-out duration-300 transform"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0 translate-y-16"
-          unmount={false}
-        >
+        <header>
           <TopNav {...props} />
           {headerSlot}
-        </Transition>
+        </header>
 
         {/* 主区块 */}
         <main id="wrapper" className={`${siteConfig('HEXO_HOME_BANNER_ENABLE', null, CONFIG) ? '' : 'pt-16'} bg-hexo-background-gray dark:bg-black w-full py-8 md:px-8 lg:px-24 min-h-screen relative`}>
           <div id="container-inner" className={(JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE')) ? 'flex-row-reverse' : '') + ' w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10'} >
             <div className={`${className || ''} w-full ${fullWidth ? '' : 'max-w-4xl'} h-full overflow-hidden`}>
-              <Transition
-                show={!onLoading}
-                appear={true}
-                enter="transition ease-in-out duration-700 transform order-first"
-                enterFrom="opacity-0 translate-y-16"
-                enterTo="opacity-100"
-                leave="transition ease-in-out duration-300 transform"
-                leaveFrom="opacity-100 translate-y-0"
-                leaveTo="opacity-0 -translate-y-16"
-                unmount={false}
-              >
-                {/* 主区上部嵌入 */}
                 {slotTop}
-
                 {children}
-              </Transition>
             </div>
             {/* 右侧栏 */}
             <SideRight {...props} />
