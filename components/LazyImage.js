@@ -1,14 +1,12 @@
 import Head from 'next/head';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { siteConfig } from '@/lib/config';
 
 /**
  * 图片懒加载
- * @param {*} param0
- * @returns
  */
-export default function LazyImage({
+const LazyImage = React.forwardRef(({
   priority,
   id,
   src,
@@ -20,10 +18,10 @@ export default function LazyImage({
   title,
   onLoad,
   style
-}) {
+}, ref) => {
   const maxWidth = siteConfig('IMAGE_COMPRESS_WIDTH');
 
-  const imageRef = useRef(null);
+  const imageRef = ref || useRef(null);
 
   const [imageLoaded, setImageLoaded] = useState(false);
   const [adjustedSrc, setAdjustedSrc] = useState(placeholderSrc || '');
@@ -111,7 +109,7 @@ export default function LazyImage({
       )}
     </>
   );
-}
+});
 
 /**
  * 根据窗口尺寸决定压缩图片宽度
@@ -155,3 +153,5 @@ const generatePlaceholder = (width, height) => {
   const sizeParam = (width && height) ? `${width}x${height}` : (width || (height ? `${height}x${height}` : '440x320'));
   return `https://fakeimg.pl/${sizeParam}/?text=${placeholderText}&font=lobster&font_size=${fontSize}`;
 };
+
+export default LazyImage;

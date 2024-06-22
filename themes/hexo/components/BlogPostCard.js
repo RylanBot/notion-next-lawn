@@ -34,9 +34,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                 {/* 图片封面 */}
                 {showPageCover && (
                     <div className={`md:w-5/12 overflow-hidden border-dashed border-teal-600 dark:border-teal-500 ${index % 2 === 0 ? 'lg:border-l-2' : 'lg:border-r-2'} max-md:border-b-2`}>
-                        <Link href={`${siteConfig('SUB_PATH', '')}/${post.slug}`} passHref legacyBehavior>
-                            <LazyImage priority={index === 1} src={post?.pageCoverThumbnail} className='h-64 w-full object-cover object-center group-hover:scale-110 duration-500 border-1 border-dashed border-teal-600' />
-                        </Link>
+                        <LazyImage priority={index === 1} src={post?.pageCoverThumbnail} className='h-64 w-full object-cover object-center group-hover:scale-110 duration-500 border-1 border-dashed border-teal-600' />
                     </div>
                 )}
             </div>

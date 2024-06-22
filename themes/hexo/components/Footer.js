@@ -1,11 +1,13 @@
 import { siteConfig } from '@/lib/config';
 
 const Footer = ({ title }) => {
+  const since = siteConfig('SINCE')
   const d = new Date()
   const currentYear = d.getFullYear()
-  const since = siteConfig('SINCE')
-  const copyrightDate =
-    parseInt(since) < currentYear ? since + '-' + currentYear : currentYear
+  const copyrightDate = parseInt(since) < currentYear ? since + '-' + currentYear : currentYear
+
+  const BEI_AN = siteConfig('BEI_AN')
+  const VERSION = siteConfig('VERSION')
 
   return (
     <footer className='relative z-10 dark:bg-black flex-shrink-0 bg-hexo-light-gray justify-center text-center m-auto w-full leading-6  text-gray-600 dark:text-gray-100 text-sm p-6'>
@@ -20,11 +22,11 @@ const Footer = ({ title }) => {
           {siteConfig('AUTHOR')}
         </a> */}
         <br />
-        {siteConfig('BEI_AN') && (
+        {BEI_AN && (
           <>
             <i className='fas fa-shield-alt' />{' '}
             <a href='https://beian.miit.gov.cn/' className='mr-2'>
-              {siteConfig('BEI_AN')}
+              {BEI_AN}
             </a>
             <br />
           </>
@@ -44,9 +46,8 @@ const Footer = ({ title }) => {
             href='https://github.com/tangly1024/NotionNext'
             className='dark:text-gray-300'
           >
-            NotionNext {siteConfig('VERSION')}
+            NotionNext {VERSION}
           </a>
-          .
         </p>
       </span>
       <br />
