@@ -67,8 +67,8 @@ const Hero = props => {
   }, [showHeader]);
 
   return (
-    <header
-      id="header" style={{ zIndex: 1 }}
+    <div id="hexo-header"
+      style={{ zIndex: 1 }}
       className="bg-white w-full h-screen relative"
     >
       {showHeader && (
@@ -100,7 +100,7 @@ const Hero = props => {
         onLoad={handleCoverLoaded}
         placeholderSrc={siteConfig('IMG_LAZY_LOAD_PLACEHOLDER')}
       />
-    </header>
+    </div>
   );
 };
 

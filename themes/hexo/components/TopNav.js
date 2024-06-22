@@ -57,7 +57,7 @@ const TopNav = props => {
     const scrollS = window.scrollY;
 
     const nav = document.querySelector('#sticky-nav');
-    const header = document.querySelector('#header');
+    const header = document.querySelector('#hexo-header');
     const menuTitle = document.querySelectorAll('.menu-title');
 
     const navTransparent = (scrollS < document.documentElement.clientHeight - 12 && router.route === '/') || scrollS < 300;
@@ -134,7 +134,7 @@ const TopNav = props => {
   </>;
 
   return (
-    <div id='top-nav' className='z-40'>
+    <nav id='top-nav' className='z-40'>
       <SearchDrawer cRef={searchDrawer} slot={searchDrawerSlot} />
 
       {/* 导航栏 */}
@@ -161,7 +161,7 @@ const TopNav = props => {
       <SideBarDrawer isOpen={isOpen} onClose={toggleSideBarClose}>
         <SideBar {...props} />
       </SideBarDrawer>
-    </div>
+    </nav>
   );
 };
 
