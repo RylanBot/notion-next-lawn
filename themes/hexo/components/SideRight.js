@@ -50,19 +50,17 @@ export default function SideRight(props) {
   const { locale } = useGlobal()
   const { pathname } = useRouter()
 
-  const [activeTab, setActiveTab] = useState('info')
-
+  const getInitialTab = (post) => {
+    return post?.toc?.length > 1 ? 'toc' : 'info';
+  };
+  
+  const [activeTab, setActiveTab] = useState(() => getInitialTab(post));
+  
   useEffect(() => {
-    setActiveTab('info')
-    if (post && post.toc && post.toc.length > 1) {
-      setActiveTab('toc')
-    }
-  }, [post])
+    setActiveTab(getInitialTab(post));
+  }, [post]);
 
-  // 文章全屏处理
-  if (post && post?.fullWidth) {
-    return null
-  }
+  if (post?.fullWidth) return null;
 
   return (
     <div id="sideRight" className="p-2 max-lg:mt-8">
