@@ -47,9 +47,10 @@ const Slug = props => {
             console.warn('Try to reload: ', router.asPath);
             router.replace(router.asPath);
           } else {
-            router.push('/404').then(() => {
-              console.warn('Fail to load: ', router.asPath);
-            });
+            router.push({
+              pathname: '/404',
+              query: { from: router.asPath }
+            })
           }
         }
       }, siteConfig('POST_WAITING_TIME_FOR_404') * 1000);

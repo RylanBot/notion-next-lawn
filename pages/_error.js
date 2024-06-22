@@ -1,14 +1,23 @@
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 
-const MyError = () => {
-  const router = useRouter();
+const MyError = ({ asPath }) => {
+  const router = useRouter()
 
   useEffect(() => {
-    router.push('/404');
+    const query = asPath ? { from: asPath } : {};
+    router.push({
+      pathname: '/404',
+      query: query
+    });
   }, []);
 
-  return null;
+  return null
 }
 
-export default MyError;
+MyError.getInitialProps = ({ req, asPath }) => {
+  const currentPath = asPath || (req ? req.url : '');
+  return { asPath: currentPath };
+}
+
+export default MyError

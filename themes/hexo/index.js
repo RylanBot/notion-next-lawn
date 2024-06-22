@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { createContext, useContext, useEffect, useRef } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 
 import { Transition } from '@headlessui/react';
 
@@ -249,23 +249,29 @@ export const LayoutSlug = props => {
  * 404
  */
 export const Layout404 = props => {
+  const router = useRouter();
+  const [from, setFrom] = useState(null);
+
+  useEffect(() => {
+    if (router.query.from) {
+      setFrom(router.query.from);
+    }
+  }, [router.query.from]);
+  
   return (
-    <>
-      <div className="text-black w-full h-screen text-center justify-center content-center items-center flex flex-col">
-        <div className="dark:text-gray-200">
-          <h2 className="inline-block border-r-2 border-gray-500 mr-2 px-3 py-2 align-top">
-            Error
-          </h2>
-          <div className="inline-block text-left h-32 leading-10 items-center">
-            <h2 className="m-0 p-0">
-              <span className="px-3 border-r-2 border-gray-500">页面不存在</span>
-              <span className="px-3 border-r-2 border-gray-500">渲染超时</span>
-              <span className="px-3">尝试重新打开</span>
-            </h2>
-          </div>
-        </div>
+    <div className="w-full h-screen flex justify-center items-center flex-col">
+      <div className="flex justify-center items-center dark:text-white">
+        <span className="px-3 border-r-2">Error</span>
+        <span className="px-3 border-r-2">页面不存在</span>
+        <span className="px-3 border-r-2">渲染超时</span>
+        <span className="px-3">尝试重新打开</span>
       </div>
-    </>
+      {from && (
+        <i onClick={() => router.replace(from)}
+          className="cursor-pointer fa-solid fa-arrows-rotate mx-2 my-6 p-2 rounded-full bg-teal-400 hover:bg-teal-500 text-white"
+        ></i>
+      )}
+    </div>
   );
 };
 
