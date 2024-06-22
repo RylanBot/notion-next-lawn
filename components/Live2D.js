@@ -1,31 +1,16 @@
 /* eslint-disable no-undef */
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { useGlobal } from '@/hooks/useGlobal';
 import { siteConfig } from '@/lib/config';
+import { isMobile } from '@/lib/utils';
 
 export default function Live2D() {
   const { theme, switchTheme } = useGlobal();
   const showPet = JSON.parse(siteConfig('WIDGET_PET'));
   const petLink = siteConfig('WIDGET_PET_LINK');
-  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    function handleResize() {
-      const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
-      setIsMobile(window.innerWidth <= 768 || isTouch);
-    }
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!showPet || isMobile) {
-      return;
-    }
     const script = document.createElement('script');
     script.src = '/js/live2d.min.js';
     script.onload = () => {
@@ -54,7 +39,7 @@ export default function Live2D() {
     }
   }
 
-  if (!showPet || isMobile) {
+  if (!showPet || isMobile()) {
     return <></>;
   }
 

@@ -1,33 +1,39 @@
-import { loadExternalResource } from '@/lib/utils'
+import { loadExternalResource, isMobile } from '@/lib/utils'
 import { useEffect, useRef } from 'react'
 
+/**
+ * 移动端调试工具
+ * 在窗口中心快速连续点击8次后会出现
+ */
 const VConsole = () => {
-  const clickCountRef = useRef(0) // 点击次数
-  const lastClickTimeRef = useRef() // 最近一次点击时间戳
-  const timerRef = useRef() // 定时器引用
+  const clickCountRef = useRef(0)
+  const lastClickTimeRef = useRef()
+  const timerRef = useRef()
 
   const loadVConsole = async () => {
     try {
       const url = await loadExternalResource('https://cdn.bootcss.com/vConsole/3.3.4/vconsole.min.js', 'js')
-      if (!url) {
-        return
-      }
+      if (!url) return
+
       const VConsole = window.VConsole
       const vConsole = new VConsole()
       return vConsole
-    } catch (error) {
+    } catch (err) {
+      console.error(err)
     }
   }
 
   useEffect(() => {
-    const clickListener = () => {
+    if(!isMobile()) return
+
+    const clickListener = (event) => {
       const now = Date.now()
       // 只监听窗口中心的100x100像素范围内的单击事件
       const centerX = window.innerWidth / 2
       const centerY = window.innerHeight / 2
       const range = 50
       const inRange = (event.clientX >= centerX - range && event.clientX <= centerX + range) &&
-                        (event.clientY >= centerY - range && event.clientY <= centerY + range)
+                      (event.clientY >= centerY - range && event.clientY <= centerY + range)
 
       if (!inRange) {
         return
@@ -52,7 +58,7 @@ const VConsole = () => {
         }
       }
     }
-    // 监听窗口点击事件
+
     window.addEventListener('click', clickListener)
     return () => {
       window.removeEventListener('click', clickListener)

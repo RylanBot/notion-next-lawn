@@ -107,7 +107,7 @@ const NotionPage = ({ post, className }) => {
     };
   }, [post]);
 
-  const zoom = typeof window !== 'undefined' && mediumZoom({
+  const zoom = isBrowser && mediumZoom({
     container: '.notion-viewport',
     background: 'rgba(0, 0, 0, 0.2)',
     margin: getMediumZoomMargin()
