@@ -34,7 +34,7 @@ const Hero = props => {
 
   const updateHeaderHeight = () => {
     requestAnimationFrame(() => {
-      const wrapperElement = document.getElementById('wrapper');
+      const wrapperElement = document.getElementById('hexo-main-wrapper');
       wrapperTop = wrapperElement?.offsetTop;
     });
   };

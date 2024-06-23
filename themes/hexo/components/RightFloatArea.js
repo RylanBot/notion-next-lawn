@@ -10,7 +10,7 @@ import JumpToTopButton from './JumpToTopButton';
 export default function RightFloatArea({ floatSlot }) {
   const [showFloatButton, switchShow] = useState(false)
   const scrollListener = useCallback(throttle(() => {
-    const targetRef = document.getElementById('wrapper')
+    const targetRef = document.getElementById('hexo-main-wrapper')
     if (!targetRef) return;
 
     const clientHeight = targetRef.clientHeight;

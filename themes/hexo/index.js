@@ -109,7 +109,7 @@ export const LayoutBase = props => {
         </header>
 
         {/* 主区块 */}
-        <main className={`${HEXO_HOME_BANNER_ENABLE && 'pt-16'}
+        <main id="hexo-main-wrapper" className={`${HEXO_HOME_BANNER_ENABLE && 'pt-16'}
          bg-hexo-background-gray dark:bg-black w-full py-8 md:px-8 lg:px-24 min-h-screen relative`}
          >
           <div className={`${LAYOUT_SIDEBAR_REVERSE && 'flex-row-reverse'} w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10`}>
