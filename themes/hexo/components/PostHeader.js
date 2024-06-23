@@ -26,6 +26,7 @@ export default function PostHeader({ post, siteInfo }) {
     <div id='hexo-header' className='w-full h-96 relative md:flex-shrink-0 z-10'>
       <LazyImage
         priority={true}
+        key={headerImage}
         src={headerImage}
         className='w-full h-full object-cover object-center absolute top-0'
       />
