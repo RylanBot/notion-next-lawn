@@ -352,3 +352,7 @@ a.avatar-wrapper {
   border-color: transparent;
   @apply border-l-teal-500 dark:border-l-teal-600
 }
+
+.social-icon {
+  @apply transform hover:scale-125 duration-150 dark:hover:text-teal-400 hover:text-teal-500;
+}

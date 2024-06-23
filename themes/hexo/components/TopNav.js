@@ -134,7 +134,7 @@ const TopNav = props => {
   </>;
 
   return (
-    <nav id='top-nav' className='z-40'>
+    <nav id='hexo-top-nav' style={{ zIndex: 1001 }}>
       <SearchDrawer cRef={searchDrawer} slot={searchDrawerSlot} />
 
       {/* 导航栏 */}

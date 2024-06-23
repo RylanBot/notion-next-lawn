@@ -48,7 +48,8 @@ export default function SideRight(props) {
   } = props
 
   const { locale } = useGlobal()
-  const { pathname } = useRouter()
+
+  const router  = useRouter()
 
   const getInitialTab = (post) => {
     return post?.toc?.length > 1 ? 'toc' : 'info';
@@ -66,8 +67,7 @@ export default function SideRight(props) {
     <div id="sideRight" className="p-2 max-lg:mt-8">
       {post && post.toc && post.toc.length > 1 && (
         <div className="lg:w-64 flex justify-center items-center mb-4">
-          <button
-            className={`w-1/2 px-4 py-1 rounded mr-2 ${
+          <button className={`w-1/2 px-4 py-1 rounded mr-2 ${
               activeTab === 'toc'
                 ? 'bg-teal-500 text-white'
                 : 'bg-gray-200 text-gray-700'
@@ -76,8 +76,7 @@ export default function SideRight(props) {
           >
             <i className="fas fa-stream" />
           </button>
-          <button
-            className={`w-1/2 px-4 py-1 rounded ${
+          <button className={`w-1/2 px-4 py-1 rounded ${
               activeTab === 'info'
                 ? 'bg-teal-500 text-white'
                 : 'bg-gray-200 text-gray-700'
@@ -88,8 +87,7 @@ export default function SideRight(props) {
           </button>
         </div>
       )}
-      <div
-        className={`lg:w-64 toc-card sticky top-32 ${
+      <div className={`lg:w-64 toc-card sticky top-32 ${
           activeTab !== 'toc' && 'hidden'
         }`}
       >
@@ -126,7 +124,7 @@ export default function SideRight(props) {
         )}
 
         {siteConfig('HEXO_WIDGET_LATEST_POSTS', null, CONFIG) &&
-          pathname !== '/' &&
+          router.pathname !== '/' &&
           latestPosts &&
           latestPosts.length > 0 && (
             <Card className="my-4">
@@ -136,8 +134,7 @@ export default function SideRight(props) {
 
         <Announcement post={notice} className="mt-8" />
 
-        {siteConfig('COMMENT_WALINE_SERVER_URL') &&
-          siteConfig('COMMENT_WALINE_RECENT') && <HexoRecentComments />}
+        {siteConfig('COMMENT_WALINE_SERVER_URL') && siteConfig('COMMENT_WALINE_RECENT') && <HexoRecentComments />}
 
         <FaceBookPage />
       </div>

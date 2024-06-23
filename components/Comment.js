@@ -83,7 +83,9 @@ const Comment = ({ siteInfo, frontMatter, className }) => {
   useEffect(() => {
     // 当连接中有特殊参数时跳转到评论区
     if (
-      isBrowser && ('giscus' in router.query || router.query.target === 'comment')) {
+      isBrowser &&
+      ('giscus' in router.query || router.query.target === 'comment')
+    ) {
       setTimeout(() => {
         const url = router.asPath.replace('?target=comment', '')
         history.replaceState({}, '', url)
@@ -94,12 +96,12 @@ const Comment = ({ siteInfo, frontMatter, className }) => {
     }
 
     if (!frontMatter) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden'
     }
   }, [frontMatter, router.query])
 
   if (isSearchEngineBot()) {
-    return;
+    return
   }
 
   if (!frontMatter) {
@@ -109,9 +111,13 @@ const Comment = ({ siteInfo, frontMatter, className }) => {
         <div className="fixed inset-0 bg-white z-10 dark:bg-zinc-950"></div>
         <div className="fixed inset-0 flex justify-center items-center z-50">
           {/* 闪烁动画 */}
-          <div className="relative border-8 border-slate-200 dark:border-slate-400 rounded-full" style={{ width: '50vmin', height: '50vmin' }}>
+          <div
+            className="relative border-8 border-slate-200 dark:border-slate-400 rounded-full"
+            style={{ width: '50vmin', height: '50vmin' }}
+          >
             <LazyImage
               src="./favicon.png"
+              placeholderSrc="./favicon.png"
               className="animate-blink relative rounded-full w-full h-full bg-white"
             />
             {/* 小圆形固定在大圆形的右下角 */}
@@ -124,14 +130,15 @@ const Comment = ({ siteInfo, frontMatter, className }) => {
 
   return (
     <div
+      id="comment"
       key={frontMatter?.id}
-      id='comment'
-      className={`comment mt-5 text-gray-800 dark:text-gray-300 ${className || ''
-        }`}
+      className={`comment mt-5 text-gray-800 dark:text-gray-300 ${
+        className && `${className}`
+      }`}
     >
       <Tabs>
         {COMMENT_ARTALK_SERVER && (
-          <div key='Artalk'>
+          <div key="Artalk">
             <Artalk />
           </div>
         )}
@@ -143,25 +150,25 @@ const Comment = ({ siteInfo, frontMatter, className }) => {
         )} */}
 
         {COMMENT_WALINE_SERVER_URL && (
-          <div key='Waline'>
+          <div key="Waline">
             <WalineComponent />
           </div>
         )}
 
         {COMMENT_VALINE_APP_ID && (
-          <div key='Valine' name='reply'>
+          <div key="Valine" name="reply">
             <ValineComponent path={frontMatter.id} />
           </div>
         )}
 
         {COMMENT_GISCUS_REPO && (
-          <div key='Giscus'>
-            <GiscusComponent className='px-2' />
+          <div key="Giscus">
+            <GiscusComponent className="px-2" />
           </div>
         )}
 
         {COMMENT_CUSDIS_APP_ID && (
-          <div key='Cusdis'>
+          <div key="Cusdis">
             <CusdisComponent frontMatter={frontMatter} />
           </div>
         )}
@@ -173,14 +180,14 @@ const Comment = ({ siteInfo, frontMatter, className }) => {
         )} */}
 
         {COMMENT_GITALK_CLIENT_ID && (
-          <div key='GitTalk'>
+          <div key="GitTalk">
             <GitalkComponent frontMatter={frontMatter} />
           </div>
         )}
 
         {COMMENT_WEBMENTION_ENABLE && (
-          <div key='WebMention'>
-            <WebMentionComponent frontMatter={frontMatter} className='px-2' />
+          <div key="WebMention">
+            <WebMentionComponent frontMatter={frontMatter} className="px-2" />
           </div>
         )}
       </Tabs>

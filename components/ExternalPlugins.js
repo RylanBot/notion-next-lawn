@@ -13,7 +13,7 @@ import WebWhiz from './Webwhiz';
 
 import { CUSTOM_EXTERNAL_CSS, CUSTOM_EXTERNAL_JS } from '@/blog.config';
 
-const TwikooCommentCounter = dynamic(() => import('@/components/TwikooCommentCounter'), { ssr: false });
+// const TwikooCommentCounter = dynamic(() => import('@/components/TwikooCommentCounter'), { ssr: false });
 const DebugPanel = dynamic(() => import('@/components/DebugPanel'), { ssr: false });
 const ThemeSwitch = dynamic(() => import('@/components/ThemeSwitch'), { ssr: false });
 const Fireworks = dynamic(() => import('@/components/Fireworks'), { ssr: false });
@@ -142,7 +142,7 @@ const ExternalPlugin = (props) => {
     {MUSIC_PLAYER && <MusicPlayer />}
     {NEST && <Nest />}
     {FLUTTERINGRIBBON && <FlutteringRibbon />}
-    {COMMENT_TWIKOO_COUNT_ENABLE && <TwikooCommentCounter {...props} />}
+    {/* {COMMENT_TWIKOO_COUNT_ENABLE && <TwikooCommentCounter {...props} />} */}
     {RIBBON && <Ribbon />}
     {DIFY_CHATBOT_ENABLED && <DifyChatbot />}
     {CUSTOM_RIGHT_CLICK_CONTEXT_MENU && <CustomContextMenu {...props} />}

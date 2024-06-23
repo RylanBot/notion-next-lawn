@@ -186,7 +186,7 @@ const getSEOMeta = (props, router, global) => {
         title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${
           siteInfo?.title
         }`,
-        description: siteConfig('TITLE'),
+        description: `${siteInfo?.description}`,
         image: `${siteInfo?.pageCover}`,
         slug: 'search/' + (keyword || ''),
         type: 'website'

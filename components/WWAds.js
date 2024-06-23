@@ -13,7 +13,9 @@ export default function WWAds({ orientation = 'vertical', sticky = false, classN
     return null
   }
 
-  return <div data-id={adWWADSId} className={`wwads-cn 
-            ${orientation === 'vertical' ? 'wwads-vertical' : 'wwads-horizontal'}
-            ${sticky ? 'wwads-sticky' : ''} z-10 ${className || ''}`} />
-}
+  return (
+    <div data-id={adWWADSId} className={`wwads-cn 
+        ${orientation === 'vertical' ? 'wwads-vertical' : 'wwads-horizontal'}
+        ${sticky ? 'wwads-sticky' : ''} z-10 ${className && `${className}`}`} 
+    />
+)}

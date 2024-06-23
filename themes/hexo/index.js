@@ -113,7 +113,7 @@ export const LayoutBase = props => {
          bg-hexo-background-gray dark:bg-black w-full py-8 md:px-8 lg:px-24 min-h-screen relative`}
          >
           <div className={`${LAYOUT_SIDEBAR_REVERSE && 'flex-row-reverse'} w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10`}>
-            <div className={`${className} w-full ${fullWidth && 'max-w-4xl'} h-full overflow-hidden`}>
+            <div className={`${className && `${className}`} w-full ${fullWidth && 'max-w-4xl'} h-full overflow-hidden`}>
               {slotTop}
               {children}
             </div>
@@ -224,6 +224,23 @@ export const LayoutArchive = props => {
  */
 export const LayoutSlug = props => {
   const { post, lock, validPassword } = props
+
+  useEffect(() => {  
+    const observer = new MutationObserver((mutationsList, observer) => {
+      const topNav = document.querySelector('#hexo-top-nav');
+      if (topNav) {
+        if (post) {
+          topNav.classList.remove('hidden');
+        } else {
+          topNav.classList.add('hidden');
+        }
+      }
+    });
+
+    observer.observe(document, { childList: true, subtree: true });
+    return () => observer.disconnect();
+  }, [post]);
+
   return (
     <>
       <div className="article w-full lg:hover:shadow rounded-t-xl lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray lg:border-2 border-teal-600 dark:border-teal-500">

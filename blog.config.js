@@ -52,9 +52,9 @@ const BLOG = {
   // 字体 CSS
   FONT_URL: [
     'https://npm.elemecdn.com/lxgw-wenkai-webfont@1.6.0/style.css',
-    'https://fonts.googleapis.com/css?family=Bitter&display=swap',
-    'https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300&display=swap',
-    'https://fonts.googleapis.com/css2?family=Noto+Serif+SC&display=swap'
+    // 'https://fonts.googleapis.com/css?family=Bitter&display=swap',
+    // 'https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300&display=swap',
+    // 'https://fonts.googleapis.com/css2?family=Noto+Serif+SC&display=swap'
   ],
   // 无衬线字体
   FONT_SANS: [

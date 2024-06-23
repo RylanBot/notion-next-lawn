@@ -37,7 +37,7 @@ const SideBarDrawer = ({ children, isOpen, onOpen, onClose, className }) => {
   }, [router.events]);
 
   return (
-    <div id='sidebar-wrapper' className={' block lg:hidden top-0 ' + className}>
+    <div id='sidebar-wrapper' className={`block lg:hidden top-0 ' ${className && `${className}`}`}>
 
       <div id="sidebar-drawer" className={`${isOpen ? 'mr-0 w-72 visible' : '-mr-72 max-w-side invisible'} bg-gray-50 right-0 top-0 dark:bg-hexo-black-gray shadow-black shadow-lg flex flex-col duration-300 fixed h-full overflow-y-scroll scroll-hidden z-30`}>
         {children}
@@ -45,7 +45,8 @@ const SideBarDrawer = ({ children, isOpen, onOpen, onClose, className }) => {
 
       {/* 背景蒙版 */}
       <div id='sidebar-drawer-background' onClick={() => { switchSideDrawerVisible(false); }}
-        className={`${isOpen ? 'block' : 'hidden'} animate__animated animate__fadeIn fixed top-0 duration-300 left-0 z-20 w-full h-full bg-black/70`} />
+        className={`${isOpen ? 'block' : 'hidden'} animate__animated animate__fadeIn fixed top-0 duration-300 left-0 z-20 w-full h-full bg-black/70`} 
+      />
     </div>
   );
 };

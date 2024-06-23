@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 
 import { useGlobal } from '@/hooks/useGlobal';
 import { siteConfig } from '@/lib/config';
-import { isMobile } from '@/lib/utils';
+import { isBrowser, isMobile } from '@/lib/utils';
 
 export default function Live2D() {
   const { theme, switchTheme } = useGlobal();
@@ -31,7 +31,7 @@ export default function Live2D() {
         document.body.removeChild(script);
       }
     };
-  }, [theme, isMobile]);
+  }, [theme, isBrowser]);
 
   function handleClick() {
     if (JSON.parse(siteConfig('WIDGET_PET_SWITCH_THEME'))) {
@@ -39,7 +39,7 @@ export default function Live2D() {
     }
   }
 
-  if (!showPet || isMobile()) {
+  if (!isBrowser && !showPet || isMobile()) {
     return <></>;
   }
 

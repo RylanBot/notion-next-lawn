@@ -3,20 +3,15 @@ import { useState } from 'react';
 
 /**
  * Tabs切换标签
- * @param {*} param0
- * @returns
  */
 const Tabs = ({ className, children }) => {
   const [currentTab, setCurrentTab] = useState(0);
-
+  
   const validChildren = children.filter(c => c);
-
-  if (validChildren.length === 0) {
-    return <></>;
-  }
+  if (validChildren.length === 0) return;
 
   return (
-    <div className={`mb-5 duration-200 ${className}`}>
+    <div className={`mb-5 duration-200 ${className && `${className}`}`}>
       {!(validChildren.length === 1 && siteConfig('COMMENT_HIDE_SINGLE_TAB')) && (
         <ul className="flex justify-center space-x-5 pb-4 dark:text-gray-400 text-gray-600 overflow-auto">
           {validChildren.map((item, index) => (
