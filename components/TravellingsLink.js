@@ -2,6 +2,7 @@ import { siteConfig } from '@/lib/config';
 import { useEffect, useRef, useState } from 'react';
 import LazyImage from './LazyImage';
 
+const TRAVEL_IMAGE = "https://www.travellings.cn/assets/logo.gif";
 /**
  * 友链接力
  */
@@ -73,7 +74,10 @@ const TravellingsLink = () => {
               className="float-right cursor-pointer"
               onClick={() => setShowModal(false)}
             >
-              <LazyImage src="https://www.travellings.cn/assets/logo.gif" className="w-28 h-7" />
+              <LazyImage className="w-28 h-7"
+                src={TRAVEL_IMAGE}
+                placeholderSrc={TRAVEL_IMAGE}
+              />
             </a>
           </div>
         </div>
