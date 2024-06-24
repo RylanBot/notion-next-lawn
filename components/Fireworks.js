@@ -1,10 +1,10 @@
 /**
  * https://codepen.io/juliangarnier/pen/gmOwJX
- * custom by hexo-theme-yun @YunYouJun
+ * custom by teal-theme-yun @YunYouJun
  */
-import { useEffect } from 'react'
-import anime from 'animejs'
 import { siteConfig } from '@/lib/config'
+import anime from 'animejs'
+import { useEffect } from 'react'
 
 /**
  * 鼠标点击烟花特效

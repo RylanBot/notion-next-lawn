@@ -21,7 +21,7 @@ const ThemeSwitch = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   // 修改当前路径url中的 theme 参数
-  // 例如 http://localhost?theme=hexo 跳转到 http://localhost?theme=newTheme
+  // 例如 http://localhost?theme=teal 跳转到 http://localhost?theme=newTheme
   const onThemeSelectChange = (e) => {
     setIsLoading(true);
     const newTheme = e.target.value;

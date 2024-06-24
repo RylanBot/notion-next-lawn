@@ -10,7 +10,7 @@ const FacebookPage = () => {
   if (!siteConfig('FACEBOOK_APP_ID') || !siteConfig('FACEBOOK_PAGE')) {
     return <></>
   }
-  return <div className="shadow-md hover:shadow-xl dark:text-gray-300 border dark:border-black rounded-xl px-2 py-4 bg-white dark:bg-hexo-black-gray lg:duration-100 justify-center">
+  return <div className="shadow-md hover:shadow-xl dark:text-gray-300 border dark:border-black rounded-xl px-2 py-4 bg-white dark:bg-lawn-black-gray lg:duration-100 justify-center">
     {siteConfig('FACEBOOK_PAGE') && (
       <div className="flex items-center pb-2">
         <a
