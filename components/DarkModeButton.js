@@ -6,8 +6,8 @@ import { Moon, Sun } from './HeroIcons';
  * 深色模式按钮
  */
 const DarkModeButton = (props) => {
-  const { cRef, className } = props
-  const { isDarkMode, toggleDarkMode } = useGlobal()
+  const { cRef } = props;
+  const { isDarkMode, toggleDarkMode } = useGlobal();
 
   /**
    * 对外暴露方法
@@ -15,15 +15,19 @@ const DarkModeButton = (props) => {
   useImperativeHandle(cRef, () => {
     return {
       handleChangeDarkMode: () => {
-        toggleDarkMode()
+        toggleDarkMode();
       }
-    }
-  })
+    };
+  });
 
   return (
-    <div onClick={toggleDarkMode} className={`${className && `${className}`} flex justify-center dark:text-gray-200 text-gray-800`}>
-      <div id='darkModeButton' className='hover:scale-110 cursor-pointer transform duration-200 w-5 h-5'> {isDarkMode ? <Sun /> : <Moon />}</div>
+    <div onClick={toggleDarkMode} className={`flex justify-center dark:text-gray-200 text-gray-800`}>
+      <div id="darkModeButton" className="hover:scale-110 cursor-pointer transform duration-200 w-5 h-5">
+        {' '}
+        {isDarkMode ? <Sun /> : <Moon />}
+      </div>
     </div>
-)}
+  );
+};
 
-export default DarkModeButton
+export default DarkModeButton;

@@ -1,33 +1,36 @@
-import { siteConfig } from '@/lib/config';
-import { compressImage, mapImgUrl } from '@/lib/notion/mapImage';
-import { isBrowser } from '@/lib/utils';
-import mediumZoom from '@fisch0920/medium-zoom';
-import 'katex/dist/katex.min.css';
 import dynamic from 'next/dynamic';
 import { useEffect, useRef } from 'react';
 import { NotionRenderer } from 'react-notion-x';
 
-const Code = dynamic(() =>
-  import('react-notion-x/build/third-party/code').then(async (m) => {
-    return m.Code;
-  }), { ssr: false }
+import mediumZoom from '@fisch0920/medium-zoom';
+import 'katex/dist/katex.min.css';
+
+import { siteConfig } from '@/lib/config';
+import { compressImage, mapImgUrl } from '@/lib/notion/mapImage';
+import { isBrowser } from '@/lib/utils';
+
+const Code = dynamic(
+  () =>
+    import('react-notion-x/build/third-party/code').then(async (m) => {
+      return m.Code;
+    }),
+  { ssr: false }
 );
 
 // 公式
-const Equation = dynamic(() =>
-  import('@/components/Equation').then(async (m) => {
-    // 化学方程式
-    await import('@/lib/mhchem');
-    return m.Equation;
-  }), { ssr: false }
+const Equation = dynamic(
+  () =>
+    import('@/components/Equation').then(async (m) => {
+      // 化学方程式
+      await import('@/lib/mhchem');
+      return m.Equation;
+    }),
+  { ssr: false }
 );
 
-const Pdf = dynamic(
-  () => import('react-notion-x/build/third-party/pdf').then((m) => m.Pdf),
-  {
-    ssr: false
-  }
-);
+const Pdf = dynamic(() => import('react-notion-x/build/third-party/pdf').then((m) => m.Pdf), {
+  ssr: false
+});
 
 // https://github.com/txs
 const PrismMac = dynamic(() => import('@/components/PrismMac'), {
@@ -38,13 +41,11 @@ const TweetEmbed = dynamic(() => import('react-tweet-embed'), {
   ssr: false
 });
 
-const Collection = dynamic(() =>
-  import('react-notion-x/build/third-party/collection').then((m) => m.Collection), { ssr: true }
-);
+const Collection = dynamic(() => import('react-notion-x/build/third-party/collection').then((m) => m.Collection), {
+  ssr: true
+});
 
-const Modal = dynamic(
-  () => import('react-notion-x/build/third-party/modal').then((m) => m.Modal), { ssr: false }
-);
+const Modal = dynamic(() => import('react-notion-x/build/third-party/modal').then((m) => m.Modal), { ssr: false });
 
 const Tweet = ({ id }) => {
   return <TweetEmbed tweetId={id} />;
@@ -74,21 +75,15 @@ const NotionPage = ({ post, className }) => {
      * 放大查看图片时替换成高清图像
      */
     const observer = new MutationObserver((mutationsList, observer) => {
-      mutationsList.forEach(mutation => {
-        if (
-          mutation.type === 'attributes' &&
-          mutation.attributeName === 'class'
-        ) {
+      mutationsList.forEach((mutation) => {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
           if (mutation.target.classList.contains('medium-zoom-image--opened')) {
             // 等待动画完成后替换为更高清的图像
             setTimeout(() => {
               // 获取该元素的 src 属性
               const src = mutation?.target?.getAttribute('src');
               //   替换为更高清的图像
-              mutation?.target?.setAttribute(
-                'src',
-                compressImage(src, siteConfig('IMAGE_ZOOM_IN_WIDTH', 1200))
-              );
+              mutation?.target?.setAttribute('src', compressImage(src, siteConfig('IMAGE_ZOOM_IN_WIDTH', 1200)));
             }, 800);
           }
         }
@@ -107,11 +102,13 @@ const NotionPage = ({ post, className }) => {
     };
   }, [post]);
 
-  const zoom = isBrowser && mediumZoom({
-    container: '.notion-viewport',
-    background: 'rgba(0, 0, 0, 0.2)',
-    margin: getMediumZoomMargin()
-  });
+  const zoom =
+    isBrowser &&
+    mediumZoom({
+      container: '.notion-viewport',
+      background: 'rgba(0, 0, 0, 0.2)',
+      margin: getMediumZoomMargin()
+    });
   const zoomRef = useRef(zoom ? zoom.clone() : null);
 
   useEffect(() => {
@@ -122,7 +119,7 @@ const NotionPage = ({ post, className }) => {
           const imgList = document?.querySelectorAll('.notion-collection-card-cover img');
           if (imgList && zoomRef.current) {
             for (let i = 0; i < imgList.length; i++) {
-              (zoomRef.current).attach(imgList[i]);
+              zoomRef.current.attach(imgList[i]);
             }
           }
 
@@ -158,23 +155,25 @@ const NotionPage = ({ post, className }) => {
     return <>{post?.summary || ''}</>;
   }
 
-  return <div id='notion-article' className={`mx-auto overflow-hidden ${className && `${className}`}`}>
-    <NotionRenderer
-      recordMap={post.blockMap}
-      mapPageUrl={mapPageUrl}
-      mapImageUrl={mapImgUrl}
-      components={{
-        Code,
-        Collection,
-        Equation,
-        Modal,
-        Pdf,
-        Tweet
-      }} />
+  return (
+    <div id="notion-article" className={`mx-auto overflow-hidden ${className || ''}`}>
+      <NotionRenderer
+        recordMap={post.blockMap}
+        mapPageUrl={mapPageUrl}
+        mapImageUrl={mapImgUrl}
+        components={{
+          Code,
+          Collection,
+          Equation,
+          Modal,
+          Pdf,
+          Tweet
+        }}
+      />
 
-    <PrismMac />
-
-  </div>;
+      <PrismMac />
+    </div>
+  );
 };
 
 /**
@@ -192,12 +191,10 @@ const processDisableDatabaseUrl = () => {
 /**
  * gallery视图，点击后是放大图片还是跳转到gallery的内部页面
  */
-const processGalleryImg = zoom => {
+const processGalleryImg = (zoom) => {
   setTimeout(() => {
     if (isBrowser) {
-      const imgList = document?.querySelectorAll(
-        '.notion-collection-card-cover img'
-      );
+      const imgList = document?.querySelectorAll('.notion-collection-card-cover img');
       if (imgList && zoom) {
         for (let i = 0; i < imgList.length; i++) {
           zoom.attach(imgList[i]);
@@ -230,10 +227,8 @@ const autoScrollToTarget = () => {
 
 /**
  * 将id映射成博文内部链接。
- * @param {*} id
- * @returns
  */
-const mapPageUrl = id => {
+const mapPageUrl = (id) => {
   // return 'https://www.notion.so/' + id.replace(/-/g, '')
   return '/' + id.replace(/-/g, '');
 };
@@ -244,7 +239,6 @@ const mapPageUrl = id => {
  */
 function getMediumZoomMargin() {
   const width = window.innerWidth;
-
   if (width < 500) {
     return 8;
   } else if (width < 800) {

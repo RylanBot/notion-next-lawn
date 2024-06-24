@@ -557,6 +557,8 @@
   }
 }
 
-#tranvellings:hover {
-  animation: bounce 0.5s infinite;
+@media (any-hover: hover){
+  #tranvellings:hover {
+    animation: bounce 0.5s infinite;
+  }
 }

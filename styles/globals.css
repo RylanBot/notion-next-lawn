@@ -354,5 +354,5 @@ a.avatar-wrapper {
 }
 
 .social-icon {
-  @apply transform hover:scale-125 duration-150 dark:hover:text-teal-400 hover:text-teal-500;
+  @apply transform duration-150 hover:scale-125 hover:text-teal-500 dark:hover:text-teal-300;
 }
