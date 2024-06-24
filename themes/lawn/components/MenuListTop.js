@@ -8,12 +8,32 @@ import { MenuItemDrop } from './MenuItemDrop';
 
 export const MenuListTop = (props) => {
   const { customNav, customMenu, navDisplayed } = props;
+  
   const { locale } = useGlobal();
+  const TRAVELLING_LINK = siteConfig('TRAVELLING_LINK');
 
   let links = [
-    { id: 1, icon: 'fa-solid fa-house', name: locale.NAV.INDEX, to: '/', show: siteConfig('LAWN_MENU_INDEX', null, CONFIG) },
-    { id: 2, icon: 'fas fa-search', name: locale.NAV.SEARCH, to: '/search', show: siteConfig('LAWN_MENU_SEARCH', null, CONFIG) },
-    { id: 3, icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', show: siteConfig('LAWN_MENU_ARCHIVE', null, CONFIG) }
+    {
+      id: 1,
+      icon: 'fa-solid fa-house',
+      name: locale.NAV.INDEX,
+      to: '/',
+      show: siteConfig('LAWN_MENU_INDEX', null, CONFIG)
+    },
+    {
+      id: 2,
+      icon: 'fas fa-search',
+      name: locale.NAV.SEARCH,
+      to: '/search',
+      show: siteConfig('LAWN_MENU_SEARCH', null, CONFIG)
+    },
+    {
+      id: 3,
+      icon: 'fas fa-archive',
+      name: locale.NAV.ARCHIVE,
+      to: '/archive',
+      show: siteConfig('LAWN_MENU_ARCHIVE', null, CONFIG)
+    }
     // { icon: 'fas fa-folder', name: locale.COMMON.CATEGORY, to: '/category', show: siteConfig('MENU_CATEGORY', null, CONFIG) },
     // { icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: siteConfig('MENU_TAG', null, CONFIG) }
   ];
@@ -39,9 +59,13 @@ export const MenuListTop = (props) => {
 
   return (
     <>
-      <nav id='nav-pc' className='leading-8 justify-center w-full flex'>
+      <nav id="nav-pc" className="leading-8 justify-center w-full flex">
         {links?.map((link, index) => link && link.show && <MenuItemDrop key={index} link={link} />)}
-        <span className='pl-4 pr-2'> <TravellingsLink hidden={navDisplayed} /></span>
+        {TRAVELLING_LINK && (
+          <span className="pl-4 pr-2">
+            <TravellingsLink hidden={navDisplayed} />
+          </span>
+        )}
       </nav>
     </>
   );
