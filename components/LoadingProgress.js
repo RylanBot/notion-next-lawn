@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import NProgress from 'nprogress';
 
@@ -11,15 +11,18 @@ import { useGlobal } from '@/hooks/useGlobal';
 export default function LoadingProgress() {
   const router = useRouter();
   const { onLoading } = useGlobal();
+  const [isRouting, setIsRouting] = useState(false);
 
   // 路由变化
   useEffect(() => {
-    const handleStart = (url) => {
+    const handleStart = () => {
+      setIsRouting(true);
       NProgress.start();
       document.body.style.overflow = 'hidden';
     };
 
     const handleStop = () => {
+      setIsRouting(false);
       NProgress.done();
     };
 
@@ -38,6 +41,8 @@ export default function LoadingProgress() {
 
   // 数据加载
   useEffect(() => {
+    if (isRouting) return;
+
     if (onLoading) {
       NProgress.start();
       document.body.style.overflow = 'hidden';
@@ -45,5 +50,5 @@ export default function LoadingProgress() {
       NProgress.done();
       document.body.style.overflow = '';
     }
-  }, [onLoading]);
+  }, [onLoading, isRouting]);
 }

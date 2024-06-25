@@ -75,7 +75,7 @@ const TravellingsLink = () => {
               className="float-right cursor-pointer"
               onClick={() => setShowModal(false)}
             >
-              <LazyImage className="w-28 h-7" src={TRAVEL_IMAGE} placeholderSrc={TRAVEL_IMAGE} />
+              <LazyImage className="w-28 h-7" src={TRAVEL_IMAGE} />
             </a>
           </div>
         </div>
