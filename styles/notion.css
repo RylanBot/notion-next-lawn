@@ -1555,12 +1555,12 @@ div[class*="notion-property-checkbox-checked"] svg {
 }
 
 .notion-collection-card {
-  /* cursor: default !important; */
+  cursor: default !important;
 }
 
 .notion-collection-card-property .notion-link {
   border-bottom: 0 none;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 .notion-collection-card-property .notion-page-title {

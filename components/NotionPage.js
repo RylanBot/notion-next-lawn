@@ -181,10 +181,8 @@ const NotionPage = ({ post, className }) => {
  */
 const processDisableDatabaseUrl = () => {
   if (isBrowser) {
-    const links = document.querySelectorAll('.notion-table a');
-    for (const e of links) {
-      e.removeAttribute('href');
-    }
+    const links = document.querySelectorAll('.notion-table .notion-page-link');
+    links.forEach(link => link.removeAttribute('href'));
   }
 };
 
