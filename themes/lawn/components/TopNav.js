@@ -54,13 +54,13 @@ const TopNav = (props) => {
   const scrollTrigger = useCallback(
     throttle(() => {
       const scrollS = window.scrollY;
+      const viewHeight = window.innerHeight;
 
       const nav = document.querySelector('#sticky-nav');
       const header = document.querySelector('#lawn-header');
       const menuTitle = document.querySelectorAll('.menu-title');
 
-      const navTransparent =
-        (scrollS < document.documentElement.clientHeight - 12 && router.route === '/') || scrollS < 300;
+      const navTransparent = (scrollS < viewHeight - 12 && router.route === '/') || scrollS < 300;
 
       if (header && navTransparent) {
         nav && nav.classList.replace('bg-white', 'bg-none');
@@ -76,14 +76,13 @@ const TopNav = (props) => {
         nav && nav.classList.replace('transparent', 'dark:bg-lawn-black-gray');
       }
 
-      menuTitle &&
-        menuTitle.forEach((menu) => {
-          if (!isDarkMode && header && window.scrollY < header.clientHeight) {
-            menu.parentNode.classList.add('dark');
-          } else {
-            menu.parentNode.classList.remove('dark');
-          }
-        });
+      menuTitle?.forEach((menu) => {
+        if (!isDarkMode && header && navTransparent) {
+          menu.parentNode.classList.add('dark');
+        } else {
+          menu.parentNode.classList.remove('dark');
+        }
+      });
 
       const showNav = scrollS <= windowTop || scrollS < 5 || (header && scrollS <= header.clientHeight); // 非首页无大图时影藏顶部 滚动条置顶时隐藏
       if (!showNav) {
@@ -127,7 +126,7 @@ const TopNav = (props) => {
             <Link
               href={'/tag'}
               passHref
-              className="text-gray-400 hover:text-black  dark:hover:text-white hover:underline cursor-pointer"
+              className="text-gray-400 hover:text-black dark:hover:text-white hover:underline cursor-pointer"
             >
               {locale.COMMON.MORE} <i className="fas fa-angle-double-right" />
             </Link>
@@ -157,10 +156,9 @@ const TopNav = (props) => {
             <Logo {...props} />
           </div>
 
-          {/* 右侧功能 */}
+          {/* 右侧菜单 */}
           <div className="mr-1 flex justify-end items-center text-xl">
             <div className="hidden lg:flex">
-              {' '}
               <MenuListTop {...props} />
             </div>
             <div onClick={toggleMenuOpen} className="w-8 justify-center items-center h-8 cursor-pointer flex lg:hidden">
