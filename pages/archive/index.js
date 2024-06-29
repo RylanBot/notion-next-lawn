@@ -9,7 +9,7 @@ import { getGlobalData } from '@/lib/notion/getNotionData';
 import { isBrowser } from '@/lib/utils';
 import { getLayoutByTheme } from '@/themes/theme';
 
-const ArchiveIndex = props => {
+const ArchiveIndex = (props) => {
   const { siteInfo } = props;
   const { locale } = useGlobal();
 
@@ -46,7 +46,7 @@ const ArchiveIndex = props => {
 export async function getStaticProps() {
   const props = await getGlobalData({ from: 'archive-index' });
   // 处理分页
-  props.posts = props.allPages?.filter(page => page.type === 'Post' && page.status === 'Published');
+  props.posts = props.allPages?.filter((page) => page.type === 'Post' && page.status === 'Published');
   delete props.allPages;
 
   const postsSortByDate = Object.create(props.posts);
@@ -57,8 +57,8 @@ export async function getStaticProps() {
 
   const archivePosts = {};
 
-  postsSortByDate.forEach(post => {
-    const date = formatDateFmt(post.publishDate, 'yyyy-MM');
+  postsSortByDate.forEach((post) => {
+    const date = formatDateFmt(post.publishDate, 'yyyy');
     if (archivePosts[date]) {
       archivePosts[date].push(post);
     } else {
