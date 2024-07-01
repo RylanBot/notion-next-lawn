@@ -42,7 +42,8 @@ const LatestPostsGroup = ({ latestPosts, siteInfo }) => {
             title={post.title}
             href={`${siteConfig('SUB_PATH', '')}/${post.slug}`}
             passHref
-            className={'my-3 flex'}
+            className={`my-3 flex ${selected ? 'pointer-events-none' : ''} `} 
+            aria-disabled={selected} 
           >
             <div className='w-20 h-14 overflow-hidden relative'>
               <LazyImage
