@@ -39,8 +39,8 @@ import { Style } from './style';
 import CONFIG from './config';
 export { CONFIG as THEME_CONFIG };
 
-const ThemeGlobalHexo = createContext();
-export const useHexoGlobal = () => useContext(ThemeGlobalHexo);
+const ThemeGlobalLawn = createContext();
+export const useLawnGlobal = () => useContext(ThemeGlobalLawn);
 
 /**
  * 基础布局
@@ -93,7 +93,7 @@ export const LayoutBase = (props) => {
   }, [router.pathname]);
 
   return (
-    <ThemeGlobalHexo.Provider value={{ SEARCH_MODAL: searchModal }}>
+    <ThemeGlobalLawn.Provider value={{ SEARCH_MODAL: searchModal }}>
       <div id="theme-lawn" className={`${FONT_STYLE} dark:bg-black scroll-smooth`}>
         {/* 特定主题 CSS */}
         <Style />
@@ -134,7 +134,7 @@ export const LayoutBase = (props) => {
         {/* 页脚 */}
         <Footer title={TITLE} />
       </div>
-    </ThemeGlobalHexo.Provider>
+    </ThemeGlobalLawn.Provider>
   );
 };
 

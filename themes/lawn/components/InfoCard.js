@@ -9,8 +9,6 @@ import SocialButton from './SocialButton';
 
 /**
  * 社交信息卡
- * @param {*} props
- * @returns
  */
 export function InfoCard(props) {
   const { className, siteInfo } = props;
@@ -21,7 +19,7 @@ export function InfoCard(props) {
   const specialClass = specialPath.includes(pathname) ? 'md:pt-14' : '';
 
   return (
-    <div className={specialClass}>
+    <div {...(specialClass ? { className: specialClass } : {})}>
       <Card className={className}>
         <div className='flex justify-center items-center py-6'>
           <LazyImage src={siteInfo?.icon} className='rounded-full' width={120} alt={siteConfig('AUTHOR')} />

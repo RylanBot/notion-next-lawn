@@ -9,10 +9,8 @@ import { RecentComments } from '@waline/client';
 
 /**
  * @see https://waline.js.org/guide/get-started.html
- * @param {*} props
- * @returns
  */
-const HexoRecentComments = (props) => {
+const LawnRecentComments = (props) => {
   const [comments, updateComments] = useState([]);
   const { locale } = useGlobal();
   const [loading, setLoading] = useState(true);
@@ -45,4 +43,4 @@ const HexoRecentComments = (props) => {
   );
 };
 
-export default HexoRecentComments;
+export default LawnRecentComments;
