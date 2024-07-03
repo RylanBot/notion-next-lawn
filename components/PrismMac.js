@@ -10,19 +10,17 @@ import 'prismjs/plugins/line-numbers/prism-line-numbers';
 import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
 import 'prismjs/plugins/show-language/prism-show-language';
 
+import { useGlobal } from '@/hooks/useGlobal';
 import { siteConfig } from '@/lib/config';
 import { loadExternalResource } from '@/lib/utils';
-
-import { useGlobal } from '@/hooks/useGlobal';
 
 /**
  * 代码美化相关
  * @author https://github.com/txs/
- * @returns
  */
-const PrismMac = () => {
+const PrismMac = ({ onLoad }) => {
   const router = useRouter();
-  const { isDarkMode, setOnLoading } = useGlobal();
+  const { isDarkMode } = useGlobal();
 
   const codeMacBar = siteConfig('CODE_MAC_BAR');
   const prismjsAutoLoader = siteConfig('PRISM_JS_AUTO_LOADER');
@@ -58,12 +56,11 @@ const PrismMac = () => {
   }, [router, isDarkMode]);
 
   useEffect(() => {
-    setOnLoading(true);
     const observer = new MutationObserver((mutationsList) => {
       for (const mutation of mutationsList) {
         if (mutation.type === 'childList') {
           renderCustomCode().then(() => {
-            setOnLoading(false);
+            onLoad();
           });
         }
       }
@@ -78,9 +75,14 @@ const PrismMac = () => {
 /**
  * 加载 Prism 主题样式
  */
-const loadPrismThemeCSS = (isDarkMode, prismThemeSwitch, prismThemeDarkPath, prismThemeLightPath, prismThemePrefixPath) => {
-  let PRISM_THEME;
-  let PRISM_PREVIOUS;
+const loadPrismThemeCSS = (
+  isDarkMode,
+  prismThemeSwitch,
+  prismThemeDarkPath,
+  prismThemeLightPath,
+  prismThemePrefixPath
+) => {
+  let PRISM_THEME, PRISM_PREVIOUS;
   if (prismThemeSwitch) {
     if (isDarkMode) {
       PRISM_THEME = prismThemeDarkPath;
@@ -103,9 +105,8 @@ const loadPrismThemeCSS = (isDarkMode, prismThemeSwitch, prismThemeDarkPath, pri
  * 将代码块转为可折叠对象
  */
 const renderCollapseCode = (codeCollapse, codeCollapseExpandDefault) => {
-  if (!codeCollapse) {
-    return;
-  }
+  if (!codeCollapse) return;
+
   const codeBlocks = document.querySelectorAll('.code-toolbar');
   for (const codeBlock of codeBlocks) {
     if (codeBlock.closest('.collapse-wrapper')) {
@@ -118,7 +119,8 @@ const renderCollapseCode = (codeCollapse, codeCollapseExpandDefault) => {
     const collapseWrapper = document.createElement('div');
     collapseWrapper.className = 'collapse-wrapper w-full py-2';
     const panelWrapper = document.createElement('div');
-    panelWrapper.className = 'border dark:border-gray-600 rounded-md hover:border-teal-500 duration-200 transition-colors';
+    panelWrapper.className =
+      'border dark:border-gray-600 rounded-md hover:border-teal-500 duration-200 transition-colors';
 
     const header = document.createElement('div');
     header.className = 'flex justify-between items-center px-4 py-2 cursor-pointer select-none';
@@ -157,7 +159,7 @@ const renderCollapseCode = (codeCollapse, codeCollapseExpandDefault) => {
  * 将 mermaid 语言 渲染成图片
  */
 const renderMermaid = async (mermaidCDN) => {
-  const observer = new MutationObserver(async mutationsList => {
+  const observer = new MutationObserver(async (mutationsList) => {
     for (const m of mutationsList) {
       if (m.target.className === 'notion-code language-mermaid') {
         const chart = m.target.querySelector('code').textContent;
@@ -177,7 +179,7 @@ const renderMermaid = async (mermaidCDN) => {
             }
           }
           if (needLoad) {
-            loadExternalResource(mermaidCDN, 'js').then(url => {
+            loadExternalResource(mermaidCDN, 'js').then((url) => {
               setTimeout(() => {
                 const mermaid = window.mermaid;
                 mermaid?.contentLoaded();
@@ -271,7 +273,7 @@ const renderPrismMac = (codeLineNumbers) => {
   if (codeLineNumbers) {
     const codeBlocks = container?.getElementsByTagName('pre');
     if (codeBlocks) {
-      Array.from(codeBlocks).forEach(item => {
+      Array.from(codeBlocks).forEach((item) => {
         if (!item.classList.contains('line-numbers')) {
           item.classList.add('line-numbers');
           item.style.whiteSpace = 'pre-wrap';
@@ -289,7 +291,7 @@ const renderPrismMac = (codeLineNumbers) => {
   const codeToolBars = container?.getElementsByClassName('code-toolbar');
   // Add pre-mac element for Mac Style UI
   if (codeToolBars) {
-    Array.from(codeToolBars).forEach(item => {
+    Array.from(codeToolBars).forEach((item) => {
       const existPreMac = item.getElementsByClassName('pre-mac');
       if (existPreMac.length < codeToolBars.length) {
         const preMac = document.createElement('div');
@@ -311,7 +313,7 @@ const renderPrismMac = (codeLineNumbers) => {
  * 在此手动resize计算
  */
 const fixCodeLineStyle = () => {
-  const observer = new MutationObserver(mutationsList => {
+  const observer = new MutationObserver((mutationsList) => {
     for (const m of mutationsList) {
       if (m.target.nodeName === 'DETAILS') {
         const preCodes = m.target.querySelectorAll('pre.notion-code');

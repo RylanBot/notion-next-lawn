@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { NotionRenderer } from 'react-notion-x';
 
 import mediumZoom from '@fisch0920/medium-zoom';
@@ -17,7 +17,6 @@ const Code = dynamic(
   { ssr: false }
 );
 
-// 公式
 const Equation = dynamic(
   () =>
     import('@/components/Equation').then(async (m) => {
@@ -32,7 +31,6 @@ const Pdf = dynamic(() => import('react-notion-x/build/third-party/pdf').then((m
   ssr: false
 });
 
-// https://github.com/txs
 const PrismMac = dynamic(() => import('@/components/PrismMac'), {
   ssr: false
 });
@@ -54,6 +52,8 @@ const Tweet = ({ id }) => {
 const NotionPage = ({ post, className }) => {
   const POST_DISABLE_GALLERY_CLICK = siteConfig('POST_DISABLE_GALLERY_CLICK');
   const POST_DISABLE_DATABASE_CLICK = siteConfig('POST_DISABLE_DATABASE_CLICK');
+
+  const [showCode, setShowCode] = useState(false);
 
   useEffect(() => {
     autoScrollToTarget();
@@ -156,7 +156,12 @@ const NotionPage = ({ post, className }) => {
   }
 
   return (
-    <div id="notion-article" className={`mx-auto overflow-hidden ${className || ''}`}>
+    <div
+      id="notion-article"
+      className={`mx-auto overflow-hidden transition duration-500 ease-in-out ${
+        !showCode ? 'opacity-0' : 'opacity-100'
+      } ${className || ''}`}
+    >
       <NotionRenderer
         recordMap={post.blockMap}
         mapPageUrl={mapPageUrl}
@@ -171,7 +176,7 @@ const NotionPage = ({ post, className }) => {
         }}
       />
 
-      <PrismMac />
+      <PrismMac onLoad={() => setShowCode(true)} />
     </div>
   );
 };
@@ -182,7 +187,7 @@ const NotionPage = ({ post, className }) => {
 const processDisableDatabaseUrl = () => {
   if (isBrowser) {
     const links = document.querySelectorAll('.notion-table .notion-page-link');
-    links.forEach(link => link.removeAttribute('href'));
+    links.forEach((link) => link.removeAttribute('href'));
   }
 };
 
