@@ -1,5 +1,5 @@
-const BLOG = require('./blog.config')
-const { fontFamilies } = require('./lib/font')
+const BLOG = require('./blog.config');
+const { fontFamilies } = require('./lib/font');
 
 module.exports = {
   content: ['./pages/**/*.js', './components/**/*.js', './layouts/**/*.js', './themes/**/*.js'],
@@ -21,7 +21,7 @@ module.exports = {
         }
       },
       backgroundImage: {
-        'rainbow-divider-dark': 'linear-gradient(90deg, #101414 0%, #101414 50%, transparent 50%, transparent 100%)',
+        'rainbow-divider-dark': 'linear-gradient(90deg, #101414 0%, #101414 50%, transparent 50%, transparent 100%)'
       },
       maxWidth: {
         side: '14rem',
@@ -29,8 +29,11 @@ module.exports = {
       }
     }
   },
+  future: {
+    hoverOnlyWhenSupported: true
+  },
   variants: {
     extend: {}
   },
   plugins: []
-}
+};
