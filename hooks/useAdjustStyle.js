@@ -2,7 +2,7 @@ import { useGlobal } from '@/hooks/useGlobal';
 import { useEffect } from 'react';
 
 const useAdjustStyle = () => {
-  const { isDarkMode } = useGlobal()
+  const { isDarkMode } = useGlobal();
 
   // 避免 callout 含有图片时溢出撑开父容器
   useEffect(() => {
@@ -20,10 +20,18 @@ const useAdjustStyle = () => {
       });
     };
 
-    adjustCalloutImg();
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'childList') {
+          adjustCalloutImg();
+        }
+      });
+    });
 
+    observer.observe(document.body, { childList: true, subtree: true });
     window.addEventListener('resize', adjustCalloutImg);
     return () => {
+      observer.disconnect();
       window.removeEventListener('resize', adjustCalloutImg);
     };
   }, []);
@@ -35,7 +43,7 @@ const useAdjustStyle = () => {
 
     const changeWidgetsColor = () => {
       const iframes = document.querySelectorAll('.notion-asset-wrapper iframe');
-      iframes.forEach(iframe => {
+      iframes.forEach((iframe) => {
         const hostname = new URL(iframe.src).hostname;
         if (hostname.includes(subdomain)) {
           iframe.contentWindow.postMessage(color, '*');
@@ -53,28 +61,28 @@ const useAdjustStyle = () => {
 
   // 强行移除 react-notion-x 表格表头第一行样式
   useEffect(() => {
-    const targetCss = `${window.location.origin}/_next/static/css/`
+    const targetCss = `${window.location.origin}/_next/static/css/`;
 
     for (let i = 0; i < document.styleSheets.length; i++) {
-      const styleSheet = document.styleSheets[i]
+      const styleSheet = document.styleSheets[i];
       if (styleSheet?.href?.startsWith(targetCss)) {
         try {
-          const rules = styleSheet.cssRules
+          const rules = styleSheet.cssRules;
           for (let j = 0; j < rules.length; j++) {
-            const rule = rules[j]
+            const rule = rules[j];
             if (rule.selectorText === '.notion-simple-table tr:first-child td') {
-              styleSheet.deleteRule(j)
-              break
+              styleSheet.deleteRule(j);
+              break;
             }
           }
         } catch (error) {
-          console.error('Error accessing stylesheet:', error, styleSheet.href)
+          console.error('Error accessing stylesheet:', error, styleSheet.href);
         }
       }
     }
 
-    return () => {}
-  }, [])
+    return () => {};
+  }, []);
 };
 
 export default useAdjustStyle;
