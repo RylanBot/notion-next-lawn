@@ -71,7 +71,7 @@ const Hero = (props) => {
   }, [showHero]);
 
   return (
-    <div id="lawn-header" style={{ zIndex: 1 }} className="relative bg-white w-full h-screen">
+    <div id="lawn-header" className="relative bg-white w-full h-screen">
       {/* 首页大图 */}
       <LazyImage
         id="lawn-header-cover"

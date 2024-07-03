@@ -40,15 +40,6 @@ const TopNav = (props) => {
     changeShow(false);
   };
 
-  // 监听滚动
-  useEffect(() => {
-    scrollTrigger();
-    window.addEventListener('scroll', scrollTrigger);
-    return () => {
-      window.removeEventListener('scroll', scrollTrigger);
-    };
-  }, []);
-
   const throttleMs = 200;
 
   const scrollTrigger = useCallback(
@@ -92,8 +83,17 @@ const TopNav = (props) => {
         nav && nav.classList.replace('-top-20', 'top-0');
         windowTop = scrollS;
       }
-    }, throttleMs)
+    }, throttleMs),
+    [router.route]
   );
+
+  useEffect(() => {
+    scrollTrigger();
+    window.addEventListener('scroll', scrollTrigger);
+    return () => {
+      window.removeEventListener('scroll', scrollTrigger);
+    };
+  }, [scrollTrigger]);
 
   const searchDrawerSlot = (
     <>
@@ -140,7 +140,7 @@ const TopNav = (props) => {
   );
 
   return (
-    <nav id="lawn-top-nav" style={{ zIndex: 1001 }}>
+    <nav id="lawn-top-nav">
       <SearchDrawer cRef={searchDrawer} slot={searchDrawerSlot} />
 
       {/* 导航栏 */}

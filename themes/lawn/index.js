@@ -62,7 +62,7 @@ export const LayoutBase = (props) => {
     <Hero {...props} />
   ) : null;
 
-  const [SHOW_NAV, SET_SHOW_NAV] = useState(false);
+  const [showNav, setShowNav] = useState(false);
 
   const drawerRight = useRef(null);
   const searchModal = useRef(null);
@@ -83,14 +83,16 @@ export const LayoutBase = (props) => {
   );
 
   useEffect(() => {
+    let timer;
     if (router.pathname === '/') {
-      setTimeout(() => {
-        SET_SHOW_NAV(true);
+      timer = setTimeout(() => {
+        setShowNav(true);
       }, 300);
     } else {
-      SET_SHOW_NAV(true);
+      setShowNav(true);
     }
-  }, [router.pathname]);
+    return () => clearTimeout(timer);
+  }, [router]);
 
   return (
     <ThemeGlobalLawn.Provider value={{ SEARCH_MODAL: searchModal }}>
@@ -100,21 +102,21 @@ export const LayoutBase = (props) => {
 
         {/* 顶部嵌入 */}
         <header>
-          {SHOW_NAV && <TopNav {...props} />}
+          {showNav && <TopNav {...props} />}
           {headerSlot}
         </header>
 
         {/* 主区块 */}
         <main
           id="lawn-main-wrapper"
-          className={`${
+          className={`bg-lawn-background-gray dark:bg-black w-full py-8 md:px-8 lg:px-24 min-h-screen relative ${
             LAWN_HOME_BANNER_ENABLE ? 'pt-16' : ''
-          } bg-lawn-background-gray dark:bg-black w-full py-8 md:px-8 lg:px-24 min-h-screen relative `}
+          }`}
         >
           <div
-            className={`${
+            className={`w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10 ${
               LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : ''
-            } w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10`}
+            }`}
           >
             <div className={`w-full h-full overflow-hidden ${fullWidth ? 'max-w-4xl' : ''}`}>
               {slotTop}
@@ -184,12 +186,11 @@ export const LayoutSearch = (props) => {
         <SearchNav {...props} />
       ) : (
         <div id="posts-wrapper">
-          {' '}
           {siteConfig('POST_LIST_STYLE') === 'page' ? (
             <BlogPostListPage {...props} />
           ) : (
             <BlogPostListScroll {...props} />
-          )}{' '}
+          )}
         </div>
       )}
     </div>
@@ -223,14 +224,14 @@ export const LayoutSlug = (props) => {
   const { post, lock, validPassword } = props;
 
   useEffect(() => {
-    const observer = new MutationObserver((mutationsList, observer) => {
+    const observer = new MutationObserver(() => {
       const topNav = document.querySelector('#lawn-top-nav');
-      if (topNav) {
-        if (post) {
-          topNav.classList.remove('hidden');
-        } else {
-          topNav.classList.add('hidden');
-        }
+      const notFound = document.querySelector('#lawn-404');
+
+      if (post || notFound) {
+        topNav?.classList.remove('hidden');
+      } else {
+        topNav?.classList.add('hidden');
       }
     });
 
@@ -239,39 +240,37 @@ export const LayoutSlug = (props) => {
   }, [post]);
 
   return (
-    <>
-      <div className="article w-full lg:hover:shadow rounded-t-xl lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-lawn-black-gray lg:border-2 border-teal-600 dark:border-teal-500">
-        {lock && <ArticleLock validPassword={validPassword} />}
+    <div className="article w-full lg:hover:shadow rounded-t-xl lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-lawn-black-gray lg:border-2 border-teal-600 dark:border-teal-500">
+      {lock && <ArticleLock validPassword={validPassword} />}
 
-        {!lock && (
-          <div id="article-wrapper" className="overflow-x-auto flex-grow mx-auto md:w-full md:px-5 ">
-            <article itemScope itemType="https://schema.org/Movie" className="subpixel-antialiased overflow-y-hidden">
-              {/* Notion文章主体 */}
-              <section className="px-5 justify-center mx-auto max-w-2xl lg:max-w-full">
-                {post && <NotionPage post={post} />}
-              </section>
+      {!lock && (
+        <div id="article-wrapper" className="overflow-x-auto flex-grow mx-auto md:w-full md:px-5 ">
+          <article itemScope itemType="https://schema.org/Blog" className="subpixel-antialiased overflow-y-hidden">
+            {/* 文章主体 */}
+            <section className="px-5 justify-center mx-auto max-w-2xl lg:max-w-full">
+              {post && <NotionPage post={post} />}
+            </section>
 
-              {/* 分享 */}
-              <ShareBar post={post} />
-              {post?.type === 'Post' && (
-                <>
-                  <ArticleCopyright {...props} />
-                  <ArticleRecommend {...props} />
-                  <ArticleAdjacent {...props} />
-                </>
-              )}
-            </article>
+            {/* 分享 */}
+            <ShareBar post={post} />
+            {post?.type === 'Post' && (
+              <>
+                <ArticleCopyright {...props} />
+                <ArticleRecommend {...props} />
+                <ArticleAdjacent {...props} />
+              </>
+            )}
+          </article>
 
-            <div className="pt-4 border-dashed"></div>
+          <div className="pt-4 border-dashed"></div>
 
-            {/* 评论互动 */}
-            <div className="duration-200 overflow-x-auto bg-white dark:bg-lawn-black-gray px-3">
-              <Comment frontMatter={post} />
-            </div>
+          {/* 评论互动 */}
+          <div className="duration-200 overflow-x-auto bg-white dark:bg-lawn-black-gray px-3">
+            <Comment frontMatter={post} />
           </div>
-        )}
-      </div>
-    </>
+        </div>
+      )}
+    </div>
   );
 };
 
@@ -282,6 +281,15 @@ export const Layout404 = (props) => {
   const router = useRouter();
   const [from, setFrom] = useState(null);
 
+  const handleReload = () => {
+    try {
+      new URL(from);
+      router.push(from);
+    } catch (err) {
+      router.push('/');
+    }
+  };
+
   useEffect(() => {
     if (router.query.from) {
       setFrom(router.query.from);
@@ -289,7 +297,7 @@ export const Layout404 = (props) => {
   }, [router.query.from]);
 
   return (
-    <div className="w-full h-screen flex justify-center items-center flex-col">
+    <div id="lawn-404" className="w-full h-screen flex justify-center items-center flex-col">
       <div className="flex justify-center items-center dark:text-white">
         <span className="px-3 border-r-2">Error</span>
         <span className="px-3 border-r-2">页面不存在</span>
@@ -298,7 +306,7 @@ export const Layout404 = (props) => {
       </div>
       {from && (
         <i
-          onClick={() => router.replace(from)}
+          onClick={handleReload}
           className="cursor-pointer fa-solid fa-arrows-rotate mx-2 my-6 p-2 rounded-full bg-teal-400 hover:bg-teal-500 text-white"
         ></i>
       )}
