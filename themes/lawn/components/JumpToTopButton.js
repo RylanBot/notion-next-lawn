@@ -10,25 +10,21 @@ import CONFIG from '../config';
  * @param showPercent 是否显示百分比
  */
 const JumpToTopButton = ({ showPercent = true, percent }) => {
-  const { locale } = useGlobal()
+  const { locale } = useGlobal();
 
   if (!siteConfig('LAWN_WIDGET_TO_TOP', null, CONFIG)) {
-    return <></>
+    return <></>;
   }
 
   return (
-    <div className='space-x-1 items-center justify-center w-7 h-auto text-center'
-      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-    >
-      <div className='group right-float-tooltip-parent'>
-        <i className='fas fa-arrow-up text-xs' />
-        <span className='right-float-tooltip -left-2'>
-          {locale.POST.TOP}
-        </span>
+    <div className="space-x-1 items-center justify-center w-7 h-auto text-center">
+      <div className="group right-float-tooltip-parent">
+        <i onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="fas fa-arrow-up text-xs" />
+        <span className="right-float-tooltip -left-2">{locale.POST.TOP}</span>
       </div>
-      {showPercent && <div className='text-xs hidden lg:block'>{percent}</div>}
+      {showPercent && <div className="text-xs hidden lg:block">{percent}</div>}
     </div>
-  )
-}
+  );
+};
 
-export default JumpToTopButton
+export default JumpToTopButton;
