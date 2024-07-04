@@ -116,8 +116,8 @@ const Comment = ({ siteInfo, frontMatter, className }) => {
             style={{ width: '50vmin', height: '50vmin' }}
           >
             <LazyImage
-              src="./favicon.png"
-              placeholderSrc="./favicon.png"
+              src="/favicon.png"
+              placeholderSrc="/favicon.png"
               className="animate-blink relative rounded-full w-full h-full bg-white"
             />
             {/* 小圆形固定在大圆形的右下角 */}
