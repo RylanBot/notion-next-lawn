@@ -196,16 +196,21 @@ const renderMermaid = async (mermaidCDN) => {
 };
 
 /**
- * @author https://github.com/RylanBot/
- * 代码块类型为 Html, CSS, JS
- * 且第一行出现注释 <!-- custom -->, \* custom *\, // custom
- * 则自动替换，将内容替换为实际代码执行
- * 1. 第二个对应 css 注释写法, 这里无法正常打出, notion 代码块中正常使用左斜杠 / 即可
+ * 类型为 Html / CSS / JS 的代码块第一行出现注释：
+ * `<!-- custom -->`, `\* custom *\`, `// custom`，
+ * 自动将内容替换为实际代码执行
+ * 1. 第二个对应 CSS 注释写法, 这里无法正常打出, notion 中正常使用左斜杠 / 即可
  * 2. 空格不能少
+ * @author https://github.com/RylanBot/
  */
 const renderCustomCode = () => {
   return new Promise((resolve) => {
     const toolbars = document.querySelectorAll('div.code-toolbar');
+
+    if (toolbars.length === 0) {
+      resolve();
+      return;
+    }
 
     const processCodeElement = (codeElement, language) => {
       const firstChild = codeElement.firstChild;

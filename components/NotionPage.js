@@ -158,7 +158,7 @@ const NotionPage = ({ post, className }) => {
   return (
     <div
       id="notion-article"
-      className={`mx-auto overflow-hidden transition duration-500 ease-in-out ${
+      className={`mx-auto overflow-hidden transition duration-100 ease-in-out ${
         !showCode ? 'opacity-0' : 'opacity-100'
       } ${className || ''}`}
     >
