@@ -86,7 +86,7 @@ const Hero = (props) => {
       <div className="absolute inset-0 bg-black opacity-10 z-10"></div>
 
       {showHero && (
-        <div className="text-white absolute bottom-0 flex flex-col h-full items-center justify-center w-full z-20">
+        <div className="text-white absolute bottom-0 flex flex-col h-full items-center justify-center w-full">
           {/* 站点标题 */}
           <div className="text-center font-black text-7xl lg:text-8xl shadow-text">{TITLE}</div>
 
