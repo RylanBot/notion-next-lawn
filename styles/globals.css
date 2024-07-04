@@ -3,9 +3,18 @@
 @tailwind utilities;
 
 :root {
-  --twikoo-teal: #55ae99;
+  --theme-color-teal: #17cfbb;
   --waline-theme-color: #55ae99 !important;
   --waline-avatar-radius: 3px !important;
+}
+
+*::selection {
+  background: var(--theme-color-teal) !important;
+  color: white;
+}
+*::-moz-selection {
+  background: var(--theme-color-teal) !important;
+  color: white;
 }
 
 .wrapper {
@@ -169,21 +178,21 @@ nav {
 }
 
 .el-input__inner:focus {
-  border-color: var(--twikoo-teal) !important;
+  border-color: var(--theme-color-teal) !important;
 }
 
 .el-textarea__inner:focus {
-  border-color: var(--twikoo-teal) !important;
+  border-color: var(--theme-color-teal) !important;
 }
 
 .twikoo svg {
-  color: var(--twikoo-teal);
+  color: var(--theme-color-teal);
 }
 
 .tk-preview {
-  border: 1px var(--twikoo-teal) solid !important;
+  border: 1px var(--theme-color-teal) solid !important;
   background-color: #f0f9eb !important;
-  color: var(--twikoo-teal) !important;
+  color: var(--theme-color-teal) !important;
 }
 
 .tk-preview :hover {
@@ -191,7 +200,7 @@ nav {
 }
 
 .tk-send {
-  background-color: var(--twikoo-teal) !important;
+  background-color: var(--theme-color-teal) !important;
   border: none !important;
 }
 

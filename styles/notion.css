@@ -84,10 +84,6 @@
   margin-block-end: 0;
 }
 
-.notion *::selection {
-  background: var(--select-color-1);
-}
-
 .notion *,
 .notion *:focus {
   outline: 0;
