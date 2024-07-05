@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { createContext, useContext, useEffect, useRef, useState } from 'react';
+import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
 
 import { useGlobal } from '@/hooks/useGlobal';
 import { siteConfig } from '@/lib/config';
@@ -278,38 +278,21 @@ export const LayoutSlug = (props) => {
  * 404
  */
 export const Layout404 = (props) => {
-  const router = useRouter();
-  const [from, setFrom] = useState(null);
-
-  const handleReload = () => {
-    try {
-      new URL(from);
-      router.push(from);
-    } catch (err) {
-      router.push('/');
-    }
-  };
-
-  useEffect(() => {
-    if (router.query.from) {
-      setFrom(router.query.from);
-    }
-  }, [router.query.from]);
+  const { locale } = useGlobal();
 
   return (
     <div id="lawn-404" className="w-full h-screen flex justify-center items-center flex-col">
-      <div className="flex justify-center items-center dark:text-white">
-        <span className="px-3 border-r-2">Error</span>
-        <span className="px-3 border-r-2">页面不存在</span>
-        <span className="px-3 border-r-2">渲染超时</span>
-        <span className="px-3">尝试重新打开</span>
+      <div className="flex justify-center items-center dark:text-gray-200 text-xl max-md:text-sm">
+        <span className="px-3 border-r-2 font-bold text-gray-600 dark:text-white">Error</span>
+        <span className="px-3 flex">
+          {locale.COMMON.ERROR_INFO.split(' | ').map((part, index, array) => (
+            <React.Fragment key={index}>
+              {part}
+              {index < array.length - 1 && <span className="border-r-2 text-gray-300 mx-3"></span>}
+            </React.Fragment>
+          ))}
+        </span>
       </div>
-      {from && (
-        <i
-          onClick={handleReload}
-          className="cursor-pointer fa-solid fa-arrows-rotate mx-2 my-6 p-2 rounded-full bg-teal-400 hover:bg-teal-500 text-white"
-        ></i>
-      )}
     </div>
   );
 };

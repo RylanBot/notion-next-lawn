@@ -17,8 +17,6 @@ import { getLayoutByTheme } from '@/themes/theme';
 /**
  * 根据notion的slug访问页面
  * 只解析一级目录例如 /about
- * @param {*} props
- * @returns
  */
 const Slug = props => {
   const { post, siteInfo } = props;
@@ -47,10 +45,7 @@ const Slug = props => {
             console.warn('Try to reload: ', router.asPath);
             router.replace(router.asPath);
           } else {
-            router.push({
-              pathname: '/404',
-              query: { from: router.asPath }
-            })
+            router.push('/404')
           }
         }
       }, siteConfig('POST_WAITING_TIME_FOR_404') * 1000);
