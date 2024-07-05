@@ -93,9 +93,8 @@ nav {
 }
 
 .shadow-card {
-  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px,
-    rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px,
-    rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px,
+    rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
 }
 
 .gt-meta {
@@ -236,8 +235,7 @@ nav {
 }
 
 #wl-edit {
-  background: url('https://s2.loli.net/2024/01/30/pyLsmawvQ8hT4CH.png') 100%
-    100% no-repeat;
+  background: url('https://s2.loli.net/2024/01/30/pyLsmawvQ8hT4CH.png') 100% 100% no-repeat;
   background-size: contain !important;
   background-repeat: no-repeat !important;
   background-position: right bottom !important;
@@ -335,23 +333,20 @@ a.avatar-wrapper {
 }
 
 .right-float-tooltip-parent {
-  @apply cursor-pointer hover:bg-opacity-10 rounded-full flex justify-center items-center duration-200 transition-all relative
+
+  @apply cursor-pointer hover:bg-opacity-10 rounded-full flex justify-center items-center duration-200 transition-all relative;
 }
 
-/* 默认情况下隐藏 Tooltip */
 .right-float-tooltip {
-  @apply hidden text-xs absolute w-16 transform -translate-x-full bg-teal-500 dark:bg-teal-600 text-white p-2 rounded-md transition-opacity duration-200;
+  @apply hidden w-24 text-xs text-center absolute transform -translate-x-full bg-teal-500 dark:bg-teal-600 text-white p-2 rounded-md transition-opacity duration-200;
 }
 
-/* 仅在非触摸设备上应用悬停效果 */
-@media (hover: hover) and (pointer: fine) {
-  .group:hover .right-float-tooltip {
-    @apply block;
-  }
+.group:hover .right-float-tooltip {
+  @apply inline-block;
 }
 
 .right-float-tooltip::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 50%;
   left: 100%;
@@ -359,5 +354,5 @@ a.avatar-wrapper {
   border-width: 5px;
   border-style: solid;
   border-color: transparent;
-  @apply border-l-teal-500 dark:border-l-teal-600
+  @apply border-l-teal-500 dark:border-l-teal-600;
 }
