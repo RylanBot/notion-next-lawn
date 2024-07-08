@@ -246,10 +246,10 @@ const renderCustomCode = () => {
           }
 
           const codeToolbar = codeElement.closest('div.code-toolbar');
-          if (codeToolbar) {
-            const toolbarParent = codeToolbar.parentNode;
-            if (toolbarParent && toolbarParent.contains(codeToolbar)) {
-              toolbarParent.insertBefore(newElement, codeToolbar);
+          const toolbarParent = codeToolbar?.parentNode;
+          if (toolbarParent) {
+            toolbarParent.insertBefore(newElement, codeToolbar);
+            if (toolbarParent.contains(codeToolbar)) {
               toolbarParent.removeChild(codeToolbar);
             }
           }

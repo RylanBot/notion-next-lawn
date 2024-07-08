@@ -34,6 +34,7 @@
     "react-cookies": "^0.1.1",
     "react-dom": "^18.2.0",
     "react-facebook": "^8.1.4",
+    "react-loading-skeleton": "^3.4.0",
     "react-notion-x": "6.16.0",
     "react-share": "^4.4.1",
     "react-tweet-embed": "~2.0.0",

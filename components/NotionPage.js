@@ -5,6 +5,9 @@ import { NotionRenderer } from 'react-notion-x';
 import mediumZoom from '@fisch0920/medium-zoom';
 import 'katex/dist/katex.min.css';
 
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
+
 import { siteConfig } from '@/lib/config';
 import { compressImage, mapImgUrl } from '@/lib/notion/mapImage';
 import { isBrowser } from '@/lib/utils';
@@ -156,28 +159,34 @@ const NotionPage = ({ post, className }) => {
   }
 
   return (
-    <div
-      id="notion-article"
-      className={`mx-auto overflow-hidden transition duration-100 ease-in-out ${
-        !showCode ? 'opacity-0' : 'opacity-100'
-      } ${className || ''}`}
-    >
-      <NotionRenderer
-        recordMap={post.blockMap}
-        mapPageUrl={mapPageUrl}
-        mapImageUrl={mapImgUrl}
-        components={{
-          Code,
-          Collection,
-          Equation,
-          Modal,
-          Pdf,
-          Tweet
-        }}
-      />
-
-      <PrismMac onLoad={() => setShowCode(true)} />
-    </div>
+    <>
+      {!showCode && (
+        <div id="notion-skeleton" className="mt-4">
+          <Skeleton className="mt-4" height={30} count={15} />
+        </div>
+      )}
+      <div
+        id="notion-article"
+        className={`mx-auto overflow-hidden transition duration-100 ease-in-out ${
+          !showCode ? 'opacity-0 h-0' : 'opacity-100 h-auto'
+        } ${className || ''}`}
+      >
+        <NotionRenderer
+          recordMap={post.blockMap}
+          mapPageUrl={mapPageUrl}
+          mapImageUrl={mapImgUrl}
+          components={{
+            Code,
+            Collection,
+            Equation,
+            Modal,
+            Pdf,
+            Tweet
+          }}
+        />
+        <PrismMac onLoad={() => setShowCode(true)} />
+      </div>
+    </>
   );
 };
 
