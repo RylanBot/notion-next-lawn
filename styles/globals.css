@@ -166,60 +166,6 @@ nav {
   margin: -0.125em 0.25em;
 }
 
-/* ----- twikoo START ----- */
-
-.el-loading-spinner {
-  @apply flex justify-center items-center;
-}
-
-.el-loading-spinner .path {
-  filter: hue-rotate(315deg);
-}
-
-.el-input__inner:focus {
-  border-color: var(--theme-color-teal) !important;
-}
-
-.el-textarea__inner:focus {
-  border-color: var(--theme-color-teal) !important;
-}
-
-.twikoo svg {
-  color: var(--theme-color-teal);
-}
-
-.tk-preview {
-  border: 1px var(--theme-color-teal) solid !important;
-  background-color: #f0f9eb !important;
-  color: var(--theme-color-teal) !important;
-}
-
-.tk-preview :hover {
-  color: #2f8d77 !important;
-}
-
-.tk-send {
-  background-color: var(--theme-color-teal) !important;
-  border: none !important;
-}
-
-/* 评论区超链接样式 */
-.tk-main a {
-  @apply text-teal-500;
-}
-
-.tk-main a:hover {
-  @apply text-teal-700;
-}
-
-/* 输入框背景图片 */
-.tk-input textarea {
-  background-size: contain;
-  height: 105px !important;
-}
-
-/* ----- twikoo END ----- */
-
 /* ----- waline START -----*/
 
 .wl-header {

@@ -6,6 +6,9 @@ import { useEffect } from 'react';
 import { siteConfig } from '@/lib/config';
 import { loadExternalResource } from '@/lib/utils';
 
+/**
+ * 网站流量分析工具
+ */
 const Ackee = () => {
   const router = useRouter();
   const server = siteConfig('ANALYTICS_ACKEE_DATA_SERVER');
@@ -26,19 +29,19 @@ const Ackee = () => {
       },
       {
         /*
-                 * Enable or disable tracking of personal data.
-                 * We recommend to ask the user for permission before turning this option on.
-                 */
+         * Enable or disable tracking of personal data.
+         * We recommend to ask the user for permission before turning this option on.
+         */
         detailed: true,
         /*
-                * Enable or disable tracking when on localhost.
-                */
+         * Enable or disable tracking when on localhost.
+         */
         ignoreLocalhost: false,
         /*
-                * Enable or disable the tracking of your own visits.
-                * This is enabled by default, but should be turned off when using a wildcard Access-Control-Allow-Origin header.
-                * Some browsers strictly block third-party cookies. The option won't have an impact when this is the case.
-                */
+         * Enable or disable the tracking of your own visits.
+         * This is enabled by default, but should be turned off when using a wildcard Access-Control-Allow-Origin header.
+         * Some browsers strictly block third-party cookies. The option won't have an impact when this is the case.
+         */
         ignoreOwnVisits: false
       }
     );
@@ -68,9 +71,7 @@ const handleAckee = async function (pathname, environment, options = {}) {
     return;
   }
 
-  const hasPathname = (
-    pathname != null && pathname !== ''
-  );
+  const hasPathname = pathname != null && pathname !== '';
 
   if (hasPathname === false) {
     console.warn('Skipped record creation because useAckee has been called without pathname');

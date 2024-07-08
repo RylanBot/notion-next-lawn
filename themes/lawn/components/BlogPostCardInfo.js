@@ -1,8 +1,6 @@
 import Link from 'next/link';
 
-// import { formatDateFmt } from '@/lib/formatDate'
 import NotionPage from '@/components/NotionPage';
-import TwikooCommentCount from '@/components/TwikooCommentCount';
 import { siteConfig } from '@/lib/config';
 
 import TagItemMini from './TagItemMini';
@@ -36,8 +34,6 @@ export const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary
                     <i className="mr-1 far fa-folder" />
                     {post.category}
                 </Link>
-
-                <TwikooCommentCount className='text-sm hover:text-teal-500 dark:hover:text-teal-400' post={post} />
             </div>}
 
             {/* 摘要 */}

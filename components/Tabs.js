@@ -1,13 +1,13 @@
 import { siteConfig } from '@/lib/config';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 /**
- * Tabs切换标签
+ * Tabs 切换标签
  */
 const Tabs = ({ className, children }) => {
   const [currentTab, setCurrentTab] = useState(0);
 
-  const validChildren = children.filter((c) => c);
+  const validChildren = React.Children.toArray(children).filter((c) => c);
   if (validChildren.length === 0) return;
 
   return (

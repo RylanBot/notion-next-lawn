@@ -8,31 +8,24 @@ import { isBrowser, loadExternalResource } from '@/lib/utils';
 
 import { GlobalStyle } from './GlobalStyle';
 import LA51 from './LA51';
-import TianLiGPT from './TianliGPT';
-import WebWhiz from './Webwhiz';
 
 import { CUSTOM_EXTERNAL_CSS, CUSTOM_EXTERNAL_JS } from '@/blog.config';
 
-// const TwikooCommentCounter = dynamic(() => import('@/components/TwikooCommentCounter'), { ssr: false });
 const DebugPanel = dynamic(() => import('@/components/DebugPanel'), { ssr: false });
 const ThemeSwitch = dynamic(() => import('@/components/ThemeSwitch'), { ssr: false });
 const Fireworks = dynamic(() => import('@/components/Fireworks'), { ssr: false });
 const Nest = dynamic(() => import('@/components/Nest'), { ssr: false });
 const FlutteringRibbon = dynamic(() => import('@/components/FlutteringRibbon'), { ssr: false });
 const Ribbon = dynamic(() => import('@/components/Ribbon'), { ssr: false });
-const Sakura = dynamic(() => import('@/components/Sakura'), { ssr: false });
 const StarrySky = dynamic(() => import('@/components/StarrySky'), { ssr: false });
-const DifyChatbot = dynamic(() => import('@/components/DifyChatbot'), { ssr: false });
 const Analytics = dynamic(() => import('@vercel/analytics/react').then(async (m) => { return m.Analytics; }), { ssr: false });
 const MusicPlayer = dynamic(() => import('@/components/Player'), { ssr: false });
 const Ackee = dynamic(() => import('@/components/Ackee'), { ssr: false });
 const Gtag = dynamic(() => import('@/components/Gtag'), { ssr: false });
 const Busuanzi = dynamic(() => import('@/components/Busuanzi'), { ssr: false });
 const GoogleAdsense = dynamic(() => import('@/components/GoogleAdsense'), { ssr: false });
-const Messenger = dynamic(() => import('@/components/FacebookMessenger'), { ssr: false });
 const VConsole = dynamic(() => import('@/components/VConsole'), { ssr: false });
 const CustomContextMenu = dynamic(() => import('@/components/CustomContextMenu'), { ssr: false });
-const DisableCopy = dynamic(() => import('@/components/DisableCopy'), { ssr: false });
 const AdBlockDetect = dynamic(() => import('@/components/AdBlockDetect'), { ssr: false });
 const AosAnimation = dynamic(() => import('@/components/AOSAnimation'), { ssr: false });
 
@@ -52,24 +45,17 @@ const ExternalPlugin = (props) => {
   const FACEBOOK_APP_ID = siteConfig('FACEBOOK_APP_ID');
   const FACEBOOK_PAGE_ID = siteConfig('FACEBOOK_PAGE_ID');
   const FIREWORKS = siteConfig('FIREWORKS');
-  const SAKURA = siteConfig('SAKURA');
   const STARRY_SKY = siteConfig('STARRY_SKY');
   const MUSIC_PLAYER = siteConfig('MUSIC_PLAYER');
   const NEST = siteConfig('NEST');
   const FLUTTERINGRIBBON = siteConfig('FLUTTERINGRIBBON');
-  const COMMENT_TWIKOO_COUNT_ENABLE = siteConfig('COMMENT_TWIKOO_COUNT_ENABLE');
   const RIBBON = siteConfig('RIBBON');
   const CUSTOM_RIGHT_CLICK_CONTEXT_MENU = siteConfig('CUSTOM_RIGHT_CLICK_CONTEXT_MENU');
   const CAN_COPY = siteConfig('CAN_COPY');
   const WEB_WHIZ_ENABLED = siteConfig('WEB_WHIZ_ENABLED');
   const AD_WWADS_BLOCK_DETECT = siteConfig('AD_WWADS_BLOCK_DETECT');
-  const CHATBASE_ID = siteConfig('CHATBASE_ID');
   const COMMENT_DAO_VOICE_ID = siteConfig('COMMENT_DAO_VOICE_ID');
   const AD_WWADS_ID = siteConfig('AD_WWADS_ID');
-  const COMMENT_TWIKOO_ENV_ID = siteConfig('COMMENT_TWIKOO_ENV_ID');
-  const COMMENT_TWIKOO_CDN_URL = siteConfig('COMMENT_TWIKOO_CDN_URL');
-  const COMMENT_ARTALK_SERVER = siteConfig('COMMENT_ARTALK_SERVER');
-  const COMMENT_ARTALK_JS = siteConfig('COMMENT_ARTALK_JS');
   const COMMENT_TIDIO_ID = siteConfig('COMMENT_TIDIO_ID');
   const COMMENT_GITTER_ROOM = siteConfig('COMMENT_GITTER_ROOM');
   const ANALYTICS_BAIDU_ID = siteConfig('ANALYTICS_BAIDU_ID');
@@ -79,8 +65,6 @@ const ExternalPlugin = (props) => {
   const MATOMO_SITE_ID = siteConfig('MATOMO_SITE_ID');
   const ANALYTICS_51LA_ID = siteConfig('ANALYTICS_51LA_ID');
   const ANALYTICS_51LA_CK = siteConfig('ANALYTICS_51LA_CK');
-  const DIFY_CHATBOT_ENABLED = siteConfig('DIFY_CHATBOT_ENABLED');
-  const TIANLI_KEY = siteConfig('TianliGPT_KEY');
   const GLOBAL_JS = siteConfig('GLOBAL_JS');
   const CLARITY_ID = siteConfig('CLARITY_ID');
 
@@ -132,19 +116,13 @@ const ExternalPlugin = (props) => {
     {ADSENSE_GOOGLE_ID && <GoogleAdsense />}
     {FACEBOOK_APP_ID && FACEBOOK_PAGE_ID && <Messenger />}
     {FIREWORKS && <Fireworks />}
-    {SAKURA && <Sakura />}
     {STARRY_SKY && <StarrySky />}
     {MUSIC_PLAYER && <MusicPlayer />}
     {NEST && <Nest />}
     {FLUTTERINGRIBBON && <FlutteringRibbon />}
-    {/* {COMMENT_TWIKOO_COUNT_ENABLE && <TwikooCommentCounter {...props} />} */}
     {RIBBON && <Ribbon />}
-    {DIFY_CHATBOT_ENABLED && <DifyChatbot />}
     {CUSTOM_RIGHT_CLICK_CONTEXT_MENU && <CustomContextMenu {...props} />}
-    {!CAN_COPY && <DisableCopy />}
-    {WEB_WHIZ_ENABLED && <WebWhiz />}
     {AD_WWADS_BLOCK_DETECT && <AdBlockDetect />}
-    {TIANLI_KEY && <TianLiGPT />}
     <VConsole />
     <AosAnimation />
     {ANALYTICS_51LA_ID && ANALYTICS_51LA_CK && <LA51 />}
@@ -156,17 +134,6 @@ const ExternalPlugin = (props) => {
                     LA.init({id:"${ANALYTICS_51LA_ID}",ck:"${ANALYTICS_51LA_CK}",hashMode:true,autoTrack:true})
                     `
             }} /> */}
-    </>)}
-
-    {CHATBASE_ID && (<>
-      <script id={CHATBASE_ID} src="https://www.chatbase.co/embed.min.js" defer />
-      <script async dangerouslySetInnerHTML={{
-        __html: `
-                    window.chatbaseConfig = {
-                        chatbotId: "${CHATBASE_ID}",
-                        }
-                    `
-      }} />
     </>)}
 
     {CLARITY_ID && (<>
@@ -201,10 +168,6 @@ const ExternalPlugin = (props) => {
     </>)}
 
     {AD_WWADS_ID && <script type="text/javascript" src="https://cdn.wwads.cn/js/makemoney.js" async></script>}
-
-    {COMMENT_TWIKOO_ENV_ID && <script defer src={COMMENT_TWIKOO_CDN_URL} />}
-
-    {COMMENT_ARTALK_SERVER && <script defer src={COMMENT_ARTALK_JS} />}
 
     {COMMENT_TIDIO_ID && <script async src={`//code.tidio.co/${COMMENT_TIDIO_ID}.js`} />}
 

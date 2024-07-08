@@ -17,18 +17,6 @@ import LatestPostsGroup from './LatestPostsGroup';
 import TagGroups from './TagGroups';
 
 // const LawnRecentComments = dynamic(() => import('./LawnRecentComments'))
-const FaceBookPage = dynamic(
-  () => {
-    let facebook = <></>;
-    try {
-      facebook = import('@/components/FacebookPage');
-    } catch (err) {
-      console.error(err);
-    }
-    return facebook;
-  },
-  { ssr: false }
-);
 
 /**
  * 主题右侧栏
@@ -131,8 +119,6 @@ export default function SideRight(props) {
             <Announcement post={notice} className="mt-8" />
 
             {/* {siteConfig('COMMENT_WALINE_SERVER_URL') && siteConfig('COMMENT_WALINE_RECENT') && <LawnRecentComments />} */}
-
-            <FaceBookPage />
           </div>
 
           {/* sticky 元素应该是可滚动元素的直接子元素，否则不生效 */}
