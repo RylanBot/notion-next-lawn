@@ -16,7 +16,7 @@ let wrapperTop = 0;
  */
 const Hero = (props) => {
   const { siteInfo } = props;
-  const { locale, setOnLoading } = useGlobal();
+  const { locale, onLoading, setOnLoading } = useGlobal();
 
   const TITLE = siteConfig('TITLE');
   const GREETING_WORDS = siteConfig('GREETING_WORDS').split(',');
@@ -45,6 +45,13 @@ const Hero = (props) => {
 
   useEffect(() => {
     setOnLoading(true);
+
+    const timeout = setTimeout(() => {
+      if (onLoading) {
+        handleCoverLoaded();
+      }
+    }, 10000);
+    return () => clearTimeout(timeout);
   }, []);
 
   useEffect(() => {
