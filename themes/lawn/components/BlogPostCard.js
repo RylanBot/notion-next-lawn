@@ -1,4 +1,3 @@
-
 import LazyImage from '@/components/LazyImage';
 import { siteConfig } from '@/lib/config';
 
@@ -6,7 +5,7 @@ import CONFIG from '../config';
 import { BlogPostCardInfo } from './BlogPostCardInfo';
 
 /**
- * 首页博客小卡片
+ * 首页文章小卡片
  */
 const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
   const showPreview = siteConfig('LAWN_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap;
@@ -33,7 +32,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                 {/* 图片封面 */}
                 {showPageCover && (
                     <div className={`md:w-5/12 overflow-hidden border-dashed border-teal-600 dark:border-teal-500 ${index % 2 === 0 ? 'lg:border-l-2' : 'lg:border-r-2'} max-md:border-b-2`}>
-                        <LazyImage priority={index === 1} src={post?.pageCoverThumbnail} className='h-64 w-full object-cover object-center group-hover:scale-110 duration-500 border-1 border-dashed border-teal-600' />
+                        <LazyImage priority={index === 1} src={post?.pageCoverThumbnail} className='h-64 w-full object-cover object-center border-1 border-dashed border-teal-600' />
                     </div>
                 )}
             </div>
