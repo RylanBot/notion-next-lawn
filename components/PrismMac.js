@@ -119,8 +119,7 @@ const renderCollapseCode = (codeCollapse, codeCollapseExpandDefault) => {
     const collapseWrapper = document.createElement('div');
     collapseWrapper.className = 'collapse-wrapper w-full py-2';
     const panelWrapper = document.createElement('div');
-    panelWrapper.className =
-      'border dark:border-gray-600 rounded-md hover:border-teal-500 duration-200 transition-colors';
+    panelWrapper.className = 'border dark:border-gray-600 rounded-md hover:border-teal-500 duration-200 transition-colors';
 
     const header = document.createElement('div');
     header.className = 'flex justify-between items-center px-4 py-2 cursor-pointer select-none';
@@ -156,7 +155,7 @@ const renderCollapseCode = (codeCollapse, codeCollapseExpandDefault) => {
 };
 
 /**
- * 将 mermaid 语言 渲染成图片
+ * 将 mermaid 语言渲染成图片
  */
 const renderMermaid = async (mermaidCDN) => {
   const observer = new MutationObserver(async (mutationsList) => {
@@ -182,6 +181,9 @@ const renderMermaid = async (mermaidCDN) => {
             loadExternalResource(mermaidCDN, 'js').then((url) => {
               setTimeout(() => {
                 const mermaid = window.mermaid;
+                mermaid?.initialize({
+                  theme: 'neutral'
+                });
                 mermaid?.contentLoaded();
               }, 100);
             });
