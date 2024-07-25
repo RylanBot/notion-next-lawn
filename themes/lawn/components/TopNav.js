@@ -88,9 +88,21 @@ const TopNav = (props) => {
   );
 
   useEffect(() => {
-    scrollTrigger();
+    const comment = document.querySelector('#comment');
+    const observer = new MutationObserver(() => {
+      scrollTrigger();
+    });
+
+    if (comment) {
+      observer.observe(comment, { attributes: true, childList: true, subtree: true });
+    }
+
     window.addEventListener('scroll', scrollTrigger);
+
     return () => {
+      if (comment) {
+        observer.disconnect();
+      }
       window.removeEventListener('scroll', scrollTrigger);
     };
   }, [scrollTrigger]);
@@ -147,9 +159,7 @@ const TopNav = (props) => {
       <div
         id="sticky-nav"
         style={{ backdropFilter: 'blur(3px)' }}
-        className={
-          'top-0 duration-300 transition-all shadow-none fixed bg-none dark:bg-lawn-black-gray dark:text-gray-200 text-black w-full z-20 transform border-transparent dark:border-transparent'
-        }
+        className="top-0 duration-300 transition-all shadow-none fixed bg-none dark:bg-lawn-black-gray dark:text-gray-200 text-black w-full z-20 transform border-transparent dark:border-transparent"
       >
         <div className="w-full flex justify-between items-center px-4 py-2">
           <div className="">

@@ -71,7 +71,7 @@ const Comment = ({ siteInfo, frontMatter, className }) => {
     <div
       id="comment"
       key={frontMatter?.id}
-      className={`comment mt-5 text-gray-800 dark:text-gray-300 ${className && `${className}`}`}
+      className={`comment mt-5 text-gray-800 dark:text-gray-300 ${`${className || ''}`}`}
     >
       <Tabs>
         {COMMENT_WALINE_SERVER_URL && (
