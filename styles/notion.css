@@ -1074,6 +1074,7 @@ code[class*='language-'] {
 
 .notion-toggle > div {
   margin-left: 1.1em;
+  padding-bottom: 25px;
 }
 
 .notion-list-view {
