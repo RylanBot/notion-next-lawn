@@ -279,12 +279,11 @@ a.avatar-wrapper {
 }
 
 .right-float-tooltip-parent {
-
   @apply cursor-pointer hover:bg-opacity-10 rounded-full flex justify-center items-center duration-200 transition-all relative;
 }
 
 .right-float-tooltip {
-  @apply hidden w-24 text-xs text-center absolute transform -translate-x-full bg-teal-500 dark:bg-teal-600 text-white p-2 rounded-md transition-opacity duration-200;
+  @apply hidden max-w-xs whitespace-nowrap text-xs text-center absolute transform -translate-x-full bg-teal-500 dark:bg-teal-600 text-white p-2 rounded-md transition-opacity duration-200;
 }
 
 .group:hover .right-float-tooltip {
