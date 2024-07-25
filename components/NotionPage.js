@@ -58,34 +58,37 @@ const NotionPage = ({ post, className }) => {
 
   const [showCode, setShowCode] = useState(false);
 
+  const zoom =
+    isBrowser &&
+    mediumZoom({
+      container: '.notion-viewport',
+      background: 'rgba(0, 0, 0, 0.2)',
+      margin: getMediumZoomMargin()
+    });
+  const zoomRef = useRef(zoom ? zoom.clone() : null);
+
   useEffect(() => {
     autoScrollToTarget();
   }, []);
 
   useEffect(() => {
-    // 相册视图点击禁止跳转，只能放大查看图片
     if (POST_DISABLE_GALLERY_CLICK) {
-      // 针对页面中的gallery视图，点击后是放大图片还是跳转到gallery的内部页面
       processGalleryImg(zoomRef?.current);
     }
 
-    // 页内数据库点击禁止跳转，只能查看
     if (POST_DISABLE_DATABASE_CLICK) {
       processDisableDatabaseUrl();
     }
+  }, [post]);
 
-    /**
-     * 放大查看图片时替换成高清图像
-     */
-    const observer = new MutationObserver((mutationsList, observer) => {
+  useEffect(() => {
+    // 放大查看图片时替换成高清图像
+    const observer = new MutationObserver((mutationsList) => {
       mutationsList.forEach((mutation) => {
         if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
           if (mutation.target.classList.contains('medium-zoom-image--opened')) {
-            // 等待动画完成后替换为更高清的图像
             setTimeout(() => {
-              // 获取该元素的 src 属性
               const src = mutation?.target?.getAttribute('src');
-              //   替换为更高清的图像
               mutation?.target?.setAttribute('src', compressImage(src, siteConfig('IMAGE_ZOOM_IN_WIDTH', 1200)));
             }, 800);
           }
@@ -93,7 +96,6 @@ const NotionPage = ({ post, className }) => {
       });
     });
 
-    // 监视页面元素和属性变化
     observer.observe(document.body, {
       attributes: true,
       subtree: true,
@@ -105,42 +107,11 @@ const NotionPage = ({ post, className }) => {
     };
   }, [post]);
 
-  const zoom =
-    isBrowser &&
-    mediumZoom({
-      container: '.notion-viewport',
-      background: 'rgba(0, 0, 0, 0.2)',
-      margin: getMediumZoomMargin()
-    });
-  const zoomRef = useRef(zoom ? zoom.clone() : null);
-
   useEffect(() => {
-    // 将相册gallery下的图片加入放大功能
-    if (siteConfig('POST_DISABLE_GALLERY_CLICK')) {
-      setTimeout(() => {
-        if (isBrowser) {
-          const imgList = document?.querySelectorAll('.notion-collection-card-cover img');
-          if (imgList && zoomRef.current) {
-            for (let i = 0; i < imgList.length; i++) {
-              zoomRef.current.attach(imgList[i]);
-            }
-          }
-
-          const cards = document.getElementsByClassName('notion-collection-card');
-          for (const e of cards) {
-            e.removeAttribute('href');
-          }
-        }
-      }, 800);
-    }
-
-    /**
-     * 处理页面内连接跳转
-     * 如果链接就是当前网站，则不打开新窗口访问
-     */
+    // 如果链接就是当前网站，则不打开新窗口访问
     if (isBrowser) {
       const currentURL = window.location.origin + window.location.pathname;
-      const allAnchorTags = document.getElementsByTagName('a'); // 或者使用 document.querySelectorAll('a') 获取 NodeList
+      const allAnchorTags = document.getElementsByTagName('a');
       for (const anchorTag of allAnchorTags) {
         if (anchorTag?.target === '_blank') {
           const hrefWithoutQueryHash = anchorTag.href.split('?')[0].split('#')[0];
@@ -191,17 +162,19 @@ const NotionPage = ({ post, className }) => {
 };
 
 /**
- * 页面的数据库链接禁止跳转，只能查看
+ * 数据库视图，禁止跳转到内部页面
  */
 const processDisableDatabaseUrl = () => {
-  if (isBrowser) {
-    const links = document.querySelectorAll('.notion-table .notion-page-link');
-    links.forEach((link) => link.removeAttribute('href'));
-  }
+  setTimeout(() => {
+    if (isBrowser) {
+      const links = document.querySelectorAll('.notion-table .notion-page-link');
+      links.forEach((link) => link.removeAttribute('href'));
+    }
+  }, 800);
 };
 
 /**
- * gallery视图，点击后是放大图片还是跳转到gallery的内部页面
+ * gallery视图，禁用跳转到内部页面，点击后放大图片
  */
 const processGalleryImg = (zoom) => {
   setTimeout(() => {
@@ -247,9 +220,8 @@ const mapPageUrl = (id) => {
 
 /**
  * 缩放
- * @returns
  */
-function getMediumZoomMargin() {
+const getMediumZoomMargin = () => {
   const width = window.innerWidth;
   if (width < 500) {
     return 8;
@@ -264,5 +236,6 @@ function getMediumZoomMargin() {
   } else {
     return 72;
   }
-}
+};
+
 export default NotionPage;
