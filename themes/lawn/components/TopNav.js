@@ -32,17 +32,8 @@ const TopNav = (props) => {
   const searchDrawer = useRef();
   const [isOpen, changeShow] = useState(false);
 
-  const toggleMenuOpen = () => {
-    changeShow(!isOpen);
-  };
-
-  const toggleSideBarClose = () => {
-    changeShow(false);
-  };
-
   const throttleMs = 200;
-
-  const scrollTrigger = useCallback(
+  const handleNavStyle = useCallback(
     throttle(() => {
       const scrollS = window.scrollY;
       const viewHeight = window.innerHeight;
@@ -83,29 +74,16 @@ const TopNav = (props) => {
         nav && nav.classList.replace('-top-20', 'top-0');
         windowTop = scrollS;
       }
-    }, throttleMs),
-    [router.route]
+    }, throttleMs)
   );
 
   useEffect(() => {
-    const comment = document.querySelector('#comment');
-    const observer = new MutationObserver(() => {
-      scrollTrigger();
-    });
-
-    if (comment) {
-      observer.observe(comment, { attributes: true, childList: true, subtree: true });
-    }
-
-    window.addEventListener('scroll', scrollTrigger);
-
+    handleNavStyle();
+    window.addEventListener('scroll', handleNavStyle);
     return () => {
-      if (comment) {
-        observer.disconnect();
-      }
-      window.removeEventListener('scroll', scrollTrigger);
+      window.removeEventListener('scroll', handleNavStyle);
     };
-  }, [scrollTrigger]);
+  }, [router]);
 
   const searchDrawerSlot = (
     <>
@@ -171,7 +149,10 @@ const TopNav = (props) => {
             <div className="hidden lg:flex">
               <MenuListTop {...props} />
             </div>
-            <div onClick={toggleMenuOpen} className="w-8 justify-center items-center h-8 cursor-pointer flex lg:hidden">
+            <div
+              onClick={() => changeShow(!isOpen)}
+              className="w-8 justify-center items-center h-8 cursor-pointer flex lg:hidden"
+            >
               <span className="menu-title text-gray-700 dark:text-gray-200">
                 {isOpen ? <i className="fas fa-times" /> : <i className="fas fa-bars" />}
               </span>
@@ -182,7 +163,7 @@ const TopNav = (props) => {
       </div>
 
       {/* 折叠侧边栏 */}
-      <SideBarDrawer isOpen={isOpen} onClose={toggleSideBarClose}>
+      <SideBarDrawer isOpen={isOpen} onClose={() => changeShow(false)}>
         <SideBar {...props} />
       </SideBarDrawer>
     </nav>

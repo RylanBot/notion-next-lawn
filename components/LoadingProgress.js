@@ -10,20 +10,17 @@ import { useGlobal } from '@/hooks/useGlobal';
  */
 export default function LoadingProgress() {
   const router = useRouter();
+  const [routing, setRouting] = useState(false);
   const { onLoading } = useGlobal();
-  const [isRouting, setIsRouting] = useState(false);
 
   // 路由变化
   useEffect(() => {
     const handleStart = () => {
-      setIsRouting(true);
-      NProgress.start();
-      document.body.style.overflow = 'hidden';
+      setRouting(true);
     };
 
     const handleStop = () => {
-      setIsRouting(false);
-      NProgress.done();
+      setRouting(false);
     };
 
     router.events.on('routeChangeStart', handleStart);
@@ -31,24 +28,20 @@ export default function LoadingProgress() {
     router.events.on('routeChangeComplete', handleStop);
 
     return () => {
-      document.body.style.overflow = '';
       router.events.off('routeChangeStart', handleStart);
       router.events.off('routeChangeComplete', handleStop);
       router.events.off('routeChangeError', handleStop);
-      document.body.style.overflow = '';
     };
   }, [router]);
 
-  // 数据加载
   useEffect(() => {
-    if (isRouting) return;
-
-    if (onLoading) {
+    if (routing || onLoading) {
       NProgress.start();
       document.body.style.overflow = 'hidden';
     } else {
       NProgress.done();
       document.body.style.overflow = '';
     }
-  }, [onLoading, isRouting]);
+  }, [onLoading, routing]);
 }
+   

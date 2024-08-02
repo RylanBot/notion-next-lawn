@@ -60,7 +60,7 @@ const PrismMac = ({ onLoad }) => {
       for (const mutation of mutationsList) {
         if (mutation.type === 'childList') {
           renderCustomCode().then(() => {
-            onLoad();
+            setTimeout(() => onLoad(), 100);
           });
         }
       }
@@ -132,7 +132,7 @@ const renderCollapseCode = (codeCollapse, codeCollapseExpandDefault) => {
     panelWrapper.appendChild(panel);
     collapseWrapper.appendChild(panelWrapper);
 
-    if (codeBlock && codeBlock.parentNode && codeBlock.parentNode.contains(codeBlock)) {
+    if (codeBlock?.parentNode?.contains(codeBlock)) {
       codeBlock.parentNode.insertBefore(collapseWrapper, codeBlock);
       panel.appendChild(codeBlock);
     }
@@ -207,13 +207,6 @@ const renderMermaid = async (mermaidCDN) => {
  */
 const renderCustomCode = () => {
   return new Promise((resolve) => {
-    const toolbars = document.querySelectorAll('div.code-toolbar');
-
-    if (toolbars.length === 0) {
-      resolve();
-      return;
-    }
-
     const processCodeElement = (codeElement, language) => {
       const firstChild = codeElement.firstChild;
       if (firstChild?.classList?.contains('comment')) {
@@ -249,17 +242,15 @@ const renderCustomCode = () => {
 
           const codeToolbar = codeElement.closest('div.code-toolbar');
           const toolbarParent = codeToolbar?.parentNode;
-          if (toolbarParent) {
-            toolbarParent.insertBefore(newElement, codeToolbar);
-            if (toolbarParent.contains(codeToolbar)) {
-              toolbarParent.removeChild(codeToolbar);
-            }
+          if (toolbarParent?.contains(codeToolbar)) {
+            toolbarParent.replaceChild(newElement, codeToolbar);
           }
         }
       }
     };
 
-    toolbars.forEach((toolbarEl) => {
+    const toolbars = document.querySelectorAll('.code-toolbar');
+    toolbars?.forEach((toolbarEl) => {
       const codeHtml = toolbarEl.querySelector('code.language-html');
       const codeCss = toolbarEl.querySelector('code.language-css');
       const codeJs = toolbarEl.querySelector('code.language-javascript');

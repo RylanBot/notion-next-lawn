@@ -56,13 +56,13 @@ export const LayoutBase = (props) => {
   const LAWN_HOME_BANNER_ENABLE = siteConfig('LAWN_HOME_BANNER_ENABLE', null, CONFIG);
   const LAYOUT_SIDEBAR_REVERSE = JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE'));
 
+  const [showNav, setShowNav] = useState(false);
+
   const headerSlot = post ? (
     <PostHeader {...props} />
   ) : router.route === '/' && LAWN_HOME_BANNER_ENABLE ? (
-    <Hero {...props} />
+    <Hero {...props} onLoad={() => setShowNav(true)} />
   ) : null;
-
-  const [showNav, setShowNav] = useState(false);
 
   const drawerRight = useRef(null);
   const searchModal = useRef(null);
@@ -83,15 +83,10 @@ export const LayoutBase = (props) => {
   );
 
   useEffect(() => {
-    let timer;
-    if (router.pathname === '/') {
-      timer = setTimeout(() => {
-        setShowNav(true);
-      }, 300);
-    } else {
+    if (router.pathname === '/') return;
+    setTimeout(() => {
       setShowNav(true);
-    }
-    return () => clearTimeout(timer);
+    }, 0);
   }, [router]);
 
   return (
@@ -110,7 +105,7 @@ export const LayoutBase = (props) => {
         <main
           id="lawn-main-wrapper"
           className={`bg-lawn-background-gray dark:bg-black w-full py-8 md:px-8 lg:px-24 min-h-screen relative ${
-            LAWN_HOME_BANNER_ENABLE ? 'pt-16' : ''
+            LAWN_HOME_BANNER_ENABLE ? 'pt-14' : ''
           }`}
         >
           <div
@@ -123,7 +118,7 @@ export const LayoutBase = (props) => {
               {children}
             </div>
             {/* 右侧栏 */}
-            <SideRight {...props} />
+            {showNav && <SideRight {...props} />}
           </div>
         </main>
 
@@ -281,8 +276,8 @@ export const Layout404 = (props) => {
   const { locale } = useGlobal();
 
   return (
-    <div id="lawn-404" className="w-full h-screen flex justify-center items-center flex-col">
-      <div className="flex justify-center items-center dark:text-gray-200 text-xl max-md:text-sm">
+    <div id="lawn-404" className="w-full h-screen flex flex-col justify-center items-center">
+      <div className="flex justify-center items-center dark:text-gray-200 text-xl max-md:text-sm relative -top-8">
         <span className="px-3 border-r-2 font-bold text-gray-600 dark:text-white">Error</span>
         <span className="px-3 flex">
           {locale.COMMON.ERROR_INFO.split(' | ').map((part, index, array) => (
