@@ -11,18 +11,15 @@ import { useGlobal } from '@/hooks/useGlobal';
 export default function LoadingProgress() {
   const router = useRouter();
   const { onLoading } = useGlobal();
-  const [isRouting, setIsRouting] = useState(false);
 
   // 路由变化
   useEffect(() => {
     const handleStart = () => {
-      setIsRouting(true);
       NProgress.start();
       document.body.style.overflow = 'hidden';
     };
 
     const handleStop = () => {
-      setIsRouting(false);
       NProgress.done();
     };
 
@@ -31,7 +28,6 @@ export default function LoadingProgress() {
     router.events.on('routeChangeComplete', handleStop);
 
     return () => {
-      document.body.style.overflow = '';
       router.events.off('routeChangeStart', handleStart);
       router.events.off('routeChangeComplete', handleStop);
       router.events.off('routeChangeError', handleStop);
@@ -41,8 +37,6 @@ export default function LoadingProgress() {
 
   // 数据加载
   useEffect(() => {
-    if (isRouting) return;
-
     if (onLoading) {
       NProgress.start();
       document.body.style.overflow = 'hidden';
@@ -50,5 +44,5 @@ export default function LoadingProgress() {
       NProgress.done();
       document.body.style.overflow = '';
     }
-  }, [onLoading, isRouting]);
+  }, [onLoading]);
 }

@@ -14,9 +14,9 @@ let wrapperTop = 0;
 /**
  * 首页全屏大图
  */
-const Hero = (props) => {
+const Hero = ({ onLoad, ...props }) => {
   const { siteInfo } = props;
-  const { locale, onLoading, setOnLoading } = useGlobal();
+  const { locale, setOnLoading } = useGlobal();
 
   const TITLE = siteConfig('TITLE');
   const GREETING_WORDS = siteConfig('GREETING_WORDS').split(',');
@@ -25,7 +25,7 @@ const Hero = (props) => {
   const LAWN_HOME_NAV_BACKGROUND_IMG_FIXED = siteConfig('LAWN_HOME_NAV_BACKGROUND_IMG_FIXED', null, CONFIG);
 
   const [typed, setTyped] = useState();
-  const [showHero, setShowHero] = useState();
+  const [showHero, setShowHero] = useState(false);
 
   const scrollToWrapper = () => {
     window.scrollTo({ top: wrapperTop, behavior: 'smooth' });
@@ -41,17 +41,11 @@ const Hero = (props) => {
   const handleCoverLoaded = () => {
     setShowHero(true);
     setOnLoading(false);
+    onLoad();
   };
 
   useEffect(() => {
     setOnLoading(true);
-
-    const timeout = setTimeout(() => {
-      if (onLoading) {
-        handleCoverLoaded();
-      }
-    }, 10000);
-    return () => clearTimeout(timeout);
   }, []);
 
   useEffect(() => {
@@ -84,6 +78,7 @@ const Hero = (props) => {
         id="lawn-header-cover"
         src={siteInfo?.pageCover}
         onLoad={handleCoverLoaded}
+        priority={true}
         placeholderSrc={siteConfig('IMG_LAZY_LOAD_PLACEHOLDER')}
         className={`${
           LAWN_HOME_NAV_BACKGROUND_IMG_FIXED ? 'fixed' : ''
