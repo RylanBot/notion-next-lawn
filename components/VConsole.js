@@ -12,7 +12,7 @@ const VConsole = () => {
 
   const loadVConsole = async () => {
     try {
-      const url = await loadExternalResource('https://cdn.bootcss.com/vConsole/3.3.4/vconsole.min.js', 'js')
+      const url = await loadExternalResource('https://unpkg.com/vconsole@3.15.1/dist/vconsole.min.js', 'js')
       if (!url) return
 
       const VConsole = window.VConsole
