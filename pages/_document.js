@@ -1,6 +1,7 @@
 // eslint-disable-next-line @next/next/no-document-import-in-page
 import BLOG from '@/blog.config';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
+
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
     const initialProps = await Document.getInitialProps(ctx);
@@ -26,8 +27,7 @@ class MyDocument extends Document {
             }
           })}
         </Head>
-        {/* todo 移除其它主题后，${siteConfig('FONT_STYLE') 失效 */}
-        <body className={'font-serif font-light scroll-smooth'}>
+        <body className="font-light scroll-smooth">
           <Main />
           <NextScript />
         </body>

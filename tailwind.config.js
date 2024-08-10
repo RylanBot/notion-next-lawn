@@ -3,13 +3,14 @@ const { fontFamilies } = require('./lib/font');
 
 module.exports = {
   content: ['./pages/**/*.js', './components/**/*.js', './layouts/**/*.js', './themes/**/*.js'],
+  safelist: ['font-sans, font-serif'],
   darkMode: BLOG.APPEARANCE === 'class' ? 'media' : 'class', // or 'media' or 'class'
   theme: {
     fontFamily: fontFamilies,
     extend: {
       colors: {
         day: {
-          DEFAULT: BLOG.BACKGROUND_LIGHT || '#ffffff'
+          DEFAULT: BLOG.BACKGROUND_LIGHT || '#070505'
         },
         night: {
           DEFAULT: BLOG.BACKGROUND_DARK || '#111827'
