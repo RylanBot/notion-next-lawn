@@ -1,5 +1,5 @@
-import { siteConfig } from '@/lib/config';
 import { useEffect, useRef, useState } from 'react';
+import { useGlobal } from '@/hooks/useGlobal';
 import LazyImage from './LazyImage';
 
 const TRAVEL_IMAGE = 'https://www.travellings.cn/assets/logo.gif';
@@ -7,6 +7,7 @@ const TRAVEL_IMAGE = 'https://www.travellings.cn/assets/logo.gif';
  * 友链接力
  */
 const TravellingsLink = () => {
+  const { locale } = useGlobal();
   const [showModal, setShowModal] = useState(false);
   const modalRef = useRef(null);
 
@@ -47,7 +48,7 @@ const TravellingsLink = () => {
           <div className="w-full h-screen fixed inset-0 bg-black opacity-50"></div>
           <div
             ref={modalRef}
-            className="w-96 bg-zinc-100 dark:bg-zinc-900 p-6 rounded z-20 border-4 border-teal-500 relative"
+            className="w-[425px] bg-zinc-100 dark:bg-zinc-900 p-6 rounded z-20 border-4 border-teal-500 relative"
           >
             <button
               onClick={() => setShowModal(false)}
@@ -62,10 +63,10 @@ const TravellingsLink = () => {
                 href="https://www.travellings.cn/"
                 className="text-lg font-bold mb-3 text-teal-600 dark:text-teal-300 hover:text-teal-500 dark:hover:text-teal-200"
               >
-                <span className="text-base">#</span> 友链接力计划
+                <span className="text-base">#</span> {locale.TRVELLINGS.TITLE}
               </a>
               <p className="text-sm font-semibold pb-2 border-b-2 border-dashed text-teal-700 dark:text-teal-400 border-teal-700 dark:border-teal-500">
-                点击按钮将随机跳转到一个在线博客网站
+                {locale.TRVELLINGS.GUIDE}
               </p>
             </div>
             <a
