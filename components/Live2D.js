@@ -19,7 +19,7 @@ export default function Live2D() {
           loadlive2d('live2d', petLink);
         }
       } catch (error) {
-        console.error('读取 PET 模型失败:', error);
+        console.warn('读取 PET 模型失败:', error);
       }
     };
     script.onerror = () => {
