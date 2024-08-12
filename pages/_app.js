@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 
 import 'aos/dist/aos.css'; // You can also use <link> for styles
 import 'react-notion-x/src/styles.css';
@@ -16,6 +16,7 @@ import LoadingProgress from '@/components/LoadingProgress';
 
 import { THEME } from '@/blog.config';
 import { GlobalContextProvider } from '@/hooks/useGlobal';
+import { initLogging } from '@/lib/logger';
 import { getQueryParam } from '@/lib/utils';
 import { getGlobalLayoutByTheme } from '@/themes/theme';
 
@@ -26,13 +27,17 @@ const MyApp = ({ Component, pageProps }) => {
   }, [route]);
 
   const GLayout = useCallback(
-    props => {
+    (props) => {
       // 根据页面路径加载不同Layout文件
       const Layout = getGlobalLayoutByTheme(queryParam);
       return <Layout {...props} />;
     },
     [queryParam]
   );
+
+  useEffect(() => {
+    initLogging();
+  }, []);
 
   return (
     <GlobalContextProvider {...pageProps}>
