@@ -18,6 +18,7 @@ const Hero = ({ onLoad, ...props }) => {
   const { siteInfo } = props;
   const { locale, setOnLoading } = useGlobal();
 
+  const WAITING_TIME = siteConfig('POST_WAITING_TIME_FOR_404');
   const TITLE = siteConfig('TITLE');
   const GREETING_WORDS = siteConfig('GREETING_WORDS').split(',');
   const LAWN_HOME_NAV_BUTTONS = siteConfig('LAWN_HOME_NAV_BUTTONS', null, CONFIG);
@@ -46,6 +47,10 @@ const Hero = ({ onLoad, ...props }) => {
 
   useEffect(() => {
     setOnLoading(true);
+
+    // 避免网络较差的时候，一直无法进入首页
+    const timer = setTimeout(() => handleCoverLoaded, WAITING_TIME * 1000);
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
