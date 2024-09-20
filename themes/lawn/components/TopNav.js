@@ -36,13 +36,14 @@ const TopNav = (props) => {
   const handleNavStyle = useCallback(
     throttle(() => {
       const scrollS = window.scrollY;
-      const viewHeight = window.innerHeight;
 
       const nav = document.querySelector('#sticky-nav');
       const header = document.querySelector('#lawn-header');
       const menuTitle = document.querySelectorAll('.menu-title');
 
-      const navTransparent = (scrollS < viewHeight - 12 && router.route === '/') || scrollS < 300;
+      const remToPx = (rem) => rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+      const headerHeight = remToPx(25);
+      const navTransparent = (scrollS < headerHeight && router.route === '/') || scrollS < 300;
 
       if (header && navTransparent) {
         nav && nav.classList.replace('bg-white', 'bg-none');
