@@ -14,9 +14,8 @@ export function InfoCard(props) {
   const { className, siteInfo } = props;
 
   const router = useRouter();
-  const pathname = router.pathname;
   const specialPath = ['/page/[page]', '/tag', '/tag/[tag]', '/category', '/category/[category]', '/archive', '/search', '/404'];
-  const specialClass = specialPath.includes(pathname) ? 'md:pt-14' : '';
+  const specialClass = specialPath.includes(router.pathname) ? 'md:pt-14' : '';
 
   return (
     <div {...(specialClass ? { className: specialClass } : {})}>

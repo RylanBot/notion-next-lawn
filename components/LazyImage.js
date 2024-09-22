@@ -79,7 +79,7 @@ const LazyImage = React.forwardRef(
     }
 
     if (className) {
-      imgProps.className = `${imgProps.className} ${className}`;
+      imgProps.className = `${className} ${imgProps.className}`;
     }
 
     if (style) {

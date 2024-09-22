@@ -32,7 +32,7 @@ export default function PostHeader({ post, siteInfo }) {
         id="article-header-cover"
         className="bg-black bg-opacity-70 absolute top-0 w-full h-96 py-10 flex justify-center items-center "
       >
-        <div className="mt-10">
+        <div>
           {/* 分类 */}
           <div className="mb-3 flex justify-center">
             {post.category && (

@@ -23,7 +23,7 @@ const LatestPostsGroup = ({ latestPosts, siteInfo }) => {
     <>
       <div className="px-1 flex flex-nowrap justify-between">
         <div>
-          <i className="mr-2 fas fas fa-history" />
+          <i className="mr-2 mb-3 fas fas fa-history" />
           {locale.COMMON.LATEST_POSTS}
         </div>
       </div>
@@ -31,28 +31,31 @@ const LatestPostsGroup = ({ latestPosts, siteInfo }) => {
       {latestPosts.map((post) => {
         const selected = currentPath === `${siteConfig('SUB_PATH', '')}/${post.slug}`;
         const headerImage = post?.pageCoverThumbnail ? post.pageCoverThumbnail : siteInfo?.pageCover;
-
         return (
-          <Link
+          <div
             key={post.id}
-            title={post.title}
-            href={`${siteConfig('SUB_PATH', '')}/${post.slug}`}
-            passHref
-            className={`my-3 flex hover:text-teal-500 dark:hover:text-teal-400 ${
-              selected ? 'text-teal-600 dark:text-gray-200 pointer-events-none' : ''
-            }`}
-            aria-disabled={selected}
+            className={`p-2 rounded-md group ${selected ? '' : 'hover:bg-teal-500 hover:text-white dark:hover:bg-teal-600'} `}
           >
-            <div className="w-20 h-14 overflow-hidden relative">
-              <LazyImage src={`${headerImage}`} className="object-cover w-full h-full" />
-            </div>
-            <div className="overflow-x-hidden px-2 duration-200 w-full rounded cursor-pointer items-center flex">
-              <div className="w-full">
-                <div className={`text-sm line-clamp-2 menu-link`}>{post.title}</div>
-                <div className="text-gray-400 dark:text-gray-500 text-xs">{post.publishDay}</div>
+            <Link
+              title={post.title}
+              href={`${siteConfig('SUB_PATH', '')}/${post.slug}`}
+              passHref
+              className={`flex ${selected ? 'text-teal-600 dark:text-teal-300 pointer-events-none' : ''}`}
+              aria-disabled={selected}
+            >
+              <div className="w-20 h-14 overflow-hidden relative">
+                <LazyImage src={`${headerImage}`} className="object-cover w-full h-full" />
               </div>
-            </div>
-          </Link>
+              <div className="overflow-x-hidden px-2 w-full rounded cursor-pointer flex items-center">
+                <div className="w-full">
+                  <div className={`text-sm line-clamp-2 menu-link`}>{post.title}</div>
+                  <div className={`text-gray-400 text-xs ${selected ? '' : 'group-hover:text-gray-200'}`}>
+                    {post.publishDay}
+                  </div>
+                </div>
+              </div>
+            </Link>
+          </div>
         );
       })}
     </>
