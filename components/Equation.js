@@ -1,7 +1,6 @@
 import * as React from 'react'
-
-import Katex from '@/components/KatexReact'
 import { getBlockTitle } from 'notion-utils'
+import Katex from '@/components/KatexReact'
 
 const katexSettings = {
   throwOnError: false,
@@ -10,8 +9,6 @@ const katexSettings = {
 
 /**
  * 数学公式
- * @param {} param0
- * @returns
  */
 export const Equation = ({ block, math, inline = false, className, ...rest }) => {
   math = math || getBlockTitle(block, null)

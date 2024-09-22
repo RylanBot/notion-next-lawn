@@ -1484,7 +1484,11 @@ div[class*='notion-property-checkbox-checked'] svg {
   -ms-overflow-style: none;
   overflow: -moz-scrollbars-none;
   scrollbar-width: none;
-  /* firefox */
+  cursor: text !important;
+}
+
+.notion-equation:hover {
+  background: transparent !important;
 }
 
 .notion-equation-inline {
