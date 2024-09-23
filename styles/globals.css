@@ -287,7 +287,7 @@ a.avatar-wrapper {
 }
 
 .group:hover .right-float-tooltip {
-  @apply inline-block;
+  @apply lg:inline-block;
 }
 
 .right-float-tooltip::after {
