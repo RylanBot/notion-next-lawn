@@ -38,27 +38,43 @@ const TopNav = (props) => {
       const scrollS = window.scrollY;
 
       const nav = document.querySelector('#sticky-nav');
+      const navTitle = document.querySelector('#nav-title');
       const header = document.querySelector('#lawn-header');
-      const menuTitle = document.querySelectorAll('.menu-title');
 
       const remToPx = (rem) => rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
       const headerHeight = remToPx(25);
-      const navTransparent = (scrollS < headerHeight && router.route === '/') || scrollS < 300;
+
+      const isHome = router.route === '/';
+      const navTransparent = (scrollS < headerHeight && isHome) || scrollS < 300;
 
       if (header && navTransparent) {
-        nav && nav.classList.replace('bg-white', 'bg-none');
-        nav && nav.classList.replace('text-gray', 'text-white');
-        nav && nav.classList.replace('border', 'border-transparent');
-        nav && nav.classList.replace('drop-shadow-md', 'shadow-none');
-        nav && nav.classList.replace('dark:bg-lawn-black-gray', 'transparent');
+        nav?.classList.replace('bg-white', 'bg-none');
+        nav?.classList.replace('text-gray', 'text-white');
+        nav?.classList.replace('border', 'border-transparent');
+        nav?.classList.replace('drop-shadow-md', 'shadow-none');
+        nav?.classList.replace('dark:bg-lawn-black-gray', 'transparent');
+
+        if (isHome) {
+          navTitle?.classList.replace('opacity-100', 'opacity-0');
+          navTitle?.classList.replace('pointer-events-auto', 'pointer-events-none');
+        } else {
+          navTitle?.classList.replace('opacity-0', 'opacity-100');
+          navTitle?.classList.replace('pointer-events-none', 'pointer-events-auto');
+        }
       } else {
-        nav && nav.classList.replace('bg-none', 'bg-white');
-        nav && nav.classList.replace('text-white', 'text-gray');
-        nav && nav.classList.replace('border-transparent', 'border');
-        nav && nav.classList.replace('shadow-none', 'drop-shadow-md');
-        nav && nav.classList.replace('transparent', 'dark:bg-lawn-black-gray');
+        nav?.classList.replace('bg-none', 'bg-white');
+        nav?.classList.replace('text-white', 'text-gray');
+        nav?.classList.replace('border-transparent', 'border');
+        nav?.classList.replace('shadow-none', 'drop-shadow-md');
+        nav?.classList.replace('transparent', 'dark:bg-lawn-black-gray');
+
+        if (isHome) {
+          navTitle?.classList.replace('opacity-0', 'opacity-100');
+          navTitle?.classList.replace('pointer-events-auto', 'pointer-events-none');
+        }
       }
 
+      const menuTitle = document.querySelectorAll('.menu-title');
       menuTitle?.forEach((menu) => {
         if (!isDarkMode && header && navTransparent) {
           menu.parentNode.classList.add('dark');
@@ -75,7 +91,8 @@ const TopNav = (props) => {
         nav && nav.classList.replace('-top-20', 'top-0');
         windowTop = scrollS;
       }
-    }, throttleMs)
+    }, throttleMs),
+    [router.route]
   );
 
   useEffect(() => {
@@ -84,7 +101,7 @@ const TopNav = (props) => {
     return () => {
       window.removeEventListener('scroll', handleNavStyle);
     };
-  }, [router]);
+  }, [router.route]);
 
   const searchDrawerSlot = (
     <>
@@ -141,8 +158,8 @@ const TopNav = (props) => {
         className="top-0 duration-300 transition-all shadow-none fixed bg-none dark:bg-lawn-black-gray dark:text-gray-200 text-black w-full z-20 transform border-transparent dark:border-transparent"
       >
         <div className="w-full flex justify-between items-center px-4 py-2">
-          <div className="">
-            <Logo {...props} />
+          <div id="nav-title" className="opacity-100 pointer-events-auto">
+            <Logo />
           </div>
 
           {/* 右侧菜单 */}
