@@ -11,7 +11,7 @@ import TagItemMini from './TagItemMini';
 export const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary }) => {
   return (
     <div
-      className={`flex flex-col justify-between lg:p-6 p-4  ${
+      className={`flex flex-col justify-between lg:p-6 p-4 ${
         showPageCover && !showPreview ? 'md:w-7/12 w-full md:max-h-64' : 'w-full'
       }`}
     >
@@ -20,10 +20,9 @@ export const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary
         <Link
           href={`${siteConfig('SUB_PATH', '')}/${post.slug}`}
           passHref
-          className={`line-clamp-2 replace cursor-pointer text-xl
-                leading-tight font-semibold text-teal-500 hover:text-teal-400 dark:text-teal-400 dark:hover:text-teal-300 ${
-                  showPreview ? 'text-center' : ''
-                }`}
+          className={`line-clamp-2 replace cursor-pointer text-xl leading-tight font-semibold text-teal-500 hover:text-teal-400 dark:text-teal-400 dark:hover:text-teal-300 ${
+            showPreview ? 'text-center' : ''
+          }`}
         >
           <span className="menu-link">{post.title}</span>
         </Link>
@@ -31,8 +30,9 @@ export const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary
         {/* 分类 */}
         {post?.category && (
           <div
-            className={`flex mt-2 items-center ${showPreview ? 'justify-center' : 'justify-start'}
-                flex-wrap dark:text-gray-500 text-gray-400`}
+            className={`flex mt-2 items-center flex-wrap dark:text-gray-500 text-gray-400 ${
+              showPreview ? 'justify-center' : 'justify-start'
+            }`}
           >
             <Link
               href={`/category/${post.category}`}

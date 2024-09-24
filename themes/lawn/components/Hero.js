@@ -12,7 +12,7 @@ import WavesArea from './WavesArea';
 let wrapperTop = 0;
 
 /**
- * 首页全屏大图
+ * 首页大图
  */
 const Hero = ({ onLoad, ...props }) => {
   const { siteInfo } = props;
@@ -92,14 +92,14 @@ const Hero = ({ onLoad, ...props }) => {
         } header-cover w-full h-[25rem] object-cover object-center`}
       />
       {/* 深色遮罩 */}
-      <div className="absolute inset-0 bg-black opacity-10 z-10"></div>
+      <div className="absolute inset-0 bg-black opacity-30 z-10"></div>
 
-      <div className="text-white absolute bottom-6 flex flex-col h-full items-center justify-center w-full">
+      <div className="text-gray-200 absolute bottom-6 flex flex-col h-full items-center justify-center w-full">
         {/* 站点标题 */}
-        <div className="text-center font-black text-6xl lg:text-8xl shadow-text">{TITLE}</div>
+        <div className="text-center font-black text-6xl lg:text-8xl shadow-text z-20">{TITLE}</div>
 
         {/* 站点欢迎语 */}
-        <div className="mt-6 h-12 items-center text-center font-medium shadow-text text-xl lg:text-2xl">
+        <div className="mt-6 h-12 items-center text-center font-medium shadow-text text-xl lg:text-2xl z-20">
           <span id="typed" ref={typedEl} />
         </div>
 

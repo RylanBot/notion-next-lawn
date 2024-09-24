@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from 'next/link';
 
 const TagItemMini = ({ tag, selected = false }) => {
   return (
@@ -6,16 +6,15 @@ const TagItemMini = ({ tag, selected = false }) => {
       key={tag}
       href={selected ? '/' : `/tag/${encodeURIComponent(tag.name)}`}
       passHref
-      className={`cursor-pointer inline-block rounded hover:bg-teal-400 dark:hover:text-white  hover:text-white duration-200
-        mr-2 py-0.5 px-1 text-xs whitespace-nowrap 
-         ${selected
-        ? 'text-white dark:text-gray-300 bg-black dark:bg-black dark:hover:bg-teal-900'
-        : `text-gray-600 hover:shadow-xl dark:border-gray-400 notion-${tag.color}_background `}` }>
-
-      <div className='font-light'>{selected && <i className='mr-1 fa-tag'/>} {tag.name + (tag.count ? `(${tag.count})` : '')} </div>
-
+      className={`inline-block rounded duration-200 my-1 mr-2 py-0.5 px-1 text-xs whitespace-nowrap ${
+        selected
+          ? 'pointer-events-none border-2 border-dotted border-teal-500'
+          : `cursor-pointer text-gray-600 hover:shadow-xl dark:border-gray-400 notion-${tag.color}_background hover:bg-teal-400 dark:hover:bg-teal-500 dark:hover:text-white hover:text-white`
+      }`}
+    >
+      <div className="font-light">{tag.name + (tag.count ? `(${tag.count})` : '')} </div>
     </Link>
   );
-}
+};
 
-export default TagItemMini
+export default TagItemMini;

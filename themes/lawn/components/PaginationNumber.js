@@ -5,31 +5,31 @@ import { useRouter } from 'next/router';
  * 数字翻页插件
  * @param page 当前页码
  * @param showNext 是否有下一页
- * @returns {JSX.Element}
- * @constructor
  */
 const PaginationNumber = ({ page, totalPage }) => {
   const router = useRouter();
   const currentPage = +page;
   const showNext = page < totalPage;
-  const pagePrefix = router.asPath.split('?')[0].replace(/\/page\/[1-9]\d*/, '').replace(/\/$/, '');
+  const pagePrefix = router.asPath
+    .split('?')[0]
+    .replace(/\/page\/[1-9]\d*/, '')
+    .replace(/\/$/, '');
   const pages = generatePages(pagePrefix, page, currentPage, totalPage);
 
   return (
-    <div className="mt-10 mb-5 flex justify-center items-end font-medium text-black duration-500 dark:text-gray-300 py-3 space-x-2">
+    <div className="mt-10 mb-5 flex justify-center items-end font-medium text-black duration-100 dark:text-gray-300 py-3 space-x-2">
       {/* 上一页 */}
       <Link
         href={{
-          pathname: currentPage === 2
-            ? `${pagePrefix}/`
-            : `${pagePrefix}/page/${currentPage - 1}`,
+          pathname: currentPage === 2 ? `${pagePrefix}/` : `${pagePrefix}/page/${currentPage - 1}`,
           query: router.query.s ? { s: router.query.s } : {}
         }}
         rel="prev"
-        className={`${currentPage === 1 ? 'invisible' : 'block'} pb-0.5 border-transparent hover:border-teal-400 w-6 text-center cursor-pointer duration-200  hover:font-bold`}>
-
+        className={`${
+          currentPage === 1 ? 'invisible' : 'block'
+        } pb-0.5 border-transparent hover:border-teal-400 w-6 text-center cursor-pointer duration-200  hover:font-bold`}
+      >
         <i className="fas fa-angle-left" />
-
       </Link>
 
       {pages}
@@ -41,10 +41,11 @@ const PaginationNumber = ({ page, totalPage }) => {
           query: router.query.s ? { s: router.query.s } : {}
         }}
         rel="next"
-        className={`${+showNext ? 'block' : 'invisible'} pb-0.5 border-transparent hover:border-teal-400 w-6 text-center cursor-pointer duration-500 hover:font-bold`}>
-
+        className={`${
+          +showNext ? 'block' : 'invisible'
+        } pb-0.5 border-transparent hover:border-teal-400 w-6 text-center cursor-pointer duration-100 hover:font-bold`}
+      >
         <i className="fas fa-angle-right" />
-
       </Link>
     </div>
   );
@@ -59,12 +60,11 @@ function getPageElement(page, currentPage, pagePrefix) {
       className={
         (page + '' === currentPage + ''
           ? 'font-bold bg-teal-400 dark:bg-teal-500 text-white '
-          : 'border-b duration-500 hover:border-teal-400 ') +
-        'border-transparent cursor-pointer pb-0.5 w-6 text-center font-light hover:font-bold'
-      }>
-
+          : 'duration-100 hover:border-teal-400 ') +
+        'rounded-sm border-transparent cursor-pointer pb-0.5 w-6 text-center font-light hover:font-bold'
+      }
+    >
       {page}
-
     </Link>
   );
 }

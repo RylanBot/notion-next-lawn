@@ -1,14 +1,13 @@
-import dynamic from 'next/dynamic';
-import { useRouter } from 'next/router';
+// import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 
 import Live2D from '@/components/Live2D';
-import { useGlobal } from '@/hooks/useGlobal';
 import { siteConfig } from '@/lib/config';
 
 import CONFIG from '../config';
 import { AnalyticsCard } from './AnalyticsCard';
 import Announcement from './Announcement';
+import ArchiveCard from './ArchiveCard';
 import Card from './Card';
 import Catalog from './Catalog';
 import CategoryGroup from './CategoryGroup';
@@ -22,24 +21,9 @@ import TagGroups from './TagGroups';
  * 主题右侧栏
  */
 export default function SideRight(props) {
-  const {
-    post,
-    currentCategory,
-    categories,
-    latestPosts,
-    tags,
-    currentTag,
-    showCategory,
-    showTag,
-    rightAreaSlot,
-    notice
-  } = props;
+  const { post, rightAreaSlot, notice } = props;
 
-  const router = useRouter();
-
-  const { locale } = useGlobal();
   const LAWN_WIDGET_ANALYTICS = siteConfig('LAWN_WIDGET_ANALYTICS', null, CONFIG);
-  const LAWN_WIDGET_LATEST_POSTS = siteConfig('LAWN_WIDGET_LATEST_POSTS', null, CONFIG);
 
   const getInitialTab = (post) => {
     return post?.toc?.length > 1 ? 'toc' : 'info';
@@ -61,9 +45,10 @@ export default function SideRight(props) {
   return (
     <>
       {hydrated && (
-        <div id="sideRight" className="p-2 max-lg:mt-8">
+        <div id="sideRight" className="p-2 max-lg:mt-8 max-md:mt-4">
+          {/* 切换 Tab */}
           {post && post.toc && post.toc.length > 1 && (
-            <div className="lg:w-64 flex justify-center items-center mb-4">
+            <div className="lg:w-72 flex justify-center items-center mb-4">
               <button
                 className={`w-1/2 px-4 py-1 rounded mr-2 ${
                   activeTab === 'toc' ? 'bg-teal-500 text-white' : 'bg-gray-200 text-gray-700'
@@ -82,7 +67,9 @@ export default function SideRight(props) {
               </button>
             </div>
           )}
-          <div className={`lg:w-64 toc-card sticky top-32 ${activeTab === 'toc' ? '' : 'hidden'}`}>
+
+          {/* 目录 */}
+          <div className={`lg:w-72 toc-card sticky top-32 ${activeTab === 'toc' ? '' : 'hidden'}`}>
             {post && post.toc && post.toc.length > 1 && (
               <Card>
                 <Catalog toc={post.toc} />
@@ -90,39 +77,33 @@ export default function SideRight(props) {
             )}
           </div>
 
-          <div className={`lg:w-64 info-card ${activeTab === 'info' ? '' : 'hidden'}`}>
+          <div className={`lg:w-72 info-card ${activeTab === 'info' ? '' : 'hidden'}`}>
+            {/* 个人信息卡 */}
             <InfoCard {...props} />
 
+            {/* 网站数据卡 */}
             {LAWN_WIDGET_ANALYTICS && <AnalyticsCard {...props} />}
 
-            {showCategory && (
-              <Card>
-                <div className="ml-2 mb-1 ">
-                  <i className="fas fa-th" /> {locale.COMMON.CATEGORY}
-                </div>
-                <CategoryGroup currentCategory={currentCategory} categories={categories} />
-              </Card>
-            )}
+            {/* 归档卡 */}
+            <ArchiveCard postCount={props.postCount} />
 
-            {showTag && (
-              <Card>
-                <TagGroups tags={tags} currentTag={currentTag} />
-              </Card>
-            )}
+            {/* 分类卡 */}
+            <CategoryGroup />
 
-            {LAWN_WIDGET_LATEST_POSTS && router.pathname !== '/' && latestPosts && latestPosts.length > 0 && (
-              <Card className="my-4">
-                <LatestPostsGroup {...props} />
-              </Card>
-            )}
+            {/* 标签卡 */}
+            <TagGroups />
 
+            {/* 最新文章 */}
+            <LatestPostsGroup {...props} />
+
+            {/* 公告 */}
             <Announcement post={notice} className="mt-8" />
 
             {/* {siteConfig('COMMENT_WALINE_SERVER_URL') && siteConfig('COMMENT_WALINE_RECENT') && <LawnRecentComments />} */}
           </div>
 
-          {/* sticky 元素应该是可滚动元素的直接子元素，否则不生效 */}
-          <div className={`lg:w-64 sticky top-96 pl-8 pt-20 ${activeTab === 'info' ? '' : 'hidden'}`}>
+          {/* ⚠️ sticky 元素应该是可滚动元素的直接子元素，否则不生效 */}
+          <div className={`lg:w-64 sticky top-96 ${activeTab === 'info' ? '' : 'hidden'}`}>
             {rightAreaSlot}
             <Live2D />
           </div>
