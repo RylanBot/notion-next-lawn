@@ -56,7 +56,7 @@ const NotionPage = ({ post, className }) => {
   const POST_DISABLE_GALLERY_CLICK = siteConfig('POST_DISABLE_GALLERY_CLICK');
   const POST_DISABLE_DATABASE_CLICK = siteConfig('POST_DISABLE_DATABASE_CLICK');
 
-  const [showCode, setShowCode] = useState(false);
+  const [shouldRender, setShouldRender] = useState(false);
 
   const zoom =
     isBrowser &&
@@ -131,7 +131,7 @@ const NotionPage = ({ post, className }) => {
 
   return (
     <>
-      {!showCode && (
+      {!shouldRender && (
         <div id="notion-skeleton" className="mt-4">
           <Skeleton className="mt-4" height={30} count={15} />
         </div>
@@ -139,7 +139,7 @@ const NotionPage = ({ post, className }) => {
       <div
         id="notion-article"
         className={`mx-auto overflow-hidden transition duration-100 ease-in-out ${
-          !showCode ? 'opacity-0 h-0' : 'opacity-100 h-auto'
+          !shouldRender ? 'opacity-0 h-0' : 'opacity-100 h-auto'
         } ${className || ''}`}
       >
         <NotionRenderer
@@ -155,7 +155,7 @@ const NotionPage = ({ post, className }) => {
             Tweet
           }}
         />
-        <PrismMac onLoad={() => setShowCode(true)} />
+        <PrismMac onLoad={() => setShouldRender(true)} />
       </div>
     </>
   );
