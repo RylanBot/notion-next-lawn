@@ -98,8 +98,22 @@ const TopNav = (props) => {
   useEffect(() => {
     handleNavStyle();
     window.addEventListener('scroll', handleNavStyle);
+
+    const observer = new MutationObserver(() => {
+      const progressEl = document.getElementById('nprogress');
+      if (!progressEl) {
+        handleNavStyle();
+      }
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+
     return () => {
       window.removeEventListener('scroll', handleNavStyle);
+      observer.disconnect();
     };
   }, [router.route]);
 

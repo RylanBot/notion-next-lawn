@@ -44,4 +44,3 @@ export default function LoadingProgress() {
     }
   }, [onLoading, routing]);
 }
-   
