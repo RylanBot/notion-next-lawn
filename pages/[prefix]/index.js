@@ -18,14 +18,14 @@ import { getLayoutByTheme } from '@/themes/theme';
  * 根据notion的slug访问页面
  * 只解析一级目录例如 /about
  */
-const Slug = props => {
+const Slug = (props) => {
   const { post, siteInfo } = props;
   const router = useRouter();
 
   const [lock, setLock] = useState(post?.password && post?.password !== '');
   const [reloaded, setReloaded] = useState(false);
 
-  const validPassword = passInput => {
+  const validPassword = (passInput) => {
     const encrypt = md5(post.slug + passInput);
     if (passInput && encrypt === post.password) {
       setLock(false);
@@ -45,7 +45,7 @@ const Slug = props => {
             console.warn('Try to reload: ', router.asPath);
             router.replace(router.asPath);
           } else {
-            router.push('/404')
+            router.push('/404');
           }
         }
       }, siteConfig('POST_WAITING_TIME_FOR_404') * 1000);
@@ -64,7 +64,7 @@ const Slug = props => {
     description: post?.summary,
     type: post?.type,
     slug: post?.slug,
-    image: post?.pageCoverThumbnail || (siteInfo?.pageCover || BLOG.HOME_BANNER_IMAGE),
+    image: post?.pageCoverThumbnail || siteInfo?.pageCover || BLOG.HOME_BANNER_IMAGE,
     category: post?.category?.[0],
     tags: post?.tags
   };
@@ -86,13 +86,15 @@ export async function getStaticPaths() {
   const from = 'slug-paths';
   const { allPages } = await getGlobalData({ from });
   return {
-    paths: allPages?.filter(row => row.slug.indexOf('/') < 0 && row.type.indexOf('Menu') < 0).map(row => ({ params: { prefix: row.slug } })),
+    paths: allPages
+      ?.filter((row) => row.slug.indexOf('/') < 0 && row.type.indexOf('Menu') < 0)
+      .map((row) => ({ params: { prefix: row.slug.toLowerCase() } })), // （不区分大小写）统一转小写
     fallback: true
   };
 }
 
 export async function getStaticProps({ params: { prefix } }) {
-  let fullSlug = prefix;
+  let fullSlug = prefix.toLowerCase();
   if (JSON.parse(BLOG.PSEUDO_STATIC)) {
     if (!fullSlug.endsWith('.html')) {
       fullSlug += '.html';
@@ -130,7 +132,7 @@ export async function getStaticProps({ params: { prefix } }) {
   }
 
   // 推荐关联文章处理
-  const allPosts = props.allPages?.filter(page => page.type === 'Post' && page.status === 'Published');
+  const allPosts = props.allPages?.filter((page) => page.type === 'Post' && page.status === 'Published');
   if (allPosts && allPosts.length > 0) {
     const index = allPosts.indexOf(props.post);
     props.prev = allPosts.slice(index - 1, index)[0] ?? allPosts.slice(-1)[0];
