@@ -6,12 +6,11 @@ import { uploadDataToAlgolia } from '@/lib/algolia';
 import { getPostBlocks } from '@/lib/notion';
 import { getNotion } from '@/lib/notion/getNotion';
 import { getGlobalData } from '@/lib/notion/getNotionData';
+import { getLastPartOfUrl } from '@/lib/utils';
 
 /**
- * 根据notion的slug访问页面
- * 解析三级以上目录 /article/2023/10/29/test
- * @param {*} props
- * @returns
+ * 根据 notion 的 slug 访问页面
+ * 解析三级以上目录 /article/parent_slug/notion_id
  */
 const PrefixSlug = props => {
   return <Slug {...props} />;
@@ -19,7 +18,6 @@ const PrefixSlug = props => {
 
 /**
  * 编译渲染页面路径
- * @returns
  */
 export async function getStaticPaths() {
   if (!BLOG.isProd) {
@@ -39,8 +37,6 @@ export async function getStaticPaths() {
 
 /**
  * 抓取页面数据
- * @param {*} param0
- * @returns
  */
 export async function getStaticProps({ params: { prefix, slug, suffix } }) {
   let fullSlug = prefix + '/' + slug + '/' + suffix.join('/');
@@ -51,14 +47,15 @@ export async function getStaticProps({ params: { prefix, slug, suffix } }) {
   }
   const from = `slug-props-${fullSlug}`;
   const props = await getGlobalData({ from });
-  // 在列表内查找文章
+
+  // 在数据库列表内查找文章
   props.post = props?.allPages?.find((p) => {
     return p.slug === fullSlug || p.id === idToUuid(fullSlug);
   });
 
-  // 处理非列表内文章的内信息
+  // 处理非数据库文章的信息 -> 是否为子页面
   if (!props?.post) {
-    const pageId = fullSlug.slice(-1)[0];
+    const pageId = getLastPartOfUrl(fullSlug);
     if (pageId.length >= 32) {
       const post = await getNotion(pageId);
       props.post = post;
@@ -102,8 +99,6 @@ export async function getStaticProps({ params: { prefix, slug, suffix } }) {
 
 /**
  * 判断是否包含两个以上的 /
- * @param {*} str
- * @returns
  */
 function hasMultipleSlashes(str) {
   const regex = /\/+/g; // 创建正则表达式，匹配所有的斜杠符号

@@ -95,6 +95,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params: { prefix } }) {
   let fullSlug = prefix.toLowerCase();
+
   if (JSON.parse(BLOG.PSEUDO_STATIC)) {
     if (!fullSlug.endsWith('.html')) {
       fullSlug += '.html';
@@ -153,10 +154,6 @@ export async function getStaticProps({ params: { prefix } }) {
 
 /**
  * 获取文章的关联推荐文章列表，目前根据标签关联性筛选
- * @param post
- * @param {*} allPosts
- * @param {*} count
- * @returns
  */
 export function getRecommendPost(post, allPosts, count = 6) {
   let recommendPosts = [];
