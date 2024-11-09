@@ -126,18 +126,18 @@ export const initDarkMode = (updateDarkMode) => {
 };
 
 /**
- * 是否优先深色模式， 根据系统深色模式以及当前时间判断
- * @returns {*}
+ * 是否优先深色模式
  */
 export function isPreferDark() {
   if (BLOG.APPEARANCE === 'dark') {
     return true;
   }
   if (BLOG.APPEARANCE === 'auto') {
-    // 系统深色模式或时间是夜间时，强行置为夜间模式
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }
+  if(BLOG.APPEARANCE === 'time'){
     const date = new Date();
-    const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    return prefersDarkMode || (BLOG.APPEARANCE_DARK_TIME && (date.getHours() >= BLOG.APPEARANCE_DARK_TIME[0] || date.getHours() < BLOG.APPEARANCE_DARK_TIME[1]));
+    return BLOG.APPEARANCE_DARK_TIME && (date.getHours() >= BLOG.APPEARANCE_DARK_TIME[0] || date.getHours() < BLOG.APPEARANCE_DARK_TIME[1]);
   }
   return false;
 }
