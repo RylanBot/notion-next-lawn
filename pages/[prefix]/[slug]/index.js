@@ -8,7 +8,7 @@ import { getNotion } from '@/lib/notion/getNotion';
 import { getGlobalData } from '@/lib/notion/getNotionData';
 
 /**
- * 根据notion的slug访问页面
+ * 根据 notion 的 slug 访问页面
  * 解析二级目录 /article/about
  */
 const PrefixSlug = (props) => {
@@ -47,12 +47,13 @@ export async function getStaticProps({ params: { prefix, slug } }) {
   }
   const from = `slug-props-${fullSlug}`;
   const props = await getGlobalData({ from });
-  // 在列表内查找文章
+
+  // 在数据库列表内查找文章
   props.post = props?.allPages?.find((p) => {
     return p.slug.toLowerCase() === fullSlug || p.id === idToUuid(fullSlug);
   });
 
-  // 处理非列表内文章的内信息
+  // 处理非数据库文章的信息 -> 是否为子页面
   if (!props?.post) {
     const pageId = slug.slice(-1)[0];
     if (pageId.length >= 32) {
@@ -71,6 +72,7 @@ export async function getStaticProps({ params: { prefix, slug } }) {
   if (!props?.posts?.blockMap) {
     props.post.blockMap = await getPostBlocks(props.post.id, from);
   }
+
   // 生成全文索引 && JSON.parse(BLOG.ALGOLIA_RECREATE_DATA)
   if (BLOG.ALGOLIA_APP_ID) {
     uploadDataToAlgolia(props?.post);

@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
 import { siteConfig } from '@/lib/config';
-import { mapPageUrl } from '@/lib/notion/mapPageUrl';
+import { handleInternalUrls } from '@/lib/notion/mapPageUrl';
 import { isBrowser, loadExternalResource } from '@/lib/utils';
 
 import { GlobalStyle } from './GlobalStyle';
@@ -31,8 +31,6 @@ const AosAnimation = dynamic(() => import('@/components/AOSAnimation'), { ssr: f
 
 /**
  * 各种插件脚本
- * @param {*} props
- * @returns
  */
 const ExternalPlugin = (props) => {
   const DISABLE_PLUGIN = siteConfig('DISABLE_PLUGIN');
@@ -42,8 +40,6 @@ const ExternalPlugin = (props) => {
   const ANALYTICS_VERCEL = siteConfig('ANALYTICS_VERCEL');
   const ANALYTICS_BUSUANZI_ENABLE = siteConfig('ANALYTICS_BUSUANZI_ENABLE');
   const ADSENSE_GOOGLE_ID = siteConfig('ADSENSE_GOOGLE_ID');
-  const FACEBOOK_APP_ID = siteConfig('FACEBOOK_APP_ID');
-  const FACEBOOK_PAGE_ID = siteConfig('FACEBOOK_PAGE_ID');
   const FIREWORKS = siteConfig('FIREWORKS');
   const STARRY_SKY = siteConfig('STARRY_SKY');
   const MUSIC_PLAYER = siteConfig('MUSIC_PLAYER');
@@ -51,8 +47,8 @@ const ExternalPlugin = (props) => {
   const FLUTTERINGRIBBON = siteConfig('FLUTTERINGRIBBON');
   const RIBBON = siteConfig('RIBBON');
   const CUSTOM_RIGHT_CLICK_CONTEXT_MENU = siteConfig('CUSTOM_RIGHT_CLICK_CONTEXT_MENU');
-  const CAN_COPY = siteConfig('CAN_COPY');
-  const WEB_WHIZ_ENABLED = siteConfig('WEB_WHIZ_ENABLED');
+  // const CAN_COPY = siteConfig('CAN_COPY');
+  // const WEB_WHIZ_ENABLED = siteConfig('WEB_WHIZ_ENABLED');
   const AD_WWADS_BLOCK_DETECT = siteConfig('AD_WWADS_BLOCK_DETECT');
   const COMMENT_DAO_VOICE_ID = siteConfig('COMMENT_DAO_VOICE_ID');
   const AD_WWADS_ID = siteConfig('AD_WWADS_ID');
@@ -88,8 +84,9 @@ const ExternalPlugin = (props) => {
   }
 
   useEffect(() => {
-    // 映射url
-    mapPageUrl(props?.allNavPages);
+    setTimeout(() => {
+      handleInternalUrls(props?.allNavPages)
+    }, 500)
   }, [router]);
 
   useEffect(() => {
@@ -114,7 +111,6 @@ const ExternalPlugin = (props) => {
     {ANALYTICS_VERCEL && <Analytics />}
     {ANALYTICS_BUSUANZI_ENABLE && <Busuanzi />}
     {ADSENSE_GOOGLE_ID && <GoogleAdsense />}
-    {FACEBOOK_APP_ID && FACEBOOK_PAGE_ID && <Messenger />}
     {FIREWORKS && <Fireworks />}
     {STARRY_SKY && <StarrySky />}
     {MUSIC_PLAYER && <MusicPlayer />}

@@ -10,6 +10,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 
 import { siteConfig } from '@/lib/config';
 import { compressImage, mapImgUrl } from '@/lib/notion/mapImage';
+import { mapPageUrl } from '@/lib/notion/mapPageUrl';
 import { isBrowser } from '@/lib/utils';
 
 const Code = dynamic(
@@ -208,14 +209,6 @@ const autoScrollToTarget = () => {
       }
     }
   }, 180);
-};
-
-/**
- * 将id映射成博文内部链接。
- */
-const mapPageUrl = (id) => {
-  // return 'https://www.notion.so/' + id.replace(/-/g, '')
-  return '/' + id.replace(/-/g, '');
 };
 
 /**
