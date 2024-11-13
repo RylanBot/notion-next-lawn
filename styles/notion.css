@@ -825,8 +825,7 @@ svg.notion-page-icon {
 }
 
 .notion-asset-wrapper iframe {
-  border: none;
-  background: rgb(247, 246, 245);
+  background: transparent !important;
 }
 
 .notion-text {
