@@ -112,7 +112,7 @@ export const LayoutBase = (props) => {
               LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : ''
             }`}
           >
-            <div className={`w-full h-full overflow-hidden ${fullWidth ? 'max-w-4xl' : ''}`}>
+            <div className={`w-full h-full overflow-hidden pb-12 ${fullWidth ? 'max-w-4xl' : ''}`}>
               {slotTop}
               {children}
             </div>
