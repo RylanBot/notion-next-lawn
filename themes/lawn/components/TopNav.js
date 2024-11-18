@@ -71,6 +71,8 @@ const TopNav = (props) => {
         if (isHome) {
           navTitle?.classList.replace('opacity-0', 'opacity-100');
           navTitle?.classList.replace('pointer-events-auto', 'pointer-events-none');
+        } else {
+          navTitle?.classList.replace('pointer-events-none', 'pointer-events-auto');
         }
       }
 
@@ -169,7 +171,7 @@ const TopNav = (props) => {
       <div
         id="sticky-nav"
         style={{ backdropFilter: 'blur(3px)' }}
-        className="top-0 duration-300 transition-all shadow-none fixed bg-none dark:bg-lawn-black-gray dark:text-gray-200 text-black w-full z-20 transform border-transparent dark:border-transparent"
+        className="top-0 transition-all shadow-none fixed bg-none dark:bg-lawn-black-gray dark:text-gray-200 text-black w-full z-20 transform border-transparent dark:border-transparent"
       >
         <div className="w-full flex justify-between items-center px-4 py-2">
           <div id="nav-title" className="opacity-100 pointer-events-auto">
