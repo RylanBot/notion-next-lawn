@@ -93,7 +93,7 @@ export default function SideRight(props) {
           {LAWN_WIDGET_ANALYTICS && <AnalyticsCard {...props} />}
 
           {/* 归档卡 */}
-          <ArchiveCard postCount={props.postCount} />
+          <ArchiveCard postCount={props.allNavPages?.length ?? 0} />
 
           {/* 分类卡 */}
           <CategoryGroup />
