@@ -55,11 +55,11 @@ function getPageElement(page, currentPage, pagePrefix) {
       href={page === 1 ? `${pagePrefix}/` : `${pagePrefix}/page/${page}`}
       key={page}
       passHref
-      className={`rounded-sm border-transparent cursor-pointer pb-0.5 w-6 text-center font-light hover:font-bold ${page === currentPage ?
-        'font-bold bg-teal-400 dark:bg-teal-500 text-white' :
-        'hover:border-teal-400'}
-    `}
+      className={`pb-0.5 w-6 text-center ${page == currentPage ?
+        'pointer-events-none rounded-sm font-bold bg-teal-400 dark:bg-teal-500 text-white' :
+        'border-b hover:border-teal-400'}`}
     >
+
       {page}
     </Link>
   );
@@ -100,4 +100,5 @@ function generatePages(pagePrefix, page, currentPage, totalPage) {
   }
   return pages;
 }
+
 export default PaginationNumber;
