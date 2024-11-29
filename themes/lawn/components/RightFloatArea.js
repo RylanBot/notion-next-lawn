@@ -33,12 +33,8 @@ export default function RightFloatArea({ floatSlot }) {
   }, [scrollListener]);
 
   return (
-    <div
-      className={`${showFloatButton ? 'opacity-100' : 'invisible opacity-0'} 
-      duration-300 transition-all bottom-12 right-1 fixed justify-end z-20 rounded-sm
-      text-white bg-teal-500 dark:bg-teal-600 p-2 lg:scale-125 lg:mr-2`}
-    >
-      <div className={'justify-center flex flex-col items-center cursor-pointer space-y-2'}>
+    <div className={`duration-300 transition-all bottom-12 right-1 fixed justify-end z-20 rounded-sm text-white bg-teal-500 dark:bg-teal-600 p-2 lg:scale-125 lg:mr-2 ${showFloatButton ? 'opacity-100' : 'invisible opacity-0'}`}>
+      <div className='justify-center flex flex-col items-center cursor-pointer space-y-2'>
         <FloatDarkModeButton />
         {floatSlot}
         <JumpToTopButton />
