@@ -32,7 +32,6 @@ const TopNav = (props) => {
   const searchDrawer = useRef();
   const [isOpen, changeShow] = useState(false);
 
-  const throttleMs = 200;
   const handleNavStyle = useCallback(
     throttle(() => {
       const scrollS = window.scrollY;
@@ -93,9 +92,7 @@ const TopNav = (props) => {
         nav && nav.classList.replace('-top-20', 'top-0');
         windowTop = scrollS;
       }
-    }, throttleMs),
-    [router.route]
-  );
+    }, 200), [router.route, isDarkMode]);
 
   useEffect(() => {
     handleNavStyle();
@@ -117,7 +114,7 @@ const TopNav = (props) => {
       window.removeEventListener('scroll', handleNavStyle);
       observer.disconnect();
     };
-  }, [router.route]);
+  }, [router.route, isDarkMode]);
 
   const searchDrawerSlot = (
     <>
