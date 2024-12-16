@@ -50,7 +50,7 @@ const WalineComponent = (props) => {
           '//npm.elemecdn.com/@waline/emojis@1.1.0/tieba',
           '//npm.elemecdn.com/@waline/emojis@1.1.0/bilibili'
         ],
-        login: 'disable',
+        // login: 'disable',
         search: false,
         imageUploader: false,
         requiredMeta: ['nick']
