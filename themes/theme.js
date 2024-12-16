@@ -58,7 +58,7 @@ const checkThemeDOM = () => {
       // 删除前面的元素，只保留最后一个元素
       for (let i = 0; i < elements.length - 1; i++) {
         if (elements[i] && elements[i].parentNode && elements[i].parentNode.contains(elements[i])) {
-          elements[i].parentNode.removeChild(elements[i])
+          elements[i].parentNode.removeChild(elements[i]);
         }
       }
     }
@@ -100,75 +100,24 @@ export const getLayoutNameByPath = (path) => {
 
 /**
  * 初始化主题 , 优先级 query > cookies > systemPrefer
- * @param isDarkMode
- * @param updateDarkMode 更改主题ChangeState函数
- * @description 读取cookie中存的用户主题
  */
 export const initDarkMode = (updateDarkMode) => {
-  // 查看用户设备浏览器是否深色模型
-  let newDarkMode = isPreferDark();
-
-  // 查看cookie中是否用户强制设置深色模式
-  const cookieDarkMode = loadDarkModeFromCookies();
-  if (cookieDarkMode) {
-    newDarkMode = JSON.parse(cookieDarkMode);
-  }
-
-  // url查询条件中是否深色模式
-  const queryMode = getQueryVariable('mode');
-  if (queryMode) {
-    newDarkMode = queryMode === 'dark';
-  }
-
-  updateDarkMode(newDarkMode);
-  saveDarkModeToCookies(newDarkMode);
-  document.getElementsByTagName('html')[0].setAttribute('class', newDarkMode ? 'dark' : 'light');
+  const darkMode = isPreferDark();
+  updateDarkMode(darkMode);
+  document.getElementsByTagName('html')[0].setAttribute('class', darkMode ? 'dark' : 'light');
 };
 
 /**
- * 是否优先深色模式
+ * 是否深色模式
  */
 export function isPreferDark() {
-  if (BLOG.APPEARANCE === 'dark') {
+  // 系统设置优先
+  if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
     return true;
-  }
-  if (BLOG.APPEARANCE === 'auto') {
-    return window.matchMedia('(prefers-color-scheme: dark)').matches;
-  }
-  if(BLOG.APPEARANCE === 'time'){
+  } else {
+    // 然后对比当前时间
+    const darkTime = [22, 6];
     const date = new Date();
-    return BLOG.APPEARANCE_DARK_TIME && (date.getHours() >= BLOG.APPEARANCE_DARK_TIME[0] || date.getHours() < BLOG.APPEARANCE_DARK_TIME[1]);
+    return (date.getHours() >= darkTime[0] || date.getHours() < darkTime[1]);
   }
-  return false;
 }
-
-/**
- * 读取深色模式
- * @returns {*}
- */
-export const loadDarkModeFromCookies = () => {
-  return cookie.load('darkMode');
-};
-
-/**
- * 保存深色模式
- * @param newTheme
- */
-export const saveDarkModeToCookies = (newTheme) => {
-  cookie.save('darkMode', newTheme, { path: '/' });
-};
-
-/**
- * 读取默认主题
- */
-export const loadThemeFromCookies = () => {
-  return cookie.load('theme');
-};
-
-/**
- * 保存默认主题
- * @param newTheme
- */
-export const saveThemeToCookies = (newTheme) => {
-  cookie.save('theme', newTheme, { path: '/' });
-};

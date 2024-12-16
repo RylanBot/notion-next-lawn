@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router';
 import { createContext, useContext, useEffect, useState } from 'react';
 
-import { THEMES, initDarkMode, saveDarkModeToCookies } from '@/themes/theme';
+import { THEMES, initDarkMode } from '@/themes/theme';
 
 import { APPEARANCE, LANG, THEME } from 'blog.config';
-import { generateLocaleDict, initLocale, saveLangToCookies } from '../lib/lang';
+import { generateLocaleDict, initLocale } from '../lib/lang';
 
 const GlobalContext = createContext();
 
@@ -40,7 +40,6 @@ export function GlobalContextProvider(props) {
   // 切换深色模式
   const toggleDarkMode = () => {
     const newStatus = !isDarkMode;
-    saveDarkModeToCookies(newStatus);
     updateDarkMode(newStatus);
     const htmlElement = document.getElementsByTagName('html')[0];
     htmlElement.classList?.remove(newStatus ? 'light' : 'dark');

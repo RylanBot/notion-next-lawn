@@ -5,7 +5,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useGlobal } from '@/hooks/useGlobal';
 import useWindowSize from '@/hooks/useWindowSize';
 import { siteConfig } from '@/lib/config';
-import { saveDarkModeToCookies, THEMES } from '@/themes/theme';
+import { THEMES } from '@/themes/theme';
 
 /**
  * 自定义右键菜单
@@ -68,7 +68,6 @@ export default function CustomContextMenu(props) {
 
   function handleChangeDarkMode() {
     const newStatus = !isDarkMode;
-    saveDarkModeToCookies(newStatus);
     updateDarkMode(newStatus);
     const htmlElement = document.getElementsByTagName('html')[0];
     htmlElement.classList?.remove(newStatus ? 'light' : 'dark');
