@@ -701,7 +701,7 @@ summary > .notion-h {
   margin: 2px 4px 0 2px;
   fill: var(--fg-color-6);
   color: var(--fg-color-icon);
-  @apply dark:brightness-150;
+  @apply dark:brightness-125;
 }
 
 img.notion-page-icon,
@@ -1951,7 +1951,6 @@ svg + .notion-page-title-text {
 .notion-table {
   align-self: center;
   overflow: auto hidden;
-  @apply w-full !important;
 }
 
 .notion-table-view {

@@ -26,30 +26,13 @@ export default function SideRight(props) {
 
   const LAWN_WIDGET_ANALYTICS = siteConfig('LAWN_WIDGET_ANALYTICS', null, CONFIG);
 
-  const [shouldRender, setShouldRender] = useState(false);
   const [activeTab, setActiveTab] = useState('info');
 
   useEffect(() => {
-    const observer = new MutationObserver(() => {
-      const skeleton = document.getElementById('notion-skeleton');
-      setShouldRender(!skeleton);
-    });
+    setActiveTab(post?.toc?.length > 1 ? 'toc' : 'info');
+  }, [post]);
 
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (shouldRender) {
-      setActiveTab(post?.toc?.length > 1 ? 'toc' : 'info');
-    }
-  }, [shouldRender, post]);
-
-  if (!isBrowser || !shouldRender || post?.fullWidth) return null;
+  if (!isBrowser || post?.fullWidth) return null;
 
   return (
     <>

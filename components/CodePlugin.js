@@ -16,9 +16,8 @@ import { loadExternalResource } from '@/lib/utils';
 
 /**
  * 代码美化相关
- * @author https://github.com/txs/
  */
-const PrismMac = ({ onLoad }) => {
+const CodePlugin = () => {
   const router = useRouter();
   const { isDarkMode } = useGlobal();
 
@@ -55,26 +54,9 @@ const PrismMac = ({ onLoad }) => {
     });
   }, [router, isDarkMode]);
 
-  useEffect(() => {
-    const observer = new MutationObserver((mutationsList) => {
-      for (const mutation of mutationsList) {
-        if (mutation.type === 'childList') {
-          renderCustomCode().then(() => {
-            setTimeout(() => onLoad(), 100);
-          });
-        }
-      }
-    });
-    observer.observe(document.body, { childList: true, subtree: true });
-    return () => observer.disconnect();
-  }, []);
-
   return <></>;
 };
 
-/**
- * 加载 Prism 主题样式
- */
 const loadPrismThemeCSS = (
   isDarkMode,
   prismThemeSwitch,
@@ -101,9 +83,6 @@ const loadPrismThemeCSS = (
   }
 };
 
-/**
- * 将代码块转为可折叠对象
- */
 const renderCollapseCode = (codeCollapse, codeCollapseExpandDefault) => {
   if (!codeCollapse) return;
 
@@ -154,9 +133,6 @@ const renderCollapseCode = (codeCollapse, codeCollapseExpandDefault) => {
   }
 };
 
-/**
- * 将 mermaid 语言渲染成图片
- */
 const renderMermaid = async (mermaidCDN) => {
   const observer = new MutationObserver(async (mutationsList) => {
     for (const m of mutationsList) {
@@ -195,73 +171,6 @@ const renderMermaid = async (mermaidCDN) => {
   if (document.querySelector('#notion-article')) {
     observer.observe(document.querySelector('#notion-article'), { attributes: true, subtree: true });
   }
-};
-
-/**
- * 类型为 Html / CSS / JS 的代码块第一行出现注释：
- * `<!-- custom -->`, `\* custom *\`, `// custom`，
- * 自动将内容替换为实际代码执行
- * 1. 第二个对应 CSS 注释写法, 这里无法正常打出, notion 中正常使用左斜杠 / 即可
- * 2. 空格不能少
- * @author https://github.com/RylanBot/
- */
-const renderCustomCode = () => {
-  return new Promise((resolve) => {
-    const processCodeElement = (codeElement, language) => {
-      const firstChild = codeElement.firstChild;
-      if (firstChild?.classList?.contains('comment')) {
-        const firstComment = firstChild.textContent || '';
-        const isCustom = {
-          html: firstComment.includes('<!-- custom -->'),
-          css: firstComment.includes('/* custom */'),
-          javascript: firstComment.includes('// custom')
-        }[language];
-
-        if (isCustom) {
-          // 获取代码原始内容
-          const textArea = document.createElement('textarea');
-          textArea.innerHTML = codeElement.textContent;
-          const originalCode = textArea.value;
-
-          let newElement;
-          switch (language) {
-            case 'html':
-              newElement = document.createElement('div');
-              newElement.style.width = '100%';
-              newElement.innerHTML = originalCode;
-              break;
-            case 'css':
-              newElement = document.createElement('style');
-              newElement.textContent = originalCode;
-              break;
-            case 'javascript':
-              newElement = document.createElement('script');
-              newElement.textContent = originalCode;
-              break;
-          }
-
-          const codeToolbar = codeElement.closest('div.code-toolbar');
-          const toolbarParent = codeToolbar?.parentNode;
-          if (toolbarParent?.contains(codeToolbar)) {
-            toolbarParent.replaceChild(newElement, codeToolbar);
-          }
-        }
-      }
-    };
-
-    const toolbars = document.querySelectorAll('.code-toolbar');
-    toolbars?.forEach((toolbarEl) => {
-      const codeHtml = toolbarEl.querySelector('code.language-html');
-      const codeCss = toolbarEl.querySelector('code.language-css');
-      const codeJs = toolbarEl.querySelector('code.language-javascript');
-
-      if (codeHtml) processCodeElement(codeHtml, 'html');
-      if (codeCss) processCodeElement(codeCss, 'css');
-      if (codeJs) processCodeElement(codeJs, 'javascript');
-    });
-
-    resolve();
-  });
 };
 
 const renderPrismMac = (codeLineNumbers) => {
@@ -308,7 +217,7 @@ const renderPrismMac = (codeLineNumbers) => {
 
 /**
  * 行号样式在首次渲染或被detail折叠后行高判断错误
- * 在此手动resize计算
+ * 在此手动 resize 计算
  */
 const fixCodeLineStyle = () => {
   const observer = new MutationObserver((mutationsList) => {
@@ -330,4 +239,4 @@ const fixCodeLineStyle = () => {
   }, 10);
 };
 
-export default PrismMac;
+export default CodePlugin;

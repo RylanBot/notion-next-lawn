@@ -45,7 +45,7 @@ const Comment = ({ siteInfo, frontMatter, className }) => {
     return (
       <>
         {/* 全屏遮罩 */}
-        <div className="fixed inset-0 bg-white z-10 dark:bg-zinc-950"></div>
+        <div className="h-screen fixed inset-0 bg-white z-10 dark:bg-zinc-950"></div>
         <div className="fixed inset-0 flex justify-center items-center z-50">
           {/* 闪烁动画 */}
           <div

@@ -1,12 +1,9 @@
 import dynamic from 'next/dynamic';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { NotionRenderer } from 'react-notion-x';
 
 import mediumZoom from '@fisch0920/medium-zoom';
 import 'katex/dist/katex.min.css';
-
-import Skeleton from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css';
 
 import { siteConfig } from '@/lib/config';
 import { compressImage, mapImgUrl } from '@/lib/notion/mapImage';
@@ -21,6 +18,10 @@ const Code = dynamic(
   { ssr: false }
 );
 
+const CodePlugin = dynamic(() => import('@/components/CodePlugin'), {
+  ssr: false
+});
+
 const Equation = dynamic(
   () =>
     import('@/components/Equation').then(async (m) => {
@@ -32,10 +33,6 @@ const Equation = dynamic(
 );
 
 const Pdf = dynamic(() => import('react-notion-x/build/third-party/pdf').then((m) => m.Pdf), {
-  ssr: false
-});
-
-const PrismMac = dynamic(() => import('@/components/PrismMac'), {
   ssr: false
 });
 
@@ -56,8 +53,6 @@ const Tweet = ({ id }) => {
 const NotionPage = ({ post, className }) => {
   const POST_DISABLE_GALLERY_CLICK = siteConfig('POST_DISABLE_GALLERY_CLICK');
   const POST_DISABLE_DATABASE_CLICK = siteConfig('POST_DISABLE_DATABASE_CLICK');
-
-  const [shouldRender, setShouldRender] = useState(false);
 
   const zoom =
     isBrowser &&
@@ -132,16 +127,9 @@ const NotionPage = ({ post, className }) => {
 
   return (
     <>
-      {!shouldRender && (
-        <div id="notion-skeleton" className="mt-4">
-          <Skeleton className="mt-4" height={30} count={15} />
-        </div>
-      )}
       <div
         id="notion-article"
-        className={`mx-auto overflow-hidden transition duration-100 ease-in-out ${
-          !shouldRender ? 'opacity-0 h-0' : 'opacity-100 h-auto'
-        } ${className || ''}`}
+        className={`mx-auto overflow-hidden transition duration-100 ease-in-out ${className || ''}`}
       >
         <NotionRenderer
           recordMap={post.blockMap}
@@ -156,7 +144,7 @@ const NotionPage = ({ post, className }) => {
             Tweet
           }}
         />
-        <PrismMac onLoad={() => setShouldRender(true)} />
+        <CodePlugin />
       </div>
     </>
   );
