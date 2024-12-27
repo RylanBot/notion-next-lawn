@@ -1,6 +1,7 @@
 // eslint-disable-next-line @next/next/no-document-import-in-page
 import BLOG from '@/blog.config';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
+import Script from 'next/script'
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
@@ -10,9 +11,11 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <Html lang={BLOG.LANG} translate='no'>
+      <Html lang={BLOG.LANG}>
         <Head>
           <link rel='icon' href={`${BLOG.BLOG_FAVICON}`} />
+          {/* 初始化亮暗模式，避免闪烁 */}
+          <script src='/js/dark.js'></script>
           {/* 预加载字体 */}
           {BLOG.FONT_AWESOME && <>
             <link rel='prefetch' href={BLOG.FONT_AWESOME} as="style" crossOrigin="anonymous" />

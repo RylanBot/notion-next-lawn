@@ -23,7 +23,7 @@ export async function getStaticPaths() {
   if (!BLOG.isProd) {
     return {
       paths: [],
-      fallback: "blocking"
+      fallback: true
     };
   }
 
@@ -31,7 +31,7 @@ export async function getStaticPaths() {
   const { allPages } = await getGlobalData({ from });
   return {
     paths: allPages?.filter(row => hasMultipleSlashes(row.slug) && row.type.indexOf('Menu') < 0).map(row => ({ params: { prefix: row.slug.split('/')[0], slug: row.slug.split('/')[1], suffix: row.slug.split('/').slice(1) } })),
-    fallback: "blocking"
+    fallback: true
   };
 }
 

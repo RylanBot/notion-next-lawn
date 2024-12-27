@@ -1,6 +1,5 @@
 import getConfig from 'next/config';
 import dynamic from 'next/dynamic';
-import cookie from 'react-cookies';
 
 import { getQueryParam, getQueryVariable, isBrowser } from '@/lib/utils';
 import * as ThemeComponents from '@theme-components';
@@ -97,27 +96,3 @@ export const getLayoutNameByPath = (path) => {
       return 'LayoutSlug';
   }
 };
-
-/**
- * 初始化主题 , 优先级 query > cookies > systemPrefer
- */
-export const initDarkMode = (updateDarkMode) => {
-  const darkMode = isPreferDark();
-  updateDarkMode(darkMode);
-  document.getElementsByTagName('html')[0].setAttribute('class', darkMode ? 'dark' : 'light');
-};
-
-/**
- * 是否深色模式
- */
-export function isPreferDark() {
-  // 系统设置优先
-  if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    return true;
-  } else {
-    // 然后对比当前时间
-    const darkTime = [22, 6];
-    const date = new Date();
-    return (date.getHours() >= darkTime[0] || date.getHours() < darkTime[1]);
-  }
-}

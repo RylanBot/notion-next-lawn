@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import Typed from 'typed.js';
 
-import LazyImage from '@/components/LazyImage';
 import { useGlobal } from '@/hooks/useGlobal';
 import { siteConfig } from '@/lib/config';
 
@@ -76,20 +75,13 @@ const Hero = ({ onLoad, ...props }) => {
   return (
     <div
       id="lawn-header"
-      className={`relative flex flex-col justify-center items-center bg-white z-1 w-full h-[25rem] ${
-        showHero ? '' : 'opacity-0'
-      }`}
+      className={`relative flex flex-col justify-center items-center bg-white z-1 w-full h-[25rem] ${showHero ? '' : 'opacity-0'}`}
     >
       {/* 首页大图 */}
-      <LazyImage
-        id="lawn-header-cover"
+      <img
         src={siteInfo?.pageCover}
+        className={`header-cover w-full h-[25rem] object-cover object-center ${LAWN_HOME_NAV_BACKGROUND_IMG_FIXED ? 'fixed' : ''}`}
         onLoad={handleCoverLoaded}
-        priority={true}
-        placeholderSrc={siteConfig('IMG_LAZY_LOAD_PLACEHOLDER')}
-        className={`${
-          LAWN_HOME_NAV_BACKGROUND_IMG_FIXED ? 'fixed' : ''
-        } header-cover w-full h-[25rem] object-cover object-center`}
       />
       {/* 深色遮罩 */}
       <div className="absolute inset-0 bg-black opacity-30 z-10"></div>

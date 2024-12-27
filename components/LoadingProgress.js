@@ -1,9 +1,21 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-
-import NProgress from 'nprogress';
+import { isBrowser } from 'react-notion-x';
 
 import { useGlobal } from '@/hooks/useGlobal';
+
+export const Loading = () => {
+  return (
+    <>
+      <div className="h-screen w-screen fixed inset-0 bg-white dark:bg-zinc-950 flex justify-center items-center z-50 m-auto">
+        <div className="relative border-8 border-slate-200 dark:border-slate-400 rounded-full p-2 h-72 w-72 max-sm:h-44 max-sm:w-44 max-sm:mb-10"
+        >
+          <img src="/favicon.png" className="animate-blink relative rounded-full w-full h-full" />
+        </div>
+      </div>
+    </>
+  );
+};
 
 /**
  * 页面加载进度条
@@ -20,7 +32,9 @@ export default function LoadingProgress() {
     };
 
     const handleStop = () => {
-      setRouting(false);
+      setTimeout(() => {
+        setRouting(false);
+      }, 1500);
     };
 
     router.events.on('routeChangeStart', handleStart);
@@ -35,12 +49,14 @@ export default function LoadingProgress() {
   }, [router]);
 
   useEffect(() => {
+    if (!isBrowser) return;
+
     if (routing || onLoading) {
-      NProgress.start();
       document.body.style.overflow = 'hidden';
     } else {
-      NProgress.done();
       document.body.style.overflow = '';
     }
-  }, [onLoading, routing]);
+  }, [isBrowser, routing, onLoading]);
+
+  if (routing || onLoading) return <Loading />;
 }

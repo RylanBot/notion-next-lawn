@@ -14,7 +14,7 @@ export default function CustomContextMenu(props) {
   const { latestPosts } = props;
   const router = useRouter();
 
-  const { isDarkMode, updateDarkMode, locale } = useGlobal();
+  const { locale, isDarkMode, toggleDarkMode } = useGlobal();
   const windowSize = useWindowSize();
 
   const [position, setPosition] = useState({ x: '0px', y: '0px' });
@@ -64,14 +64,6 @@ export default function CustomContextMenu(props) {
     const query = router.query;
     query.theme = randomTheme;
     router.push({ pathname: router.pathname, query });
-  }
-
-  function handleChangeDarkMode() {
-    const newStatus = !isDarkMode;
-    updateDarkMode(newStatus);
-    const htmlElement = document.getElementsByTagName('html')[0];
-    htmlElement.classList?.remove(newStatus ? 'light' : 'dark');
-    htmlElement.classList?.add(newStatus ? 'dark' : 'light');
   }
 
   useLayoutEffect(() => {
@@ -153,7 +145,7 @@ export default function CustomContextMenu(props) {
             <div className='whitespace-nowrap'>{locale.MENU.COPY_URL}</div>
           </div>
 
-          <div onClick={handleChangeDarkMode} title={isDarkMode ? locale.MENU.LIGHT_MODE : locale.MENU.DARK_MODE} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all'>
+          <div onClick={toggleDarkMode} title={isDarkMode ? locale.MENU.LIGHT_MODE : locale.MENU.DARK_MODE} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all'>
             {isDarkMode ? <i className="fa-regular fa-sun mr-2" /> : <i className="fa-regular fa-moon mr-2" />}
             <div className='whitespace-nowrap'> {isDarkMode ? locale.MENU.LIGHT_MODE : locale.MENU.DARK_MODE}</div>
           </div>

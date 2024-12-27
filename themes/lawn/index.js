@@ -49,7 +49,7 @@ export const LayoutBase = (props) => {
   const { post, children, slotTop } = props;
 
   const router = useRouter();
-  const { fullWidth } = useGlobal();
+  const { fullWidth, onLoading } = useGlobal();
 
   const FONT_STYLE = siteConfig('FONT_STYLE');
   const LAWN_HOME_BANNER_ENABLE = siteConfig('LAWN_HOME_BANNER_ENABLE', null, CONFIG);
@@ -103,14 +103,10 @@ export const LayoutBase = (props) => {
         {/* 主区块 */}
         <main
           id="lawn-main-wrapper"
-          className={`bg-lawn-background-gray dark:bg-black w-full py-8 md:px-32 min-h-screen relative ${
-            LAWN_HOME_BANNER_ENABLE ? 'pt-14 max-md:pt-6' : ''
-          }`}
+          className={`bg-lawn-background-gray dark:bg-black w-full py-8 md:px-32 min-h-screen relative ${LAWN_HOME_BANNER_ENABLE ? 'pt-14 max-md:pt-6' : ''}`}
         >
           <div
-            className={`w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10 ${
-              LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : ''
-            }`}
+            className={`w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10 ${LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : ''}`}
           >
             <div className={`w-full h-full overflow-hidden pb-12 ${fullWidth ? 'max-w-4xl' : ''}`}>
               {slotTop}
@@ -128,7 +124,7 @@ export const LayoutBase = (props) => {
         <AlgoliaSearchModal cRef={searchModal} {...props} />
 
         {/* 页脚 */}
-        <Footer/>
+        {!onLoading && <Footer />}
       </div>
     </ThemeGlobalLawn.Provider>
   );
