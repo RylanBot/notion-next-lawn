@@ -1,13 +1,22 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { isBrowser } from 'react-notion-x';
 
 import { useGlobal } from '@/hooks/useGlobal';
 
 export const Loading = () => {
+  useEffect(() => {  
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.removeProperty('overflow');
+      if (!document.body.getAttribute('style')) {
+        document.body.removeAttribute('style');
+      }
+    };
+  }, []);
+
   return (
     <>
-      <div className="z-[1000] h-screen w-screen fixed inset-0 bg-white dark:bg-zinc-950 flex justify-center items-center">
+      <div id="loading" className="z-[1000] h-screen w-screen fixed inset-0 bg-white dark:bg-zinc-950 flex justify-center items-center">
         <div className='max-sm:pb-16'>
           {/* 对应 favicon 的 svg path（先直接写死，避免获取图片的速度受到网络影响） */}
           <svg className="animate-blink scale-50 max-sm:scale-[0.35]" width="512" height="512" xmlns="http://www.w3.org/2000/svg" version="1.1">
@@ -49,16 +58,6 @@ export default function LoadingProgress() {
       router.events.off('routeChangeError', handleStop);
     };
   }, [router]);
-
-  useEffect(() => {
-    if (!isBrowser) return;
-
-    if (routing || onLoading) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-  }, [isBrowser, routing, onLoading]);
 
   if (routing || onLoading) return <Loading />;
 }

@@ -256,7 +256,7 @@ export const LayoutSlug = (props) => {
 
           {/* 评论互动 */}
           <div className="duration-200 overflow-x-auto bg-white dark:bg-lawn-black-gray px-3">
-            <Comment frontMatter={post} />
+            <Comment post={post} />
           </div>
         </div>
       )}
@@ -303,7 +303,7 @@ export const LayoutCategoryIndex = (props) => {
           {categoryOptions?.map((category) => {
             return (
               <Link key={category.name} href={`/category/${category.name}`} passHref legacyBehavior>
-                <div className={' duration-300 px-5 cursor-pointer py-2 hover:text-teal-500 dark:hover:text-teal-400'}>
+                <div className="duration-300 px-5 cursor-pointer py-2 hover:text-teal-500 dark:hover:text-teal-400">
                   <i className="mr-4 fas fa-folder" /> {category.name}({category.count})
                 </div>
               </Link>

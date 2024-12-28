@@ -44,17 +44,14 @@ const SideBarDrawer = ({ children, isOpen, onOpen, onClose, className }) => {
     };
 
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
       document.addEventListener('touchmove', handleScroll, { passive: false });
       document.addEventListener('wheel', handleScroll, { passive: false });
     } else {
-      document.body.style.overflow = 'auto';
       document.removeEventListener('touchmove', handleScroll);
       document.removeEventListener('wheel', handleScroll);
     }
 
     return () => {
-      document.body.style.overflow = 'auto';
       document.removeEventListener('touchmove', handleScroll);
       document.removeEventListener('wheel', handleScroll);
     };
