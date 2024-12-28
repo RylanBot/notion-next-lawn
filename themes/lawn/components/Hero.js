@@ -17,15 +17,16 @@ const Hero = ({ onLoad, ...props }) => {
   const { siteInfo } = props;
   const { locale, setOnLoading } = useGlobal();
 
-  const WAITING_TIME = siteConfig('POST_WAITING_TIME_FOR_404');
   const TITLE = siteConfig('TITLE');
   const GREETING_WORDS = siteConfig('GREETING_WORDS').split(',');
   const LAWN_HOME_NAV_BUTTONS = siteConfig('LAWN_HOME_NAV_BUTTONS', null, CONFIG);
   const LAWN_SHOW_START_READING = siteConfig('LAWN_SHOW_START_READING', null, CONFIG);
   const LAWN_HOME_NAV_BACKGROUND_IMG_FIXED = siteConfig('LAWN_HOME_NAV_BACKGROUND_IMG_FIXED', null, CONFIG);
 
+  const typedRef = useRef(null);
+  const imgRef = useRef(null);
+
   const [showHero, setShowHero] = useState(false);
-  const typedEl = useRef(null);
 
   const scrollToWrapper = () => {
     window.scrollTo({ top: wrapperTop, behavior: 'smooth' });
@@ -39,23 +40,30 @@ const Hero = ({ onLoad, ...props }) => {
   };
 
   const handleCoverLoaded = () => {
-    setShowHero(true);
-    setOnLoading(false);
-    onLoad();
+    setTimeout(() => {
+      setShowHero(true);
+      setOnLoading(false);
+      onLoad();
+    }, 3000);
   };
 
   useEffect(() => {
     setOnLoading(true);
 
-    // 避免网络较差的时候，一直无法进入首页
-    const timer = setTimeout(handleCoverLoaded, WAITING_TIME * 1000);
-    return () => clearTimeout(timer);
+    const img = imgRef.current;
+    if (img.complete) {
+      handleCoverLoaded();
+    } else {
+      img.onload = () => handleCoverLoaded();
+    }
+
+    img.src = siteInfo.pageCover;
   }, []);
 
   useEffect(() => {
     updateHeaderHeight();
 
-    const typed = new Typed(typedEl.current, {
+    const typed = new Typed(typedRef.current, {
       strings: GREETING_WORDS,
       loop: true,
       typeSpeed: 100,
@@ -79,9 +87,8 @@ const Hero = ({ onLoad, ...props }) => {
     >
       {/* 首页大图 */}
       <img
-        src={siteInfo?.pageCover}
+        ref={imgRef}
         className={`header-cover w-full h-[25rem] object-cover object-center ${LAWN_HOME_NAV_BACKGROUND_IMG_FIXED ? 'fixed' : ''}`}
-        onLoad={handleCoverLoaded}
       />
       {/* 深色遮罩 */}
       <div className="absolute inset-0 bg-black opacity-30 z-10"></div>
@@ -92,7 +99,7 @@ const Hero = ({ onLoad, ...props }) => {
 
         {/* 站点欢迎语 */}
         <div className="mt-6 h-12 items-center text-center font-medium shadow-text text-xl lg:text-2xl z-20">
-          <span id="typed" ref={typedEl} />
+          <span id="typed" ref={typedRef} />
         </div>
 
         {/* 首页导航大按钮 */}
