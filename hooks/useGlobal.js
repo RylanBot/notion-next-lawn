@@ -42,12 +42,12 @@ export function GlobalContextProvider(props) {
   };
 
   const toggleDarkMode = () => {
-    const newStatus = !isDarkMode;
-    setDarkMode(newStatus);
+    const isNewDark = !isDarkMode;
+    setDarkMode(isNewDark);
     const htmlElement = document.getElementsByTagName('html')[0];
-    htmlElement.classList.remove(newStatus ? 'light' : 'dark');
-    htmlElement.classList.add(newStatus ? 'dark' : 'light');
-    localStorage.setItem("darkMode", newStatus);
+    htmlElement.classList.remove(isNewDark ? 'light' : 'dark');
+    htmlElement.classList.add(isNewDark ? 'dark' : 'light');
+    window.localStorage.setItem('darkMode', isNewDark);
   };
 
   useEffect(() => {
@@ -59,8 +59,8 @@ export function GlobalContextProvider(props) {
     };
 
     const initDarkMode = () => {
-      const localMode = window.localStorage.getItem("darkMode");
-      setDarkMode(localMode);
+      const isLocalDark = window.localStorage.getItem('darkMode');
+      setDarkMode(isLocalDark === 'true');
     };
 
     initLocale();
