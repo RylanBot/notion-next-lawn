@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
+import { isBrowser } from 'react-notion-x';
 
 import { useGlobal } from '@/hooks/useGlobal';
 import { siteConfig } from '@/lib/config';
-import { isBrowser } from '@/lib/utils';
 
 import AlgoliaSearchModal from '@/components/AlgoliaSearchModal';
 import Comment from '@/components/Comment';
@@ -49,24 +49,25 @@ export const LayoutBase = (props) => {
   const { post, children, slotTop } = props;
 
   const router = useRouter();
-  const { fullWidth, onLoading } = useGlobal();
+  const { fullWidth } = useGlobal();
 
   const FONT_STYLE = siteConfig('FONT_STYLE');
   const LAWN_HOME_BANNER_ENABLE = siteConfig('LAWN_HOME_BANNER_ENABLE', null, CONFIG);
   const LAYOUT_SIDEBAR_REVERSE = JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE'));
 
+  const [hydrated, setHydrated] = useState(false);
   const [showNav, setShowNav] = useState(false);
+
+  const drawerRight = useRef(null);
+  const searchModal = useRef(null);
+
+  const tocRef = isBrowser ? document.getElementById('article-wrapper') : null;
 
   const headerSlot = post ? (
     <PostHeader {...props} />
   ) : router.route === '/' && LAWN_HOME_BANNER_ENABLE ? (
     <Hero {...props} onLoad={() => setShowNav(true)} />
   ) : null;
-
-  const drawerRight = useRef(null);
-  const searchModal = useRef(null);
-
-  const tocRef = isBrowser ? document.getElementById('article-wrapper') : null;
 
   const floatSlot = (
     <>
@@ -82,6 +83,7 @@ export const LayoutBase = (props) => {
   );
 
   useEffect(() => {
+    setHydrated(true);
     if (router.pathname === '/') return;
     setTimeout(() => {
       setShowNav(true);
@@ -94,37 +96,42 @@ export const LayoutBase = (props) => {
         {/* 特定主题 CSS */}
         <Style />
 
-        {/* 顶部嵌入 */}
-        <header>
-          {showNav && <TopNav {...props} />}
-          {headerSlot}
-        </header>
+        {hydrated && (
+          <>
+            {/* 顶部嵌入 */}
+            <header>
+              {showNav && <TopNav {...props} />}
+              {headerSlot}
+            </header>
 
-        {/* 主区块 */}
-        <main
-          id="lawn-main-wrapper"
-          className={`bg-lawn-background-gray dark:bg-black w-full py-8 md:px-32 min-h-screen relative ${LAWN_HOME_BANNER_ENABLE ? 'pt-14 max-md:pt-6' : ''}`}
-        >
-          <div
-            className={`w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10 ${LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : ''}`}
-          >
-            <div className={`w-full h-full overflow-hidden pb-12 ${fullWidth ? 'max-w-4xl' : ''}`}>
-              {slotTop}
-              {children}
-            </div>
-            {/* 右侧栏 */}
-            {showNav && <SideRight {...props} />}
-          </div>
-        </main>
+            {/* 主区块 */}
+            <main
+              id="lawn-main-wrapper"
+              className={`bg-lawn-background-gray dark:bg-black w-full py-8 md:px-32 min-h-screen relative ${LAWN_HOME_BANNER_ENABLE ? 'pt-14 max-md:pt-6' : ''}`}
+            >
+              <div
+                className={`w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10 ${LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : ''}`}
+              >
+                <div className={`w-full h-full overflow-hidden pb-12 ${fullWidth ? 'max-w-4xl' : ''}`}>
+                  {slotTop}
+                  {children}
+                </div>
+                {/* 右侧栏 */}
+                {showNav && <SideRight {...props} />}
+              </div>
+            </main>
 
-        {/* 悬浮菜单 */}
-        <RightFloatArea floatSlot={floatSlot} />
+            {/* 悬浮菜单 */}
+            <RightFloatArea floatSlot={floatSlot} />
 
-        {/* 全文搜索 */}
-        <AlgoliaSearchModal cRef={searchModal} {...props} />
+            {/* 全文搜索 */}
+            <AlgoliaSearchModal cRef={searchModal} {...props} />
 
-        {/* 页脚 */}
-        {!onLoading && <Footer />}
+            {/* 页脚 */}
+            <Footer />
+          </>
+        )}
+
       </div>
     </ThemeGlobalLawn.Provider>
   );
