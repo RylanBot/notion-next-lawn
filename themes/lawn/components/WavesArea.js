@@ -1,10 +1,10 @@
-import { useGlobal } from '@/hooks/useGlobal';
+import useDarkMode from '@/hooks/useDarkMode';
 
 /**
  * 文章波浪动画
  */
 export default function WavesArea() {
-  const { isDarkMode } = useGlobal();
+  const { isDarkMode } = useDarkMode();
   const color = isDarkMode ? '#000000' : '#f5f5f5';
 
   return (

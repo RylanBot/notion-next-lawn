@@ -1,12 +1,12 @@
-import { useGlobal } from '@/hooks/useGlobal';
 import { useImperativeHandle } from 'react';
+import useDarkMode from '@/hooks/useDarkMode';
 
 /**
  * 深色模式按钮
  */
 const DarkModeButton = (props) => {
   const { cRef } = props;
-  const { isDarkMode, toggleDarkMode } = useGlobal();
+  const { isDarkMode, toggleDarkMode } = useDarkMode();
 
   // 对外暴露方法
   useImperativeHandle(cRef, () => {

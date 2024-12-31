@@ -1,9 +1,13 @@
+import useDarkMode from '@/hooks/useDarkMode';
 import { useGlobal } from '@/hooks/useGlobal';
+
 import { siteConfig } from '@/lib/config';
+
 import CONFIG from '../config';
 
 export default function FloatDarkModeButton() {
-  const { locale, isDarkMode, toggleDarkMode } = useGlobal();
+  const { locale } = useGlobal();
+  const { isDarkMode, toggleDarkMode } = useDarkMode();
 
   if (!siteConfig('LAWN_WIDGET_DARK_MODE', null, CONFIG)) {
     return <></>;

@@ -2,8 +2,6 @@ import { useGlobal } from '@/hooks/useGlobal';
 import { useEffect } from 'react';
 
 const useAdjustStyle = () => {
-  const { isDarkMode } = useGlobal();
-
   // 避免 callout 含有图片时溢出撑开父容器
   useEffect(() => {
     const adjustCalloutImg = () => {

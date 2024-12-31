@@ -1,10 +1,11 @@
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import { isBrowser } from 'react-notion-x'
 
 import { siteConfig } from '@/lib/config';
 import { handleInternalUrls } from '@/lib/notion/mapPageUrl';
-import { isBrowser, loadExternalResource } from '@/lib/utils';
+import { loadExternalResource } from '@/lib/utils';
 
 import { GlobalStyle } from './GlobalStyle';
 import LA51 from './LA51';

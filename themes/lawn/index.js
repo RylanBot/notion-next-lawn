@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
+import { isBrowser } from 'react-notion-x'
 
 import { useGlobal } from '@/hooks/useGlobal';
 import { siteConfig } from '@/lib/config';
-import { isBrowser } from '@/lib/utils';
 
 import AlgoliaSearchModal from '@/components/AlgoliaSearchModal';
 import Comment from '@/components/Comment';

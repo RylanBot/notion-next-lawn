@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic';
 import { useEffect, useRef } from 'react';
-import { NotionRenderer } from 'react-notion-x';
+import { isBrowser, NotionRenderer } from 'react-notion-x';
 
 import mediumZoom from '@fisch0920/medium-zoom';
 import 'katex/dist/katex.min.css';
@@ -8,7 +8,6 @@ import 'katex/dist/katex.min.css';
 import { siteConfig } from '@/lib/config';
 import { compressImage, mapImgUrl } from '@/lib/notion/mapImage';
 import { mapPageUrl } from '@/lib/notion/mapPageUrl';
-import { isBrowser } from '@/lib/utils';
 
 const Code = dynamic(
   () =>

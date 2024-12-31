@@ -1,10 +1,11 @@
 import { useRouter } from 'next/router';
 import { createContext, useContext, useEffect, useState } from 'react';
+import { isBrowser } from 'react-notion-x';
 
 import { THEMES } from '@/themes/theme';
 
-import { getQueryVariable, isBrowser } from '@/lib/utils';
 import { generateLocaleDict } from '@/lib/lang';
+import { getQueryVariable } from '@/lib/utils';
 
 import { LANG, THEME } from 'blog.config';
 
@@ -22,8 +23,6 @@ export function GlobalContextProvider(props) {
   const [theme, setTheme] = useState(NOTION_CONFIG?.THEME || THEME);
   const [lang, setLang] = useState(NOTION_CONFIG?.LANG || LANG);
   const [locale, setLocale] = useState(generateLocaleDict(NOTION_CONFIG?.LANG || LANG));
-  const [isDarkMode, setDarkMode] = useState("light");
-
   const [onLoading, setOnLoading] = useState(false);
 
   const switchTheme = () => {
@@ -41,15 +40,6 @@ export function GlobalContextProvider(props) {
     setLocale(generateLocaleDict(lang));
   };
 
-  const toggleDarkMode = () => {
-    const isNewDark = !isDarkMode;
-    setDarkMode(isNewDark);
-    const htmlElement = document.getElementsByTagName('html')[0];
-    htmlElement.classList.remove(isNewDark ? 'light' : 'dark');
-    htmlElement.classList.add(isNewDark ? 'dark' : 'light');
-    window.localStorage.setItem('darkMode', isNewDark);
-  };
-
   useEffect(() => {
     if (!isBrowser) return;
 
@@ -64,7 +54,6 @@ export function GlobalContextProvider(props) {
     };
 
     initLocale();
-    initDarkMode();
   }, [isBrowser]);
 
   return (
@@ -79,8 +68,6 @@ export function GlobalContextProvider(props) {
       lang,
       locale,
       changeLang,
-      isDarkMode,
-      toggleDarkMode,
       theme,
       setTheme,
       switchTheme,

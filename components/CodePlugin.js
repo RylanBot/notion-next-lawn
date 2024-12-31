@@ -10,7 +10,8 @@ import 'prismjs/plugins/line-numbers/prism-line-numbers';
 import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
 import 'prismjs/plugins/show-language/prism-show-language';
 
-import { useGlobal } from '@/hooks/useGlobal';
+import useDarkMode from '@/hooks/useDarkMode';
+
 import { siteConfig } from '@/lib/config';
 import { loadExternalResource } from '@/lib/utils';
 
@@ -19,7 +20,7 @@ import { loadExternalResource } from '@/lib/utils';
  */
 const CodePlugin = () => {
   const router = useRouter();
-  const { isDarkMode } = useGlobal();
+  const { isDarkMode } = useDarkMode();
 
   const codeMacBar = siteConfig('CODE_MAC_BAR');
   const prismjsAutoLoader = siteConfig('PRISM_JS_AUTO_LOADER');

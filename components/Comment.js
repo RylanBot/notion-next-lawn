@@ -1,12 +1,13 @@
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import { isBrowser } from 'react-notion-x'
 
 import Tabs from '@/components/Tabs';
 import { Loading } from '@/components/LoadingProgress';
 
 import { siteConfig } from '@/lib/config';
-import { isBrowser, isSearchEngineBot } from '@/lib/utils';
+import { isSearchEngineBot } from '@/lib/utils';
 
 const WalineComponent = dynamic(
   () => {
