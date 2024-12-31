@@ -1,12 +1,12 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import { isBrowser } from 'react-notion-x'
 
 import BLOG from '@/blog.config';
 import { useGlobal } from '@/hooks/useGlobal';
 import { siteConfig } from '@/lib/config';
 import { formatDateFmt } from '@/lib/formatDate';
 import { getGlobalData } from '@/lib/notion/getNotionData';
-import { isBrowser } from '@/lib/utils';
 import { getLayoutByTheme } from '@/themes/theme';
 
 const ArchiveIndex = (props) => {

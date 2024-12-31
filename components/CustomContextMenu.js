@@ -2,8 +2,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
+import useDarkMode from '@/hooks/useDarkMode';
 import { useGlobal } from '@/hooks/useGlobal';
 import useWindowSize from '@/hooks/useWindowSize';
+
 import { siteConfig } from '@/lib/config';
 import { THEMES } from '@/themes/theme';
 
@@ -14,7 +16,8 @@ export default function CustomContextMenu(props) {
   const { latestPosts } = props;
   const router = useRouter();
 
-  const { locale, isDarkMode, toggleDarkMode } = useGlobal();
+  const { locale } = useGlobal();
+  const { isDarkMode, toggleDarkMode } = useDarkMode();
   const windowSize = useWindowSize();
 
   const [position, setPosition] = useState({ x: '0px', y: '0px' });

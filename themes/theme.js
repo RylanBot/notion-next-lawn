@@ -1,7 +1,8 @@
 import getConfig from 'next/config';
 import dynamic from 'next/dynamic';
+import { isBrowser } from 'react-notion-x'
 
-import { getQueryParam, getQueryVariable, isBrowser } from '@/lib/utils';
+import { getQueryParam, getQueryVariable } from '@/lib/utils';
 import * as ThemeComponents from '@theme-components';
 
 import BLOG from '@/blog.config';
@@ -11,7 +12,6 @@ export const { THEMES = [] } = getConfig().publicRuntimeConfig;
 
 /**
  * 加载全局布局
- * @param {*} themeQuery
  */
 export const getGlobalLayoutByTheme = (themeQuery) => {
   const layout = getLayoutNameByPath(-1);
@@ -24,8 +24,6 @@ export const getGlobalLayoutByTheme = (themeQuery) => {
 
 /**
  * 加载主题文件
- * 如果是
- * @param {*} router
  */
 export const getLayoutByTheme = ({ router, theme }) => {
   const themeQuery = getQueryParam(router.asPath, 'theme') || theme;
@@ -66,7 +64,6 @@ const checkThemeDOM = () => {
 
 /**
  * 根据路径 获取对应的layout
- * @param {*} path
  */
 export const getLayoutNameByPath = (path) => {
   switch (path) {
