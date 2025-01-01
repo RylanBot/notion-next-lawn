@@ -36,7 +36,7 @@
   --notion-yellow_background: rgb(251, 243, 219);
   --notion-orange_background: rgb(250, 235, 221);
   --notion-brown_background: rgb(214, 194, 184);
-  --notion-gray_background: rgb(223, 223, 223);
+  --notion-gray_background: rgb(241, 241, 239);
   --notion-green_background: rgb(219, 237, 219);
   --notion-default_background: transparent;
 
@@ -381,7 +381,7 @@ span[class^='notion-'][class$='_background'] {
   padding: 0 3px;
 }
 
-em > span[class^='notion-'][class$='_background'] {
+em span[class^='notion-'][class$='_background'] {
   padding-right: 5px;
 }
 
