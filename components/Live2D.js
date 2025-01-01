@@ -1,9 +1,10 @@
 /* eslint-disable no-undef */
 import { useEffect } from 'react';
+import { isBrowser } from 'react-notion-x'
 
 import { useGlobal } from '@/hooks/useGlobal';
 import { siteConfig } from '@/lib/config';
-import { isBrowser, isMobile } from '@/lib/utils';
+import { isMobile } from '@/lib/utils';
 
 export default function Live2D() {
   const { theme, switchTheme } = useGlobal();

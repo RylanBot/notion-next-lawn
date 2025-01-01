@@ -32,7 +32,7 @@ export default function SideRight(props) {
     setActiveTab(post?.toc?.length > 1 ? 'toc' : 'info');
   }, [post]);
 
-  if (!isBrowser || post?.fullWidth) return null;
+  if (post?.fullWidth) return null;
 
   return (
     <>

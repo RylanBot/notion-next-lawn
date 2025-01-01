@@ -1,6 +1,6 @@
 'use client'
 
-import { isBrowser } from '@/lib/utils'
+import { isBrowser } from 'react-notion-x'
 
 /**
  * 自定义外部 script

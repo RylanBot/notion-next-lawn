@@ -1,12 +1,12 @@
 import { useRouter } from 'next/router';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import 'aos/dist/aos.css'; // You can also use <link> for styles
+import 'aos/dist/aos.css';
 import 'react-notion-x/src/styles.css';
 
 import '@/styles/animate.css'; // @see https://animate.style/
 import '@/styles/globals.css';
-import '@/styles/notion.css'; //  重写部分样式
+import '@/styles/notion.css'; // 重写部分样式
 import '@/styles/utility-patterns.css';
 
 import ExternalPlugins from '@/components/ExternalPlugins';
@@ -15,12 +15,13 @@ import LoadingProgress from '@/components/LoadingProgress';
 
 import { THEME } from '@/blog.config';
 import { GlobalContextProvider } from '@/hooks/useGlobal';
-import { initLogging } from '@/lib/logger';
+// import { initLogging } from '@/lib/logger';
 import { getQueryParam } from '@/lib/utils';
 import { getGlobalLayoutByTheme } from '@/themes/theme';
 
 const MyApp = ({ Component, pageProps }) => {
   const route = useRouter();
+
   const queryParam = useMemo(() => {
     return getQueryParam(route.asPath, 'theme') || THEME;
   }, [route]);
@@ -33,10 +34,6 @@ const MyApp = ({ Component, pageProps }) => {
     },
     [queryParam]
   );
-
-  useEffect(() => {
-    initLogging();
-  }, []);
 
   return (
     <GlobalContextProvider {...pageProps}>
