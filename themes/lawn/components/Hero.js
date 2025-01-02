@@ -85,20 +85,17 @@ const Hero = ({ onLoad, ...props }) => {
       id="lawn-header"
       className={`relative flex flex-col justify-center items-center bg-white z-1 w-full h-[25rem] ${showHero ? '' : 'opacity-0'}`}
     >
-      {/* 首页大图 */}
       <img
         ref={imgRef}
-        className={`header-cover w-full h-[25rem] object-cover object-center ${LAWN_HOME_NAV_BACKGROUND_IMG_FIXED ? 'fixed' : ''}`}
+        className={`header-cover brightness-75 w-full h-[25rem] object-cover object-center ${LAWN_HOME_NAV_BACKGROUND_IMG_FIXED ? 'fixed' : ''}`}
       />
-      {/* 深色遮罩 */}
-      <div className="absolute inset-0 bg-black opacity-30 z-10"></div>
 
       <div className="text-gray-200 absolute bottom-6 flex flex-col h-full items-center justify-center w-full">
         {/* 站点标题 */}
-        <div className="text-center font-black text-6xl lg:text-8xl shadow-text z-20">{TITLE}</div>
+        <div className="text-center font-black text-6xl lg:text-8xl shadow-text z-10">{TITLE}</div>
 
         {/* 站点欢迎语 */}
-        <div className="mt-6 h-12 items-center text-center font-medium shadow-text text-xl lg:text-2xl z-20">
+        <div className="mt-6 h-12 items-center text-center font-medium shadow-text text-xl lg:text-2xl z-10">
           <span id="typed" ref={typedRef} />
         </div>
 
@@ -108,7 +105,7 @@ const Hero = ({ onLoad, ...props }) => {
         {/* 开始阅读按钮 */}
         <div
           onClick={scrollToWrapper}
-          className="z-30 cursor-pointer w-full text-center py-4 text-3xl absolute bottom-4 text-white"
+          className="z-10 cursor-pointer w-full text-center py-4 text-3xl absolute bottom-4 text-white"
         >
           <div className="opacity-70 animate-bounce text-xs">
             {LAWN_SHOW_START_READING && locale.COMMON.START_READING}

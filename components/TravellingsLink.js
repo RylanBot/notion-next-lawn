@@ -44,11 +44,11 @@ const TravellingsLink = () => {
       </button>
 
       {showModal && (
-        <div className="w-full h-screen fixed inset-0 flex items-center justify-center z-10 px-4">
-          <div className="w-full h-screen fixed inset-0 bg-black opacity-50"></div>
+        <div className="w-full h-screen fixed inset-0 flex items-center justify-center px-4 z-50">
+          <div className="w-full h-screen fixed inset-0 bg-black opacity-75"></div>
           <div
             ref={modalRef}
-            className="w-[425px] bg-zinc-100 dark:bg-zinc-900 p-6 rounded z-20 border-4 border-teal-500 relative"
+            className="w-[425px] bg-zinc-100 dark:bg-zinc-900 p-6 rounded border-4 border-teal-500 relative max-sm:mb-10"
           >
             <button
               onClick={() => setShowModal(false)}
