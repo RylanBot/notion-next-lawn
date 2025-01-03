@@ -7,6 +7,7 @@ import { siteConfig } from '@/lib/config';
 import CONFIG from '../config';
 import NavButtonGroup from './NavButtonGroup';
 import WavesArea from './WavesArea';
+import LazyImage from '@/components/LazyImage';
 
 let wrapperTop = 0;
 
@@ -24,8 +25,6 @@ const Hero = ({ onLoad, ...props }) => {
   const LAWN_HOME_NAV_BACKGROUND_IMG_FIXED = siteConfig('LAWN_HOME_NAV_BACKGROUND_IMG_FIXED', null, CONFIG);
 
   const typedRef = useRef(null);
-  const imgRef = useRef(null);
-
   const [showHero, setShowHero] = useState(false);
 
   const scrollToWrapper = () => {
@@ -44,23 +43,12 @@ const Hero = ({ onLoad, ...props }) => {
       setShowHero(true);
       setOnLoading(false);
       onLoad();
-    }, 3000);
+    }, 1500);
   };
 
   useEffect(() => {
     setOnLoading(true);
 
-    const img = imgRef.current;
-    if (img.complete) {
-      handleCoverLoaded();
-    } else {
-      img.onload = () => handleCoverLoaded();
-    }
-
-    img.src = siteInfo.pageCover;
-  }, []);
-
-  useEffect(() => {
     updateHeaderHeight();
 
     const typed = new Typed(typedRef.current, {
@@ -85,8 +73,11 @@ const Hero = ({ onLoad, ...props }) => {
       id="lawn-header"
       className={`relative flex flex-col justify-center items-center bg-white z-1 w-full h-[25rem] ${showHero ? '' : 'opacity-0'}`}
     >
-      <img
-        ref={imgRef}
+      <LazyImage
+        src={siteInfo?.pageCover}
+        onLoad={() => handleCoverLoaded()}
+        priority={true}
+        fetchpriority="high"
         className={`header-cover brightness-75 w-full h-[25rem] object-cover object-center ${LAWN_HOME_NAV_BACKGROUND_IMG_FIXED ? 'fixed' : ''}`}
       />
 

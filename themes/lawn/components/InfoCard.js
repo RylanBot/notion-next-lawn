@@ -13,6 +13,9 @@ import SocialButton from './SocialButton';
 export function InfoCard(props) {
   const { className, siteInfo } = props;
 
+  const AUTHOR = siteConfig('AUTHOR');
+  const BIO = siteConfig('BIO');
+
   const router = useRouter();
   const specialPath = [
     '/page/[page]',
@@ -29,10 +32,15 @@ export function InfoCard(props) {
     <div className={`max-md:hidden ${specialPath.includes(router.pathname) ? 'md:pt-14' : ''}`}>
       <Card className={className}>
         <div className="flex justify-center items-center py-4">
-          <LazyImage src={siteInfo?.icon} className="rounded-full" width={120} alt={siteConfig('AUTHOR')} />
+          <LazyImage
+            src={siteInfo?.icon}
+            alt={AUTHOR}
+            width={120}
+            className="rounded-full"
+          />
         </div>
-        <div className="font-oleo font-medium text-center text-2xl mb-3">{siteConfig('AUTHOR')}</div>
-        <div className="text-sm text-center mb-6">{siteConfig('BIO')}</div>
+        <div className="font-oleo font-medium text-center text-2xl mb-3">{AUTHOR}</div>
+        <div className="text-sm text-center mb-6">{BIO}</div>
         {/* <MenuGroupCard {...props} /> */}
         <SocialButton />
       </Card>

@@ -7,7 +7,7 @@ import { siteConfig } from '@/lib/config';
  * 图片懒加载
  */
 const LazyImage = React.forwardRef(
-  ({ priority, id, src, alt, placeholderSrc, className, width, height, title, onLoad, style }, ref) => {
+  ({ priority, src, placeholderSrc, className, width, height, onLoad, ...props }, ref) => {
     const maxWidth = siteConfig('IMAGE_COMPRESS_WIDTH');
     const imageRef = ref || useRef(null);
 
@@ -18,15 +18,21 @@ const LazyImage = React.forwardRef(
       placeholderSrc = generatePlaceholder(width, height);
     }
 
-    const handleImageLoad = (event) => {
+    const handleImageLoad = () => {
       setImageLoaded(true);
       if (typeof onLoad === 'function') {
         onLoad();
       }
     };
 
+    const handleImageError = () => {
+      if (imageRef.current) {
+        imageRef.current.src = placeholderSrc;
+      }
+    };
+
     useEffect(() => {
-      const adjustedImageSrc = adjustImgSize(src, maxWidth);
+      const adjustedImageSrc = adjustImgSize(src || imageRef.current.src, maxWidth);
       setAdjustedSrc(adjustedImageSrc);
 
       const observer = new IntersectionObserver(
@@ -35,13 +41,20 @@ const LazyImage = React.forwardRef(
             if (entry.isIntersecting) {
               const lazyImage = entry.target;
               lazyImage.src = adjustedImageSrc;
-              // 监听原图加载而不是占位图
-              lazyImage.onload = handleImageLoad;
+
+              if (lazyImage.complete) {
+                handleImageLoad();
+              } else {
+                lazyImage.onload = () => handleImageLoad();
+              }
+
+              lazyImage.onerror = handleImageError;
+
               observer.unobserve(lazyImage);
             }
           });
         },
-        { rootMargin: '600px 0px' }
+        { rootMargin: '100px 0px' }
       );
 
       if (imageRef.current) {
@@ -58,32 +71,19 @@ const LazyImage = React.forwardRef(
     const imgProps = {
       ref: imageRef,
       src: imageLoaded ? adjustedSrc : placeholderSrc,
-      alt: alt,
-      className: imageLoaded ? '' : 'animate-pulse'
+      className: imageLoaded ? '' : 'animate-pulse',
+      ...props
     };
-
-    if (id) {
-      imgProps.id = id;
-    }
-
-    if (title) {
-      imgProps.title = title;
-    }
-
-    if (width && width !== 'auto') {
-      imgProps.width = width;
-    }
-
-    if (height && height !== 'auto') {
-      imgProps.height = height;
-    }
 
     if (className) {
       imgProps.className = `${className} ${imgProps.className}`;
     }
 
-    if (style) {
-      imgProps.style = style;
+    if (width && width !== 'auto') {
+      imgProps.width = width;
+    }
+    if (height && height !== 'auto') {
+      imgProps.height = height;
     }
 
     return (
@@ -104,11 +104,10 @@ const LazyImage = React.forwardRef(
  * 根据窗口尺寸决定压缩图片宽度
  * @param {*} src
  * @param {*} maxWidth
- * @returns
  */
 const adjustImgSize = (src, maxWidth) => {
   if (!src) {
-    return siteConfig('IMG_LAZY_LOAD_PLACEHOLDER');
+    return generatePlaceholder();
   }
   const screenWidth = window.screen.width;
 
@@ -129,11 +128,11 @@ const adjustImgSize = (src, maxWidth) => {
 /**
  * 生成自定义的占位图片
  */
-const generatePlaceholder = (width, height) => {
+const generatePlaceholder = (width = 400, height = 320) => {
   const text = `${siteConfig('AUTHOR')}'s Blog`;
   const placeholderText = encodeURIComponent(text);
 
-  const minDimension = Math.min(width || 440, height || 320);
+  const minDimension = Math.min(width || 400, height || 320);
   const characterWidth = 0.5;
   const totalCharWidth = text.length * characterWidth;
   const fontSize = Math.floor(minDimension / totalCharWidth);
