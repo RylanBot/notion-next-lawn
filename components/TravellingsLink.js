@@ -8,18 +8,19 @@ const TRAVEL_IMAGE = 'https://www.travellings.cn/assets/logo.gif';
  */
 const TravellingsLink = () => {
   const { locale } = useGlobal();
-  const [showModal, setShowModal] = useState(false);
+
   const modalRef = useRef(null);
+  const [showModal, setShowModal] = useState(false);
 
   /* PC 端滑动关闭 */
   useEffect(() => {
-    const scrollTrigger = () => {
+    const handleScroll = () => {
       setShowModal(false);
     };
 
-    window.addEventListener('scroll', scrollTrigger);
+    window.addEventListener('scroll', handleScroll);
     return () => {
-      window.removeEventListener('scroll', scrollTrigger);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
@@ -74,7 +75,6 @@ const TravellingsLink = () => {
               target="_blank"
               href="https://www.travellings.cn/go.html"
               className="float-right cursor-pointer"
-              onClick={() => setShowModal(false)}
             >
               <LazyImage className="w-28 h-7" src={TRAVEL_IMAGE} />
             </a>

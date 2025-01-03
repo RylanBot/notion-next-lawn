@@ -22,7 +22,6 @@ const DebugPanel = dynamic(() => import('@/components/DebugPanel'), { ssr: false
 const Analytics = dynamic(() => import('@vercel/analytics/react').then(async (m) => { return m.Analytics; }), { ssr: false });
 const Gtag = dynamic(() => import('@/components/Gtag'), { ssr: false });
 const Busuanzi = dynamic(() => import('@/components/Busuanzi'), { ssr: false });
-const GoogleAdsense = dynamic(() => import('@/components/GoogleAdsense'), { ssr: false });
 
 const Fireworks = dynamic(() => import('@/components/Fireworks'), { ssr: false });
 const FlutteringRibbon = dynamic(() => import('@/components/FlutteringRibbon'), { ssr: false });
@@ -41,7 +40,6 @@ const ExternalPlugin = (props) => {
 
   const ANALYTICS_VERCEL = siteConfig('ANALYTICS_VERCEL');
   const ANALYTICS_BUSUANZI_ENABLE = siteConfig('ANALYTICS_BUSUANZI_ENABLE');
-  const ADSENSE_GOOGLE_ID = siteConfig('ADSENSE_GOOGLE_ID');
   const ANALYTICS_CNZZ_ID = siteConfig('ANALYTICS_CNZZ_ID');
   const ANALYTICS_GOOGLE_ID = siteConfig('ANALYTICS_GOOGLE_ID');
   const ANALYTICS_51LA_ID = siteConfig('ANALYTICS_51LA_ID');
@@ -102,7 +100,6 @@ const ExternalPlugin = (props) => {
     {ANALYTICS_GOOGLE_ID && <Gtag />}
     {ANALYTICS_VERCEL && <Analytics />}
     {ANALYTICS_BUSUANZI_ENABLE && <Busuanzi />}
-    {ADSENSE_GOOGLE_ID && <GoogleAdsense />}
 
     {ANALYTICS_51LA_ID && ANALYTICS_51LA_CK && <LA51 />}
     {ANALYTICS_51LA_ID && ANALYTICS_51LA_CK && <script id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js" defer />}
