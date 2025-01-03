@@ -31,7 +31,7 @@ export function InfoCard(props) {
         <div className="flex justify-center items-center py-4">
           <LazyImage src={siteInfo?.icon} className="rounded-full" width={120} alt={siteConfig('AUTHOR')} />
         </div>
-        <div className="font-medium text-center text-xl mb-4">{siteConfig('AUTHOR')}</div>
+        <div className="font-oleo font-medium text-center text-2xl mb-3">{siteConfig('AUTHOR')}</div>
         <div className="text-sm text-center mb-6">{siteConfig('BIO')}</div>
         {/* <MenuGroupCard {...props} /> */}
         <SocialButton />

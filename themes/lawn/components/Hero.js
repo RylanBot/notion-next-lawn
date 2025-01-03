@@ -92,10 +92,10 @@ const Hero = ({ onLoad, ...props }) => {
 
       <div className="text-gray-200 absolute bottom-6 flex flex-col h-full items-center justify-center w-full">
         {/* 站点标题 */}
-        <div className="text-center font-black text-6xl lg:text-8xl shadow-text z-10">{TITLE}</div>
+        <div className="font-oleo shadow-text text-center text-7xl lg:text-9xl z-10">{TITLE}</div>
 
         {/* 站点欢迎语 */}
-        <div className="mt-6 h-12 items-center text-center font-medium shadow-text text-xl lg:text-2xl z-10">
+        <div className="mt-6 h-12 items-center text-center font-bold text-xl lg:text-2xl z-10">
           <span id="typed" ref={typedRef} />
         </div>
 
