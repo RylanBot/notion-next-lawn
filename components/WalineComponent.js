@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { createRef, useEffect } from 'react';
 
 import { init } from '@waline/client';
-import '@waline/client/dist/waline.css';
+import '@waline/client/style';
 
 import { useGlobal } from '@/hooks/useGlobal';
 import { siteConfig } from '@/lib/config';
@@ -88,10 +88,8 @@ const WalineComponent = (props) => {
     }
 
     return () => {
-      if (waline) {
-        waline.destroy();
-        waline = null;
-      }
+      waline?.destroy();
+      waline = null;
       router.events.off('routeChangeComplete', updateWaline);
     };
   }, []);

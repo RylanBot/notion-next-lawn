@@ -38,7 +38,7 @@
     "typed.js": "^2.0.12"
   },
   "devDependencies": {
-    "@waline/client": "^2.5.1",
+    "@waline/client": "^3.4.2",
     "autoprefixer": "^10.4.13",
     "eslint": "^7.26.0",
     "eslint-config-next": "^13.1.1",
