@@ -1,7 +1,7 @@
 import { useGlobal } from '@/hooks/useGlobal';
 import dynamic from 'next/dynamic';
 
-const NotionPage = dynamic(() => import('@/components/NotionPage'));
+const NotionPage = dynamic(() => import('@/plugins/NotionPage'));
 
 /**
  * 公告

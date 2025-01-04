@@ -2,12 +2,12 @@ import { useEffect, useRef, useState } from 'react';
 import Typed from 'typed.js';
 
 import { useGlobal } from '@/hooks/useGlobal';
-import { siteConfig } from '@/lib/config';
+import { siteConfig } from '@/libs/common/config';
 
 import CONFIG from '../config';
 import NavButtonGroup from './NavButtonGroup';
 import WavesArea from './WavesArea';
-import LazyImage from '@/components/LazyImage';
+import LazyImage from '@/plugins/LazyImage';
 
 let wrapperTop = 0;
 
@@ -71,14 +71,18 @@ const Hero = ({ onLoad, ...props }) => {
   return (
     <div
       id="lawn-header"
-      className={`relative flex flex-col justify-center items-center bg-white z-1 w-full h-[25rem] ${showHero ? '' : 'opacity-0'}`}
+      className={`relative flex flex-col justify-center items-center bg-white z-1 w-full h-[25rem] ${
+        showHero ? '' : 'opacity-0'
+      }`}
     >
       <LazyImage
         src={siteInfo?.pageCover}
         onLoad={() => handleCoverLoaded()}
         priority={true}
         fetchpriority="high"
-        className={`header-cover brightness-75 w-full h-[25rem] object-cover object-center ${LAWN_HOME_NAV_BACKGROUND_IMG_FIXED ? 'fixed' : ''}`}
+        className={`brightness-75 w-full h-[25rem] object-cover object-center ${
+          LAWN_HOME_NAV_BACKGROUND_IMG_FIXED ? 'fixed' : ''
+        }`}
       />
 
       <div className="text-gray-200 absolute bottom-6 flex flex-col h-full items-center justify-center w-full">

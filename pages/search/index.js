@@ -2,8 +2,8 @@ import { useRouter } from 'next/router';
 
 import BLOG from '@/blog.config';
 import { useGlobal } from '@/hooks/useGlobal';
-import { siteConfig } from '@/lib/config';
-import { getGlobalData } from '@/lib/notion/getNotionData';
+import { siteConfig } from '@/libs/common/config';
+import { getGlobalData } from '@/libs/notion/getNotionData';
 import { getLayoutByTheme } from '@/themes/theme';
 /**
  * 搜索路由

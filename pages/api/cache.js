@@ -1,4 +1,4 @@
-import { cleanCache } from '@/lib/cache/local_file_cache'
+import { cleanCache } from '@/libs/cache/local_file_cache'
 
 /**
  * 清理缓存

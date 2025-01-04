@@ -5,13 +5,13 @@ import md5 from 'js-md5';
 import { idToUuid } from 'notion-utils';
 
 import BLOG from '@/blog.config';
-import { uploadDataToAlgolia } from '@/lib/algolia';
-import { siteConfig } from '@/lib/config';
-import { getPostBlocks } from '@/lib/notion';
-import { getNotion } from '@/lib/notion/getNotion';
-import { getGlobalData } from '@/lib/notion/getNotionData';
-import { getPageTableOfContents } from '@/lib/notion/getPageTableOfContents';
-import { isBrowser } from '@/lib/utils';
+import { uploadDataToAlgolia } from '@/libs/subscribe/algolia';
+import { siteConfig } from '@/libs/common/config';
+import { getNotion } from '@/libs/notion/getNotion';
+import { getGlobalData } from '@/libs/notion/getNotionData';
+import { getPageTableOfContents } from '@/libs/notion/getPageTableOfContents';
+import { getPostBlocks } from '@/libs/notion/getPostBlocks';
+import { isBrowser } from '@/libs/common/utils';
 import { getLayoutByTheme } from '@/themes/theme';
 
 /**
@@ -57,7 +57,7 @@ const Slug = (props) => {
       post.content = Object.keys(post.blockMap.block);
       post.toc = getPageTableOfContents(post, post.blockMap);
     }
-  }, [post, router]);
+  }, [lock, post]);
 
   const meta = {
     title: post ? `${post?.title} | ${siteConfig('TITLE')}` : `Loading... ｜ ${siteConfig('TITLE')}`,

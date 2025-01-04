@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
-import LazyImage from '@/components/LazyImage';
-import { siteConfig } from '@/lib/config';
+import LazyImage from '@/plugins/LazyImage';
+import { siteConfig } from '@/libs/common/config';
 
 import CONFIG from '../config';
 import { BlogPostCardInfo } from './BlogPostCardInfo';

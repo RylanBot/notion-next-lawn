@@ -1,5 +1,5 @@
-import LazyImage from '@/components/LazyImage';
-import { siteConfig } from '@/lib/config';
+import LazyImage from '@/plugins/LazyImage';
+import { siteConfig } from '@/libs/common/config';
 
 // import MenuGroupCard from './MenuGroupCard';
 import { MenuListSide } from './MenuListSide';
@@ -23,9 +23,8 @@ const SideBar = (props) => {
               src={siteInfo?.icon}
               alt={AUTHOR}
               width={100}
-              priority={true}
-              fetchpriority="high"
-              className="rounded-full"
+              height={100}
+              className="rounded-full w-28 h-28"
             />
           </div>
           <div className="font-oleo text-2xl font-medium text-center mb-1">{AUTHOR}</div>

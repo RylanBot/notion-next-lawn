@@ -1,11 +1,11 @@
-import BLOG from '@/blog.config'
-import { getPostBlocks } from '@/lib/notion'
-import { getGlobalData } from '@/lib/notion/getNotionData'
-import { generateRss } from '@/lib/rss'
-import { generateRobotsTxt } from '@/lib/robots.txt'
-import { getLayoutByTheme } from '@/themes/theme'
-import { siteConfig } from '@/lib/config'
-import { useRouter } from 'next/router'
+import BLOG from '@/blog.config';
+import { siteConfig } from '@/libs/common/config';
+import { getGlobalData } from '@/libs/notion/getNotionData';
+import { getPostBlocks } from '@/libs/notion/getPostBlocks';
+import { generateRobotsTxt } from '@/libs/subscribe/robots.txt';
+import { generateRss } from '@/libs/subscribe/rss';
+import { getLayoutByTheme } from '@/themes/theme';
+import { useRouter } from 'next/router';
 
 /**
  * 首页布局

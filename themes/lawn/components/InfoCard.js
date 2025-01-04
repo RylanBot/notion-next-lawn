@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 
-import LazyImage from '@/components/LazyImage';
-import { siteConfig } from '@/lib/config';
+import LazyImage from '@/plugins/LazyImage';
+import { siteConfig } from '@/libs/common/config';
 
 import Card from './Card';
 // import MenuGroupCard from './MenuGroupCard';
@@ -10,7 +10,7 @@ import SocialButton from './SocialButton';
 /**
  * 社交信息卡
  */
-export function InfoCard(props) {
+function InfoCard(props) {
   const { className, siteInfo } = props;
 
   const AUTHOR = siteConfig('AUTHOR');
@@ -35,8 +35,9 @@ export function InfoCard(props) {
           <LazyImage
             src={siteInfo?.icon}
             alt={AUTHOR}
-            width={120}
-            className="rounded-full"
+            priority={true}
+            fetchpriority="high"
+            className="rounded-full w-36 h-36"
           />
         </div>
         <div className="font-oleo font-medium text-center text-2xl mb-3">{AUTHOR}</div>
@@ -47,3 +48,5 @@ export function InfoCard(props) {
     </div>
   );
 }
+
+export default InfoCard;

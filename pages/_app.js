@@ -9,14 +9,14 @@ import '@/styles/globals.css';
 import '@/styles/notion.css'; // 重写部分样式
 import '@/styles/utility-patterns.css';
 
-import ExternalPlugins from '@/components/ExternalPlugins';
-import GlobalHead from '@/components/GlobalHead';
-import LoadingProgress from '@/components/LoadingProgress';
+import ExternalPlugins from '@/plugins/ExternalPlugins';
+import GlobalHead from '@/plugins/GlobalHead';
+import LoadingProgress from '@/plugins/LoadingProgress';
 
 import { THEME } from '@/blog.config';
 import { GlobalContextProvider } from '@/hooks/useGlobal';
-// import { initLogging } from '@/lib/logger';
-import { getQueryParam } from '@/lib/utils';
+// import { initLogging } from '@/libs/logger';
+import { getQueryParam } from '@/libs/common/utils';
 import { getGlobalLayoutByTheme } from '@/themes/theme';
 
 const MyApp = ({ Component, pageProps }) => {

@@ -20,17 +20,14 @@
     "copy-to-clipboard": "^3.3.1",
     "feed": "^4.2.2",
     "js-md5": "^0.7.3",
-    "localStorage": "^1.0.4",
     "lodash.throttle": "^4.1.1",
     "memory-cache": "^0.2.0",
     "mongodb": "^4.6.0",
     "next": "13.3.1",
     "notion-client": "6.15.6",
     "notion-utils": "6.15.6",
-    "preact": "^10.5.15",
     "prism-themes": "1.9.0",
     "react": "^18.2.0",
-    "react-cookies": "^0.1.1",
     "react-dom": "^18.2.0",
     "react-notion-x": "6.16.0",
     "react-share": "^4.4.1",
@@ -40,20 +37,9 @@
   "devDependencies": {
     "@waline/client": "^3.4.2",
     "autoprefixer": "^10.4.13",
-    "eslint": "^7.26.0",
-    "eslint-config-next": "^13.1.1",
-    "eslint-config-standard": "^16.0.2",
-    "eslint-plugin-import": "^2.23.0",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^5.1.0",
-    "eslint-plugin-react": "^7.23.2",
-    "eslint-plugin-react-hooks": "^4.6.2",
     "next-sitemap": "^1.6.203",
     "postcss": "^8.4.20",
     "tailwindcss": "^3.3.2",
     "webpack-bundle-analyzer": "^4.5.0"
-  },
-  "resolutions": {
-    "axios": ">=0.21.1"
   }
 }

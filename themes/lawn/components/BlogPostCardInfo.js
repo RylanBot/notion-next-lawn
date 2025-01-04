@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
-import NotionPage from '@/components/NotionPage';
-import { siteConfig } from '@/lib/config';
+import NotionPage from '@/plugins/NotionPage';
+import { siteConfig } from '@/libs/common/config';
 
 import TagItemMini from './TagItemMini';
 

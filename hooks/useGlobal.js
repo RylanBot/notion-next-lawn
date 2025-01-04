@@ -2,12 +2,11 @@ import { useRouter } from 'next/router';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { isBrowser } from 'react-notion-x';
 
+import { LANG, THEME } from '@/blog.config';
 import { THEMES } from '@/themes/theme';
 
-import { generateLocaleDict } from '@/lib/lang';
-import { getQueryVariable } from '@/lib/utils';
-
-import { LANG, THEME } from 'blog.config';
+import { getQueryVariable } from '@/libs/common/utils';
+import { generateLocaleDict } from '@/libs/lang';
 
 const GlobalContext = createContext();
 

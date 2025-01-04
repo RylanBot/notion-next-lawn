@@ -1,8 +1,8 @@
 import BLOG from '@/blog.config';
 import { useGlobal } from '@/hooks/useGlobal';
-import { getDataFromCache } from '@/lib/cache/cache_manager';
-import { siteConfig } from '@/lib/config';
-import { getGlobalData } from '@/lib/notion/getNotionData';
+import { getDataFromCache } from '@/libs/cache/cache_manager';
+import { siteConfig } from '@/libs/common/config';
+import { getGlobalData } from '@/libs/notion/getNotionData';
 import { getLayoutByTheme } from '@/themes/theme';
 import { useRouter } from 'next/router';
 

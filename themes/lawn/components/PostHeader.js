@@ -1,8 +1,8 @@
 import Link from 'next/link';
 
-import LazyImage from '@/components/LazyImage';
-import NotionIcon from '@/components/NotionIcon';
-import WordCount from '@/components/WordCount';
+import LazyImage from '@/plugins/LazyImage';
+import NotionIcon from '@/plugins/NotionIcon';
+import WordCount from '@/plugins/WordCount';
 
 import { useGlobal } from '@/hooks/useGlobal';
 
@@ -30,9 +30,7 @@ export default function PostHeader({ post, siteInfo }) {
         className="w-full h-full object-cover object-center absolute top-0"
       />
 
-      <div
-        id="article-header-cover"
-        className="bg-black bg-opacity-70 absolute top-0 w-full h-96 py-10 flex justify-center items-center "
+      <div className="bg-black bg-opacity-70 absolute top-0 w-full h-96 py-10 flex justify-center items-center "
       >
         <div>
           {/* 分类 */}

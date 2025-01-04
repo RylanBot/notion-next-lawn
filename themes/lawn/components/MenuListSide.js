@@ -1,6 +1,6 @@
-import TravellingsLink from '@/components/TravellingsLink';
+import TravellingsLink from '@/plugins/TravellingsLink';
 import { useGlobal } from '@/hooks/useGlobal';
-import { siteConfig } from '@/lib/config';
+import { siteConfig } from '@/libs/common/config';
 
 import CONFIG from '../config';
 import { MenuItemCollapse } from './MenuItemCollapse';

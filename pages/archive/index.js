@@ -1,13 +1,14 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { isBrowser } from 'react-notion-x'
+import { isBrowser } from 'react-notion-x';
 
 import BLOG from '@/blog.config';
 import { useGlobal } from '@/hooks/useGlobal';
-import { siteConfig } from '@/lib/config';
-import { formatDateFmt } from '@/lib/formatDate';
-import { getGlobalData } from '@/lib/notion/getNotionData';
+import { siteConfig } from '@/libs/common/config';
 import { getLayoutByTheme } from '@/themes/theme';
+
+import { formatDateFmt } from '@/libs/common/date';
+import { getGlobalData } from '@/libs/notion/getNotionData';
 
 const ArchiveIndex = (props) => {
   const { siteInfo } = props;

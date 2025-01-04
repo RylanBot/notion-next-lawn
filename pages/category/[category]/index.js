@@ -1,14 +1,14 @@
+import { useRouter } from 'next/router';
+
 import BLOG from '@/blog.config';
 import { useGlobal } from '@/hooks/useGlobal';
-import { siteConfig } from '@/lib/config';
-import { getGlobalData } from '@/lib/notion/getNotionData';
 import { getLayoutByTheme } from '@/themes/theme';
-import { useRouter } from 'next/router';
+
+import { siteConfig } from '@/libs/common/config';
+import { getGlobalData } from '@/libs/notion/getNotionData';
 
 /**
  * 分类页
- * @param {*} props
- * @returns
  */
 export default function Category(props) {
   const { siteInfo } = props

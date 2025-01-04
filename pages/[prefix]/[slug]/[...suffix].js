@@ -2,11 +2,11 @@ import { idToUuid } from 'notion-utils';
 import Slug, { getRecommendPost } from '..';
 
 import BLOG from '@/blog.config';
-import { uploadDataToAlgolia } from '@/lib/algolia';
-import { getPostBlocks } from '@/lib/notion';
-import { getNotion } from '@/lib/notion/getNotion';
-import { getGlobalData } from '@/lib/notion/getNotionData';
-import { getLastPartOfUrl } from '@/lib/utils';
+import { uploadDataToAlgolia } from '@/libs/subscribe/algolia';
+import { getNotion } from '@/libs/notion/getNotion';
+import { getGlobalData } from '@/libs/notion/getNotionData';
+import { getPostBlocks } from '@/libs/notion/getPostBlocks';
+import { getLastPartOfUrl } from '@/libs/common/utils';
 
 /**
  * 根据 notion 的 slug 访问页面

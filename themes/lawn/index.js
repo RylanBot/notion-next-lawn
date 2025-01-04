@@ -4,13 +4,13 @@ import React, { createContext, useContext, useEffect, useRef, useState } from 'r
 import { isBrowser } from 'react-notion-x';
 
 import { useGlobal } from '@/hooks/useGlobal';
-import { siteConfig } from '@/lib/config';
+import { siteConfig } from '@/libs/common/config';
 
-import AlgoliaSearchModal from '@/components/AlgoliaSearchModal';
-import Comment from '@/components/Comment';
-import replaceSearchResult from '@/components/Mark';
-import NotionPage from '@/components/NotionPage';
-import ShareBar from '@/components/ShareBar';
+import AlgoliaSearchModal from '@/plugins/AlgoliaSearchModal';
+import Comment from '@/plugins/Comment';
+import replaceSearchResult from '@/plugins/Mark';
+import NotionPage from '@/plugins/NotionPage';
+import ShareBar from '@/plugins/ShareBar';
 
 import ArticleAdjacent from './components/ArticleAdjacent';
 import ArticleCopyright from './components/ArticleCopyright';
@@ -97,27 +97,31 @@ export const LayoutBase = (props) => {
         <Style />
 
         {hydrated && (
-          <>
+          <div className={layoutLoaded ? null : 'opacity-0'}>
             {/* 顶部嵌入 */}
             <header>
-              {layoutLoaded && <TopNav {...props} />}
+              <TopNav {...props} />
               {headerSlot}
             </header>
 
             {/* 主区块 */}
             <main
               id="lawn-main-wrapper"
-              className={`bg-lawn-background-gray dark:bg-black w-full py-8 md:px-32 min-h-screen relative ${LAWN_HOME_BANNER_ENABLE ? 'pt-14 max-md:pt-6' : ''}`}
+              className={`bg-lawn-background-gray dark:bg-black w-full py-8 md:px-32 min-h-screen relative ${
+                LAWN_HOME_BANNER_ENABLE ? 'pt-14 max-md:pt-6' : ''
+              }`}
             >
               <div
-                className={`w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10 ${LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : ''}`}
+                className={`w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10 ${
+                  LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : ''
+                }`}
               >
                 <div className={`w-full h-full overflow-hidden pb-12 ${fullWidth ? 'max-w-4xl' : ''}`}>
                   {slotTop}
                   {children}
                 </div>
                 {/* 右侧栏 */}
-                {layoutLoaded && <SideRight {...props} />}
+                <SideRight {...props} />
               </div>
             </main>
 
@@ -129,9 +133,8 @@ export const LayoutBase = (props) => {
 
             {/* 页脚 */}
             <Footer />
-          </>
+          </div>
         )}
-
       </div>
     </ThemeGlobalLawn.Provider>
   );

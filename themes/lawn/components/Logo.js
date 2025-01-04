@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { siteConfig } from '@/lib/config';
+import { siteConfig } from '@/libs/common/config';
 
 /**
  * 站点标题

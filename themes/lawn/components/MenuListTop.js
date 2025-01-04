@@ -1,7 +1,7 @@
 import { useGlobal } from '@/hooks/useGlobal';
-import { siteConfig } from '@/lib/config';
+import { siteConfig } from '@/libs/common/config';
 
-import TravellingsLink from '@/components/TravellingsLink';
+import TravellingsLink from '@/plugins/TravellingsLink';
 
 import CONFIG from '../config';
 import { MenuItemDrop } from './MenuItemDrop';

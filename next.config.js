@@ -1,4 +1,3 @@
-const { THEME } = require('./blog.config')
 const fs = require('fs')
 const path = require('path')
 const BLOG = require('./blog.config')
@@ -96,8 +95,8 @@ module.exports = withBundleAnalyzer({
     //   })
     // }
     // 动态主题：添加 resolve.alias 配置，将动态路径映射到实际路径
-    console.log('加载默认主题', path.resolve(__dirname, 'themes', THEME))
-    config.resolve.alias['@theme-components'] = path.resolve(__dirname, 'themes', THEME)
+    console.log('加载默认主题', path.resolve(__dirname, 'themes', BLOG.THEME))
+    config.resolve.alias['@theme-components'] = path.resolve(__dirname, 'themes', BLOG.THEME)
     return config
   },
   experimental: {

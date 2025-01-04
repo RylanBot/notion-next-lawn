@@ -1,14 +1,14 @@
-import BLOG from '@/blog.config'
-import { getPostBlocks } from '@/lib/notion'
-import { getGlobalData } from '@/lib/notion/getNotionData'
-import { useRouter } from 'next/router'
-import { getLayoutByTheme } from '@/themes/theme'
-import { siteConfig } from '@/lib/config'
+import { useRouter } from 'next/router';
+
+import BLOG from '@/blog.config';
+import { getLayoutByTheme } from '@/themes/theme';
+
+import { siteConfig } from '@/libs/common/config';
+import { getGlobalData } from '@/libs/notion/getNotionData';
+import { getPostBlocks } from '@/libs/notion/getPostBlocks';
 
 /**
  * 文章列表分页
- * @param {*} props
- * @returns
  */
 const Page = props => {
   const { siteInfo } = props

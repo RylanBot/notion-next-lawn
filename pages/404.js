@@ -1,7 +1,7 @@
-import { getGlobalData } from '@/lib/notion/getNotionData'
-import { useRouter } from 'next/router'
+import { siteConfig } from '@/libs/common/config'
+import { getGlobalData } from '@/libs/notion/getNotionData'
 import { getLayoutByTheme } from '@/themes/theme'
-import { siteConfig } from '@/lib/config'
+import { useRouter } from 'next/router'
 
 /**
  * 404

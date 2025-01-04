@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 
-import Collapse from '@/components/Collapse';
+import Collapse from '@/plugins/Collapse';
 
 /**
  * 折叠菜单
