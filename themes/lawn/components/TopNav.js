@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import throttle from 'lodash.throttle';
 
+import useDarkMode from '@/hooks/useDarkMode';
 import { useGlobal } from '@/hooks/useGlobal';
 import { siteConfig } from '@/lib/config';
 
@@ -18,7 +19,6 @@ import SideBarDrawer from './SideBarDrawer';
 import TagGroups from './TagGroups';
 
 let windowTop = 0;
-
 /**
  * 顶部导航栏
  */
@@ -26,7 +26,8 @@ const TopNav = (props) => {
   const { tags, currentTag, categories, currentCategory } = props;
   const showSearchButton = siteConfig('LAWN_MENU_SEARCH', false, CONFIG);
 
-  const { locale, isDarkMode } = useGlobal();
+  const { locale } = useGlobal();
+  const { isDarkMode } = useDarkMode();
   const router = useRouter();
 
   const searchDrawer = useRef();
@@ -92,7 +93,9 @@ const TopNav = (props) => {
         nav && nav.classList.replace('-top-20', 'top-0');
         windowTop = scrollS;
       }
-    }, 200), [router.route, isDarkMode]);
+    }, 200),
+    [router.route, isDarkMode]
+  );
 
   useEffect(() => {
     handleNavStyle();

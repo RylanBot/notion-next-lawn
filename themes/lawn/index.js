@@ -56,7 +56,7 @@ export const LayoutBase = (props) => {
   const LAYOUT_SIDEBAR_REVERSE = JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE'));
 
   const [hydrated, setHydrated] = useState(false);
-  const [showNav, setShowNav] = useState(false);
+  const [layoutLoaded, setLayoutLoaded] = useState(false);
 
   const drawerRight = useRef(null);
   const searchModal = useRef(null);
@@ -66,7 +66,7 @@ export const LayoutBase = (props) => {
   const headerSlot = post ? (
     <PostHeader {...props} />
   ) : router.route === '/' && LAWN_HOME_BANNER_ENABLE ? (
-    <Hero {...props} onLoad={() => setShowNav(true)} />
+    <Hero {...props} onLoad={() => setLayoutLoaded(true)} />
   ) : null;
 
   const floatSlot = (
@@ -86,7 +86,7 @@ export const LayoutBase = (props) => {
     setHydrated(true);
     if (router.pathname === '/') return;
     setTimeout(() => {
-      setShowNav(true);
+      setLayoutLoaded(true);
     }, 0);
   }, [router]);
 
@@ -100,7 +100,7 @@ export const LayoutBase = (props) => {
           <>
             {/* 顶部嵌入 */}
             <header>
-              {showNav && <TopNav {...props} />}
+              {layoutLoaded && <TopNav {...props} />}
               {headerSlot}
             </header>
 
@@ -117,7 +117,7 @@ export const LayoutBase = (props) => {
                   {children}
                 </div>
                 {/* 右侧栏 */}
-                {showNav && <SideRight {...props} />}
+                {layoutLoaded && <SideRight {...props} />}
               </div>
             </main>
 
