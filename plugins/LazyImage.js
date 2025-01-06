@@ -39,7 +39,8 @@ const LazyImage = React.forwardRef(
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
-              const lazyImage = entry.target;
+              // 手动创建图片（避免 entry.target 不一定有 complete 属性）
+              const lazyImage = new Image();
               lazyImage.src = adjustedImageSrc;
 
               if (lazyImage.complete) {
@@ -50,11 +51,11 @@ const LazyImage = React.forwardRef(
 
               lazyImage.onerror = handleImageError;
 
-              observer.unobserve(lazyImage);
+              observer.unobserve(entry.target);
             }
           });
         },
-        { rootMargin: '100px 0px' }
+        { rootMargin: '50px 0px' }
       );
 
       if (imageRef.current) {

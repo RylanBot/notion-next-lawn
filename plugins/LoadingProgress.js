@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { useGlobal } from '@/hooks/useGlobal';
