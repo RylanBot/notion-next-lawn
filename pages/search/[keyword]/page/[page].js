@@ -1,158 +1,125 @@
-import BLOG from '@/blog.config';
-import { useGlobal } from '@/hooks/useGlobal';
-import { getDataFromCache } from '@/lib/cache/cache_manager';
-import { siteConfig } from '@/lib/config';
-import { getGlobalData } from '@/lib/notion/getNotionData';
-import { getLayoutByTheme } from '@/themes/theme';
 import { useRouter } from 'next/router';
 
-const Index = props => {
-  const { keyword, siteInfo } = props
-  const { locale } = useGlobal()
+import BLOG from '@/blog.config';
+import { getLayoutByTheme } from '@/themes';
 
-  // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
+import { getDataFromCache } from '@/libs/cache';
+import { siteConfig } from '@/libs/common/config';
+import { isIterable } from '@/libs/common/util';
+import { getGlobalData } from '@/libs/notion/site';
 
-  const meta = {
-    title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${siteConfig('TITLE')}`,
-    description: siteConfig('TITLE'),
-    image: siteInfo?.pageCover,
-    slug: 'search/' + (keyword || ''),
-    type: 'website'
-  }
+const Index = (props) => {
+  const { keyword } = props;
+  const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() });
+  props = { ...props, currentSearch: keyword };
+  return <Layout {...props} />;
+};
 
-  props = { ...props, meta, currentSearch: keyword }
-
-  return <Layout {...props} />
-}
-
-/**
- * 服务端搜索
- * @param {*} param0
- * @returns
- */
 export async function getStaticProps({ params: { keyword, page } }) {
   const props = await getGlobalData({
     from: 'search-props',
     pageType: ['Post']
-  })
-  const { allPages } = props
-  const allPosts = allPages?.filter(page => page.type === 'Post' && page.status === 'Published')
-  props.posts = await filterByMemCache(allPosts, keyword)
-  props.postCount = props.posts.length
+  });
+  const { allPages } = props;
+  const allPosts = allPages?.filter((page) => page.type === 'Post' && page.status === 'Published');
+  props.posts = await filterByMemCache(allPosts, keyword);
+  props.postCount = props.posts.length;
   // 处理分页
-  props.posts = props.posts.slice(BLOG.POSTS_PER_PAGE * (page - 1), BLOG.POSTS_PER_PAGE * page)
-  props.keyword = keyword
-  props.page = page
-  delete props.allPages
+  props.posts = props.posts.slice(BLOG.POSTS_PER_PAGE * (page - 1), BLOG.POSTS_PER_PAGE * page);
+  props.keyword = keyword;
+  props.page = page;
+  delete props.allPages;
   return {
     props,
     revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND)
-  }
+  };
 }
 
 export async function getStaticPaths() {
   return {
     paths: [{ params: { keyword: BLOG.TITLE, page: '1' } }],
     fallback: true
-  }
+  };
 }
 
 /**
  * 将对象的指定字段拼接到字符串
- * @param sourceTextArray
- * @param targetObj
- * @param key
- * @returns {*}
  */
 function appendText(sourceTextArray, targetObj, key) {
   if (!targetObj) {
-    return sourceTextArray
+    return sourceTextArray;
   }
-  const textArray = targetObj[key]
-  const text = textArray ? getTextContent(textArray) : ''
+  const textArray = targetObj[key];
+  const text = textArray ? getTextContent(textArray) : '';
   if (text && text !== 'Untitled') {
-    return sourceTextArray.concat(text)
+    return sourceTextArray.concat(text);
   }
-  return sourceTextArray
+  return sourceTextArray;
 }
 
 /**
  * 递归获取层层嵌套的数组
- * @param {*} textArray
- * @returns
  */
 function getTextContent(textArray) {
   if (typeof textArray === 'object' && isIterable(textArray)) {
-    let result = ''
+    let result = '';
     for (const textObj of textArray) {
-      result = result + getTextContent(textObj)
+      result = result + getTextContent(textObj);
     }
-    return result
+    return result;
   } else if (typeof textArray === 'string') {
-    return textArray
+    return textArray;
   }
 }
 
 /**
- * 对象是否可以遍历
- * @param {*} obj
- * @returns
- */
-const isIterable = obj =>
-  obj != null && typeof obj[Symbol.iterator] === 'function'
-
-/**
  * 在内存缓存中进行全文索引
- * @param {*} allPosts
- * @param keyword 关键词
- * @returns
  */
 async function filterByMemCache(allPosts, keyword) {
-  const filterPosts = []
+  const filterPosts = [];
   if (keyword) {
-    keyword = keyword.trim()
+    keyword = keyword.trim();
   }
   for (const post of allPosts) {
-    const cacheKey = 'page_block_' + post.id
-    const page = await getDataFromCache(cacheKey, true)
-    const tagContent = post?.tags && Array.isArray(post?.tags) ? post?.tags.join(' ') : ''
-    const categoryContent = post.category && Array.isArray(post.category) ? post.category.join(' ') : ''
-    const articleInfo = post.title + post.summary + tagContent + categoryContent
-    let hit = articleInfo.indexOf(keyword) > -1
-    let indexContent = [post.summary]
+    const cacheKey = 'page_block_' + post.id;
+    const page = await getDataFromCache(cacheKey, true);
+    const tagContent = post?.tags && Array.isArray(post?.tags) ? post?.tags.join(' ') : '';
+    const categoryContent = post.category && Array.isArray(post.category) ? post.category.join(' ') : '';
+    const articleInfo = post.title + post.summary + tagContent + categoryContent;
+    let hit = articleInfo.indexOf(keyword) > -1;
+    let indexContent = [post.summary];
     if (page && page.block) {
-      const contentIds = Object.keys(page.block)
-      contentIds.forEach(id => {
-        const properties = page?.block[id]?.value?.properties
-        indexContent = appendText(indexContent, properties, 'title')
-        indexContent = appendText(indexContent, properties, 'caption')
-      })
+      const contentIds = Object.keys(page.block);
+      contentIds.forEach((id) => {
+        const properties = page?.block[id]?.value?.properties;
+        indexContent = appendText(indexContent, properties, 'title');
+        indexContent = appendText(indexContent, properties, 'caption');
+      });
     }
     // console.log('全文搜索缓存', cacheKey, page != null)
-    post.results = []
-    let hitCount = 0
+    post.results = [];
+    let hitCount = 0;
     for (const i in indexContent) {
-      const c = indexContent[i]
+      const c = indexContent[i];
       if (!c) {
-        continue
+        continue;
       }
-      const index = c.toLowerCase().indexOf(keyword.toLowerCase())
+      const index = c.toLowerCase().indexOf(keyword.toLowerCase());
       if (index > -1) {
-        hit = true
-        hitCount += 1
-        post.results.push(c)
+        hit = true;
+        hitCount += 1;
+        post.results.push(c);
       } else {
         if ((post.results.length - 1) / hitCount < 3 || i === 0) {
-          post.results.push(c)
+          post.results.push(c);
         }
       }
     }
     if (hit) {
-      filterPosts.push(post)
+      filterPosts.push(post);
     }
   }
-  return filterPosts
+  return filterPosts;
 }
 
-export default Index
+export default Index;

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
-import NotionPage from '@/components/NotionPage';
-import { siteConfig } from '@/lib/config';
+import NotionPage from '@/plugins/notion/NotionPage';
+import { siteConfig } from '@/libs/common/config';
 
 import TagItemMini from './TagItemMini';
 
@@ -72,12 +72,13 @@ export const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary
         <div className="text-gray-400 justify-between flex">
           {/* 日期 */}
           {/* <Link
-                    href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
-                    passHref
-                    className="font-light menu-link cursor-pointer text-sm leading-4 mr-3">
-                    <i className="far fa-calendar-alt mr-1" />
-                    {post?.publishDay || post.lastEditedDay}
-                </Link> */}
+            href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
+            passHref
+            className="font-light menu-link cursor-pointer text-sm leading-4 mr-3"
+          >
+            <i className="far fa-calendar-alt mr-1" />
+            {post?.publishDay || post.lastEditedDay}
+          </Link> */}
           <span className="font-light text-sm leading-7 mr-3">
             <i className="far fa-calendar-alt mr-1" />
             {post?.publishDay}

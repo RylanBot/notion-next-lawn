@@ -2,12 +2,11 @@ import { useRouter } from 'next/router';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { isBrowser } from 'react-notion-x';
 
-import { THEMES } from '@/themes/theme';
+import { LANG, THEME } from '@/blog.config';
+import { THEMES } from '@/themes';
 
-import { generateLocaleDict } from '@/lib/lang';
-import { getQueryVariable } from '@/lib/utils';
-
-import { LANG, THEME } from 'blog.config';
+import { getQueryVariable } from '@/libs/common/util';
+import { generateLocaleDict } from '@/libs/lang';
 
 const GlobalContext = createContext();
 
@@ -46,11 +45,6 @@ export function GlobalContextProvider(props) {
     const initLocale = () => {
       const localLang = getQueryVariable('lang') || window.navigator.language;
       changeLang(localLang);
-    };
-
-    const initDarkMode = () => {
-      const isLocalDark = window.localStorage.getItem('darkMode');
-      setDarkMode(isLocalDark === 'true');
     };
 
     initLocale();

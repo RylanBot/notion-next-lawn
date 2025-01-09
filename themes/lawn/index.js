@@ -1,38 +1,37 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
-import { isBrowser } from 'react-notion-x';
 
 import { useGlobal } from '@/hooks/useGlobal';
-import { siteConfig } from '@/lib/config';
+import { siteConfig } from '@/libs/common/config';
 
-import AlgoliaSearchModal from '@/components/AlgoliaSearchModal';
-import Comment from '@/components/Comment';
-import replaceSearchResult from '@/components/Mark';
-import NotionPage from '@/components/NotionPage';
-import ShareBar from '@/components/ShareBar';
+import AlgoliaSearchModal from '@/plugins/algolia/AlgoliaSearchModal';
+import replaceSearchResult from '@/plugins/algolia/highlight';
+import Comment from '@/plugins/comment';
+import NotionPage from '@/plugins/notion/NotionPage';
 
-import ArticleAdjacent from './components/ArticleAdjacent';
-import ArticleCopyright from './components/ArticleCopyright';
-import { ArticleLock } from './components/ArticleLock';
-import ArticleRecommend from './components/ArticleRecommend';
-import BlogPostArchive from './components/BlogPostArchive';
-import BlogPostListPage from './components/BlogPostListPage';
-import BlogPostListScroll from './components/BlogPostListScroll';
-import ButtonRandomPost from './components/ButtonRandomPost';
-import Card from './components/Card';
-import Footer from './components/Footer';
-import Hero from './components/Hero';
-import JumpToCommentButton from './components/JumpToCommentButton';
-import PostHeader from './components/PostHeader';
-import RightFloatArea from './components/RightFloatArea';
-import SearchNav from './components/SearchNav';
-import SideRight from './components/SideRight';
-import SlotBar from './components/SlotBar';
-import TagItemMini from './components/TagItemMini';
-import TocDrawer from './components/TocDrawer';
-import TocDrawerButton from './components/TocDrawerButton';
-import TopNav from './components/TopNav';
+import {
+  ArticleAdjacent,
+  ArticleCopyright,
+  ArticleLock,
+  ArticleRecommend,
+  BlogPostArchive,
+  BlogPostListPage,
+  BlogPostListScroll,
+  ButtonRandomPost,
+  Card,
+  CatalogDrawer,
+  Footer,
+  Hero,
+  JumpToCommentButton,
+  PostHeader,
+  RightFloatArea,
+  SearchNav,
+  SideRight,
+  SlotBar,
+  TagItemMini,
+  TopNav
+} from './components';
 
 import { Style } from './style';
 
@@ -56,27 +55,19 @@ export const LayoutBase = (props) => {
   const LAYOUT_SIDEBAR_REVERSE = JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE'));
 
   const [hydrated, setHydrated] = useState(false);
-  const [showNav, setShowNav] = useState(false);
+  const [layoutLoaded, setLayoutLoaded] = useState(false);
 
-  const drawerRight = useRef(null);
   const searchModal = useRef(null);
-
-  const tocRef = isBrowser ? document.getElementById('article-wrapper') : null;
 
   const headerSlot = post ? (
     <PostHeader {...props} />
   ) : router.route === '/' && LAWN_HOME_BANNER_ENABLE ? (
-    <Hero {...props} onLoad={() => setShowNav(true)} />
+    <Hero {...props} onLoad={() => setLayoutLoaded(true)} />
   ) : null;
 
   const floatSlot = (
     <>
-      {post?.toc?.length > 1 && (
-        <>
-          <TocDrawerButton onClick={() => drawerRight?.current?.handleSwitchVisible()} />
-          <TocDrawer post={post} cRef={drawerRight} targetRef={tocRef} />
-        </>
-      )}
+      {post?.toc?.length > 1 && <CatalogDrawer toc={post.toc} />}
       <JumpToCommentButton />
       <ButtonRandomPost {...props} />
     </>
@@ -86,7 +77,7 @@ export const LayoutBase = (props) => {
     setHydrated(true);
     if (router.pathname === '/') return;
     setTimeout(() => {
-      setShowNav(true);
+      setLayoutLoaded(true);
     }, 0);
   }, [router]);
 
@@ -97,27 +88,31 @@ export const LayoutBase = (props) => {
         <Style />
 
         {hydrated && (
-          <>
+          <div className={layoutLoaded ? null : 'opacity-0'}>
             {/* 顶部嵌入 */}
             <header>
-              {showNav && <TopNav {...props} />}
+              <TopNav {...props} />
               {headerSlot}
             </header>
 
             {/* 主区块 */}
             <main
               id="lawn-main-wrapper"
-              className={`bg-lawn-background-gray dark:bg-black w-full py-8 md:px-32 min-h-screen relative ${LAWN_HOME_BANNER_ENABLE ? 'pt-14 max-md:pt-6' : ''}`}
+              className={`bg-lawn-background-gray dark:bg-black w-full py-8 md:px-32 min-h-screen relative ${
+                LAWN_HOME_BANNER_ENABLE ? 'pt-14 max-md:pt-6' : ''
+              }`}
             >
               <div
-                className={`w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10 ${LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : ''}`}
+                className={`w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10 ${
+                  LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : ''
+                }`}
               >
                 <div className={`w-full h-full overflow-hidden pb-12 ${fullWidth ? 'max-w-4xl' : ''}`}>
                   {slotTop}
                   {children}
                 </div>
                 {/* 右侧栏 */}
-                {showNav && <SideRight {...props} />}
+                <SideRight {...props} />
               </div>
             </main>
 
@@ -129,9 +124,8 @@ export const LayoutBase = (props) => {
 
             {/* 页脚 */}
             <Footer />
-          </>
+          </div>
         )}
-
       </div>
     </ThemeGlobalLawn.Provider>
   );
@@ -248,8 +242,6 @@ export const LayoutSlug = (props) => {
               {post && <NotionPage post={post} />}
             </section>
 
-            {/* 分享 */}
-            <ShareBar post={post} />
             {post?.type === 'Post' && (
               <>
                 <ArticleCopyright {...props} />
@@ -275,7 +267,11 @@ export const LayoutSlug = (props) => {
  * 404
  */
 export const Layout404 = (props) => {
-  const { locale } = useGlobal();
+  const { locale, setOnLoading } = useGlobal();
+
+  useEffect(() => {
+    setOnLoading(false);
+  }, []);
 
   return (
     <div id="lawn-404" className="w-full h-screen flex flex-col justify-center items-center">
@@ -309,7 +305,7 @@ export const LayoutCategoryIndex = (props) => {
         <div id="category-list" className="duration-200 flex flex-wrap mx-8">
           {categoryOptions?.map((category) => {
             return (
-              <Link key={category.name} href={`/category/${category.name}`} passHref legacyBehavior>
+              <Link key={category.name} href={`/category/${category.name}`} passHref>
                 <div className="duration-300 px-5 cursor-pointer py-2 hover:text-teal-500 dark:hover:text-teal-400">
                   <i className="mr-4 fas fa-folder" /> {category.name}({category.count})
                 </div>

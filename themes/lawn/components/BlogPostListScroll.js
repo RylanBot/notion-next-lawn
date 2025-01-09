@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { getListByPage } from '@/lib/utils';
+import { getListByPage } from '@/libs/common/util';
 
 import { useGlobal } from '@/hooks/useGlobal';
-import { siteConfig } from '@/lib/config';
+import { siteConfig } from '@/libs/common/config';
 
 import CONFIG from '../config';
 import BlogPostCard from './BlogPostCard';

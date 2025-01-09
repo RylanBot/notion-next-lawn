@@ -1,68 +1,61 @@
-import BLOG from '@/blog.config';
-import { useGlobal } from '@/hooks/useGlobal';
-import { siteConfig } from '@/lib/config';
-import { getGlobalData } from '@/lib/notion/getNotionData';
-import { getLayoutByTheme } from '@/themes/theme';
 import { useRouter } from 'next/router';
 
-const Tag = props => {
-  const { locale } = useGlobal()
-  const { tag, siteInfo } = props
+import BLOG from '@/blog.config';
+import { getLayoutByTheme } from '@/themes';
 
-  // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
+import { siteConfig } from '@/libs/common/config';
+import { getGlobalData } from '@/libs/notion/site';
 
-  const meta = {
-    title: `${tag} | ${locale.COMMON.TAGS} | ${siteConfig('TITLE')}`,
-    description: siteConfig('DESCRIPTION'),
-    image: siteInfo?.pageCover,
-    slug: 'tag/' + tag,
-    type: 'website'
-  }
-  props = { ...props, meta }
-
+const Tag = (props) => {
+  const router = useRouter();
+  const THEME = siteConfig('THEME');
+  const Layout = getLayoutByTheme({ theme: THEME, router: router });
   return <Layout {...props} />
-}
+};
 
 export async function getStaticProps({ params: { tag, page } }) {
-  const from = 'tag-page-props'
-  const props = await getGlobalData({ from })
+  const from = 'tag-page-props';
+  const props = await getGlobalData({ from });
   // 过滤状态、标签
-  props.posts = props.allPages?.filter(page => page.type === 'Post' && page.status === 'Published').filter(post => post && post?.tags && post?.tags.includes(tag))
+  props.posts = props.allPages
+    ?.filter((page) => page.type === 'Post' && page.status === 'Published')
+    .filter((post) => post && post?.tags && post?.tags.includes(tag));
   // 处理文章数
-  props.postCount = props.posts.length
+  props.postCount = props.posts.length;
   // 处理分页
-  props.posts = props.posts.slice(BLOG.POSTS_PER_PAGE * (page - 1), BLOG.POSTS_PER_PAGE * page)
+  props.posts = props.posts.slice(BLOG.POSTS_PER_PAGE * (page - 1), BLOG.POSTS_PER_PAGE * page);
 
-  props.tag = tag
-  props.page = page
-  delete props.allPages
+  props.tag = tag;
+  props.page = page;
+  delete props.allPages;
   return {
     props,
     revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND)
-  }
+  };
 }
 
 export async function getStaticPaths() {
-  const from = 'tag-page-static-path'
-  const { tagOptions, allPages } = await getGlobalData({ from })
-  const paths = []
-  tagOptions?.forEach(tag => {
+  const from = 'tag-page-static-path';
+  const { tagOptions, allPages } = await getGlobalData({ from });
+  const paths = [];
+  tagOptions?.forEach((tag) => {
     // 过滤状态类型
-    const tagPosts = allPages?.filter(page => page.type === 'Post' && page.status === 'Published').filter(post => post && post?.tags && post?.tags.includes(tag.name))
+    const tagPosts = allPages
+      ?.filter((page) => page.type === 'Post' && page.status === 'Published')
+      .filter((post) => post && post?.tags && post?.tags.includes(tag.name));
     // 处理文章页数
-    const postCount = tagPosts.length
-    const totalPages = Math.ceil(postCount / BLOG.POSTS_PER_PAGE)
+    const postCount = tagPosts.length;
+    const totalPages = Math.ceil(postCount / BLOG.POSTS_PER_PAGE);
     if (totalPages > 1) {
       for (let i = 1; i <= totalPages; i++) {
-        paths.push({ params: { tag: tag.name, page: '' + i } })
+        paths.push({ params: { tag: tag.name, page: '' + i } });
       }
     }
-  })
+  });
   return {
     paths: paths,
     fallback: true
-  }
+  };
 }
 
-export default Tag
+export default Tag;

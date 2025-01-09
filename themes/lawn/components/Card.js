@@ -8,4 +8,5 @@ const Card = ({ children, headerSlot, className }) => {
     </div>
   );
 };
+
 export default Card;

@@ -3,8 +3,7 @@ import Link from 'next/link';
 const TagItemMini = ({ tag, selected = false }) => {
   return (
     <Link
-      key={tag}
-      href={selected ? '/' : `/tag/${encodeURIComponent(tag.name)}`}
+      href={`/tag/${encodeURIComponent(tag.name)}`}
       passHref
       className={`inline-block rounded duration-200 my-1 mr-2 py-0.5 px-1 text-xs whitespace-nowrap ${
         selected

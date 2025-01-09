@@ -1,13 +1,8 @@
 const CONFIG = {
   LAWN_HOME_BANNER_ENABLE: true,
-  // 3.14.1以后的版本中，欢迎语在blog.config.js中配置，用英文逗号','隔开多个。
-  LAWN_HOME_BANNER_GREETINGS: ['Hi，我是一个程序员', 'Hi，我是一个打工人', 'Hi，我是一个干饭人', '欢迎来到我的博客🎉'], // 首页大图标语文字
-
   LAWN_HOME_NAV_BUTTONS: false, // 首页是否显示分类大图标按钮
-  // 已知未修复bug, 在移动端开启true后会加载不出图片； 暂时建议设置为false。
   LAWN_HOME_NAV_BACKGROUND_IMG_FIXED: false, // 首页背景图滚动时是否固定，true 则滚动时图片不懂动； false则随鼠标滚动 ;
-  // 是否显示开始阅读按钮
-  LAWN_SHOW_START_READING: true,
+  LAWN_SHOW_START_READING: false,   // 是否显示开始阅读按钮
 
   // 菜单配置
   LAWN_MENU_INDEX: false, // 显示首页
@@ -35,4 +30,5 @@ const CONFIG = {
   LAWN_WIDGET_DARK_MODE: true, // 夜间模式
   LAWN_WIDGET_TOC: true // 移动端悬浮目录
 }
-export default CONFIG
+
+export default CONFIG;

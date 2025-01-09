@@ -1,15 +1,11 @@
-import { siteConfig } from '@/lib/config';
 import Link from 'next/link';
+import { siteConfig } from '@/libs/common/config';
 
 /**
  * 博客归档列表
- * @param posts 所有文章
- * @param archiveTitle 归档标题
  */
 const BlogPostArchive = ({ posts = [], archiveTitle }) => {
-  if (!posts || posts.length === 0) {
-    return <></>;
-  }
+  if (!posts || posts.length === 0) return <></>;
 
   return (
     <div className="mb-8">

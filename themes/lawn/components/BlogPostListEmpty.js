@@ -1,7 +1,7 @@
 import { useGlobal } from '@/hooks/useGlobal';
 
 /**
- * 空白博客 列表
+ * 空白博客列表
  */
 const BlogPostListEmpty = ({ currentSearch }) => {
   const { locale } = useGlobal()

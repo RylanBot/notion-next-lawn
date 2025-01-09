@@ -1,83 +1,59 @@
-import BLOG from '@/blog.config';
-import { useGlobal } from '@/hooks/useGlobal';
-import { siteConfig } from '@/lib/config';
-import { getGlobalData } from '@/lib/notion/getNotionData';
-import { getLayoutByTheme } from '@/themes/theme';
 import { useRouter } from 'next/router';
+
+import BLOG from '@/blog.config';
+import { getLayoutByTheme } from '@/themes';
+
+import { siteConfig } from '@/libs/common/config';
+import { getGlobalData } from '@/libs/notion/site';
 
 /**
  * 标签下的文章列表
- * @param {*} props
- * @returns
  */
-const Tag = props => {
-  const { locale } = useGlobal()
-  const { tag, siteInfo } = props
-
-  // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
-
-  const meta = {
-    title: `${tag} | ${locale.COMMON.TAGS} | ${siteConfig('TITLE')}`,
-    description: siteConfig('DESCRIPTION'),
-    image: siteInfo?.pageCover,
-    slug: 'tag/' + tag,
-    type: 'website'
-  }
-  props = { ...props, meta }
-
-  return <Layout {...props} />
-}
+const Tag = (props) => {
+  const router = useRouter();
+  const THEME = siteConfig('THEME');
+  const Layout = getLayoutByTheme({ theme: THEME, router: router });
+  return <Layout {...props} />;
+};
 
 export async function getStaticProps({ params: { tag } }) {
-  const from = 'tag-props'
-  const props = await getGlobalData({ from })
+  const from = 'tag-props';
+  const props = await getGlobalData({ from });
 
   // 过滤状态
-  props.posts = props.allPages?.filter(page => page.type === 'Post' && page.status === 'Published').filter(post => post && post?.tags && post?.tags.includes(tag))
+  props.posts = props.allPages
+    ?.filter((page) => page.type === 'Post' && page.status === 'Published')
+    .filter((post) => post && post?.tags && post?.tags.includes(tag));
 
   // 处理文章页数
-  props.postCount = props.posts.length
+  props.postCount = props.posts.length;
 
   // 处理分页
   if (BLOG.POST_LIST_STYLE === 'scroll') {
     // 滚动列表 给前端返回所有数据
   } else if (BLOG.POST_LIST_STYLE === 'page') {
-    props.posts = props.posts?.slice(0, BLOG.POSTS_PER_PAGE)
+    props.posts = props.posts?.slice(0, BLOG.POSTS_PER_PAGE);
   }
 
-  props.tag = tag
-  delete props.allPages
+  props.tag = tag;
+  delete props.allPages;
   return {
     props,
     revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND)
-  }
-}
-
-/**
- * 获取所有的标签
- * @returns
- * @param tags
- */
-function getTagNames(tags) {
-  const tagNames = []
-  tags.forEach(tag => {
-    tagNames.push(tag.name)
-  })
-  return tagNames
+  };
 }
 
 export async function getStaticPaths() {
-  const from = 'tag-static-path'
-  const { tagOptions } = await getGlobalData({ from })
-  const tagNames = getTagNames(tagOptions)
+  const from = 'tag-static-path';
+  const { tagOptions } = await getGlobalData({ from });
+  const tagNames = tagOptions.map((tag) => tag.name);
 
   return {
-    paths: Object.keys(tagNames).map(index => ({
+    paths: Object.keys(tagNames).map((index) => ({
       params: { tag: tagNames[index] }
     })),
     fallback: true
-  }
+  };
 }
 
-export default Tag
+export default Tag;

@@ -1,7 +1,7 @@
-import { useGlobal } from '@/hooks/useGlobal';
 import dynamic from 'next/dynamic';
+import { useGlobal } from '@/hooks/useGlobal';
 
-const NotionPage = dynamic(() => import('@/components/NotionPage'));
+const NotionPage = dynamic(() => import('@/plugins/notion/NotionPage'));
 
 /**
  * 公告
@@ -21,4 +21,5 @@ const Announcement = ({ post, className }) => {
     return <></>;
   }
 };
+
 export default Announcement;

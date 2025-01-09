@@ -1,12 +1,12 @@
 import Link from 'next/link';
 import { useState } from 'react';
 
-import Collapse from '@/components/Collapse';
+import Collapse from '@/plugins/base/Collapse';
 
 /**
  * 折叠菜单
  */
-export const MenuItemCollapse = (props) => {
+const MenuItemCollapse = (props) => {
   const { link } = props;
   const [show, changeShow] = useState(false);
   const hasSubMenu = link?.subMenus?.length > 0;
@@ -80,3 +80,5 @@ export const MenuItemCollapse = (props) => {
     </>
   );
 };
+
+export default MenuItemCollapse;

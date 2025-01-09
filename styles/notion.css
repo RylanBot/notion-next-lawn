@@ -761,7 +761,8 @@ svg.notion-page-icon {
   @apply w-full;
 }
 
-.notion-list li:has(> span.notion-equation) {
+.notion-list li:has(.notion-equation),
+.notion-toggle :has(.notion-equation) {
   overflow-x: auto;
   list-style-position: inside;
 }
@@ -1067,7 +1068,7 @@ code[class*='language-'] {
 }
 
 .notion-callout-text {
-  margin-left: 8px;
+  margin: 0 8px;
   white-space: pre-wrap;
   word-break: break-word;
 }

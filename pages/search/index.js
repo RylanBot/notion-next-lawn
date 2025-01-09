@@ -1,23 +1,19 @@
 import { useRouter } from 'next/router';
 
 import BLOG from '@/blog.config';
-import { useGlobal } from '@/hooks/useGlobal';
-import { siteConfig } from '@/lib/config';
-import { getGlobalData } from '@/lib/notion/getNotionData';
-import { getLayoutByTheme } from '@/themes/theme';
+import { getLayoutByTheme } from '@/themes';
+
+import { siteConfig } from '@/libs/common/config';
+import { getGlobalData } from '@/libs/notion/site';
+
 /**
  * 搜索路由
- * @param {*} props
- * @returns
  */
 const Search = props => {
-  const { posts, siteInfo } = props;
-  const { locale } = useGlobal();
-
-  // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() });
-
+  const { posts } = props;
   const router = useRouter();
+  const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: router });
+
   const keyword = getSearchKey(router);
 
   let filteredPosts;
@@ -33,16 +29,6 @@ const Search = props => {
   } else {
     filteredPosts = [];
   }
-
-  const meta = {
-    title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${siteConfig('TITLE')}`,
-    description: siteConfig('DESCRIPTION'),
-    image: siteInfo?.pageCover,
-    slug: 'search',
-    type: 'website'
-  };
-
-  props = { ...props, meta, posts: filteredPosts };
 
   return <Layout {...props} />;
 };

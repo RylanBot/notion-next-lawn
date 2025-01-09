@@ -1,4 +1,3 @@
-import { useGlobal } from '@/hooks/useGlobal';
 import { useEffect } from 'react';
 
 const useAdjustStyle = () => {

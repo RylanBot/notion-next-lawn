@@ -1,23 +1,23 @@
 import { useRouter } from 'next/router';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import 'aos/dist/aos.css';
 import 'react-notion-x/src/styles.css';
 
-import '@/styles/animate.css'; // @see https://animate.style/
-import '@/styles/globals.css';
-import '@/styles/notion.css'; // 重写部分样式
-import '@/styles/utility-patterns.css';
-
-import ExternalPlugins from '@/components/ExternalPlugins';
-import GlobalHead from '@/components/GlobalHead';
-import LoadingProgress from '@/components/LoadingProgress';
+import '@/styles/animate.css';
+import '@/styles/global.css';
+import '@/styles/notion.css';
 
 import { THEME } from '@/blog.config';
+import { getQueryParam } from '@/libs/common/util';
+import { getGlobalLayoutByTheme } from '@/themes';
+
+import ExternalPlugins from '@/plugins/core/ExternalPlugins';
+import GlobalHead from '@/plugins/core/GlobalHead';
+import LoadingProgress from '@/plugins/animation/LoadingProgress';
+
+import useAdjustStyle from '@/hooks/useAdjustStyle';
 import { GlobalContextProvider } from '@/hooks/useGlobal';
-// import { initLogging } from '@/lib/logger';
-import { getQueryParam } from '@/lib/utils';
-import { getGlobalLayoutByTheme } from '@/themes/theme';
 
 const MyApp = ({ Component, pageProps }) => {
   const route = useRouter();
@@ -34,6 +34,8 @@ const MyApp = ({ Component, pageProps }) => {
     },
     [queryParam]
   );
+
+  useAdjustStyle();
 
   return (
     <GlobalContextProvider {...pageProps}>

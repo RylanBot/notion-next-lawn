@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 
-export const MenuItemDrop = ({ link }) => {
+const MenuItemDrop = ({ link }) => {
   const [show, changeShow] = useState(false)
   const hasSubMenu = link?.subMenus?.length > 0
 
@@ -39,3 +39,5 @@ export const MenuItemDrop = ({ link }) => {
 
     </div>
 }
+
+export default MenuItemDrop;

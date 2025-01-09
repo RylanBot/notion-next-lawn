@@ -1,5 +1,5 @@
-import { useGlobal } from '@/hooks/useGlobal';
 import { useRouter } from 'next/router';
+import { useGlobal } from '@/hooks/useGlobal';
 
 /**
  * 随机跳转到一个文章

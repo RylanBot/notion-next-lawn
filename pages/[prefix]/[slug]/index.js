@@ -1,14 +1,15 @@
 import { idToUuid } from 'notion-utils';
-import Slug, { getRecommendPost } from '..';
 
 import BLOG from '@/blog.config';
-import { uploadDataToAlgolia } from '@/lib/algolia';
-import { getPostBlocks } from '@/lib/notion';
-import { getNotion } from '@/lib/notion/getNotion';
-import { getGlobalData } from '@/lib/notion/getNotionData';
+import { uploadDataToAlgolia } from '@/plugins/algolia/update';
+
+import { getNotionPost } from '@/libs/notion';
+import { getPostBlocks } from '@/libs/notion/block';
+import { getGlobalData } from '@/libs/notion/site';
+
+import Slug, { getRecommendPost } from '..';
 
 /**
- * 根据 notion 的 slug 访问页面
  * 解析二级目录 /article/about
  */
 const PrefixSlug = (props) => {
@@ -57,7 +58,7 @@ export async function getStaticProps({ params: { prefix, slug } }) {
   if (!props?.post) {
     const pageId = slug.slice(-1)[0];
     if (pageId.length >= 32) {
-      const post = await getNotion(pageId);
+      const post = await getNotionPost(pageId);
       props.post = post;
     }
   }

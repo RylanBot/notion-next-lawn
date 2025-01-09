@@ -1,5 +1,5 @@
 import { useGlobal } from '@/hooks/useGlobal';
-import { siteConfig } from '@/lib/config';
+import { siteConfig } from '@/libs/common/config';
 
 import CONFIG from '../config';
 

@@ -1,18 +1,15 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { isBrowser } from 'react-notion-x'
+import { isBrowser } from 'react-notion-x';
 
 import BLOG from '@/blog.config';
-import { useGlobal } from '@/hooks/useGlobal';
-import { siteConfig } from '@/lib/config';
-import { formatDateFmt } from '@/lib/formatDate';
-import { getGlobalData } from '@/lib/notion/getNotionData';
-import { getLayoutByTheme } from '@/themes/theme';
+import { getLayoutByTheme } from '@/themes';
+
+import { siteConfig } from '@/libs/common/config';
+import { formatDateFmt } from '@/libs/common/date';
+import { getGlobalData } from '@/libs/notion/site';
 
 const ArchiveIndex = (props) => {
-  const { siteInfo } = props;
-  const { locale } = useGlobal();
-
   // 根据页面路径加载不同Layout文件
   const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() });
 
@@ -29,16 +26,6 @@ const ArchiveIndex = (props) => {
       }
     }
   }, []);
-
-  const meta = {
-    title: `${locale.NAV.ARCHIVE} | ${siteConfig('TITLE')}`,
-    description: siteConfig('DESCRIPTION'),
-    image: siteInfo?.pageCover,
-    slug: 'archive',
-    type: 'website'
-  };
-
-  props = { ...props, meta };
 
   return <Layout {...props} />;
 };

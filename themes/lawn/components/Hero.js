@@ -2,13 +2,12 @@ import { useEffect, useRef, useState } from 'react';
 import Typed from 'typed.js';
 
 import { useGlobal } from '@/hooks/useGlobal';
-import { siteConfig } from '@/lib/config';
+import { siteConfig } from '@/libs/common/config';
+import LazyImage from '@/plugins/base/LazyImage';
 
 import CONFIG from '../config';
 import NavButtonGroup from './NavButtonGroup';
 import WavesArea from './WavesArea';
-
-let wrapperTop = 0;
 
 /**
  * 首页大图
@@ -24,18 +23,17 @@ const Hero = ({ onLoad, ...props }) => {
   const LAWN_HOME_NAV_BACKGROUND_IMG_FIXED = siteConfig('LAWN_HOME_NAV_BACKGROUND_IMG_FIXED', null, CONFIG);
 
   const typedRef = useRef(null);
-  const imgRef = useRef(null);
-
+  const wrapperTopRef = useRef(0);
   const [showHero, setShowHero] = useState(false);
 
   const scrollToWrapper = () => {
-    window.scrollTo({ top: wrapperTop, behavior: 'smooth' });
+    window.scrollTo({ top: wrapperTopRef.current, behavior: 'smooth' });
   };
 
   const updateHeaderHeight = () => {
     requestAnimationFrame(() => {
       const wrapperElement = document.getElementById('lawn-main-wrapper');
-      wrapperTop = wrapperElement?.offsetTop;
+      wrapperTopRef.current = wrapperElement?.offsetTop;
     });
   };
 
@@ -44,23 +42,12 @@ const Hero = ({ onLoad, ...props }) => {
       setShowHero(true);
       setOnLoading(false);
       onLoad();
-    }, 3000);
+    }, 1500);
   };
 
   useEffect(() => {
     setOnLoading(true);
 
-    const img = imgRef.current;
-    if (img.complete) {
-      handleCoverLoaded();
-    } else {
-      img.onload = () => handleCoverLoaded();
-    }
-
-    img.src = siteInfo.pageCover;
-  }, []);
-
-  useEffect(() => {
     updateHeaderHeight();
 
     const typed = new Typed(typedRef.current, {
@@ -83,11 +70,18 @@ const Hero = ({ onLoad, ...props }) => {
   return (
     <div
       id="lawn-header"
-      className={`relative flex flex-col justify-center items-center bg-white z-1 w-full h-[25rem] ${showHero ? '' : 'opacity-0'}`}
+      className={`relative flex flex-col justify-center items-center bg-white z-1 w-full h-[25rem] ${
+        showHero ? '' : 'opacity-0'
+      }`}
     >
-      <img
-        ref={imgRef}
-        className={`header-cover brightness-75 w-full h-[25rem] object-cover object-center ${LAWN_HOME_NAV_BACKGROUND_IMG_FIXED ? 'fixed' : ''}`}
+      <LazyImage
+        src={siteInfo?.pageCover}
+        onLoad={() => handleCoverLoaded()}
+        priority={true}
+        fetchpriority="high"
+        className={`brightness-75 w-full h-[25rem] object-cover object-center ${
+          LAWN_HOME_NAV_BACKGROUND_IMG_FIXED ? 'fixed' : ''
+        }`}
       />
 
       <div className="text-gray-200 absolute bottom-6 flex flex-col h-full items-center justify-center w-full">
@@ -103,15 +97,15 @@ const Hero = ({ onLoad, ...props }) => {
         {LAWN_HOME_NAV_BUTTONS && <NavButtonGroup {...props} />}
 
         {/* 开始阅读按钮 */}
-        <div
-          onClick={scrollToWrapper}
-          className="z-10 cursor-pointer w-full text-center py-4 text-3xl absolute bottom-4 text-white"
-        >
-          <div className="opacity-70 animate-bounce text-xs">
-            {LAWN_SHOW_START_READING && locale.COMMON.START_READING}
+        {LAWN_SHOW_START_READING && (
+          <div
+            onClick={scrollToWrapper}
+            className="z-10 cursor-pointer w-full text-center py-4 text-3xl absolute bottom-4 text-white"
+          >
+            <div className="opacity-70 animate-bounce text-xs">{locale.COMMON.START_READING}</div>
+            <i className="opacity-70 animate-bounce fas fa-angle-down" />
           </div>
-          <i className="opacity-70 animate-bounce fas fa-angle-down" />
-        </div>
+        )}
       </div>
 
       <WavesArea />

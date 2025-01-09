@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { RecentComments } from '@waline/client';
 
 import { useGlobal } from '@/hooks/useGlobal';
-import { siteConfig } from '@/lib/config';
-import Card from '@/themes/lawn/components/Card';
+import { siteConfig } from '@/libs/common/config';
 
-import { RecentComments } from '@waline/client';
+import Card from './Card';
 
 /**
  * @see https://waline.js.org/guide/get-started.html

@@ -1,8 +1,9 @@
 import Link from 'next/link';
 
-import LazyImage from '@/components/LazyImage';
-import NotionIcon from '@/components/NotionIcon';
-import WordCount from '@/components/WordCount';
+import LazyImage from '@/plugins/base/LazyImage';
+import NotionIcon from '@/plugins/notion/NotionIcon';
+import WordCount from '@/plugins/base/WordCount';
+
 import { useGlobal } from '@/hooks/useGlobal';
 
 import TagItemMini from './TagItemMini';
@@ -21,16 +22,15 @@ export default function PostHeader({ post, siteInfo }) {
 
   return (
     <div id="lawn-header" className="w-full h-96 relative md:flex-shrink-0 z-10">
-      <LazyImage
-        priority={true}
+      <LazyImage      
         key={headerImage}
         src={headerImage}
+        priority={true}
+        fetchpriority="high"
         className="w-full h-full object-cover object-center absolute top-0"
       />
 
-      <div
-        id="article-header-cover"
-        className="bg-black bg-opacity-70 absolute top-0 w-full h-96 py-10 flex justify-center items-center "
+      <div className="bg-black bg-opacity-70 absolute top-0 w-full h-96 py-10 flex justify-center items-center "
       >
         <div>
           {/* 分类 */}

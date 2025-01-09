@@ -1,23 +1,22 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import throttle from 'lodash.throttle';
 
+import useDarkMode from '@/hooks/useDarkMode';
 import { useGlobal } from '@/hooks/useGlobal';
-import { siteConfig } from '@/lib/config';
+import { siteConfig } from '@/libs/common/config';
 
 import CONFIG from '../config';
 import CategoryGroup from './CategoryGroup';
 import Logo from './Logo';
-import { MenuListTop } from './MenuListTop';
+import MenuListTop from './MenuListTop';
 import SearchButton from './SearchButton';
 import SearchDrawer from './SearchDrawer';
 import SideBar from './SideBar';
 import SideBarDrawer from './SideBarDrawer';
 import TagGroups from './TagGroups';
-
-let windowTop = 0;
 
 /**
  * 顶部导航栏
@@ -26,95 +25,99 @@ const TopNav = (props) => {
   const { tags, currentTag, categories, currentCategory } = props;
   const showSearchButton = siteConfig('LAWN_MENU_SEARCH', false, CONFIG);
 
-  const { locale, isDarkMode } = useGlobal();
+  const { locale } = useGlobal();
+  const { isDarkMode } = useDarkMode();
   const router = useRouter();
 
   const searchDrawer = useRef();
+  const windowTopRef = useRef(0);
+
   const [isOpen, changeShow] = useState(false);
 
-  const handleNavStyle = useCallback(
-    throttle(() => {
-      const scrollS = window.scrollY;
+  const handleNavStyle = throttle(() => {
+    const scrollS = window.scrollY;
 
-      const nav = document.querySelector('#sticky-nav');
-      const navTitle = document.querySelector('#nav-title');
-      const header = document.querySelector('#lawn-header');
+    const header = document.querySelector('#lawn-header');
+    const nav = document.querySelector('#sticky-nav');
+    const navTitle = document.querySelector('#nav-title');
 
-      const remToPx = (rem) => rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
-      const headerHeight = remToPx(25);
+    const remToPx = (rem) => rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    const headerHeight = remToPx(25);
 
-      const isHome = router.route === '/';
-      const navTransparent = (scrollS < headerHeight && isHome) || scrollS < 300;
+    const isHome = router.route === '/';
+    const navTransparent = (scrollS < headerHeight && isHome) || scrollS < 300;
 
-      if (header && navTransparent) {
-        nav?.classList.replace('bg-white', 'bg-none');
-        nav?.classList.replace('text-gray', 'text-white');
-        nav?.classList.replace('border', 'border-transparent');
-        nav?.classList.replace('drop-shadow-md', 'shadow-none');
-        nav?.classList.replace('dark:bg-lawn-black-gray', 'transparent');
+    if (header && navTransparent) {
+      nav?.classList.replace('bg-white', 'bg-none');
+      nav?.classList.replace('text-gray', 'text-white');
+      nav?.classList.replace('border', 'border-transparent');
+      nav?.classList.replace('drop-shadow-md', 'shadow-none');
+      nav?.classList.replace('dark:bg-lawn-black-gray', 'transparent');
 
-        if (isHome) {
-          navTitle?.classList.replace('opacity-100', 'opacity-0');
-          navTitle?.classList.replace('pointer-events-auto', 'pointer-events-none');
-        } else {
-          navTitle?.classList.replace('opacity-0', 'opacity-100');
-          navTitle?.classList.replace('pointer-events-none', 'pointer-events-auto');
-        }
+      if (isHome) {
+        navTitle?.classList.replace('opacity-100', 'opacity-0');
+        navTitle?.classList.replace('pointer-events-auto', 'pointer-events-none');
       } else {
-        nav?.classList.replace('bg-none', 'bg-white');
-        nav?.classList.replace('text-white', 'text-gray');
-        nav?.classList.replace('border-transparent', 'border');
-        nav?.classList.replace('shadow-none', 'drop-shadow-md');
-        nav?.classList.replace('transparent', 'dark:bg-lawn-black-gray');
-
-        if (isHome) {
-          navTitle?.classList.replace('opacity-0', 'opacity-100');
-          navTitle?.classList.replace('pointer-events-auto', 'pointer-events-none');
-        } else {
-          navTitle?.classList.replace('pointer-events-none', 'pointer-events-auto');
-        }
+        navTitle?.classList.replace('opacity-0', 'opacity-100');
+        navTitle?.classList.replace('pointer-events-none', 'pointer-events-auto');
       }
+    } else {
+      nav?.classList.replace('bg-none', 'bg-white');
+      nav?.classList.replace('text-white', 'text-gray');
+      nav?.classList.replace('border-transparent', 'border');
+      nav?.classList.replace('shadow-none', 'drop-shadow-md');
+      nav?.classList.replace('transparent', 'dark:bg-lawn-black-gray');
 
-      const menuTitle = document.querySelectorAll('.menu-title');
-      menuTitle?.forEach((menu) => {
-        if (!isDarkMode && header && navTransparent) {
-          menu.parentNode.classList.add('dark');
-        } else {
-          menu.parentNode.classList.remove('dark');
-        }
-      });
-
-      const showNav = scrollS <= windowTop || scrollS < 5 || (header && scrollS <= header.clientHeight); // 非首页无大图时影藏顶部 滚动条置顶时隐藏
-      if (!showNav) {
-        nav && nav.classList.replace('top-0', '-top-20');
-        windowTop = scrollS;
+      if (isHome) {
+        // 首页禁止点击 Logo 跳转
+        navTitle?.classList.replace('opacity-0', 'opacity-100');
+        navTitle?.classList.replace('pointer-events-auto', 'pointer-events-none');
       } else {
-        nav && nav.classList.replace('-top-20', 'top-0');
-        windowTop = scrollS;
+        navTitle?.classList.replace('pointer-events-none', 'pointer-events-auto');
       }
-    }, 200), [router.route, isDarkMode]);
+    }
 
-  useEffect(() => {
-    handleNavStyle();
-    window.addEventListener('scroll', handleNavStyle);
-
-    const observer = new MutationObserver(() => {
-      const progressEl = document.getElementById('nprogress');
-      if (!progressEl) {
-        handleNavStyle();
+    const menuTitle = document.querySelectorAll('.menu-title');
+    menuTitle?.forEach((menu) => {
+      if (!isDarkMode && header && navTransparent) {
+        menu.parentNode.classList.add('dark');
+      } else {
+        menu.parentNode.classList.remove('dark');
       }
     });
 
+    const showNav = scrollS <= windowTopRef.current || scrollS < 5 || (header && scrollS <= header.clientHeight);
+    if (!showNav) {
+      nav && nav.classList.replace('top-0', '-top-20');
+    } else {
+      nav && nav.classList.replace('-top-20', 'top-0');
+    }
+
+    windowTopRef.current = scrollS;
+  }, 200);
+
+  useEffect(() => {
+    handleNavStyle();
+
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach(() => {
+        const header = document.querySelector('#lawn-header'); // Hero + PostHeader
+        if (header) {
+          handleNavStyle(); // 避免偶尔路由跳转时，没有同步 Header 状态
+          observer.disconnect();
+        }
+      });
+    });
     observer.observe(document.body, {
       childList: true,
       subtree: true
     });
 
+    window.addEventListener('scroll', handleNavStyle);
     return () => {
       window.removeEventListener('scroll', handleNavStyle);
-      observer.disconnect();
     };
-  }, [router.route, isDarkMode]);
+  }, [router.asPath]);
 
   const searchDrawerSlot = (
     <>

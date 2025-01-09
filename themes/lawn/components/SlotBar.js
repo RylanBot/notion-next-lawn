@@ -1,9 +1,7 @@
 /**
  * 博客列表上方嵌入条
- * @param {*} props
- * @returns
  */
-export default function SlotBar(props) {
+const SlotBar = (props) => {
   const { tag, category } = props;
 
   if (tag) {
@@ -21,4 +19,6 @@ export default function SlotBar(props) {
   }
 
   return <></>;
-}
+};
+
+export default SlotBar;

@@ -1,6 +1,6 @@
 import BLOG from '@/blog.config'
-import { siteConfig } from '@/lib/config'
-import { getGlobalData } from '@/lib/notion/getNotionData'
+import { siteConfig } from '@/libs/common/config'
+import { getGlobalData } from '@/libs/notion/site'
 import { getServerSideSitemap } from 'next-sitemap'
 
 export const getServerSideProps = async ctx => {

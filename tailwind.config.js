@@ -1,12 +1,15 @@
 const BLOG = require('./blog.config');
-const { fontFamilies } = require('./lib/font');
 
 module.exports = {
-  content: ['./pages/**/*.js', './components/**/*.js', './layouts/**/*.js', './themes/**/*.js'],
+  content: ['./pages/**/*.js', './plugins/**/*.js', './themes/**/*.js'],
   safelist: ['font-sans, font-serif'],
-  darkMode: BLOG.APPEARANCE === 'class' ? 'media' : 'class', // or 'media' or 'class'
+  darkMode: 'class',
   theme: {
-    fontFamily: fontFamilies,
+    fontFamily: {
+      sans: BLOG.FONT_SANS,
+      serif: BLOG.FONT_SERIF,
+      oleo: ['Oleo Script', 'Times New Roman']
+    },
     extend: {
       colors: {
         day: {

@@ -1,35 +1,19 @@
 import { useRouter } from 'next/router';
 
 import BLOG from '@/blog.config';
-import { useGlobal } from '@/hooks/useGlobal';
-import { siteConfig } from '@/lib/config';
-import { getGlobalData } from '@/lib/notion/getNotionData';
-import { getLayoutByTheme } from '@/themes/theme';
+import { getLayoutByTheme } from '@/themes';
+
+import { siteConfig } from '@/libs/common/config';
+import { getGlobalData } from '@/libs/notion/site';
 
 /**
  * 分类页
- * @param {*} props
- * @returns
  */
-
 export default function Category(props) {
-  const { siteInfo } = props;
-  const { locale } = useGlobal();
-  // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() });
-
-  const meta = {
-    title: `${props.category} | ${locale.COMMON.CATEGORY} | ${siteConfig('TITLE') || ''
-      }`,
-    description: siteConfig('DESCRIPTION'),
-    slug: 'category/' + props.category,
-    image: siteInfo?.pageCover,
-    type: 'website'
-  };
-
-  props = { ...props, meta };
-
-  return <Layout {...props} />;
+  const router = useRouter();
+  const THEME = siteConfig('THEME');
+  const Layout = getLayoutByTheme({ theme: THEME, router: router });
+  return <Layout {...props} />
 }
 
 export async function getStaticProps({ params: { category, page } }) {
@@ -37,7 +21,9 @@ export async function getStaticProps({ params: { category, page } }) {
   let props = await getGlobalData({ from });
 
   // 过滤状态类型
-  props.posts = props.allPages?.filter(page => page.type === 'Post' && page.status === 'Published').filter(post => post && post.category && post.category.includes(category));
+  props.posts = props.allPages
+    ?.filter((page) => page.type === 'Post' && page.status === 'Published')
+    .filter((post) => post && post.category && post.category.includes(category));
   // 处理文章页数
   props.postCount = props.posts.length;
   // 处理分页
@@ -59,9 +45,11 @@ export async function getStaticPaths() {
   const { categoryOptions, allPages } = await getGlobalData({ from });
   const paths = [];
 
-  categoryOptions?.forEach(category => {
+  categoryOptions?.forEach((category) => {
     // 过滤状态类型
-    const categoryPosts = allPages?.filter(page => page.type === 'Post' && page.status === 'Published').filter(post => post && post.category && post.category.includes(category.name));
+    const categoryPosts = allPages
+      ?.filter((page) => page.type === 'Post' && page.status === 'Published')
+      .filter((post) => post && post.category && post.category.includes(category.name));
     // 处理文章页数
     const postCount = categoryPosts.length;
     const totalPages = Math.ceil(postCount / BLOG.POSTS_PER_PAGE);

@@ -1,18 +1,17 @@
 // import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
-import { isBrowser } from 'react-notion-x';
 
-import Live2D from '@/components/Live2D';
-import { siteConfig } from '@/lib/config';
+import { siteConfig } from '@/libs/common/config';
+import Live2D from '@/plugins/animation/Live2D';
 
 import CONFIG from '../config';
-import { AnalyticsCard } from './AnalyticsCard';
+import AnalyticsCard from './AnalyticsCard';
 import Announcement from './Announcement';
 import ArchiveCard from './ArchiveCard';
 import Card from './Card';
 import Catalog from './Catalog';
 import CategoryGroup from './CategoryGroup';
-import { InfoCard } from './InfoCard';
+import InfoCard from './InfoCard';
 import LatestPostsGroup from './LatestPostsGroup';
 import TagGroups from './TagGroups';
 
@@ -38,7 +37,7 @@ export default function SideRight(props) {
     <>
       <div id="sideRight" className="p-2 max-lg:mt-8 max-md:mt-4">
         {/* 切换 Tab */}
-        {post && post.toc && post.toc.length > 1 && (
+        {post?.toc?.length > 1 && (
           <div className="lg:w-72 flex justify-center items-center mb-4">
             <button
               className={`w-1/2 px-4 py-1 rounded mr-2 ${
@@ -61,7 +60,7 @@ export default function SideRight(props) {
 
         {/* 目录 */}
         <div className={`lg:w-72 toc-card sticky top-32 ${activeTab === 'toc' ? '' : 'hidden'}`}>
-          {post && post.toc && post.toc.length > 1 && (
+          {post?.toc?.length > 1 && (
             <Card>
               <Catalog toc={post.toc} />
             </Card>

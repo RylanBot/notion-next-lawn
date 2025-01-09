@@ -1,24 +1,22 @@
 import { idToUuid } from 'notion-utils';
-import Slug, { getRecommendPost } from '..';
 
 import BLOG from '@/blog.config';
-import { uploadDataToAlgolia } from '@/lib/algolia';
-import { getPostBlocks } from '@/lib/notion';
-import { getNotion } from '@/lib/notion/getNotion';
-import { getGlobalData } from '@/lib/notion/getNotionData';
-import { getLastPartOfUrl } from '@/lib/utils';
+import { uploadDataToAlgolia } from '@/plugins/algolia/update';
+
+import { getLastPartOfUrl } from '@/libs/common/util';
+import { getNotionPost } from '@/libs/notion';
+import { getPostBlocks } from '@/libs/notion/block';
+import { getGlobalData } from '@/libs/notion/site';
+
+import Slug, { getRecommendPost } from '..';
 
 /**
- * 根据 notion 的 slug 访问页面
  * 解析三级以上目录 /article/parent_slug/notion_id
  */
 const PrefixSlug = props => {
   return <Slug {...props} />;
 };
 
-/**
- * 编译渲染页面路径
- */
 export async function getStaticPaths() {
   if (!BLOG.isProd) {
     return {
@@ -35,9 +33,6 @@ export async function getStaticPaths() {
   };
 }
 
-/**
- * 抓取页面数据
- */
 export async function getStaticProps({ params: { prefix, slug, suffix } }) {
   let fullSlug = prefix + '/' + slug + '/' + suffix.join('/');
   if (JSON.parse(BLOG.PSEUDO_STATIC)) {
@@ -57,7 +52,7 @@ export async function getStaticProps({ params: { prefix, slug, suffix } }) {
   if (!props?.post) {
     const pageId = getLastPartOfUrl(fullSlug);
     if (pageId.length >= 32) {
-      const post = await getNotion(pageId);
+      const post = await getNotionPost(pageId);
       props.post = post;
     }
   }

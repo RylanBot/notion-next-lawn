@@ -1,14 +1,13 @@
 import { useGlobal } from '@/hooks/useGlobal';
-import { siteConfig } from '@/lib/config';
-
-import TravellingsLink from '@/components/TravellingsLink';
+import { siteConfig } from '@/libs/common/config';
+import TravellingsLink from '@/plugins/base/TravellingsLink';
 
 import CONFIG from '../config';
-import { MenuItemDrop } from './MenuItemDrop';
+import MenuItemDrop from './MenuItemDrop';
 
-export const MenuListTop = (props) => {
-  const { customNav, customMenu, navDisplayed } = props;
-  
+const MenuListTop = (props) => {
+  const { customNav, customMenu } = props;
+
   const { locale } = useGlobal();
   const TRAVELLING_LINK = siteConfig('TRAVELLING_LINK');
 
@@ -63,10 +62,12 @@ export const MenuListTop = (props) => {
         {links?.map((link, index) => link && link.show && <MenuItemDrop key={index} link={link} />)}
         {TRAVELLING_LINK && (
           <span className="pl-4 pr-2">
-            <TravellingsLink hidden={navDisplayed} />
+            <TravellingsLink />
           </span>
         )}
       </nav>
     </>
   );
 };
+
+export default MenuListTop;

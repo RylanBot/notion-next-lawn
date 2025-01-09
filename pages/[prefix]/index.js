@@ -1,25 +1,25 @@
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-
 import md5 from 'js-md5';
+import { useRouter } from 'next/router';
 import { idToUuid } from 'notion-utils';
+import { useEffect, useState } from 'react';
+import { isBrowser } from 'react-notion-x';
 
 import BLOG from '@/blog.config';
-import { uploadDataToAlgolia } from '@/lib/algolia';
-import { siteConfig } from '@/lib/config';
-import { getPostBlocks } from '@/lib/notion';
-import { getNotion } from '@/lib/notion/getNotion';
-import { getGlobalData } from '@/lib/notion/getNotionData';
-import { getPageTableOfContents } from '@/lib/notion/getPageTableOfContents';
-import { isBrowser } from '@/lib/utils';
-import { getLayoutByTheme } from '@/themes/theme';
+import { uploadDataToAlgolia } from '@/plugins/algolia/update';
+import { getLayoutByTheme } from '@/themes';
+
+import { siteConfig } from '@/libs/common/config';
+import { getNotionPost } from '@/libs/notion';
+import { getPostBlocks } from '@/libs/notion/block';
+import { getGlobalData } from '@/libs/notion/site';
+import { getPageTableOfContents } from '@/libs/notion/toc';
 
 /**
- * 根据notion的slug访问页面
+ * 根据 notion 的 slug 访问页面
  * 只解析一级目录例如 /about
  */
 const Slug = (props) => {
-  const { post, siteInfo } = props;
+  const { post } = props;
   const router = useRouter();
 
   const [lock, setLock] = useState(post?.password && post?.password !== '');
@@ -57,20 +57,9 @@ const Slug = (props) => {
       post.content = Object.keys(post.blockMap.block);
       post.toc = getPageTableOfContents(post, post.blockMap);
     }
-  }, [post, router]);
+  }, [router.asPath, lock, post]);
 
-  const meta = {
-    title: post ? `${post?.title} | ${siteConfig('TITLE')}` : `Loading... ｜ ${siteConfig('TITLE')}`,
-    description: post?.summary,
-    type: post?.type,
-    slug: post?.slug,
-    image: post?.pageCoverThumbnail || siteInfo?.pageCover || BLOG.HOME_BANNER_IMAGE,
-    category: post?.category?.[0],
-    tags: post?.tags
-  };
-
-  props = { ...props, lock, meta, setLock, validPassword };
-  // 根据页面路径加载不同Layout文件
+  props = { ...props, lock, setLock, validPassword };
   const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() });
   return <Layout {...props} />;
 };
@@ -112,7 +101,7 @@ export async function getStaticProps({ params: { prefix } }) {
   if (!props?.post) {
     const pageId = prefix;
     if (pageId.length >= 32) {
-      const post = await getNotion(pageId);
+      const post = await getNotionPost(pageId);
       props.post = post;
     }
   }

@@ -1,32 +1,18 @@
-import BLOG from '@/blog.config'
-import { getPostBlocks } from '@/lib/notion'
-import { getGlobalData } from '@/lib/notion/getNotionData'
-import { useRouter } from 'next/router'
-import { getLayoutByTheme } from '@/themes/theme'
-import { siteConfig } from '@/lib/config'
+import { useRouter } from 'next/router';
+
+import BLOG from '@/blog.config';
+import { getLayoutByTheme } from '@/themes';
+
+import { getPostBlocks } from '@/libs/notion/block';
+import { getGlobalData } from '@/libs/notion/site';
 
 /**
  * 文章列表分页
- * @param {*} props
- * @returns
  */
 const Page = props => {
-  const { siteInfo } = props
-
-  // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
-
-  const meta = {
-    title: `${props?.page} | Page | ${siteConfig('TITLE')}`,
-    description: siteConfig('DESCRIPTION'),
-    image: siteInfo?.pageCover,
-    slug: 'page/' + props.page,
-    type: 'website'
-  }
-
-  props = { ...props, meta }
-
-  return <Layout {...props} />
+  const router = useRouter();
+  const Layout = getLayoutByTheme({ theme: THEME, router: router });
+  return <Layout {...props} />;
 }
 
 export async function getStaticPaths() {
