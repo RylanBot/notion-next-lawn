@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router';
 
 import { useGlobal } from '@/hooks/useGlobal';
+import { formatSlugName } from '@/libs/common/util';
+
 import Card from './Card';
 import TagItemMini from './TagItemMini';
 
@@ -23,8 +25,7 @@ const TagGroups = () => {
         </div>
         <div className="px-4">
           {tagOptions.map((tag) => {
-            const selected = currentTag === tag.name;
-            return <TagItemMini key={tag.name} tag={tag} selected={selected} />;
+            return <TagItemMini key={tag.name} tag={tag} selected={currentTag === formatSlugName(tag.name)} />;
           })}
         </div>
       </div>

@@ -19,7 +19,7 @@ const Hero = ({ onLoad, ...props }) => {
   const TITLE = siteConfig('TITLE');
   const GREETING_WORDS = siteConfig('GREETING_WORDS').split(',');
   const LAWN_HOME_NAV_BUTTONS = siteConfig('LAWN_HOME_NAV_BUTTONS', null, CONFIG);
-  const LAWN_SHOW_START_READING = siteConfig('LAWN_SHOW_START_READING', null, CONFIG);
+  const LAWN_HOME_START_READING = siteConfig('LAWN_HOME_START_READING', null, CONFIG);
   const LAWN_HOME_NAV_BACKGROUND_IMG_FIXED = siteConfig('LAWN_HOME_NAV_BACKGROUND_IMG_FIXED', null, CONFIG);
 
   const typedRef = useRef(null);
@@ -97,7 +97,7 @@ const Hero = ({ onLoad, ...props }) => {
         {LAWN_HOME_NAV_BUTTONS && <NavButtonGroup {...props} />}
 
         {/* 开始阅读按钮 */}
-        {LAWN_SHOW_START_READING && (
+        {LAWN_HOME_START_READING && (
           <div
             onClick={scrollToWrapper}
             className="z-10 cursor-pointer w-full text-center py-4 text-3xl absolute bottom-4 text-white"

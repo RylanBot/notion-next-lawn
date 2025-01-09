@@ -1,7 +1,10 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
+import { siteConfig } from '@/libs/common/config';
+import { formatSlugName, isChinese } from '@/libs/common/util';
 import { useGlobal } from '@/hooks/useGlobal';
+
 import Card from './Card';
 
 const CategoryGroup = () => {
@@ -10,6 +13,12 @@ const CategoryGroup = () => {
   const currentCategory = router.query.category;
 
   if (!categoryOptions) return;
+
+  let CATEGORY_SLUG_MAP = {};
+  try {
+    // 确保 JSON 字符串格式正确
+    CATEGORY_SLUG_MAP = JSON.parse(siteConfig('CATEGORY_SLUG_MAP', {}));
+  } catch (error) {}
 
   return (
     <>
@@ -20,11 +29,13 @@ const CategoryGroup = () => {
 
         <div id="category-list" className="dark:border-gray-600 flex flex-wrap mx-4">
           {categoryOptions.map((category) => {
-            const selected = currentCategory === category.name;
+            const currentSlug = formatSlugName(category.name);
+            const selected = currentCategory === currentSlug;
+            const displayName = isChinese ? CATEGORY_SLUG_MAP[category.name] ?? category.name : category.name;
             return (
               <Link
-                key={category.name}
-                href={`/category/${category.name}`}
+                key={currentSlug}
+                href={`/category/${currentSlug}`}
                 passHref
                 className={`text-sm w-full items-center my-0.5 px-2 py-1 font-light rounded-md ${
                   selected
@@ -34,7 +45,7 @@ const CategoryGroup = () => {
               >
                 <div>
                   <i className={`mr-2 fas ${selected ? 'fa-folder-open text-teal-500' : 'fa-folder'}`} />
-                  {category.name}({category.count})
+                  {displayName}({category.count})
                 </div>
               </Link>
             );

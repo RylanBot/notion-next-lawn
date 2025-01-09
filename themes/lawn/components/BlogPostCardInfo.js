@@ -1,26 +1,36 @@
 import Link from 'next/link';
 
 import NotionPage from '@/plugins/notion/NotionPage';
+
 import { siteConfig } from '@/libs/common/config';
+import { formatSlugName, isChinese } from '@/libs/common/util';
 
 import TagItemMini from './TagItemMini';
 
 /**
  * 博客列表的文字内容
  */
-export const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary }) => {
+const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary }) => {
+  const SUB_PATH = siteConfig('SUB_PATH', '');
+
+  let CATEGORY_SLUG_MAP = {};
+  try {
+    // 确保 JSON 字符串格式正确
+    CATEGORY_SLUG_MAP = JSON.parse(siteConfig('CATEGORY_SLUG_MAP', {}));
+  } catch (error) {}
+
   return (
     <div
-      className={`flex flex-col justify-between lg:p-6 p-4 ${
+      className={`flex flex-col justify-between p-4 ${
         showPageCover && !showPreview ? 'md:w-7/12 w-full md:max-h-64' : 'w-full'
       }`}
     >
       <div>
         {/* 标题 */}
         <Link
-          href={`${siteConfig('SUB_PATH', '')}/${post.slug}`}
+          href={`${SUB_PATH}/${post.slug}`}
           passHref
-          className={`line-clamp-2 replace cursor-pointer text-xl leading-tight font-semibold text-teal-500 hover:text-teal-400 dark:text-teal-400 dark:hover:text-teal-300 ${
+          className={`mb-2 line-clamp-2 replace cursor-pointer text-xl leading-tight font-semibold text-teal-500 hover:text-teal-400 dark:text-teal-400 dark:hover:text-teal-300 ${
             showPreview ? 'text-center' : ''
           }`}
         >
@@ -29,18 +39,14 @@ export const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary
 
         {/* 分类 */}
         {post?.category && (
-          <div
-            className={`flex mt-2 items-center flex-wrap dark:text-gray-500 text-gray-400 ${
-              showPreview ? 'justify-center' : 'justify-start'
-            }`}
-          >
+          <div className="flex items-center text-gray-400">
             <Link
-              href={`/category/${post.category}`}
+              href={`/category/${formatSlugName(post.category)}`}
               passHref
-              className="cursor-pointer font-light text-sm menu-link hover:text-teal-500 dark:hover:text-teal-400 transform"
+              className="cursor-pointer font-bold text-sm menu-link text-teal-800 dark:text-teal-600 hover:text-teal-700 dark:hover:text-teal-500 transform"
             >
-              <i className="mr-1 far fa-folder" />
-              {post.category}
+              <i className="fa-regular fa-folder-open mr-2"></i>
+              {isChinese ? CATEGORY_SLUG_MAP[post.category] ?? post.category : post.category}
             </Link>
           </div>
         )}
@@ -60,6 +66,7 @@ export const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary
             ))}
           </p>
         )}
+
         {/* 预览 */}
         {showPreview && (
           <div className="overflow-ellipsis truncate">
@@ -68,33 +75,22 @@ export const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary
         )}
       </div>
 
-      <div>
-        <div className="text-gray-400 justify-between flex">
-          {/* 日期 */}
-          {/* <Link
-            href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
-            passHref
-            className="font-light menu-link cursor-pointer text-sm leading-4 mr-3"
-          >
-            <i className="far fa-calendar-alt mr-1" />
-            {post?.publishDay || post.lastEditedDay}
-          </Link> */}
-          <span className="font-light text-sm leading-7 mr-3">
-            <i className="far fa-calendar-alt mr-1" />
-            {post?.publishDay}
-            {post.finished_date && <> - {post.finished_date} </>}
-          </span>
-
-          {/* Tag */}
-          <div className="md:flex-nowrap flex-wrap md:justify-start inline-block">
-            <div>
-              {post.tagItems?.map((tag) => (
-                <TagItemMini key={tag.name} tag={tag} />
-              ))}
-            </div>
-          </div>
+      {/* Tags */}
+      <div className="flex items-center justify-between">
+        {/* 日期 */}
+        <div className="font-bold text-xs leading-tight text-gray-500 dark:text-gray-400">
+          {/* <i class="fa-regular fa-calendar mr-1"></i> */}
+          {post?.publishDay}
+          {post.finished_date && <> - {post.finished_date} </>}
+        </div>
+        <div className="flex flex-wrap items-center justify-end">
+          {post.tagItems?.map((tag) => (
+            <TagItemMini key={tag.name} tag={tag} />
+          ))}
         </div>
       </div>
     </div>
   );
 };
+
+export default BlogPostCardInfo;

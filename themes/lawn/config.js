@@ -1,8 +1,9 @@
 const CONFIG = {
+  // 首页
   LAWN_HOME_BANNER_ENABLE: true,
-  LAWN_HOME_NAV_BUTTONS: false, // 首页是否显示分类大图标按钮
-  LAWN_HOME_NAV_BACKGROUND_IMG_FIXED: false, // 首页背景图滚动时是否固定，true 则滚动时图片不懂动； false则随鼠标滚动 ;
-  LAWN_SHOW_START_READING: false,   // 是否显示开始阅读按钮
+  LAWN_HOME_NAV_BUTTONS: false, // 分类大图标按钮
+  LAWN_HOME_NAV_BACKGROUND_IMG_FIXED: false, // 背景图滚动时是否固定
+  LAWN_HOME_START_READING: false, // 开始阅读按钮
 
   // 菜单配置
   LAWN_MENU_INDEX: false, // 显示首页
@@ -28,7 +29,10 @@ const CONFIG = {
   LAWN_WIDGET_TO_TOP: true,
   LAWN_WIDGET_TO_COMMENT: false, // 跳到评论区
   LAWN_WIDGET_DARK_MODE: true, // 夜间模式
-  LAWN_WIDGET_TOC: true // 移动端悬浮目录
+  LAWN_WIDGET_TOC: true, // 移动端悬浮目录
+
+  // 其它
+  LAWN_SLOT_BAR: false
 }
 
 export default CONFIG;

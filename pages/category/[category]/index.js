@@ -4,14 +4,13 @@ import BLOG from '@/blog.config';
 import { getLayoutByTheme } from '@/themes';
 
 import { siteConfig } from '@/libs/common/config';
+import { formatSlugName } from '@/libs/common/util';
 import { getGlobalData } from '@/libs/notion/site';
 
 export default function Category(props) {
   const router = useRouter();
-
   const THEME = siteConfig('THEME');
   const Layout = getLayoutByTheme({ theme: THEME, router: router });
-
   return <Layout {...props} />;
 }
 
@@ -20,9 +19,10 @@ export async function getStaticProps({ params: { category } }) {
   let props = await getGlobalData({ from });
 
   // 过滤状态
-  props.posts = props.allPages?.filter((page) => page.type === 'Post' && page.status === 'Published');
-  // 处理过滤
-  props.posts = props.posts.filter((post) => post && post.category && post.category.includes(category));
+  props.posts = props.allPages
+    ?.filter((page) => page.type === 'Post' && page.status === 'Published')
+    .filter((post) => formatSlugName(post.category) === category);
+
   // 处理文章页数
   props.postCount = props.posts.length;
   // 处理分页
@@ -47,7 +47,7 @@ export async function getStaticPaths() {
   const { categoryOptions } = await getGlobalData({ from });
   return {
     paths: Object.keys(categoryOptions).map((category) => ({
-      params: { category: categoryOptions[category]?.name }
+      params: { category: formatSlugName(categoryOptions[category]?.name) }
     })),
     fallback: true
   };

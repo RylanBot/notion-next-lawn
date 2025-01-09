@@ -142,10 +142,12 @@ export const LayoutIndex = (props) => {
  * 博客列表
  */
 export const LayoutPostList = (props) => {
+  const LAWN_SLOT_BAR = siteConfig('LAWN_SLOT_BAR', null, CONFIG);
+  const POST_LIST = siteConfig('POST_LIST_STYLE') === 'page';
   return (
     <div>
-      <SlotBar {...props} />
-      {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
+      <SlotBar visible={LAWN_SLOT_BAR} {...props} />
+      {POST_LIST ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
     </div>
   );
 };
@@ -155,6 +157,7 @@ export const LayoutPostList = (props) => {
  */
 export const LayoutSearch = (props) => {
   const { keyword } = props;
+  const POST_LIST = siteConfig('POST_LIST_STYLE') === 'page';
   const router = useRouter();
   const currentSearch = keyword || router?.query?.s;
 
@@ -176,13 +179,7 @@ export const LayoutSearch = (props) => {
       {!currentSearch ? (
         <SearchNav {...props} />
       ) : (
-        <div id="posts-wrapper">
-          {siteConfig('POST_LIST_STYLE') === 'page' ? (
-            <BlogPostListPage {...props} />
-          ) : (
-            <BlogPostListScroll {...props} />
-          )}
-        </div>
+        <div id="posts-wrapper">{POST_LIST ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}</div>
       )}
     </div>
   );

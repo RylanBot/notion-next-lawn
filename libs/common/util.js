@@ -1,15 +1,8 @@
 import { isBrowser } from 'react-notion-x';
 
-export const shuffleArray = (array) => {
-  if (!array) {
-    return [];
-  }
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-};
+export const formatSlugName = (name) => name.replace(/\s+/g, '-').toLowerCase();
+
+export const isChinese = isBrowser && navigator.language.startsWith('zh');
 
 /**
  * google机器人

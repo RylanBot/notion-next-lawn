@@ -4,23 +4,25 @@ import BLOG from '@/blog.config';
 import { getLayoutByTheme } from '@/themes';
 
 import { siteConfig } from '@/libs/common/config';
+import { formatSlugName } from '@/libs/common/util';
 import { getGlobalData } from '@/libs/notion/site';
 
 const Tag = (props) => {
   const router = useRouter();
   const THEME = siteConfig('THEME');
   const Layout = getLayoutByTheme({ theme: THEME, router: router });
-  return <Layout {...props} />
+  return <Layout {...props} />;
 };
 
 export async function getStaticProps({ params: { tag, page } }) {
   const from = 'tag-page-props';
   const props = await getGlobalData({ from });
-  // 过滤状态、标签
+  // 过滤状态
   props.posts = props.allPages
     ?.filter((page) => page.type === 'Post' && page.status === 'Published')
-    .filter((post) => post && post?.tags && post?.tags.includes(tag));
-  // 处理文章数
+    .filter((post) => post.tags?.some((rawTag) => formatSlugName(rawTag) === tag) ?? false);
+ 
+    // 处理文章数
   props.postCount = props.posts.length;
   // 处理分页
   props.posts = props.posts.slice(BLOG.POSTS_PER_PAGE * (page - 1), BLOG.POSTS_PER_PAGE * page);
@@ -48,7 +50,7 @@ export async function getStaticPaths() {
     const totalPages = Math.ceil(postCount / BLOG.POSTS_PER_PAGE);
     if (totalPages > 1) {
       for (let i = 1; i <= totalPages; i++) {
-        paths.push({ params: { tag: tag.name, page: '' + i } });
+        paths.push({ params: { tag: formatSlugName(tag.name), page: '' + i } });
       }
     }
   });

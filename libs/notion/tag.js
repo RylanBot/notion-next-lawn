@@ -1,6 +1,8 @@
 import BLOG from '@/blog.config';
 import { isIterable } from '../common/util';
 
+export const formatTagName = (name) => name.replace(/\s+/g, '-').toLowerCase();
+
 export function getAllTags({ allPages, sliceCount = 0, tagOptions }) {
   const allPosts = allPages?.filter((page) => page.type === 'Post' && page.status === 'Published');
 

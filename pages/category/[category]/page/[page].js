@@ -4,6 +4,7 @@ import BLOG from '@/blog.config';
 import { getLayoutByTheme } from '@/themes';
 
 import { siteConfig } from '@/libs/common/config';
+import { formatSlugName } from '@/libs/common/util';
 import { getGlobalData } from '@/libs/notion/site';
 
 /**
@@ -13,7 +14,7 @@ export default function Category(props) {
   const router = useRouter();
   const THEME = siteConfig('THEME');
   const Layout = getLayoutByTheme({ theme: THEME, router: router });
-  return <Layout {...props} />
+  return <Layout {...props} />;
 }
 
 export async function getStaticProps({ params: { category, page } }) {
@@ -23,7 +24,8 @@ export async function getStaticProps({ params: { category, page } }) {
   // 过滤状态类型
   props.posts = props.allPages
     ?.filter((page) => page.type === 'Post' && page.status === 'Published')
-    .filter((post) => post && post.category && post.category.includes(category));
+    .filter((post) => formatSlugName(post.category) === category);
+
   // 处理文章页数
   props.postCount = props.posts.length;
   // 处理分页
@@ -55,7 +57,7 @@ export async function getStaticPaths() {
     const totalPages = Math.ceil(postCount / BLOG.POSTS_PER_PAGE);
     if (totalPages > 1) {
       for (let i = 1; i <= totalPages; i++) {
-        paths.push({ params: { category: category.name, page: '' + i } });
+        paths.push({ params: { category: formatSlugName(category.name), page: '' + i } });
       }
     }
   });
