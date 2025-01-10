@@ -1,10 +1,9 @@
 import Link from 'next/link';
 
 import NotionPage from '@/plugins/notion/NotionPage';
-
 import { siteConfig } from '@/libs/common/config';
-import { formatSlugName, isChinese } from '@/libs/common/util';
 
+import CategoryMini from './CategoryMini';
 import TagItemMini from './TagItemMini';
 
 /**
@@ -12,12 +11,6 @@ import TagItemMini from './TagItemMini';
  */
 const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary }) => {
   const SUB_PATH = siteConfig('SUB_PATH', '');
-
-  let CATEGORY_SLUG_MAP = {};
-  try {
-    // 确保 JSON 字符串格式正确
-    CATEGORY_SLUG_MAP = JSON.parse(siteConfig('CATEGORY_SLUG_MAP', {}));
-  } catch (error) {}
 
   return (
     <div
@@ -39,16 +32,11 @@ const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary }) => 
 
         {/* 分类 */}
         {post?.category && (
-          <div className="flex items-center text-gray-400">
-            <Link
-              href={`/category/${formatSlugName(post.category)}`}
-              passHref
-              className="cursor-pointer font-bold text-sm menu-link text-teal-800 dark:text-teal-600 hover:text-teal-700 dark:hover:text-teal-500 transform"
-            >
-              <i className="fa-regular fa-folder-open mr-2"></i>
-              {isChinese ? CATEGORY_SLUG_MAP[post.category] ?? post.category : post.category}
-            </Link>
-          </div>
+          <CategoryMini
+            name={post.category}
+            icon="mr-2 fa-regular fa-folder-open"
+            className="cursor-pointer font-bold text-sm menu-link text-teal-800 dark:text-teal-600 hover:text-teal-700 dark:hover:text-teal-500"
+          />
         )}
 
         {/* 摘要 */}

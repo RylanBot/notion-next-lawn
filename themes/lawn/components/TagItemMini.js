@@ -1,6 +1,7 @@
+import Link from 'next/link';
+
 import { siteConfig } from '@/libs/common/config';
 import { formatSlugName, isChinese } from '@/libs/common/util';
-import Link from 'next/link';
 
 const TagItemMini = ({ tag, selected = false }) => {
   let TAG_SLUG_MAP = {};

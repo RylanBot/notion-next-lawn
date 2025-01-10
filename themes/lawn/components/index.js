@@ -7,6 +7,7 @@ export { default as BlogPostListPage } from './BlogPostListPage';
 export { default as BlogPostListScroll } from './BlogPostListScroll';
 export { default as ButtonRandomPost } from './ButtonRandomPost';
 export { default as CatalogDrawer } from './CatalogDrawer';
+export { default as CategoryMini } from './CategoryMini';
 export { default as Card } from './Card';
 export { default as Footer } from './Footer';
 export { default as Hero } from './Hero';

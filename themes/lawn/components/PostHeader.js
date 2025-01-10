@@ -1,11 +1,10 @@
-import Link from 'next/link';
-
 import LazyImage from '@/plugins/base/LazyImage';
 import NotionIcon from '@/plugins/notion/NotionIcon';
 import WordCount from '@/plugins/base/WordCount';
 
 import { useGlobal } from '@/hooks/useGlobal';
 
+import CategoryMini from './CategoryMini';
 import TagItemMini from './TagItemMini';
 import WavesArea from './WavesArea';
 
@@ -22,7 +21,7 @@ export default function PostHeader({ post, siteInfo }) {
 
   return (
     <div id="lawn-header" className="w-full h-96 relative md:flex-shrink-0 z-10">
-      <LazyImage      
+      <LazyImage
         key={headerImage}
         src={headerImage}
         priority={true}
@@ -30,21 +29,15 @@ export default function PostHeader({ post, siteInfo }) {
         className="w-full h-full object-cover object-center absolute top-0"
       />
 
-      <div className="bg-black bg-opacity-70 absolute top-0 w-full h-96 py-10 flex justify-center items-center "
-      >
+      <div className="bg-black bg-opacity-70 absolute top-0 w-full h-96 py-10 flex justify-center items-center ">
         <div>
           {/* 分类 */}
           <div className="mb-3 flex justify-center">
             {post.category && (
-              <>
-                <Link
-                  href={`/category/${post.category}`}
-                  passHref
-                  className="cursor-pointer px-2 py-1 mb-2 rounded-sm text-sm font-medium text-white border border-white hover:border-teal-300 hover:text-teal-300 duration-200 shadow-text-md"
-                >
-                  {post.category}
-                </Link>
-              </>
+              <CategoryMini
+                name={post.category}
+                className="cursor-pointer px-2 py-1 mb-2 rounded-sm text-sm font-medium text-white border border-white hover:border-teal-300 hover:text-teal-300 duration-200 shadow-text-md"
+              />
             )}
           </div>
 

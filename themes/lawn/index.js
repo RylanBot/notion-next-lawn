@@ -1,10 +1,8 @@
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
 
 import { useGlobal } from '@/hooks/useGlobal';
 import { siteConfig } from '@/libs/common/config';
-import { formatSlugName, isChinese } from '@/libs/common/util';
 
 import AlgoliaSearchModal from '@/plugins/algolia/AlgoliaSearchModal';
 import { replaceSearchResult } from '@/plugins/algolia/highlight';
@@ -22,6 +20,7 @@ import {
   ButtonRandomPost,
   Card,
   CatalogDrawer,
+  CategoryMini,
   Footer,
   Hero,
   JumpToCommentButton,
@@ -304,11 +303,6 @@ export const Layout404 = (props) => {
 export const LayoutCategoryIndex = (props) => {
   const { categoryOptions } = props;
   const { locale } = useGlobal();
-  let CATEGORY_SLUG_MAP = {};
-  try {
-    // 确保 JSON 字符串格式正确
-    CATEGORY_SLUG_MAP = JSON.parse(siteConfig('CATEGORY_SLUG_MAP', {}));
-  } catch (error) {}
 
   return (
     <div className="pt-16 mx-2 mb-2">
@@ -319,12 +313,13 @@ export const LayoutCategoryIndex = (props) => {
         <div id="category-list" className="duration-200 flex flex-wrap mx-8">
           {categoryOptions?.map((category) => {
             return (
-              <Link key={category.name} href={`/category/${formatSlugName(category.name)}`} passHref>
-                <div className="duration-300 px-5 cursor-pointer py-2 hover:text-teal-500 dark:hover:text-teal-400">
-                  <i className="mr-1 fas fa-folder" />
-                  {isChinese ? CATEGORY_SLUG_MAP[category.name] ?? category.name : category.name}({category.count})
-                </div>
-              </Link>
+              <CategoryMini
+                key={category.name}
+                name={category.name}
+                count={category.count}
+                icon="mr-1 fas fa-folder"
+                className="px-5 py-2 hover:text-teal-500 dark:hover:text-teal-400"
+              />
             );
           })}
         </div>
