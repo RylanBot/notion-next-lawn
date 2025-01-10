@@ -1,27 +1,32 @@
+import { useState } from 'react';
 import Link from 'next/link';
 import { siteConfig } from '@/libs/common/config';
 
 /**
- * 博客归档列表
+ * 博客每年归档列表
  */
-const BlogPostArchive = ({ posts = [], archiveTitle }) => {
+const BlogPostArchive = ({ posts = [], year, collapsed }) => {
+  const SUB_PATH = siteConfig('SUB_PATH', '');
+  const [isCollapsed, setIsCollapsed] = useState(collapsed);
+
   if (!posts || posts.length === 0) return <></>;
 
   return (
     <div className="mb-8">
-      <div className="my-2 font-bold text-xl text-teal-600 dark:text-teal-400" id={archiveTitle}>
-        {archiveTitle}
-      </div>
-      <ul>
+      <button onClick={() => setIsCollapsed(!isCollapsed)} className="flex items-center justify-center mb-2">
+        <span className="mr-2 font-bold text-2xl text-teal-600 dark:text-teal-400" id={year}>
+          {year}
+        </span>
+        <i className={`text-gray-400 ${isCollapsed ? 'fa-solid fa-plus' : 'fas fa-chevron-down'}`}></i>
+      </button>
+
+      <ul className={isCollapsed ? 'hidden' : undefined}>
         {posts?.map((post) => (
-          <li
-            key={post.id}
-            className="border-l-2 p-2 text-base items-center"
-          >
-            <div id={post?.publishDay}>
-              <span className="text-gray-600 dark:text-gray-300">{post.date?.start_date}</span> &nbsp;
+          <li key={post.id} className="border-l-2 px-4 py-2 text-base items-center dark:border-zinc-600">
+            <div id={post.date.start_date}>
+              <span className="text-gray-600 dark:text-gray-300">{post.date.start_date}</span> &nbsp;
               <Link
-                href={`${siteConfig('SUB_PATH', '')}/${post.slug}`}
+                href={`${SUB_PATH}/${post.slug}`}
                 passHref
                 className="notion-link leading-loose hover:font-bold hover:text-teal-500 dark:hover:text-teal-300"
               >
