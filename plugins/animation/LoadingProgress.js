@@ -37,10 +37,7 @@ export const Loading = () => {
   );
 };
 
-/**
- * 页面加载进度条
- */
-export default function LoadingProgress() {
+const LoadingProgress = () => {
   const router = useRouter();
   const { onLoading } = useGlobal();
 
@@ -72,4 +69,6 @@ export default function LoadingProgress() {
   }, []);
 
   if (routing || onLoading) return <Loading />;
-}
+};
+
+export default LoadingProgress;

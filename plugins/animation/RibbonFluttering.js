@@ -4,7 +4,7 @@ const id = 'canvasFlutteringRibbon';
 /**
  * 动态彩带特效
  */
-export const RibbonFluttering = () => {
+const RibbonFluttering = () => {
   const destroyRibbon = () => {
     const ribbon = document.getElementById(id);
     if (ribbon && ribbon.parentNode && ribbon.parentNode.contains(ribbon)) {
@@ -16,6 +16,7 @@ export const RibbonFluttering = () => {
     createFlutteringRibbon();
     return () => destroyRibbon();
   }, []);
+
   return <></>;
 };
 
@@ -23,7 +24,6 @@ export default RibbonFluttering;
 
 /**
  * 创建连接点
- * @param config
  */
 function createFlutteringRibbon() {
   'object' == typeof window &&

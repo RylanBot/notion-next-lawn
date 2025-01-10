@@ -22,36 +22,36 @@ const PrismCode = () => {
   const router = useRouter();
   const { isDarkMode } = useDarkMode();
 
-  const codeMacBar = siteConfig('CODE_MAC_BAR');
-  const prismjsAutoLoader = siteConfig('PRISM_JS_AUTO_LOADER');
-  const prismjsPath = siteConfig('PRISM_JS_PATH');
+  const PRISM_AUTO_LOADER = siteConfig('PRISM_JS_AUTO_LOADER');
+  const PRISM_PATH = siteConfig('PRISM_JS_PATH');
+  const PRISM_PREFIX = siteConfig('PRISM_THEME_PREFIX_PATH');
 
-  const prismThemeSwitch = siteConfig('PRISM_THEME_SWITCH');
-  const prismThemeDarkPath = siteConfig('PRISM_THEME_DARK_PATH');
-  const prismThemeLightPath = siteConfig('PRISM_THEME_LIGHT_PATH');
-  const prismThemePrefixPath = siteConfig('PRISM_THEME_PREFIX_PATH');
+  const PRISM_THEME_SWITCH = siteConfig('PRISM_THEME_SWITCH');
+  const PRISM_DARK = siteConfig('PRISM_THEME_DARK_PATH');
+  const PRISM_LIGHT = siteConfig('PRISM_THEME_LIGHT_PATH');
 
-  const mermaidCDN = siteConfig('MERMAID_CDN');
-  const codeLineNumbers = siteConfig('CODE_LINE_NUMBERS');
+  const CODE_MAC_BAR = siteConfig('CODE_MAC_BAR');
+  const CODE_LINE_NUMBER = siteConfig('CODE_LINE_NUMBERS');
+  const CODE_COLLAPSE = siteConfig('CODE_COLLAPSE');
+  const CODE_COLLAPSE_DEFAULT = siteConfig('CODE_COLLAPSE_EXPAND_DEFAULT');
 
-  const codeCollapse = siteConfig('CODE_COLLAPSE');
-  const codeCollapseExpandDefault = siteConfig('CODE_COLLAPSE_EXPAND_DEFAULT');
+  const MERMAID_CDN = siteConfig('MERMAID_CDN');
 
   useEffect(() => {
-    if (codeMacBar) {
+    if (CODE_MAC_BAR) {
       loadExternalResource('/css/prism-mac-style.css', 'css');
     }
-    // 加载prism样式
-    loadPrismThemeCSS(isDarkMode, prismThemeSwitch, prismThemeDarkPath, prismThemeLightPath, prismThemePrefixPath);
+    // 加载 prism 样式
+    loadPrismThemeCSS(isDarkMode, PRISM_THEME_SWITCH, PRISM_DARK, PRISM_LIGHT, PRISM_PREFIX);
     // 折叠代码
-    loadExternalResource(prismjsAutoLoader, 'js').then((url) => {
+    loadExternalResource(PRISM_AUTO_LOADER, 'js').then((url) => {
       if (window?.Prism?.plugins?.autoloader) {
-        window.Prism.plugins.autoloader.languages_path = prismjsPath;
+        window.Prism.plugins.autoloader.languages_path = PRISM_PATH;
       }
 
-      renderPrismMac(codeLineNumbers);
-      renderMermaid(mermaidCDN);
-      renderCollapseCode(codeCollapse, codeCollapseExpandDefault);
+      renderPrismMac(CODE_LINE_NUMBER);
+      renderMermaid(MERMAID_CDN);
+      renderCollapseCode(CODE_COLLAPSE, CODE_COLLAPSE_DEFAULT);
     });
   }, [router, isDarkMode]);
 
@@ -99,7 +99,8 @@ const renderCollapseCode = (codeCollapse, codeCollapseExpandDefault) => {
     const collapseWrapper = document.createElement('div');
     collapseWrapper.className = 'collapse-wrapper w-full py-2';
     const panelWrapper = document.createElement('div');
-    panelWrapper.className = 'border dark:border-gray-600 rounded-md hover:border-teal-500 duration-200 transition-colors';
+    panelWrapper.className =
+      'border dark:border-gray-600 rounded-md hover:border-teal-500 duration-200 transition-colors';
 
     const header = document.createElement('div');
     header.className = 'flex justify-between items-center px-4 py-2 cursor-pointer select-none';

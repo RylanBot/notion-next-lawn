@@ -1,15 +1,13 @@
 import anime from 'animejs';
 import { useEffect } from 'react';
 
-import { siteConfig } from '@/libs/common/config';
-
 /**
  * 鼠标点击烟花特效
  * @see https://codepen.io/juliangarnier/pen/gmOwJX
  * @author https://github.com/YunYouJun/hexo-theme-yun
  */
 const Fireworks = () => {
-  const fireworksColor = siteConfig('FIREWORKS_COLOR');
+  const fireworksColor = ['255, 20, 97', '24, 255, 146', '90, 135, 255', '251, 243, 140'];
 
   useEffect(() => {
     createFireworks({ colors: fireworksColor });

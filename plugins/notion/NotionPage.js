@@ -53,11 +53,11 @@ const NotionPage = ({ post, className }) => {
 
   useEffect(() => {
     if (POST_DISABLE_GALLERY_CLICK) {
-      processGalleryImg(zoomRef?.current);
+      disableGalleryImg(zoomRef?.current);
     }
 
     if (POST_DISABLE_DATABASE_CLICK) {
-      processDisableDatabaseUrl();
+      disableDatabaseUrl();
     }
   }, [post]);
 
@@ -105,9 +105,7 @@ const NotionPage = ({ post, className }) => {
     }
   }, []);
 
-  if (!post || !post.blockMap) {
-    return <>{post?.summary || ''}</>;
-  }
+  if (!post || !post.blockMap) return <>{post?.summary || ''}</>;
 
   return (
     <>
@@ -133,10 +131,12 @@ const NotionPage = ({ post, className }) => {
   );
 };
 
+export default NotionPage;
+
 /**
  * 数据库视图，禁止跳转到内部页面
  */
-const processDisableDatabaseUrl = () => {
+const disableDatabaseUrl = () => {
   setTimeout(() => {
     if (isBrowser) {
       const links = document.querySelectorAll('.notion-table .notion-page-link');
@@ -146,9 +146,9 @@ const processDisableDatabaseUrl = () => {
 };
 
 /**
- * gallery视图，禁用跳转到内部页面，点击后放大图片
+ * Gallery 视图，禁用跳转到内部页面，点击后放大图片
  */
-const processGalleryImg = (zoom) => {
+const disableGalleryImg = (zoom) => {
   setTimeout(() => {
     if (isBrowser) {
       const imgList = document?.querySelectorAll('.notion-collection-card-cover img');
@@ -167,7 +167,7 @@ const processGalleryImg = (zoom) => {
 };
 
 /**
- * 根据url参数自动滚动到指定区域
+ * 根据 url 参数自动滚动到指定区域
  */
 const autoScrollToTarget = () => {
   setTimeout(() => {
@@ -201,5 +201,3 @@ const getMediumZoomMargin = () => {
     return 72;
   }
 };
-
-export default NotionPage;

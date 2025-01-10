@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
-import { isBrowser } from 'react-notion-x'
+import { isBrowser } from 'react-notion-x';
 
 import { useGlobal } from '@/hooks/useGlobal';
 import { siteConfig } from '@/libs/common/config';
 import { isMobile } from '@/libs/common/util';
 
-export default function Live2D() {
+const Live2D = () => {
   const { theme, switchTheme } = useGlobal();
-  const showPet = JSON.parse(siteConfig('WIDGET_PET'));
-  const petLink = siteConfig('WIDGET_PET_LINK');
+  const SHOW_PET = JSON.parse(siteConfig('WIDGET_PET'));
+  const PET_LINK = siteConfig('WIDGET_PET_LINK');
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -16,7 +16,7 @@ export default function Live2D() {
     script.onload = () => {
       try {
         if (typeof window?.loadlive2d !== 'undefined') {
-          loadlive2d('live2d', petLink);
+          loadlive2d('live2d', PET_LINK);
         }
       } catch (error) {
         console.warn('读取 PET 模型失败:', error);
@@ -39,17 +39,19 @@ export default function Live2D() {
     }
   }
 
-  if (!isBrowser && !showPet || isMobile()) {
-    return <></>;
-  }
+  if ((!isBrowser && !SHOW_PET) || isMobile()) return <></>;
 
   return (
-    <canvas id="live2d"
-      width="250" height="250"
+    <canvas
+      id="live2d"
+      width="250"
+      height="250"
       onClick={handleClick}
       className="cursor-grab pl-8 pt-20"
       onMouseDown={(e) => e.target.classList.add('cursor-grabbing')}
       onMouseUp={(e) => e.target.classList.remove('cursor-grabbing')}
     />
   );
-}
+};
+
+export default Live2D;
