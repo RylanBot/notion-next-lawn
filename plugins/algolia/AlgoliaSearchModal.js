@@ -6,7 +6,7 @@ import { useImperativeHandle, useRef, useState } from 'react';
 import { useGlobal } from '@/hooks/useGlobal';
 import { siteConfig } from '@/libs/common/config';
 
-import replaceSearchResult from './highlight';
+import { replaceSearchResult } from './highlight';
 
 /**
  * 结合 Algolia 实现的弹出式搜索框

@@ -14,6 +14,7 @@ import CategoryGroup from './CategoryGroup';
 import InfoCard from './InfoCard';
 import LatestPostsGroup from './LatestPostsGroup';
 import TagGroups from './TagGroups';
+import { useRouter } from 'next/router';
 
 // const LawnRecentComments = dynamic(() => import('./LawnRecentComments'))
 
@@ -23,6 +24,7 @@ import TagGroups from './TagGroups';
 export default function SideRight(props) {
   const { post, rightAreaSlot, notice } = props;
 
+  const router = useRouter();
   const LAWN_WIDGET_ANALYTICS = siteConfig('LAWN_WIDGET_ANALYTICS', null, CONFIG);
 
   const [activeTab, setActiveTab] = useState('info');
@@ -69,7 +71,7 @@ export default function SideRight(props) {
 
         <div className={`lg:w-72 info-card ${activeTab === 'info' ? '' : 'hidden'}`}>
           {/* 个人信息卡 */}
-          <InfoCard {...props} />
+          <InfoCard className={post|| router.route==='/' ? undefined : 'mt-16'} {...props} />
 
           {/* 网站数据卡 */}
           {LAWN_WIDGET_ANALYTICS && <AnalyticsCard {...props} />}

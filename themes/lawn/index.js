@@ -4,9 +4,10 @@ import React, { createContext, useContext, useEffect, useRef, useState } from 'r
 
 import { useGlobal } from '@/hooks/useGlobal';
 import { siteConfig } from '@/libs/common/config';
+import { formatSlugName, isChinese } from '@/libs/common/util';
 
 import AlgoliaSearchModal from '@/plugins/algolia/AlgoliaSearchModal';
-import replaceSearchResult from '@/plugins/algolia/highlight';
+import { replaceSearchResult } from '@/plugins/algolia/highlight';
 import Comment from '@/plugins/comment';
 import NotionPage from '@/plugins/notion/NotionPage';
 
@@ -157,25 +158,35 @@ export const LayoutPostList = (props) => {
  */
 export const LayoutSearch = (props) => {
   const { keyword } = props;
-  const POST_LIST = siteConfig('POST_LIST_STYLE') === 'page';
+
   const router = useRouter();
+  const { setOnLoading } = useGlobal();
+  const POST_LIST = siteConfig('POST_LIST_STYLE') === 'page';
+
   const currentSearch = keyword || router?.query?.s;
 
   useEffect(() => {
-    if (currentSearch) {
-      replaceSearchResult({
-        doms: document.getElementsByClassName('replace'),
-        search: keyword,
-        target: {
-          element: 'span',
-          className: 'text-red-500 border-b border-dashed'
-        }
-      });
-    }
-  });
+    setOnLoading(true);
+
+    const performSearch = async () => {
+      if (currentSearch) {
+        await replaceSearchResult({
+          doms: document.getElementsByClassName('replace'),
+          search: keyword,
+          target: {
+            element: 'span',
+            className: 'text-red-500'
+          }
+        });
+      }
+      setOnLoading(false);
+    };
+
+    performSearch();
+  }, [currentSearch]);
 
   return (
-    <div className="pt-8">
+    <div className="pt-16">
       {!currentSearch ? (
         <SearchNav {...props} />
       ) : (
@@ -293,18 +304,25 @@ export const Layout404 = (props) => {
 export const LayoutCategoryIndex = (props) => {
   const { categoryOptions } = props;
   const { locale } = useGlobal();
+  let CATEGORY_SLUG_MAP = {};
+  try {
+    // 确保 JSON 字符串格式正确
+    CATEGORY_SLUG_MAP = JSON.parse(siteConfig('CATEGORY_SLUG_MAP', {}));
+  } catch (error) {}
+
   return (
     <div className="pt-16 mx-2 mb-2">
       <Card className="w-full">
-        <div className="dark:text-gray-200 mb-5 mx-3">
+        <div className="dark:text-gray-200 mb-2 mx-3">
           <i className="mr-2 fas fa-th" /> {locale.COMMON.CATEGORY}
         </div>
         <div id="category-list" className="duration-200 flex flex-wrap mx-8">
           {categoryOptions?.map((category) => {
             return (
-              <Link key={category.name} href={`/category/${category.name}`} passHref>
+              <Link key={category.name} href={`/category/${formatSlugName(category.name)}`} passHref>
                 <div className="duration-300 px-5 cursor-pointer py-2 hover:text-teal-500 dark:hover:text-teal-400">
-                  <i className="mr-4 fas fa-folder" /> {category.name}({category.count})
+                  <i className="mr-1 fas fa-folder" />
+                  {isChinese ? CATEGORY_SLUG_MAP[category.name] ?? category.name : category.name}({category.count})
                 </div>
               </Link>
             );
@@ -324,7 +342,7 @@ export const LayoutTagIndex = (props) => {
   return (
     <div className="pt-16 mx-2 mb-2">
       <Card className="w-full">
-        <div className="dark:text-gray-200 mb-5 ml-4">
+        <div className="dark:text-gray-200 mb-2 ml-4">
           <i className="mr-2 fas fa-tag" /> {locale.COMMON.TAGS}
         </div>
         <div id="tags-list" className="duration-200 flex flex-wrap ml-8">
