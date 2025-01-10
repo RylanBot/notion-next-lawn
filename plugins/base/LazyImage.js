@@ -34,40 +34,53 @@ const LazyImage = React.forwardRef(
     useEffect(() => {
       const adjustedImageSrc = adjustImgSize(src || imageRef.current.src, maxWidth);
       setAdjustedSrc(adjustedImageSrc);
-
+    
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
-              // 手动创建图片（避免 entry.target 不一定有 complete 属性）
               const lazyImage = new Image();
               lazyImage.src = adjustedImageSrc;
-
+    
               if (lazyImage.complete) {
                 handleImageLoad();
               } else {
                 lazyImage.onload = () => handleImageLoad();
               }
-
+    
               lazyImage.onerror = handleImageError;
-
+    
               observer.unobserve(entry.target);
             }
           });
         },
         { rootMargin: '50px 0px' }
       );
-
+    
       if (imageRef.current) {
         observer.observe(imageRef.current);
       }
+    
+      // 强制检查图片是否已经加载
+      if (imageRef.current && imageRef.current.complete) {
+        handleImageLoad();
+      }
 
+      const handleVisibilityChange = () => {
+        if (document.visibilityState === 'visible' && imageRef.current?.complete) {
+          handleImageLoad();
+        }
+      };
+    
+      document.addEventListener('visibilitychange', handleVisibilityChange);
+    
       return () => {
         if (imageRef.current) {
           observer.unobserve(imageRef.current);
         }
+        document.removeEventListener('visibilitychange', handleVisibilityChange);
       };
-    }, [src]);
+    }, [src, adjustedSrc]);    
 
     const imgProps = {
       ref: imageRef,
