@@ -1,4 +1,3 @@
-import md5 from 'js-md5';
 import { NotionAPI } from 'notion-client';
 import { getDateValue, getTextContent } from 'notion-utils';
 
@@ -113,8 +112,7 @@ export async function getPageProperties(id, value, schema, authToken, tagOptions
       properties.slug += '.html';
     }
   }
-  // 密码字段md5
-  properties.password = properties.password ? md5(properties.slug + properties.password) : '';
+
   return properties;
 }
 

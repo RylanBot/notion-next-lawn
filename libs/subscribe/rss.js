@@ -11,10 +11,6 @@ import { getPostBlocks } from '../notion/block';
  * 生成 RSS 内容
  */
 const createFeedContent = async post => {
-  // 加密的文章内容只返回摘要
-  if (post.password && post.password !== '') {
-    return post.summary;
-  }
   const blockMap = await getPostBlocks(post.id, 'rss-content');
   if (blockMap) {
     post.blockMap = blockMap;

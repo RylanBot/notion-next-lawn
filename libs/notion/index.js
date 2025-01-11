@@ -24,8 +24,8 @@ export async function getNotionPost(postId) {
     status: 'Published',
     createdTime: formatDate(new Date(postInfo.created_time).toString(), BLOG.LANG),
     lastEditedDay: formatDate(new Date(postInfo?.last_edited_time).toString(), BLOG.LANG),
-    fullWidth: postInfo?.fullWidth,
-    page_cover: getPageCover(postInfo),
+    fullWidth: postInfo?.fullWidth ?? false,
+    page_cover: getPageCover(postInfo) ?? '',
     date: { start_date: formatDate(new Date(postInfo?.last_edited_time).toString(), BLOG.LANG) },
     finished_date: formatDate(new Date(postInfo?.finished_date).toString(), BLOG.LANG),
     blockMap

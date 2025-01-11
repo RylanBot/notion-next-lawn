@@ -6,6 +6,7 @@ import { uploadDataToAlgolia } from '@/plugins/algolia/update';
 import { getNotionPost } from '@/libs/notion';
 import { getPostBlocks } from '@/libs/notion/block';
 import { getGlobalData } from '@/libs/notion/site';
+import { getPageTableOfContents } from '@/libs/notion/toc';
 
 import Slug, { getRecommendPost } from '..';
 
@@ -72,6 +73,8 @@ export async function getStaticProps({ params: { prefix, slug } }) {
   // 文章内容加载
   if (!props?.posts?.blockMap) {
     props.post.blockMap = await getPostBlocks(props.post.id, from);
+    props.post.content = Object.keys(props.post.blockMap.block);
+    props.post.toc = getPageTableOfContents(props.post, props.post.blockMap);
   }
 
   // 生成全文索引 && JSON.parse(BLOG.ALGOLIA_RECREATE_DATA)

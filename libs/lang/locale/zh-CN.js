@@ -42,8 +42,6 @@ export default {
     RESULT_OF_SEARCH: '篇搜索到的结果',
     NO_RESULTS_FOUND: '没有找到文章',
     ARTICLE_DETAIL: '文章详情',
-    PASSWORD_ERROR: '密码错误！',
-    ARTICLE_LOCK_TIPS: '文章已上锁，请输入访问密码',
     SUBMIT: '提交',
     POST_TIME: '发布于',
     LAST_EDITED_TIME: '最后更新',

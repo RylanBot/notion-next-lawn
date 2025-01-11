@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
+import React, { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useGlobal } from '@/hooks/useGlobal';
 import { siteConfig } from '@/libs/common/config';
@@ -12,7 +12,6 @@ import NotionPage from '@/plugins/notion/NotionPage';
 import {
   ArticleAdjacent,
   ArticleCopyright,
-  ArticleLock,
   ArticleRecommend,
   BlogPostArchive,
   BlogPostListPage,
@@ -65,13 +64,13 @@ export const LayoutBase = (props) => {
     <Hero {...props} onLoad={() => setLayoutLoaded(true)} />
   ) : null;
 
-  const floatSlot = (
+  const floatSlot = useMemo(() => (
     <>
       {post?.toc?.length > 1 && <CatalogDrawer toc={post.toc} />}
       <JumpToCommentButton />
       <ButtonRandomPost {...props} />
     </>
-  );
+  ), [post, post?.toc]);
 
   useEffect(() => {
     setHydrated(true);
@@ -219,7 +218,7 @@ export const LayoutArchive = (props) => {
  * 文章详情
  */
 export const LayoutSlug = (props) => {
-  const { post, lock, validPassword } = props;
+  const { post } = props;
 
   useEffect(() => {
     const observer = new MutationObserver(() => {
@@ -239,9 +238,6 @@ export const LayoutSlug = (props) => {
 
   return (
     <div className="article w-full lg:hover:shadow rounded-t-xl lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-lawn-black-gray lg:border-2 border-teal-600 dark:border-teal-500">
-      {lock && <ArticleLock validPassword={validPassword} />}
-
-      {!lock && (
         <div id="article-wrapper" className="overflow-x-auto flex-grow mx-auto md:w-full md:px-5 ">
           <article itemScope itemType="https://schema.org/Blog" className="subpixel-antialiased overflow-y-hidden">
             {/* 文章主体 */}
@@ -265,7 +261,7 @@ export const LayoutSlug = (props) => {
             <Comment post={post} />
           </div>
         </div>
-      )}
+   
     </div>
   );
 };

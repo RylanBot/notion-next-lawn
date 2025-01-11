@@ -31,9 +31,6 @@ export async function getStaticProps() {
   if (BLOG.POST_LIST_PREVIEW === 'true') {
     for (const i in props.posts) {
       const post = props.posts[i];
-      if (post.password && post.password !== '') {
-        continue;
-      }
       post.blockMap = await getPostBlocks(post.id, 'slug', BLOG.POST_PREVIEW_LINES);
     }
   }

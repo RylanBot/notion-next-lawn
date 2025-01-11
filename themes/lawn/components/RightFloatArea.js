@@ -7,8 +7,9 @@ import JumpToTopButton from './JumpToTopButton';
 /**
  * 右下角悬浮按钮
  */
-export default function RightFloatArea({ floatSlot }) {
+const RightFloatArea = ({ floatSlot }) =>{
   const [showFloatButton, switchShow] = useState(false);
+  
   const scrollListener = useCallback(
     throttle(() => {
       const targetRef = document.getElementById('lawn-main-wrapper');
@@ -42,3 +43,5 @@ export default function RightFloatArea({ floatSlot }) {
     </div>
   );
 }
+
+export default RightFloatArea;

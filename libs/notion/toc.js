@@ -61,28 +61,45 @@ function getBlockHeader(contents, recordMap, toc) {
   for (const blockId of contents) {
     const block = recordMap.block[blockId]?.value;
     if (!block) continue;
-
     const { type } = block;
+
+    if (type.indexOf('header') >= 0) {
+      const existed = toc.find((e) => e.id === blockId);
+      if (!existed) {
+        toc.push({
+          id: blockId,
+          type,
+          text: getTextContent(block.properties?.title),
+          // text: getBlockHeaderContent(block.properties?.title[0]),
+          indentLevel: indentLevels[type]
+        });
+      }
+    }
+
     if (block.content?.length > 0) {
       getBlockHeader(block.content, recordMap, toc);
-    } else {
-      if (type.indexOf('header') >= 0) {
-        const existed = toc.find((e) => e.id === blockId);
-        if (!existed) {
-          toc.push({
-            id: blockId,
-            type,
-            text: getTextContent(block.properties?.title),
-            indentLevel: indentLevels[type]
-          });
-        }
-      } else if (type === 'transclusion_reference') {
-        getBlockHeader([block.format.transclusion_reference_pointer.id], recordMap, toc);
-      } else if (type === 'transclusion_container') {
-        getBlockHeader(block.content, recordMap, toc);
-      }
     }
   }
 
   return toc;
+}
+
+/**
+ * To fix: 无法渲染标题中的公式
+ * @param {*} titleArr
+ * [ 'Plain Header' ]
+ * [ 'Styled Header', [ [ "h", "teal" ] ] ]
+ * [ '⁍', [ [ "e", "\\textcolor{teal}{\\small\\text{Katex}}" ] ] ]
+ */
+function getBlockHeaderContent(titleArr) {
+  const title = titleArr[0];
+
+  if (title === '⁍') {
+    const katex = titleArr[1][0];
+    if (katex[0] === 'e') {
+      return katex[1];
+    }
+  }
+
+  return title;
 }

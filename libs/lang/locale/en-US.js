@@ -39,8 +39,6 @@ export default {
     COPYRIGHT_NOTICE: 'All articles in this blog, except for special statements, adopt BY-NC-SA agreement. Please indicate the source!',
     RESULT_OF_SEARCH: 'Results Found',
     ARTICLE_DETAIL: 'Article Details',
-    PASSWORD_ERROR: 'Password Error!',
-    ARTICLE_LOCK_TIPS: 'Please Enter the password:',
     NO_RESULTS_FOUND: 'No results found.',
     SUBMIT: 'Submit',
     POST_TIME: 'Post on',

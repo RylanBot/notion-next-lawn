@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { siteConfig } from '@/libs/common/config';
 
 import CONFIG from '../config';
@@ -10,6 +10,18 @@ import Catalog from './Catalog';
 const CatalogDrawer = ({ toc }) => {
   const [showDrawer, setShowDrawer] = useState(false);
   const switchVisible = () => setShowDrawer(!showDrawer);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowDrawer(false);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   if (!siteConfig('LAWN_WIDGET_TOC', null, CONFIG)) return <></>;
 

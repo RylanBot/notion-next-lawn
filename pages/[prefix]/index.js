@@ -1,4 +1,3 @@
-import md5 from 'js-md5';
 import { useRouter } from 'next/router';
 import { idToUuid } from 'notion-utils';
 import { useEffect, useState } from 'react';
@@ -21,18 +20,7 @@ import { getPageTableOfContents } from '@/libs/notion/toc';
 const Slug = (props) => {
   const { post } = props;
   const router = useRouter();
-
-  const [lock, setLock] = useState(post?.password && post?.password !== '');
   const [reloaded, setReloaded] = useState(false);
-
-  const validPassword = (passInput) => {
-    const encrypt = md5(post.slug + passInput);
-    if (passInput && encrypt === post.password) {
-      setLock(false);
-      return true;
-    }
-    return false;
-  };
 
   // 文章加载
   useEffect(() => {
@@ -52,14 +40,9 @@ const Slug = (props) => {
 
       return () => clearTimeout(timeout);
     }
+  }, [post]);  
 
-    if (!lock && post?.blockMap?.block) {
-      post.content = Object.keys(post.blockMap.block);
-      post.toc = getPageTableOfContents(post, post.blockMap);
-    }
-  }, [router.asPath, lock, post]);
-
-  props = { ...props, lock, setLock, validPassword };
+  props = { ...props };
   const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() });
   return <Layout {...props} />;
 };
@@ -114,6 +97,8 @@ export async function getStaticProps({ params: { prefix } }) {
   // 文章内容加载
   if (!props?.posts?.blockMap) {
     props.post.blockMap = await getPostBlocks(props.post.id, from);
+    props.post.content = Object.keys(props.post.blockMap.block);
+    props.post.toc = getPageTableOfContents(props.post, props.post.blockMap);
   }
 
   // 生成全文索引 && process.env.npm_lifecycle_event === 'build' && JSON.parse(BLOG.ALGOLIA_RECREATE_DATA)

@@ -761,12 +761,6 @@ svg.notion-page-icon {
   @apply w-full;
 }
 
-.notion-list li:has(.notion-equation),
-.notion-toggle :has(.notion-equation) {
-  overflow-x: auto;
-  list-style-position: inside;
-}
-
 .notion-list-disc {
   list-style-type: disc;
   padding-inline-start: 1.4em;
@@ -1500,7 +1494,6 @@ div[class*='notion-property-checkbox-checked'] svg {
   border-radius: 3px;
   transition: background 20ms ease-in 0s;
   text-align: center;
-  -ms-overflow-style: none;
   cursor: text !important;
 }
 

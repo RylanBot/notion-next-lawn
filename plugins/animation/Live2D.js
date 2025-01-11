@@ -11,6 +11,8 @@ const Live2D = () => {
   const PET_LINK = siteConfig('WIDGET_PET_LINK');
 
   useEffect(() => {
+    if(!isBrowser) return;
+
     const script = document.createElement('script');
     script.src = '/js/live2d.min.js';
     script.onload = () => {
@@ -39,7 +41,7 @@ const Live2D = () => {
     }
   }
 
-  if ((!isBrowser && !SHOW_PET) || isMobile()) return <></>;
+  if ((!SHOW_PET) || isMobile()) return <></>;
 
   return (
     <canvas
