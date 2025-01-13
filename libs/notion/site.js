@@ -265,8 +265,10 @@ async function getConfigMapFromConfigPage(allPages) {
         switch (schema[key]?.type) {
           case 'date': {
             const dateProperty = getDateValue(val);
-            delete dateProperty.type;
-            properties[schema[key].name] = dateProperty;
+            if (dateProperty) {
+              delete dateProperty.type;
+              properties[schema[key].name] = dateProperty;
+            }
             break;
           }
           case 'select':

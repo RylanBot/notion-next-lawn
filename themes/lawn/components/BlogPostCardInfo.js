@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
-import NotionPage from '@/plugins/notion/NotionPage';
 import { siteConfig } from '@/libs/common/config';
+import NotionPage from '@/plugins/notion/NotionPage';
 
 import CategoryMini from './CategoryMini';
 import TagItemMini from './TagItemMini';
@@ -68,7 +68,7 @@ const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary }) => 
         {/* 日期 */}
         <div className="font-bold text-xs leading-tight text-gray-500 dark:text-gray-400">
           {/* <i class="fa-regular fa-calendar mr-1"></i> */}
-          {post?.publishDay}
+          {post.publishDay}
           {post.finished_date && <> - {post.finished_date} </>}
         </div>
         <div className="flex flex-wrap items-center justify-end">

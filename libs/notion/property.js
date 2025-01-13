@@ -21,8 +21,10 @@ export async function getPageProperties(id, value, schema, authToken, tagOptions
       switch (schema[key]?.type) {
         case 'date': {
           const dateProperty = getDateValue(val);
-          delete dateProperty.type;
-          properties[schema[key].name] = dateProperty;
+          if (dateProperty) {
+            delete dateProperty.type;
+            properties[schema[key].name] = dateProperty;
+          }
           break;
         }
         case 'select':
@@ -79,8 +81,10 @@ export async function getPageProperties(id, value, schema, authToken, tagOptions
 
   properties.publishDate = new Date(properties?.date?.start_date || value.created_time).getTime();
   properties.publishDay = formatDate(properties.publishDate, BLOG.LANG);
-  // 自定义最后更新
-  properties.finished_date = formatDate(properties.finished_date, BLOG.LANG);
+
+  // 自定义最后更新时间
+  properties.finished_date = formatDate(properties.finished_date?.start_date, BLOG.LANG);
+
   properties.lastEditedDate = new Date(value?.last_edited_time);
   properties.lastEditedDay = formatDate(new Date(value?.last_edited_time), BLOG.LANG);
   properties.fullWidth = value.format?.page_full_width ?? false;

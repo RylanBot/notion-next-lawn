@@ -1,6 +1,6 @@
 import LazyImage from '@/plugins/base/LazyImage';
-import NotionIcon from '@/plugins/notion/NotionIcon';
 import WordCount from '@/plugins/base/WordCount';
+import NotionIcon from '@/plugins/notion/NotionIcon';
 
 import { useGlobal } from '@/hooks/useGlobal';
 
@@ -65,7 +65,7 @@ export default function PostHeader({ post, siteInfo }) {
                 </>
               )}
               {/* 最后更新 */}
-              {post?.finished_date && post?.finished_date !== 'Invalid Date' && (
+              {post.finished_date && (
                 <div className="mx-3">
                   <i className="far fa-calendar-check pr-2"></i>
                   {locale.COMMON.LAST_EDITED_TIME}: {post.finished_date}

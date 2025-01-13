@@ -1,8 +1,8 @@
 import { idToUuid } from 'notion-utils';
 import BLOG from '@/blog.config';
 
-import { getPageCover } from './image';
 import { getPostBlocks } from './block';
+import { getPageCover } from './image';
 
 import { formatDate } from '../common/date';
 
