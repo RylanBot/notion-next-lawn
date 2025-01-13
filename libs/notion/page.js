@@ -3,7 +3,7 @@ import { idToUuid } from 'notion-utils';
 import BLOG from '@/blog.config';
 import { getLastPartOfUrl } from '../common/util';
 
-export function getAllPageIds (collectionQuery, collectionId, collectionView, viewIds) {
+export const getAllPageIds  = (collectionQuery, collectionId, collectionView, viewIds) => {
   if (!collectionQuery && !collectionView) {
     return []
   }
@@ -32,7 +32,6 @@ export function getAllPageIds (collectionQuery, collectionId, collectionView, vi
   }
   return pageIds
 }
-
 
 /**
  * 将 id 映射成博文内部链接（去除连字符）

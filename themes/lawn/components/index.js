@@ -1,6 +1,4 @@
-export { default as ArticleAdjacent } from './ArticleAdjacent';
 export { default as ArticleCopyright } from './ArticleCopyright';
-export { default as ArticleRecommend } from './ArticleRecommend';
 export { default as BlogPostArchive } from './BlogPostArchive';
 export { default as BlogPostListPage } from './BlogPostListPage';
 export { default as BlogPostListScroll } from './BlogPostListScroll';

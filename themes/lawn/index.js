@@ -10,9 +10,7 @@ import Comment from '@/plugins/comment';
 import NotionPage from '@/plugins/notion/NotionPage';
 
 import {
-  ArticleAdjacent,
   ArticleCopyright,
-  ArticleRecommend,
   BlogPostArchive,
   BlogPostListPage,
   BlogPostListScroll,
@@ -64,13 +62,16 @@ export const LayoutBase = (props) => {
     <Hero {...props} onLoad={() => setLayoutLoaded(true)} />
   ) : null;
 
-  const floatSlot = useMemo(() => (
-    <>
-      {post?.toc?.length > 1 && <CatalogDrawer toc={post.toc} />}
-      <JumpToCommentButton />
-      <ButtonRandomPost {...props} />
-    </>
-  ), [post, post?.toc]);
+  const floatSlot = useMemo(
+    () => (
+      <>
+        {post?.toc?.length > 1 && <CatalogDrawer toc={post.toc} />}
+        <JumpToCommentButton />
+        <ButtonRandomPost {...props} />
+      </>
+    ),
+    [post, post?.toc]
+  );
 
   useEffect(() => {
     setHydrated(true);
@@ -238,30 +239,23 @@ export const LayoutSlug = (props) => {
 
   return (
     <div className="article w-full lg:hover:shadow rounded-t-xl lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-lawn-black-gray lg:border-2 border-teal-600 dark:border-teal-500">
-        <div id="article-wrapper" className="overflow-x-auto flex-grow mx-auto md:w-full md:px-5 ">
-          <article itemScope itemType="https://schema.org/Blog" className="subpixel-antialiased overflow-y-hidden">
-            {/* 文章主体 */}
-            <section className="px-5 justify-center mx-auto max-w-2xl lg:max-w-full">
-              {post && <NotionPage post={post} />}
-            </section>
+      <div id="article-wrapper" className="overflow-x-auto flex-grow mx-auto md:w-full md:px-5 ">
+        <article itemScope itemType="https://schema.org/Blog" className="subpixel-antialiased overflow-y-hidden">
+          {/* 文章主体 */}
+          <section className="px-5 justify-center mx-auto max-w-2xl lg:max-w-full">
+            {post && <NotionPage post={post} />}
+          </section>
+          {/* 版权 */}
+          {post?.type === 'Post' && <ArticleCopyright {...props} />}
+        </article>
 
-            {post?.type === 'Post' && (
-              <>
-                <ArticleCopyright {...props} />
-                <ArticleRecommend {...props} />
-                <ArticleAdjacent {...props} />
-              </>
-            )}
-          </article>
+        <div className="pt-4 border-dashed"></div>
 
-          <div className="pt-4 border-dashed"></div>
-
-          {/* 评论互动 */}
-          <div className="duration-200 overflow-x-auto bg-white dark:bg-lawn-black-gray px-3">
-            <Comment post={post} />
-          </div>
+        {/* 评论互动 */}
+        <div className="duration-200 overflow-x-auto bg-white dark:bg-lawn-black-gray px-3">
+          <Comment post={post} />
         </div>
-   
+      </div>
     </div>
   );
 };

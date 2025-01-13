@@ -20,13 +20,10 @@ const CONFIG = {
   LAWN_POST_LIST_PREVIEW: false, // 读取文章预览
   LAWN_POST_LIST_IMG_CROSSOVER: true, // 博客列表图片左右交错
 
-  LAWN_ARTICLE_ADJACENT: false, // 显示上一篇下一篇文章推荐
   LAWN_ARTICLE_COPYRIGHT: false, // 显示文章版权声明
-  LAWN_ARTICLE_RECOMMEND: false, // 文章关联推荐
-
   LAWN_WIDGET_LATEST_POSTS: true, // 显示最新文章卡
   LAWN_WIDGET_ANALYTICS: false, // 显示统计卡
-  LAWN_WIDGET_TO_TOP: true,
+  LAWN_WIDGET_TO_TOP: true, // 回到顶部
   LAWN_WIDGET_TO_COMMENT: false, // 跳到评论区
   LAWN_WIDGET_DARK_MODE: true, // 夜间模式
   LAWN_WIDGET_TOC: true, // 移动端悬浮目录

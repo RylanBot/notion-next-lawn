@@ -40,7 +40,7 @@ const Slug = (props) => {
 
       return () => clearTimeout(timeout);
     }
-  }, [post]);  
+  }, [post]);
 
   props = { ...props };
   const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() });
@@ -60,14 +60,17 @@ export async function getStaticPaths() {
   return {
     paths: allPages
       ?.filter((row) => row.slug.indexOf('/') < 0 && row.type.indexOf('Menu') < 0)
-      .map((row) => ({ params: { prefix: row.slug.toLowerCase() } })), // （不区分大小写）统一转小写
+      .map((row) => ({
+        params: {
+          prefix: row.slug
+        }
+      })),
     fallback: true
   };
 }
 
 export async function getStaticProps({ params: { prefix } }) {
-  let fullSlug = prefix.toLowerCase();
-
+  let fullSlug = prefix.toLowerCase(); //（不区分大小写）统一转小写
   if (JSON.parse(BLOG.PSEUDO_STATIC)) {
     if (!fullSlug.endsWith('.html')) {
       fullSlug += '.html';
@@ -77,7 +80,7 @@ export async function getStaticProps({ params: { prefix } }) {
   const props = await getGlobalData({ from });
   // 在列表内查找文章
   props.post = props?.allPages?.find((p) => {
-    return p.slug === fullSlug || p.id === idToUuid(fullSlug);
+    return p.slug.toLowerCase() === fullSlug || p.id === idToUuid(fullSlug);
   });
 
   // 处理非列表内文章的内信息
@@ -101,22 +104,9 @@ export async function getStaticProps({ params: { prefix } }) {
     props.post.toc = getPageTableOfContents(props.post, props.post.blockMap);
   }
 
-  // 生成全文索引 && process.env.npm_lifecycle_event === 'build' && JSON.parse(BLOG.ALGOLIA_RECREATE_DATA)
+  // 生成全文索引
   if (BLOG.ALGOLIA_APP_ID) {
     uploadDataToAlgolia(props?.post);
-  }
-
-  // 推荐关联文章处理
-  const allPosts = props.allPages?.filter((page) => page.type === 'Post' && page.status === 'Published');
-  if (allPosts && allPosts.length > 0) {
-    const index = allPosts.indexOf(props.post);
-    props.prev = allPosts.slice(index - 1, index)[0] ?? allPosts.slice(-1)[0];
-    props.next = allPosts.slice(index + 1, index + 2)[0] ?? allPosts[0];
-    props.recommendPosts = getRecommendPost(props.post, allPosts, BLOG.POST_RECOMMEND_COUNT);
-  } else {
-    props.prev = null;
-    props.next = null;
-    props.recommendPosts = [];
   }
 
   delete props.allPages;
@@ -124,37 +114,6 @@ export async function getStaticProps({ params: { prefix } }) {
     props,
     revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND)
   };
-}
-
-/**
- * 获取文章的关联推荐文章列表，目前根据标签关联性筛选
- */
-export function getRecommendPost(post, allPosts, count = 6) {
-  let recommendPosts = [];
-  const postIds = [];
-  const currentTags = post?.tags || [];
-  for (let i = 0; i < allPosts.length; i++) {
-    const p = allPosts[i];
-    if (p.id === post.id || p.type.indexOf('Post') < 0) {
-      continue;
-    }
-
-    for (let j = 0; j < currentTags.length; j++) {
-      const t = currentTags[j];
-      if (postIds.indexOf(p.id) > -1) {
-        continue;
-      }
-      if (p.tags && p.tags.indexOf(t) > -1) {
-        recommendPosts.push(p);
-        postIds.push(p.id);
-      }
-    }
-  }
-
-  if (recommendPosts.length > count) {
-    recommendPosts = recommendPosts.slice(0, count);
-  }
-  return recommendPosts;
 }
 
 export default Slug;
