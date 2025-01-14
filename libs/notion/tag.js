@@ -1,4 +1,3 @@
-import BLOG from '@/blog.config';
 import { isIterable } from '../common/util';
 
 export const formatTagName = (name) => name.replace(/\s+/g, '-').toLowerCase();
@@ -41,6 +40,6 @@ export function getAllTags({ allPages, sliceCount = 0, tagOptions }) {
 
 export function getTagOptions(schema) {
   if (!schema) return {};
-  const tagSchema = Object.values(schema).find((e) => e.name === BLOG.NOTION_PROPERTY_NAME.tags);
+  const tagSchema = Object.values(schema).find((e) => e.name === 'tags');
   return tagSchema?.options || [];
 }

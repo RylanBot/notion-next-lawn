@@ -23,8 +23,8 @@ const BlogPostArchive = ({ posts = [], year, collapsed }) => {
       <ul className={isCollapsed ? 'hidden' : undefined}>
         {posts?.map((post) => (
           <li key={post.id} className="border-l-2 px-4 py-2 text-base items-center dark:border-zinc-600">
-            <div id={post.date.start_date}>
-              <span className="text-gray-600 dark:text-gray-300">{post.date.start_date}</span> &nbsp;
+            <div id={post.date.start}>
+              <span className="text-gray-600 dark:text-gray-300">{post.date.start}</span> &nbsp;
               <Link
                 href={`${SUB_PATH}/${post.slug}`}
                 passHref

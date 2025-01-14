@@ -1,108 +1,91 @@
-import { NotionAPI } from 'notion-client';
 import { getDateValue, getTextContent } from 'notion-utils';
-
-import BLOG from '@/blog.config';
-import { formatDate } from '../common/date';
 import { mapImgUrl } from './image';
+
+/**
+ * 提取数据库表格参数
+ */
+export const getDatabaseProperties = (schema, rawProperties) => {
+  const properties = {};
+
+  for (let i = 0; i < rawProperties.length; i++) {
+    const [key, val] = rawProperties[i];
+    switch (schema[key]?.type) {
+      case 'text':
+      case 'title':
+      case 'checkbox':
+        properties[schema[key].name] = getTextContent(val);
+        break;
+      case 'date':
+      case 'daterange': {
+        const dateProperty = getDateValue(val);
+        if (dateProperty) {
+          properties[schema[key].name] = dateProperty;
+        }
+        break;
+      }
+      case 'select': {
+        const selects = getTextContent(val);
+        if (selects.length) {
+          properties[schema[key].name] = selects.split(',')[0]; // 只提取第一个值
+        }
+        break;
+      }
+      case 'multi_select': {
+        const selects = getTextContent(val);
+        if (selects.length) {
+          properties[schema[key].name] = selects.split(','); // 提取所有值
+        }
+        break;
+      }
+      default:
+        break;
+    }
+  }
+
+  return properties;
+};
 
 /**
  * 获取页面元素成员属性
  */
-export async function getPageProperties(id, value, schema, authToken, tagOptions) {
+export const getPageProperties = async (id, value, schema, tagOptions) => {
   const rawProperties = Object.entries(value?.properties || []);
-  const excludeProperties = ['date', 'select', 'multi_select', 'person'];
-  const properties = {};
-  for (let i = 0; i < rawProperties.length; i++) {
-    const [key, val] = rawProperties[i];
-    properties.id = id;
-    if (schema[key]?.type && !excludeProperties.includes(schema[key].type)) {
-      properties[schema[key].name] = getTextContent(val);
-    } else {
-      switch (schema[key]?.type) {
-        case 'date': {
-          const dateProperty = getDateValue(val);
-          if (dateProperty) {
-            delete dateProperty.type;
-            properties[schema[key].name] = dateProperty;
-          }
-          break;
-        }
-        case 'select':
-        case 'multi_select': {
-          const selects = getTextContent(val);
-          if (selects[0]?.length) {
-            properties[schema[key].name] = selects.split(',');
-          }
-          break;
-        }
-        case 'person': {
-          const rawUsers = val.flat();
-          const users = [];
-          const api = new NotionAPI({ authToken });
+  const properties = getDatabaseProperties(schema, rawProperties);
 
-          for (let i = 0; i < rawUsers.length; i++) {
-            if (rawUsers[i][0][1]) {
-              const userId = rawUsers[i][0];
-              const res = await api.getUsers(userId);
-              const resValue = res?.recordMapWithRoles?.notion_user?.[userId[1]]?.value;
-              const user = {
-                id: resValue?.id,
-                first_name: resValue?.given_name,
-                last_name: resValue?.family_name,
-                profile_photo: resValue?.profile_photo
-              };
-              users.push(user);
-            }
-          }
-          properties[schema[key].name] = users;
-          break;
-        }
-        default:
-          break;
-      }
+  /*
+    生成的 properties 结构类似
+    {
+      category: '',
+      date: { start_date: 'xxxx-xx-xx', end_date: 'xxxx-xx-xx' },
+      slug: '',
+      tags: [ '', '' ],
+      type: '' ,
+      title: '',
+      summary: '',
+      status: ''
     }
-  }
+   */
 
-  // 映射键：用户自定义表头名
-  const fieldNames = BLOG.NOTION_PROPERTY_NAME;
-  if (fieldNames) {
-    Object.keys(fieldNames).forEach((key) => {
-      if (fieldNames[key] && properties[fieldNames[key]]) properties[key] = properties[fieldNames[key]];
-    });
-  }
+  /* 格式化参数 */
+  properties.date = {
+    start: String(properties.date?.start_date ?? value.created_time).replace(/-/g, '/'),
+    end: String(properties.date?.end_date ?? '').replace(/-/g, '/')
+  };
 
-  // type\status\category 是单选下拉框 取数组第一个
-  properties.type = properties.type?.[0] || '';
-  properties.status = properties.status?.[0] || '';
-  properties.category = properties.category?.[0] || '';
-
-  // 映射值：用户个性化type和status字段的下拉框选项，在此映射回代码的英文标识
-  mapProperties(properties);
-
-  properties.publishDate = new Date(properties?.date?.start_date || value.created_time).getTime();
-  properties.publishDay = formatDate(properties.publishDate, BLOG.LANG);
-
-  // 自定义最后更新时间
-  properties.finished_date = formatDate(properties.finished_date?.start_date, BLOG.LANG);
-
-  properties.lastEditedDate = new Date(value?.last_edited_time);
-  properties.lastEditedDay = formatDate(new Date(value?.last_edited_time), BLOG.LANG);
+  /* 补充额外的参数 */
+  properties.id = id;
   properties.fullWidth = value.format?.page_full_width ?? false;
   properties.pageIcon = mapImgUrl(value?.format?.page_icon, value) ?? '';
   properties.pageCover = mapImgUrl(value?.format?.page_cover, value) ?? '';
   properties.pageCoverThumbnail = mapImgUrl(value?.format?.page_cover, value, 'block', 'pageCoverThumbnail') ?? '';
 
-  properties.content = value.content ?? [];
   properties.tagItems =
     properties?.tags?.map((tag) => {
       return { name: tag, color: tagOptions?.find((t) => t.value === tag)?.color || 'gray' };
     }) || [];
-  delete properties.content;
 
-  // 处理URL
-  if (properties.type === 'Post') {
-    properties.slug = BLOG.POST_URL_PREFIX ? generateCustomizeUrl(properties) : properties.slug ?? properties.id;
-  } else if (properties.type === 'Page') {
+  // 处理 URL
+  if (properties.type === 'Post' || properties.type === 'Page') {
     properties.slug = properties.slug ?? properties.id;
   } else if (properties.type === 'Menu' || properties.type === 'SubMenu') {
     // 菜单路径为空、作为可展开菜单使用
@@ -110,71 +93,5 @@ export async function getPageProperties(id, value, schema, authToken, tagOptions
     properties.name = properties.title ?? '';
   }
 
-  // 开启伪静态路径
-  if (JSON.parse(BLOG.PSEUDO_STATIC)) {
-    if (!properties?.slug?.endsWith('.html') && !properties?.slug?.startsWith('http')) {
-      properties.slug += '.html';
-    }
-  }
-
   return properties;
-}
-
-/**
- * 映射用户自定义表头
- */
-function mapProperties(properties) {
-  if (properties?.type === BLOG.NOTION_PROPERTY_NAME.type_post) {
-    properties.type = 'Post';
-  }
-  if (properties?.type === BLOG.NOTION_PROPERTY_NAME.type_page) {
-    properties.type = 'Page';
-  }
-  if (properties?.type === BLOG.NOTION_PROPERTY_NAME.type_notice) {
-    properties.type = 'Notice';
-  }
-  if (properties?.status === BLOG.NOTION_PROPERTY_NAME.status_publish) {
-    properties.status = 'Published';
-  }
-  if (properties?.status === BLOG.NOTION_PROPERTY_NAME.status_invisible) {
-    properties.status = 'Invisible';
-  }
-}
-
-/**
- * 获取自定义URL
- * 可以根据变量生成URL
- * 支持：%year%/%month%/%day%/%slug%
- */
-function generateCustomizeUrl(postProperties) {
-  let fullPrefix = '';
-  const allSlugPatterns = BLOG.POST_URL_PREFIX.split('/');
-  allSlugPatterns.forEach((pattern, idx) => {
-    if (pattern === '%year%' && postProperties?.publishDay) {
-      const formatPostCreatedDate = new Date(postProperties?.publishDay);
-      fullPrefix += formatPostCreatedDate.getUTCFullYear();
-    } else if (pattern === '%month%' && postProperties?.publishDay) {
-      const formatPostCreatedDate = new Date(postProperties?.publishDay);
-      fullPrefix += String(formatPostCreatedDate.getUTCMonth() + 1).padStart(2, 0);
-    } else if (pattern === '%day%' && postProperties?.publishDay) {
-      const formatPostCreatedDate = new Date(postProperties?.publishDay);
-      fullPrefix += String(formatPostCreatedDate.getUTCDate()).padStart(2, 0);
-    } else if (pattern === '%slug%') {
-      fullPrefix += postProperties.slug ?? postProperties.id;
-    } else if (!pattern.includes('%')) {
-      fullPrefix += pattern;
-    } else {
-      return;
-    }
-    if (idx !== allSlugPatterns.length - 1) {
-      fullPrefix += '/';
-    }
-  });
-  if (fullPrefix.startsWith('/')) {
-    fullPrefix = fullPrefix.substring(1); // 去掉头部的"/"
-  }
-  if (fullPrefix.endsWith('/')) {
-    fullPrefix = fullPrefix.substring(0, fullPrefix.length - 1); // 去掉尾部部的"/"
-  }
-  return `${fullPrefix}/${postProperties.slug ?? postProperties.id}`;
-}
+};

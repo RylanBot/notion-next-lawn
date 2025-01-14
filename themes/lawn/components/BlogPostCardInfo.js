@@ -68,8 +68,8 @@ const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary }) => 
         {/* 日期 */}
         <div className="font-bold text-xs leading-tight text-gray-500 dark:text-gray-400">
           {/* <i class="fa-regular fa-calendar mr-1"></i> */}
-          {post.publishDay}
-          {post.finished_date && <> - {post.finished_date} </>}
+          {post.date.start}
+          {post.date.end && <> - {post.date.end} </>}
         </div>
         <div className="flex flex-wrap items-center justify-end">
           {post.tagItems?.map((tag) => (

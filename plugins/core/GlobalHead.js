@@ -20,6 +20,7 @@ const GlobalHead = (props) => {
     IMAGE = META.image || '/bg_image.jpg';
   }
 
+  const AUTHOR = siteConfig('AUTHOR');
   const TITLE = META?.title || siteConfig('TITLE');
   const DESCRIPTION = META?.description || `${siteInfo?.description}`;
   const TYPE = META?.type || 'website';
@@ -27,20 +28,14 @@ const GlobalHead = (props) => {
   const CATEGORY = META?.category || siteConfig('KEYWORDS'); // section 主要是像是 category 這樣的分類，Facebook 用這個來抓連結的分類
   const FAVICON = siteConfig('BLOG_FAVICON');
 
-  // SEO关键词
+  // SEO 关键词
   let KEYWORDS = META?.tags || siteConfig('KEYWORDS');
   if (post?.tags && post?.tags?.length > 0) {
     KEYWORDS = post?.tags?.join(',');
   }
 
   const SEO_GOOGLE_SITE_VERIFICATION = siteConfig('SEO_GOOGLE_SITE_VERIFICATION');
-  const SEO_BAIDU_SITE_VERIFICATION = siteConfig('SEO_BAIDU_SITE_VERIFICATION');
-  const COMMENT_WEBMENTION_ENABLE = siteConfig('COMMENT_WEBMENTION_ENABLE');
-  const COMMENT_WEBMENTION_HOSTNAME = siteConfig('COMMENT_WEBMENTION_HOSTNAME');
-  const COMMENT_WEBMENTION_AUTH = siteConfig('COMMENT_WEBMENTION_AUTH');
   const ANALYTICS_BUSUANZI_ENABLE = JSON.parse(siteConfig('ANALYTICS_BUSUANZI_ENABLE'));
-  const AUTHOR = siteConfig('AUTHOR');
-  const FACEBOOK_PAGE = siteConfig('FACEBOOK_PAGE');
 
   return (
     <Head>
@@ -50,7 +45,6 @@ const GlobalHead = (props) => {
       <meta name="robots" content="follow, index" />
       <meta charSet="UTF-8" />
       {SEO_GOOGLE_SITE_VERIFICATION && <meta name="google-site-verification" content={SEO_GOOGLE_SITE_VERIFICATION} />}
-      {SEO_BAIDU_SITE_VERIFICATION && <meta name="baidu-site-verification" content={SEO_BAIDU_SITE_VERIFICATION} />}
       <meta name="keywords" content={KEYWORDS} />
       <meta name="description" content={DESCRIPTION} />
       <meta property="og:locale" content={LANG} />
@@ -64,22 +58,11 @@ const GlobalHead = (props) => {
       <meta name="twitter:description" content={DESCRIPTION} />
       <meta name="twitter:title" content={TITLE} />
 
-      {COMMENT_WEBMENTION_ENABLE && (
-        <>
-          <link rel="webmention" href={`https://webmention.io/${COMMENT_WEBMENTION_HOSTNAME}/webmention`} />
-          <link rel="pingback" href={`https://webmention.io/${COMMENT_WEBMENTION_HOSTNAME}/xmlrpc`} />
-        </>
-      )}
-
-      {COMMENT_WEBMENTION_ENABLE && COMMENT_WEBMENTION_AUTH !== '' && <link href={COMMENT_WEBMENTION_AUTH} rel="me" />}
-
       {ANALYTICS_BUSUANZI_ENABLE && <meta name="referrer" content="no-referrer-when-downgrade" />}
       {META?.type === 'Post' && (
         <>
-          <meta property="article:published_time" content={META.publishDay} />
           <meta property="article:author" content={AUTHOR} />
           <meta property="article:section" content={CATEGORY} />
-          <meta property="article:publisher" content={FACEBOOK_PAGE} />
         </>
       )}
       {children}
@@ -88,7 +71,7 @@ const GlobalHead = (props) => {
 };
 
 /**
- * 获取SEO信息
+ * 获取 SEO 信息
  */
 const getSEOMeta = (props, router, global) => {
   const { locale } = global;

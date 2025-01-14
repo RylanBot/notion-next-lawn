@@ -1,71 +1,62 @@
-import BLOG from '@/blog.config'
-import { siteConfig } from '@/libs/common/config'
-import { getGlobalData } from '@/libs/notion/site'
-import { getServerSideSitemap } from 'next-sitemap'
+import { getServerSideSitemap } from 'next-sitemap';
 
-export const getServerSideProps = async ctx => {
-  const { allPages } = await getGlobalData({ from: 'rss' })
+import { siteConfig } from '@/libs/common/config';
+import { getGlobalData } from '@/libs/notion/site';
+
+export const getServerSideProps = async (ctx) => {
+  const { allPages } = await getGlobalData({ from: 'rss' });
+  const LINK = siteConfig('LINK');
+
+  // 默认
   const defaultFields = [
     {
-      loc: `${siteConfig('LINK')}`,
+      loc: `${LINK}`,
       lastmod: new Date().toISOString().split('T')[0],
       changefreq: 'daily',
       priority: '1.0'
     },
     {
-      loc: `${siteConfig('LINK')}/archive`,
+      loc: `${LINK}/archive`,
       lastmod: new Date().toISOString().split('T')[0],
-      changefreq: 'daily',
+      changefreq: 'weekly',
       priority: '0.7'
     },
     {
-      loc: `${siteConfig('LINK')}/category`,
+      loc: `${LINK}/category`,
       lastmod: new Date().toISOString().split('T')[0],
-      changefreq: 'daily',
+      changefreq: 'weekly',
       priority: '0.7'
     },
-    // {
-    //   loc: `${siteConfig('LINK')}/feed`,
-    //   lastmod: new Date().toISOString().split('T')[0],
-    //   changefreq: 'daily',
-    //   priority: '0.7'
-    // },
-    // {
-    //   loc: `${siteConfig('LINK')}/search`,
-    //   lastmod: new Date().toISOString().split('T')[0],
-    //   changefreq: 'daily',
-    //   priority: '0.7'
-    // },
     {
-      loc: `${siteConfig('LINK')}/tag`,
+      loc: `${LINK}/tag`,
       lastmod: new Date().toISOString().split('T')[0],
-      changefreq: 'daily',
+      changefreq: 'weekly',
       priority: '0.7'
     }
-  ]
+  ];
+
+  // 补充文章
   const postFields = allPages
-    ?.filter(p => p.status === BLOG.NOTION_PROPERTY_NAME.status_publish)
-    ?.map(post => {
-      const slugWithoutLeadingSlash = post?.slug.startsWith('/')
-        ? post?.slug?.slice(1)
-        : post.slug
+    ?.filter((p) => p.status === 'Published')
+    ?.map((post) => {
+      const slug = post.slug.startsWith('/') ? post?.slug?.slice(1) : post.slug;
+      const date = (post.date.end ? post.date.end : post.date.start).replace(/\//g, '-');
       return {
-        loc: `${siteConfig('LINK')}/${slugWithoutLeadingSlash}`,
-        lastmod: new Date(post?.lastEditedDate).toISOString().split('T')[0],
-        changefreq: 'daily',
+        loc: `${LINK}/${slug}`,
+        lastmod: date,
+        changefreq: 'weekly',
         priority: post?.type === 'Menu' ? '0.9' : '0.8'
-      }
+      };
     })
-  const fields = defaultFields.concat(postFields)
-  fields.sort((a, b) => parseFloat(b.priority) - parseFloat(a.priority))
+    .sort((a, b) => new Date(b.lastmod) - new Date(a.lastmod));
+
+  const fields = defaultFields.concat(postFields);
+  fields.sort((a, b) => parseFloat(b.priority) - parseFloat(a.priority));
 
   // 缓存
-  ctx.res.setHeader(
-    'Cache-Control',
-    'public, max-age=3600, stale-while-revalidate=59'
-  )
+  ctx.res.setHeader('Cache-Control', 'public, max-age=3600, stale-while-revalidate=59');
 
-  return getServerSideSitemap(ctx, fields)
-}
+  return getServerSideSitemap(ctx, fields);
+};
 
-export default () => {}
+export default () => {};

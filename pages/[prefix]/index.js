@@ -70,12 +70,8 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params: { prefix } }) {
-  let fullSlug = prefix.toLowerCase(); //（不区分大小写）统一转小写
-  if (JSON.parse(BLOG.PSEUDO_STATIC)) {
-    if (!fullSlug.endsWith('.html')) {
-      fullSlug += '.html';
-    }
-  }
+  const fullSlug = prefix.toLowerCase(); //（不区分大小写）统一转小写
+
   const from = `slug-props-${fullSlug}`;
   const props = await getGlobalData({ from });
   // 在列表内查找文章

@@ -1,11 +1,12 @@
-import { idToUuid, getDateValue, getTextContent } from 'notion-utils';
+import { idToUuid } from 'notion-utils';
+
 import BLOG from '@/blog.config';
 
 import { getPostBlocks, getSingleBlock } from './block';
 import { getAllCategories, getCategoryOptions } from './category';
 import { compressImage, mapImgUrl } from './image';
 import { getAllPageIds } from './page';
-import { getPageProperties } from './property';
+import { getPageProperties, getDatabaseProperties } from './property';
 import { getAllTags, getTagOptions } from './tag';
 
 import { getDataFromCache, setDataToCache } from '../cache';
@@ -49,23 +50,22 @@ async function getNotionDatabase({ pageId, from }) {
     console.error('can`t get Notion Data ; Which id is: ', pageId);
     return {};
   }
+
   pageId = idToUuid(pageId);
+
   const block = pageRecordMap.block || {};
   const rawMetadata = block[pageId]?.value;
-  // Check Type Page-Database和Inline-Database
   if (rawMetadata?.type !== 'collection_view_page' && rawMetadata?.type !== 'collection_view') {
     console.error(`pageId "${pageId}" is not a database`);
     return getEmptyData(pageId);
   }
+
   const collection = Object.values(pageRecordMap.collection)[0]?.value || {};
   const siteInfo = getSiteInfo({ collection, block });
   const collectionId = rawMetadata?.collection_id;
   const collectionQuery = pageRecordMap.collection_query;
   const collectionView = pageRecordMap.collection_view;
-  const schema = collection?.schema;
-
   const viewIds = rawMetadata?.view_ids;
-  const collectionData = [];
 
   const pageIds = getAllPageIds(collectionQuery, collectionId, collectionView, viewIds);
   if (pageIds?.length === 0) {
@@ -81,16 +81,17 @@ async function getNotionDatabase({ pageId, from }) {
     console.log('有效Page数量', pageIds?.length);
   }
 
+  const collectionData = [];
+  const schema = collection?.schema;
   // 获取每篇文章基础数据
   for (let i = 0; i < pageIds.length; i++) {
     const id = pageIds[i];
     const value = block[id]?.value;
     if (!value) {
-      // 如果找不到文章对应的block，说明发生了溢出，使用 pageID 再去请求
+      // 如果找不到文章对应的 block，说明发生了溢出，使用 pageID 再去请求
       const pageBlock = await getSingleBlock(id, from);
       if (pageBlock.block[id].value) {
-        const properties =
-          (await getPageProperties(id, pageBlock.block[id].value, schema, null, getTagOptions(schema))) || null;
+        const properties = await getPageProperties(id, pageBlock.block[id].value, schema, getTagOptions(schema));
         if (properties) {
           collectionData.push(properties);
         }
@@ -98,7 +99,7 @@ async function getNotionDatabase({ pageId, from }) {
       continue;
     }
 
-    const properties = (await getPageProperties(id, value, schema, null, getTagOptions(schema))) || null;
+    const properties = await getPageProperties(id, value, schema, getTagOptions(schema));
     if (properties) {
       collectionData.push(properties);
     }
@@ -107,7 +108,7 @@ async function getNotionDatabase({ pageId, from }) {
   // 文章计数
   let postCount = 0;
 
-  // 查找所有的Post和Page
+  // 查找所有的 Post 和 Page
   const allPages = collectionData.filter((post) => {
     if (post?.type === 'Post' && post.status === 'Published') {
       postCount++;
@@ -120,31 +121,38 @@ async function getNotionDatabase({ pageId, from }) {
     );
   });
 
-  // 站点配置优先读取配置表格，否则读取blog.config.js 文件
-  const NOTION_CONFIG = (await getConfigMapFromConfigPage(collectionData)) || {};
-
-  // Sort by date
+  // 排序
   if (BLOG.POSTS_SORT_BY === 'date') {
     allPages.sort((a, b) => {
-      return b?.publishDate - a?.publishDate;
+      const dateA = new Date(a?.date.start);
+      const dateB = new Date(b?.date.start);
+      return dateB - dateA;
     });
   }
 
+  // 公告
   const notice = await getNotice(
     collectionData.filter((post) => {
       return post && post?.type && post?.type === 'Notice' && post.status === 'Published';
     })?.[0]
   );
+
+  // 分类
   const categoryOptions = getAllCategories({ allPages, categoryOptions: getCategoryOptions(schema) });
+  // 标签
   const tagOptions = getAllTags({ allPages, tagOptions: getTagOptions(schema) });
+
   // 旧的菜单
   const customNav = getCustomNav({
     allPages: collectionData.filter((post) => post?.type === 'Page' && post.status === 'Published')
   });
   // 新的菜单
-  const customMenu = await getCustomMenu({ collectionData });
+  const customMenu = getCustomMenu({ collectionData });
   const latestPosts = getLatestPosts({ allPages, from, latestPostCount: 4 });
   const allNavPages = getNavPages({ allPages });
+
+  // 站点配置优先读取配置表格，否则读取 blog.config.js 文件
+  const NOTION_CONFIG = (await getConfigMapFromConfigPage(collectionData)) || {};
 
   return {
     NOTION_CONFIG,
@@ -171,13 +179,11 @@ async function getNotionDatabase({ pageId, from }) {
 }
 
 async function getConfigMapFromConfigPage(allPages) {
-  // 默认返回配置文件
-  const notionConfig = {};
-
   if (!allPages || !Array.isArray(allPages) || allPages.length === 0) {
     console.warn('[Notion配置] 忽略的配置');
     return null;
   }
+
   const configPage = allPages?.find((post) => {
     return post && post?.type && (post?.type === 'CONFIG' || post?.type === 'config' || post?.type === 'Config');
   });
@@ -186,10 +192,9 @@ async function getConfigMapFromConfigPage(allPages) {
     console.warn('[Notion配置] 未找到配置页面');
     return null;
   }
+
   const configPageId = configPage.id;
-  //   console.log('[Notion配置]请求配置数据 ', configPage.id)
   let pageRecordMap = await getPostBlocks(configPageId, 'config-table');
-  //   console.log('配置中心Page', configPageId, pageRecordMap)
   let content = pageRecordMap.block[configPageId].value.content;
   for (const table of ['Config-Table', 'CONFIG-TABLE']) {
     if (content) break;
@@ -223,12 +228,11 @@ async function getConfigMapFromConfigPage(allPages) {
   const databaseRecordMap = pageRecordMap.block[configTableId];
   const block = pageRecordMap.block || {};
   const rawMetadata = databaseRecordMap.value;
-  // Check Type Page-Database和Inline-Database
   if (rawMetadata?.type !== 'collection_view_page' && rawMetadata?.type !== 'collection_view') {
     console.error(`pageId "${configTableId}" is not a database`);
     return null;
   }
-  //   console.log('表格', databaseRecordMap, block, rawMetadata)
+
   const collectionId = rawMetadata?.collection_id;
   const collection = pageRecordMap.collection[collectionId].value;
   const collectionQuery = pageRecordMap.collection_query;
@@ -246,47 +250,19 @@ async function getConfigMapFromConfigPage(allPages) {
       databaseRecordMap
     );
   }
+
+  const notionConfig = {};
   // 遍历用户的表格
   for (let i = 0; i < pageIds.length; i++) {
     const id = pageIds[i];
     const value = block[id]?.value;
-    if (!value) {
-      continue;
-    }
+    if (!value) continue;
+
     const rawProperties = Object.entries(block?.[id]?.value?.properties || []);
-    const excludeProperties = ['date', 'select', 'multi_select', 'person'];
-    const properties = {};
-    for (let i = 0; i < rawProperties.length; i++) {
-      const [key, val] = rawProperties[i];
-      properties.id = id;
-      if (schema[key]?.type && !excludeProperties.includes(schema[key].type)) {
-        properties[schema[key].name] = getTextContent(val);
-      } else {
-        switch (schema[key]?.type) {
-          case 'date': {
-            const dateProperty = getDateValue(val);
-            if (dateProperty) {
-              delete dateProperty.type;
-              properties[schema[key].name] = dateProperty;
-            }
-            break;
-          }
-          case 'select':
-          case 'multi_select': {
-            const selects = getTextContent(val);
-            if (selects[0]?.length) {
-              properties[schema[key].name] = selects.split(',');
-            }
-            break;
-          }
-          default:
-            break;
-        }
-      }
-    }
+    const properties = getDatabaseProperties(schema, rawProperties);
 
     if (properties) {
-      // 将表格中的字段映射成 英文
+      // 将表格中的字段映射成英文
       const config = {
         enable: (properties['启用'] || properties.Enable) === 'Yes',
         key: properties['配置名'] || properties.Name,
@@ -295,7 +271,6 @@ async function getConfigMapFromConfigPage(allPages) {
 
       // 只导入生效的配置
       if (config.enable) {
-        // console.log('[Notion配置]', config.key, config.value)
         notionConfig[config.key] = config.value;
       }
     }
@@ -310,16 +285,14 @@ function getSiteInfo({ collection, block }) {
   const pageCover = collection?.cover
     ? mapImgUrl(collection?.cover, block[idToUuid(BLOG.NOTION_PAGE_ID)]?.value)
     : BLOG.HOME_BANNER_IMAGE;
+
   let icon = collection?.icon ? mapImgUrl(collection?.icon, collection, 'collection') : BLOG.AVATAR;
-
-  // 用户头像压缩一下
+  // 压缩头像
   icon = compressImage(icon);
-
-  // 站点图标不能是emoji情
+  // 站点图标不能是 emoji
   const emojiPattern = /\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDE4F]/g;
-  if (!icon || emojiPattern.test(icon)) {
-    icon = BLOG.AVATAR;
-  }
+  if (!icon || emojiPattern.test(icon)) icon = BLOG.AVATAR;
+
   return { title, description, pageCover, icon };
 }
 
@@ -335,7 +308,7 @@ function getEmptyData(pageId) {
         status: 'Published',
         type: 'Post',
         slug: '13a171332816461db29d50e9f575b00d',
-        date: { start_date: '2023-04-24', lastEditedDay: '2023-04-24', tagItems: [] }
+        date: { start: '2023-04-24', end: '' }
       }
     ],
     allNavPages: [],
@@ -374,9 +347,7 @@ function getCustomNav({ allPages }) {
 
 function getCustomMenu({ collectionData }) {
   const menuPages = collectionData.filter(
-    (post) =>
-      (post?.type === BLOG.NOTION_PROPERTY_NAME.type_menu || post?.type === BLOG.NOTION_PROPERTY_NAME.type_sub_menu) &&
-      post.status === 'Published'
+    (post) => (post?.type === 'Menu' || post?.type === 'SubMenu') && post.status === 'Published'
   );
   const menus = [];
   if (menuPages && menuPages.length > 0) {
@@ -385,9 +356,9 @@ function getCustomMenu({ collectionData }) {
       if (e?.slug?.indexOf('http') === 0) {
         e.target = '_blank';
       }
-      if (e.type === BLOG.NOTION_PROPERTY_NAME.type_menu) {
+      if (e.type === 'Menu') {
         menus.push(e);
-      } else if (e.type === BLOG.NOTION_PROPERTY_NAME.type_sub_menu) {
+      } else if (e.type === 'SubMenu') {
         const parentMenu = menus[menus.length - 1];
         if (parentMenu) {
           if (parentMenu.subMenus) {
@@ -417,8 +388,7 @@ function getNavPages({ allPages }) {
     tags: item.tags || null,
     summary: item.summary || null,
     slug: item.slug,
-    pageIcon: item.pageIcon || '',
-    lastEditedDate: item.lastEditedDate
+    pageIcon: item.pageIcon || ''
   }));
 }
 
@@ -433,10 +403,8 @@ function getLatestPosts({ allPages, from, latestPostCount }) {
   const allPosts = allPages?.filter((page) => page.type === 'Post' && page.status === 'Published');
 
   const latestPosts = Object.create(allPosts).sort((a, b) => {
-    // const dateA = new Date(a?.lastEditedDate || a?.publishDate)
-    // const dateB = new Date(b?.lastEditedDate || b?.publishDate)
-    const dateA = new Date(a?.publishDate);
-    const dateB = new Date(b?.publishDate);
+    const dateA = new Date(a?.date.start);
+    const dateB = new Date(b?.date.start);
     return dateB - dateA;
   });
   return latestPosts.slice(0, latestPostCount);

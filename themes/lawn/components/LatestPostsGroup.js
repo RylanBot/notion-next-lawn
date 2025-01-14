@@ -49,7 +49,7 @@ const LatestPostsGroup = ({ latestPosts, siteInfo }) => {
                 <div className="w-full">
                   <div className={`text-sm line-clamp-2 menu-link`}>{post.title}</div>
                   <div className={`text-gray-400 text-xs ${selected ? '' : 'group-hover:text-gray-200'}`}>
-                    {post.publishDay}
+                    {post.date.start}
                   </div>
                 </div>
               </div>

@@ -199,7 +199,22 @@ export const LayoutSearch = (props) => {
  * 归档
  */
 export const LayoutArchive = (props) => {
-  const { archivePosts } = props;
+  const { posts } = props;
+
+  const groupPostsByYear = (posts) => {
+    const groupedPosts = {};
+
+    posts.forEach((post) => {
+      const year = new Date(post.date.start).getFullYear().toString();
+      if (!groupedPosts[year]) groupedPosts[year] = [];
+      groupedPosts[year].push(post);
+    });
+
+    return groupedPosts;
+  };
+
+  const archivePosts = groupPostsByYear(posts);
+
   return (
     <div className="pt-16 mx-2 mb-2">
       <Card className="w-full">

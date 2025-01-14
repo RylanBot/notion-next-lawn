@@ -37,6 +37,6 @@ export function getAllCategories({ allPages, categoryOptions, sliceCount = 0 }) 
 
 export function getCategoryOptions(schema) {
   if (!schema) return {};
-  const categorySchema = Object.values(schema).find((e) => e.name === BLOG.NOTION_PROPERTY_NAME.category);
+  const categorySchema = Object.values(schema).find((e) => e.name === 'category');
   return categorySchema?.options || [];
 }

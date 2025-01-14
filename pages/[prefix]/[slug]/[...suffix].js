@@ -43,12 +43,8 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params: { prefix, slug, suffix } }) {
-  let fullSlug = `${prefix}/${slug}/${suffix.join('/')}`.toLowerCase();
-  if (JSON.parse(BLOG.PSEUDO_STATIC)) {
-    if (!fullSlug.endsWith('.html')) {
-      fullSlug += '.html';
-    }
-  }
+  const fullSlug = `${prefix}/${slug}/${suffix.join('/')}`.toLowerCase();
+
   const from = `slug-props-${fullSlug}`;
   const props = await getGlobalData({ from });
 

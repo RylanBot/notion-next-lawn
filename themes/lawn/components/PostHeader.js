@@ -50,25 +50,21 @@ export default function PostHeader({ post, siteInfo }) {
           {/* 发布时间 */}
           <section className="flex-wrap shadow-text-md flex text-sm justify-center mt-4 text-white font-light leading-8">
             <div className="flex justify-center">
-              {post?.type !== 'Page' && (
+              {post.type !== 'Page' && (
                 <>
-                  <>
-                    {post?.publishDay && (
-                      <span className="mx-3">
-                        <i className="fas fa-hourglass-half pr-2"></i>
-                        <span>
-                          {locale.COMMON.POST_TIME}: {post.publishDay}
-                        </span>
-                      </span>
-                    )}
-                  </>
+                  <span className="mx-3">
+                    <i className="fas fa-hourglass-half pr-2"></i>
+                    <span>
+                      {locale.COMMON.POST_TIME}: {post.date.start}
+                    </span>
+                  </span>
                 </>
               )}
               {/* 最后更新 */}
-              {post.finished_date && (
+              {post.date.end && (
                 <div className="mx-3">
                   <i className="far fa-calendar-check pr-2"></i>
-                  {locale.COMMON.LAST_EDITED_TIME}: {post.finished_date}
+                  {locale.COMMON.LAST_EDITED_TIME}: {post.date.end}
                 </div>
               )}
             </div>

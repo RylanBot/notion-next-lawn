@@ -1,10 +1,7 @@
 import { idToUuid } from 'notion-utils';
-import BLOG from '@/blog.config';
 
 import { getPostBlocks } from './block';
 import { getPageCover } from './image';
-
-import { formatDate } from '../common/date';
 
 /**
  * 这个函数不能和其它代码放在一个文件
@@ -22,12 +19,9 @@ export async function getNotionPost(postId) {
     tags: [],
     title: postInfo?.properties?.title?.[0],
     status: 'Published',
-    createdTime: formatDate(new Date(postInfo.created_time).toString(), BLOG.LANG),
-    lastEditedDay: formatDate(new Date(postInfo?.last_edited_time).toString(), BLOG.LANG),
     fullWidth: postInfo?.fullWidth ?? false,
     page_cover: getPageCover(postInfo) ?? '',
-    date: { start_date: formatDate(new Date(postInfo?.last_edited_time).toString(), BLOG.LANG) },
-    finished_date: formatDate(new Date(postInfo?.finished_date).toString(), BLOG.LANG),
+    date: { start: '', end: '' },
     blockMap
   };
 }
