@@ -55,15 +55,17 @@ export async function getStaticPaths() {
   }
 
   const from = 'slug-paths';
-  const { allPages } = await getGlobalData({ from });
+  const { customMenu } = await getGlobalData({ from });
+  const paths = customMenu
+    ?.filter((row) => row.status === 'Published')
+    .map((row) => ({
+      params: {
+        prefix: row.slug.split('/')[1]
+      }
+    }));
+
   return {
-    paths: allPages
-      ?.filter((row) => row.slug.indexOf('/') < 0 && row.type.indexOf('Menu') < 0)
-      .map((row) => ({
-        params: {
-          prefix: row.slug
-        }
-      })),
+    paths: paths,
     fallback: true
   };
 }

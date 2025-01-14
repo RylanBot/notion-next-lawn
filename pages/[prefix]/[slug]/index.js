@@ -9,7 +9,7 @@ import { getPageTableOfContents } from '@/libs/notion/toc';
 import Slug from '..';
 
 /**
- * 解析二级目录 /article/about
+ * 解析二级目录 /article/cs123
  */
 const PrefixSlug = (props) => {
   return <Slug {...props} />;
@@ -25,15 +25,19 @@ export async function getStaticPaths() {
 
   const from = 'slug-paths';
   const { allPages } = await getGlobalData({ from });
+  const paths = allPages
+    ?.filter((row) => row.status === 'Published' && row.type === 'Post')
+    .map((row) => ({
+      params: {
+        // prefix: row.slug.split('/')[0],
+        // slug: row.slug.split('/')[1]
+        prefix: BLOG.POST_SUB_PATH,
+        slug: row.slug
+      }
+    }));
+
   return {
-    paths: allPages
-      ?.filter((row) => row.slug.indexOf('/') > 0 && row.type.indexOf('Menu') < 0)
-      .map((row) => ({
-        params: {
-          prefix: row.slug.split('/')[0],
-          slug: row.slug.split('/')[1]
-        }
-      })),
+    paths: paths,
     fallback: true
   };
 }
