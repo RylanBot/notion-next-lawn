@@ -12,7 +12,7 @@ const GlobalHead = (props) => {
   const router = useRouter();
 
   const META = getSEOMeta(props, router, useGlobal());
-  let URL = siteConfig('PATH')?.length ? `${siteConfig('LINK')}/${siteConfig('SUB_PATH', '')}` : siteConfig('LINK');
+  let URL = `${siteConfig('LINK')}/${siteConfig('POST_SUB_PATH')}`;
 
   let IMAGE;
   if (META) {

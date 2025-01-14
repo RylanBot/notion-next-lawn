@@ -6,6 +6,7 @@ import { getGlobalData } from '@/libs/notion/site';
 export const getServerSideProps = async (ctx) => {
   const { allPages } = await getGlobalData({ from: 'rss' });
   const LINK = siteConfig('LINK');
+  const POST_SUB_PATH = siteConfig('POST_SUB_PATH');
 
   // 默认
   const defaultFields = [
@@ -39,7 +40,7 @@ export const getServerSideProps = async (ctx) => {
   const postFields = allPages
     ?.filter((p) => p.status === 'Published')
     ?.map((post) => {
-      const slug = post.slug.startsWith('/') ? post?.slug?.slice(1) : post.slug;
+      const slug = post.slug.startsWith('/') ? post?.slug?.slice(1) : `${POST_SUB_PATH}/${post.slug}`;
       const date = (post.date.end ? post.date.end : post.date.start).replace(/\//g, '-');
       return {
         loc: `${LINK}/${slug}`,

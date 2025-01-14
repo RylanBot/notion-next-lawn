@@ -30,7 +30,7 @@ export default function CustomContextMenu(props) {
   function handleJumpToRandomPost() {
     const randomIndex = Math.floor(Math.random() * latestPosts.length);
     const randomPost = latestPosts[randomIndex];
-    router.push(`${siteConfig('SUB_PATH', '')}/${randomPost?.slug}`);
+    router.push(`${siteConfig('POST_SUB_PATH')}/${randomPost?.slug}`);
   }
 
   function handleBack() {

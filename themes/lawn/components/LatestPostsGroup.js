@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import LazyImage from '@/plugins/base/LazyImage';
 import { useGlobal } from '@/hooks/useGlobal';
 import { siteConfig } from '@/libs/common/config';
+import LazyImage from '@/plugins/base/LazyImage';
 
 import Card from './Card';
 
@@ -16,7 +16,7 @@ const LatestPostsGroup = ({ latestPosts, siteInfo }) => {
   const currentPath = useRouter().asPath;
   const { locale } = useGlobal();
 
-  const SUB_PATH = siteConfig('SUB_PATH', '');
+  const POST_SUB_PATH = siteConfig('POST_SUB_PATH');
 
   if (latestPosts?.length < 1 || currentPath === '/') return;
 
@@ -30,7 +30,7 @@ const LatestPostsGroup = ({ latestPosts, siteInfo }) => {
       </div>
 
       {latestPosts?.map((post) => {
-        const selected = currentPath === `${SUB_PATH}/${post.slug}`;
+        const selected = currentPath === `/${POST_SUB_PATH}/${post.slug}`;
         const headerImage = post?.pageCoverThumbnail ? post.pageCoverThumbnail : siteInfo?.pageCover;
         return (
           <div
@@ -41,7 +41,7 @@ const LatestPostsGroup = ({ latestPosts, siteInfo }) => {
                 : 'hover:bg-teal-400 hover:text-white dark:hover:bg-teal-500'
             } `}
           >
-            <Link title={post.title} href={`${SUB_PATH}/${post.slug}`} passHref className="flex">
+            <Link title={post.title} href={`/${POST_SUB_PATH}/${post.slug}`} passHref className="flex">
               <div className="w-20 h-14 overflow-hidden relative">
                 <LazyImage src={headerImage} className="object-cover w-full h-full rounded-sm" />
               </div>

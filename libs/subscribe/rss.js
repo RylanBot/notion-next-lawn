@@ -26,7 +26,7 @@ export async function generateRss(posts) {
   const feed = new Feed({
     title: BLOG.TITLE,
     description: BLOG.DESCRIPTION,
-    link: `${BLOG.LINK}/${BLOG.SUB_PATH}`,
+    link: `${BLOG.LINK}`,
     language: BLOG.LANG,
     favicon: `${BLOG.LINK}${BLOG.BLOG_FAVICON}`,
     copyright: `All rights reserved ${year}, ${BLOG.AUTHOR}`,
@@ -39,7 +39,7 @@ export async function generateRss(posts) {
   for (const post of posts) {
     feed.addItem({
       title: post.title,
-      link: `${BLOG.LINK}/${post.slug}`,
+      link: `${BLOG.LINK}/${BLOG.POST_SUB_PATH}/${post.slug}`,
       description: post.summary,
       content: await createFeedContent(post),
       date: post.date.start

@@ -1,12 +1,12 @@
-import { useState } from 'react';
-import Link from 'next/link';
 import { siteConfig } from '@/libs/common/config';
+import Link from 'next/link';
+import { useState } from 'react';
 
 /**
  * 博客每年归档列表
  */
 const BlogPostArchive = ({ posts = [], year, collapsed }) => {
-  const SUB_PATH = siteConfig('SUB_PATH', '');
+  const POST_SUB_PATH = siteConfig('POST_SUB_PATH');
   const [isCollapsed, setIsCollapsed] = useState(collapsed);
 
   if (!posts || posts.length === 0) return <></>;
@@ -26,7 +26,7 @@ const BlogPostArchive = ({ posts = [], year, collapsed }) => {
             <div id={post.date.start}>
               <span className="text-gray-600 dark:text-gray-300">{post.date.start}</span> &nbsp;
               <Link
-                href={`${SUB_PATH}/${post.slug}`}
+                href={`/${POST_SUB_PATH}/${post.slug}`}
                 passHref
                 className="notion-link leading-loose hover:font-bold hover:text-teal-500 dark:hover:text-teal-300"
               >

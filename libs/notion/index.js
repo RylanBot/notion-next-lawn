@@ -11,7 +11,7 @@ export async function getNotionPost(postId) {
   const blockMap = await getPostBlocks(postId, 'slug');
   if (!blockMap) return null;
 
-  const postInfo = blockMap?.block?.[idToUuid(postId)].value;
+  const postInfo = blockMap?.block?.[idToUuid(postId)]?.value;
   return {
     id: postId,
     type: postInfo,

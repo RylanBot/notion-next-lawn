@@ -67,8 +67,9 @@ export const getPageProperties = async (id, value, schema, tagOptions) => {
    */
 
   /* 格式化参数 */
+  const createdTime = new Date(value.created_time).toISOString().split('T')[0];
   properties.date = {
-    start: String(properties.date?.start_date ?? value.created_time).replace(/-/g, '/'),
+    start: String(properties.date?.start_date ?? createdTime).replace(/-/g, '/'),
     end: String(properties.date?.end_date ?? '').replace(/-/g, '/')
   };
 

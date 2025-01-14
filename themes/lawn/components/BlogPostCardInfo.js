@@ -10,7 +10,7 @@ import TagItemMini from './TagItemMini';
  * 博客列表的文字内容
  */
 const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary }) => {
-  const SUB_PATH = siteConfig('SUB_PATH', '');
+  const POST_SUB_PATH = siteConfig('POST_SUB_PATH');
 
   return (
     <div
@@ -21,7 +21,7 @@ const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary }) => 
       <div>
         {/* 标题 */}
         <Link
-          href={`${SUB_PATH}/${post.slug}`}
+          href={`/${POST_SUB_PATH}/${post.slug}`}
           passHref
           className={`mb-2 line-clamp-2 replace cursor-pointer text-xl leading-tight font-semibold text-teal-500 hover:text-teal-400 dark:text-teal-400 dark:hover:text-teal-300 ${
             showPreview ? 'text-center' : ''

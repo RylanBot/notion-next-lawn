@@ -93,18 +93,6 @@ export function checkContainHttp(str) {
   }
 }
 
-/**
- * 检查一个字符串是否 notionid : 32位，仅由数字英文构成
- */
-export function checkStrIsNotionId(str) {
-  if (!str) {
-    return false;
-  }
-  // 使用正则表达式进行匹配
-  const regex = /^[a-zA-Z0-9]{32}$/;
-  return regex.test(str);
-}
-
 // 截取 url 中最后一个 / 后面的内容
 export function getLastPartOfUrl(url) {
   if (!url) {

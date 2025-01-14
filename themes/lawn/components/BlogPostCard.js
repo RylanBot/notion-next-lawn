@@ -14,7 +14,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
     post.pageCoverThumbnail = siteInfo?.pageCover;
   }
 
-  const SUB_PATH = siteConfig('SUB_PATH', '');
+  const POST_SUB_PATH = siteConfig('POST_SUB_PATH');
   const SHOW_POST_PREVIEW = siteConfig('LAWN_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap;
   const SHOW_POST_COVER = siteConfig('LAWN_POST_LIST_COVER', null, CONFIG) && post?.pageCoverThumbnail && !SHOW_POST_PREVIEW;
   const POST_LIST_IMG_CROSSOVER = siteConfig('LAWN_POST_LIST_IMG_CROSSOVER', null, CONFIG);
@@ -57,7 +57,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
               index % 2 === 0 ? 'lg:border-l-2' : 'lg:border-r-2'
             }`}
           >
-            <Link href={`${SUB_PATH}/${post.slug}`}>
+            <Link href={`/${POST_SUB_PATH}/${post.slug}`}>
               <LazyImage
                 priority={index === 1}
                 src={post?.pageCoverThumbnail}

@@ -25,6 +25,7 @@ const MusicPlayer = dynamic(() => import('@/plugins/base/Player'), { ssr: false 
 const ExternalPlugin = (props) => {
   const router = useRouter();
   
+  const POST_SUB_PATH = siteConfig('POST_SUB_PATH');
   const ANALYTICS_VERCEL = siteConfig('ANALYTICS_VERCEL');
   const ANALYTICS_BUSUANZI_ENABLE = siteConfig('ANALYTICS_BUSUANZI_ENABLE');
   const ANALYTICS_CNZZ_ID = siteConfig('ANALYTICS_CNZZ_ID');
@@ -39,7 +40,7 @@ const ExternalPlugin = (props) => {
 
   useEffect(() => {
     if(!isBrowser) return;
-    handleInternalUrls(props?.allNavPages);
+    handleInternalUrls(props?.allNavPages, POST_SUB_PATH);
   }, [router, isBrowser]);
 
   return <>

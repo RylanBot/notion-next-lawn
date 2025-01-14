@@ -1,6 +1,5 @@
 import { idToUuid } from 'notion-utils';
 
-import BLOG from '@/blog.config';
 import { getLastPartOfUrl } from '../common/util';
 
 export const getAllPageIds  = (collectionQuery, collectionId, collectionView, viewIds) => {
@@ -43,7 +42,7 @@ export const mapPageUrl = (id) => {
 /**
  * 处理页面内的链接跳转
  */
-export const handleInternalUrls = (allPages) => {
+export const handleInternalUrls = (allPages, subPath) => {
   // 引用其它 Notion 文章
   const notionLinks = document?.getElementById('notion-article')?.querySelectorAll('a.notion-link');
   if (!notionLinks) return;
@@ -58,7 +57,8 @@ export const handleInternalUrls = (allPages) => {
 
   const url = window.location.pathname;
   const prefix = url.split('/')[1];
-  if (prefix !== BLOG.POST_URL_PREFIX) return;
+  if (prefix !== subPath) return;
+
   // 子页面跟随父页面的 slug
   const notionPageLinks = document?.getElementById('notion-article')?.querySelectorAll('a.notion-page-link');
   notionPageLinks.forEach(link => {

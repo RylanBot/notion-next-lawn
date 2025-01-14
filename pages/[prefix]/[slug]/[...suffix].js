@@ -1,9 +1,6 @@
-import { idToUuid } from 'notion-utils';
-
 import BLOG from '@/blog.config';
 import { uploadDataToAlgolia } from '@/plugins/algolia/update';
 
-import { getLastPartOfUrl } from '@/libs/common/util';
 import { getNotionPost } from '@/libs/notion';
 import { getPostBlocks } from '@/libs/notion/block';
 import { getGlobalData } from '@/libs/notion/site';
@@ -35,7 +32,7 @@ export async function getStaticPaths() {
         params: {
           prefix: row.slug.split('/')[0],
           slug: row.slug.split('/')[1],
-          suffix: row.slug.split('/').slice(1)
+          suffix: row.slug.split('/')[2]
         }
       })),
     fallback: true
@@ -43,23 +40,21 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params: { prefix, slug, suffix } }) {
-  const fullSlug = `${prefix}/${slug}/${suffix.join('/')}`.toLowerCase();
+  const fullSlug = `${prefix}/${slug}/${suffix}`;
 
   const from = `slug-props-${fullSlug}`;
   const props = await getGlobalData({ from });
 
+  const firstSuffix = suffix[0];
   // 在数据库列表内查找文章
   props.post = props?.allPages?.find((p) => {
-    return p.slug.toLowerCase() === fullSlug || p.id === idToUuid(fullSlug);
+    return p.slug.toLowerCase() === `${slug}/${firstSuffix}`.toLowerCase();
   });
 
   // 处理非数据库文章的信息 -> 是否为子页面
-  if (!props?.post) {
-    const pageId = getLastPartOfUrl(fullSlug);
-    if (pageId.length >= 32) {
-      const post = await getNotionPost(pageId);
-      props.post = post;
-    }
+  if (!props?.post && firstSuffix.length >= 32) {
+    const post = await getNotionPost(firstSuffix);
+    props.post = post;
   }
 
   // 无法获取文章

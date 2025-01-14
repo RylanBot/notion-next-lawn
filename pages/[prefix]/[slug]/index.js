@@ -1,5 +1,3 @@
-import { idToUuid } from 'notion-utils';
-
 import BLOG from '@/blog.config';
 import { uploadDataToAlgolia } from '@/plugins/algolia/update';
 
@@ -41,23 +39,20 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params: { prefix, slug } }) {
-  const fullSlug = `${prefix}/${slug}`.toLowerCase();
+  const fullSlug = `${prefix}/${slug}`;
 
   const from = `slug-props-${fullSlug}`;
   const props = await getGlobalData({ from });
 
   // 在数据库列表内查找文章
   props.post = props?.allPages?.find((p) => {
-    return p.slug.toLowerCase() === fullSlug || p.id === idToUuid(fullSlug);
+    return p.slug.toLowerCase() === slug.toLowerCase();
   });
 
   // 处理非数据库文章的信息 -> 是否为子页面
-  if (!props?.post) {
-    const pageId = slug.slice(-1)[0];
-    if (pageId.length >= 32) {
-      const post = await getNotionPost(pageId);
-      props.post = post;
-    }
+  if (!props?.post && slug.length >= 32) {
+    const post = await getNotionPost(slug);
+    props.post = post;
   }
 
   // 无法获取文章

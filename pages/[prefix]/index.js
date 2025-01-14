@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import { idToUuid } from 'notion-utils';
 import { useEffect, useState } from 'react';
 import { isBrowser } from 'react-notion-x';
 
@@ -70,23 +69,22 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params: { prefix } }) {
-  const fullSlug = prefix.toLowerCase(); //（不区分大小写）统一转小写
+  const fullSlug = prefix;
 
   const from = `slug-props-${fullSlug}`;
   const props = await getGlobalData({ from });
-  // 在列表内查找文章
+
+  // 在数据库列表内查找文章（不区分大小写 -> 统一转小写）
   props.post = props?.allPages?.find((p) => {
-    return p.slug.toLowerCase() === fullSlug || p.id === idToUuid(fullSlug);
+    return p.slug.toLowerCase() === prefix.toLowerCase();
   });
 
-  // 处理非列表内文章的内信息
-  if (!props?.post) {
-    const pageId = prefix;
-    if (pageId.length >= 32) {
-      const post = await getNotionPost(pageId);
-      props.post = post;
-    }
+  // 处理非数据库文章的信息 -> 是否为子页面
+  if (!props?.post && prefix.length >= 32) {
+    const post = await getNotionPost(prefix);
+    props.post = post;
   }
+
   // 无法获取文章
   if (!props?.post) {
     props.post = null;
