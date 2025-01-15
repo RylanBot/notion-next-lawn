@@ -4,7 +4,7 @@ import BLOG from '@/blog.config';
 import { getLayoutByTheme } from '@/themes';
 
 import { siteConfig } from '@/libs/common/config';
-import { formatSlugName } from '@/libs/common/util';
+import { formatNameToSlug } from '@/libs/common/util';
 import { getGlobalData } from '@/libs/notion/site';
 
 const Tag = (props) => {
@@ -20,7 +20,7 @@ export async function getStaticProps({ params: { tag, page } }) {
   // 过滤状态
   props.posts = props.allPages
     ?.filter((page) => page.type === 'Post' && page.status === 'Published')
-    .filter((post) => post.tags?.some((rawTag) => formatSlugName(rawTag) === tag) ?? false);
+    .filter((post) => post.tags?.some((rawTag) => formatNameToSlug(rawTag) === tag) ?? false);
  
     // 处理文章数
   props.postCount = props.posts.length;
@@ -50,7 +50,7 @@ export async function getStaticPaths() {
     const totalPages = Math.ceil(postCount / BLOG.POSTS_PER_PAGE);
     if (totalPages > 1) {
       for (let i = 1; i <= totalPages; i++) {
-        paths.push({ params: { tag: formatSlugName(tag.name), page: '' + i } });
+        paths.push({ params: { tag: formatNameToSlug(tag.name), page: '' + i } });
       }
     }
   });

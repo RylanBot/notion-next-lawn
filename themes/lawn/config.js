@@ -26,10 +26,7 @@ const CONFIG = {
   LAWN_WIDGET_TO_TOP: true, // 回到顶部
   LAWN_WIDGET_TO_COMMENT: false, // 跳到评论区
   LAWN_WIDGET_DARK_MODE: true, // 夜间模式
-  LAWN_WIDGET_TOC: true, // 移动端悬浮目录
-
-  // 其它
-  LAWN_SLOT_BAR: false
-}
+  LAWN_WIDGET_TOC: true // 移动端悬浮目录
+};
 
 export default CONFIG;

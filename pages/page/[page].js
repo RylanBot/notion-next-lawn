@@ -7,6 +7,9 @@ import { siteConfig } from '@/libs/common/config';
 import { getPostBlocks } from '@/libs/notion/block';
 import { getGlobalData } from '@/libs/notion/site';
 
+/**
+ * 文章分页
+ */
 export default function Page(props) {
   const router = useRouter();
   const THEME = siteConfig('THEME');

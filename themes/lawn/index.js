@@ -146,7 +146,7 @@ export const LayoutPostList = (props) => {
   const POST_LIST = siteConfig('POST_LIST_STYLE') === 'page';
   return (
     <div>
-      <SlotBar visible={LAWN_SLOT_BAR} {...props} />
+      <SlotBar {...props} />
       {POST_LIST ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
     </div>
   );

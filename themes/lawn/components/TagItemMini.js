@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 import { siteConfig } from '@/libs/common/config';
-import { formatSlugName, isChinese } from '@/libs/common/util';
+import { formatNameToSlug, isChinese } from '@/libs/common/util';
 
 const TagItemMini = ({ tag, selected = false }) => {
   let TAG_SLUG_MAP = {};
@@ -14,7 +14,7 @@ const TagItemMini = ({ tag, selected = false }) => {
 
   return (
     <Link
-      href={`/tag/${formatSlugName(tag.name)}`}
+      href={`/tag/${formatNameToSlug(tag.name)}`}
       passHref
       className={`h-5 inline-flex items-center rounded duration-200 my-1 mr-2 py-0.5 px-1 text-xs whitespace-nowrap ${
         selected

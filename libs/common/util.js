@@ -1,11 +1,24 @@
 import { isBrowser } from 'react-notion-x';
 
-export const formatSlugName = (name) => name.replace(/\s+/g, '-').toLowerCase();
+/**
+ * 单词 -> 连字符
+ */
+export const formatNameToSlug = (name) => name.replace(/\s+/g, '-').toLowerCase();
+
+/**
+ * 连字符 -> 单词
+ */
+export const formatSlugToName = (slug) => {
+  return slug
+    .split('-')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+};
 
 export const isChinese = isBrowser && navigator.language.startsWith('zh');
 
 /**
- * google机器人
+ * Google 机器人
  */
 export const isSearchEngineBot = () => {
   if (typeof navigator === 'undefined') {
@@ -22,9 +35,7 @@ export const isSearchEngineBot = () => {
  */
 export const isMobile = () => {
   let isMobile = false;
-  if (!isBrowser) {
-    return isMobile;
-  }
+  if (!isBrowser) return isMobile;
 
   // 这个判断会引发 TypeError: navigator.userAgentData.mobile is undefined 问题，导致博客无法正常工作
   // if (!isMobile && navigator.userAgentData.mobile) {
@@ -60,51 +71,15 @@ export function sliceUrlFromHttp(str) {
   }
 }
 
-/**
- * 将相对路径的 url test 转为绝对路径 /test
- * 判断 url 如果不是以 / 开头，则拼接一个 /
- * 同时如果开头有重复的多个 // ，则只保留一个
- */
-export function convertUrlStartWithOneSlash(str) {
-  if (!str) {
-    return '#';
-  }
-  // 判断url是否以 / 开头
-  if (!str.startsWith('/')) {
-    // 如果不是，则在前面拼接一个 /
-    str = '/' + str;
-  }
-  // 移除开头的多个连续斜杠，只保留一个
-  str = str.replace(/\/+/g, '/');
-  return str;
-}
-
-/**
- * 检查是否外链
- */
-export function checkContainHttp(str) {
-  // 检查字符串是否包含http
-  if (str?.includes('http:') || str?.includes('https:')) {
-    // 如果包含，找到http的位置
-    return str?.indexOf('http') > -1;
-  } else {
-    // 不包含
-    return false;
-  }
-}
-
 // 截取 url 中最后一个 / 后面的内容
 export function getLastPartOfUrl(url) {
-  if (!url) {
-    return '';
-  }
+  if (!url) return '';
+
   // 找到最后一个斜杠的位置
   const lastSlashIndex = url.lastIndexOf('/');
 
   // 如果找不到斜杠，则返回整个字符串
-  if (lastSlashIndex === -1) {
-    return url;
-  }
+  if (lastSlashIndex === -1) return url;
 
   // 截取最后一个斜杠后面的内容
   const lastPart = url.substring(lastSlashIndex + 1);
@@ -156,7 +131,7 @@ export function loadExternalResource(url, type) {
 }
 
 /**
- * 查询url中的query参数
+ * 查询 URL 中的 query 参数
  */
 export function getQueryVariable(key) {
   const query = isBrowser ? window.location.search.substring(1) : '';
@@ -189,6 +164,8 @@ export function mergeDeep(target, ...sources) {
   if (!sources.length) return target;
   const source = sources.shift();
 
+  const isObject = (item) => item && typeof item === 'object' && !Array.isArray(item);
+
   if (isObject(target) && isObject(source)) {
     for (const key in source) {
       if (isObject(source[key])) {
@@ -200,13 +177,6 @@ export function mergeDeep(target, ...sources) {
     }
   }
   return mergeDeep(target, ...sources);
-}
-
-/**
- * 是否对象
- */
-export function isObject(item) {
-  return item && typeof item === 'object' && !Array.isArray(item);
 }
 
 /**
@@ -245,52 +215,3 @@ export function deepClone(obj) {
  * 延时
  */
 export const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-/**
- * 获取从第1页到指定页码的文章
- */
-export const getListByPage = function (list, pageIndex, pageSize) {
-  return list.slice(0, pageIndex * pageSize);
-};
-
-/**
- * 扫描页面上的所有文本节点，将url格式的文本转为可点击链接
- */
-export const scanAndConvertToLinks = (node) => {
-  if (node.nodeType === Node.TEXT_NODE) {
-    const text = node.textContent;
-    const urlRegex = /https?:\/\/[^\s]+/g;
-    let lastIndex = 0;
-    let match;
-
-    const newNode = document.createElement('span');
-
-    while ((match = urlRegex.exec(text)) !== null) {
-      const beforeText = text.substring(lastIndex, match.index);
-      const url = match[0];
-
-      if (beforeText) {
-        newNode.appendChild(document.createTextNode(beforeText));
-      }
-
-      const link = document.createElement('a');
-      link.href = url;
-      link.target = '_blank';
-      link.textContent = url;
-
-      newNode.appendChild(link);
-
-      lastIndex = urlRegex.lastIndex;
-    }
-
-    if (lastIndex < text.length) {
-      newNode.appendChild(document.createTextNode(text.substring(lastIndex)));
-    }
-
-    node.parentNode.replaceChild(newNode, node);
-  } else if (node.nodeType === Node.ELEMENT_NODE) {
-    for (const childNode of node.childNodes) {
-      scanAndConvertToLinks(childNode);
-    }
-  }
-};

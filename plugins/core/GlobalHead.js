@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 
 import { useGlobal } from '@/hooks/useGlobal';
 import { siteConfig } from '@/libs/common/config';
+import { formatSlugToName, isChinese } from '@/libs/common/util';
 
 /**
  * 页面的 Head，用于促进 SEO
@@ -44,7 +45,7 @@ const GlobalHead = (props) => {
       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0" />
       <meta name="robots" content="follow, index" />
       <meta charSet="UTF-8" />
-      {SEO_GOOGLE_SITE_VERIFICATION && <meta name="google-site-verification" content={SEO_GOOGLE_SITE_VERIFICATION} />}
+
       <meta name="keywords" content={KEYWORDS} />
       <meta name="description" content={DESCRIPTION} />
       <meta property="og:locale" content={LANG} />
@@ -58,7 +59,9 @@ const GlobalHead = (props) => {
       <meta name="twitter:description" content={DESCRIPTION} />
       <meta name="twitter:title" content={TITLE} />
 
+      {SEO_GOOGLE_SITE_VERIFICATION && <meta name="google-site-verification" content={SEO_GOOGLE_SITE_VERIFICATION} />}
       {ANALYTICS_BUSUANZI_ENABLE && <meta name="referrer" content="no-referrer-when-downgrade" />}
+
       {META?.type === 'Post' && (
         <>
           <meta property="article:author" content={AUTHOR} />
@@ -77,6 +80,14 @@ const getSEOMeta = (props, router, global) => {
   const { locale } = global;
   const { post, siteInfo, tag, category, page } = props;
   const keyword = router?.query?.s;
+
+  let CATEGORY_SLUG_MAP = {};
+  let TAG_SLUG_MAP = {};
+  try {
+    // 确保 JSON 字符串格式正确
+    CATEGORY_SLUG_MAP = JSON.parse(siteConfig('CATEGORY_SLUG_MAP', {}));
+    TAG_SLUG_MAP = JSON.parse(siteConfig('TAG_SLUG_MAP', {}));
+  } catch (error) {}
 
   switch (router.route) {
     case '/':
@@ -104,16 +115,11 @@ const getSEOMeta = (props, router, global) => {
         type: 'website'
       };
     case '/category/[category]':
-      return {
-        title: `${category} | ${locale.COMMON.CATEGORY} | ${siteInfo?.title}`,
-        description: `${siteInfo?.description}`,
-        slug: 'category/' + category,
-        image: `${siteInfo?.pageCover}`,
-        type: 'website'
-      };
     case '/category/[category]/page/[page]':
+      let categoryName = formatSlugToName(category ?? '');
+      categoryName = isChinese ? CATEGORY_SLUG_MAP[categoryName] ?? categoryName : categoryName;
       return {
-        title: `${category} | ${locale.COMMON.CATEGORY} | ${siteInfo?.title}`,
+        title: `${categoryName} | ${locale.COMMON.CATEGORY} | ${siteInfo?.title}`,
         description: `${siteInfo?.description}`,
         slug: 'category/' + category,
         image: `${siteInfo?.pageCover}`,
@@ -121,21 +127,16 @@ const getSEOMeta = (props, router, global) => {
       };
     case '/tag/[tag]':
     case '/tag/[tag]/page/[page]':
+      let tagName = formatSlugToName(tag ?? '');
+      tagName = isChinese ? TAG_SLUG_MAP[tagName] ?? tagName : tagName;
       return {
-        title: `${tag} | ${locale.COMMON.TAGS} | ${siteInfo?.title}`,
+        title: `${tagName} | ${locale.COMMON.TAGS} | ${siteInfo?.title}`,
         description: `${siteInfo?.description}`,
         image: `${siteInfo?.pageCover}`,
         slug: 'tag/' + tag,
         type: 'website'
       };
     case '/search':
-      return {
-        title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${siteInfo?.title}`,
-        description: `${siteInfo?.description}`,
-        image: `${siteInfo?.pageCover}`,
-        slug: 'search',
-        type: 'website'
-      };
     case '/search/[keyword]':
     case '/search/[keyword]/page/[page]':
       return {

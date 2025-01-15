@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 
 import { useGlobal } from '@/hooks/useGlobal';
-import { formatSlugName } from '@/libs/common/util';
+import { formatNameToSlug } from '@/libs/common/util';
 
 import Card from './Card';
 import CategoryMini from './CategoryMini';
@@ -22,7 +22,7 @@ const CategoryGroup = () => {
 
         <div id="category-list" className="dark:border-gray-600 flex flex-col mx-4">
           {categoryOptions.map((category) => {
-            const selected = currentCategory === formatSlugName(category.name);
+            const selected = currentCategory === formatNameToSlug(category.name);
             return (
               <CategoryMini
                 key={category.name}

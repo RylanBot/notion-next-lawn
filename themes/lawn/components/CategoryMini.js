@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 import { siteConfig } from '@/libs/common/config';
-import { formatSlugName, isChinese } from '@/libs/common/util';
+import { formatNameToSlug, isChinese } from '@/libs/common/util';
 
 const CategoryMini = ({ name, count, icon, className }) => {
   let CATEGORY_SLUG_MAP = {};
@@ -12,7 +12,7 @@ const CategoryMini = ({ name, count, icon, className }) => {
 
   return (
     <>
-      <Link className={className} href={`/category/${formatSlugName(name)}`} passHref>
+      <Link className={className} href={`/category/${formatNameToSlug(name)}`} passHref>
         {icon && <i className={`${icon}`} />}
         {isChinese ? CATEGORY_SLUG_MAP[name] ?? name : name}
         {count && <>({count})</>}

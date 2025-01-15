@@ -4,7 +4,7 @@ import BLOG from '@/blog.config';
 import { getLayoutByTheme } from '@/themes';
 
 import { siteConfig } from '@/libs/common/config';
-import { formatSlugName } from '@/libs/common/util';
+import { formatNameToSlug } from '@/libs/common/util';
 import { getGlobalData } from '@/libs/notion/site';
 
 export default function Category(props) {
@@ -21,7 +21,7 @@ export async function getStaticProps({ params: { category } }) {
   // 过滤状态
   props.posts = props.allPages
     ?.filter((page) => page.type === 'Post' && page.status === 'Published')
-    .filter((post) => formatSlugName(post.category) === category);
+    .filter((post) => formatNameToSlug(post.category) === category);
 
   // 处理文章页数
   props.postCount = props.posts.length;
@@ -47,7 +47,7 @@ export async function getStaticPaths() {
   const { categoryOptions } = await getGlobalData({ from });
   return {
     paths: Object.keys(categoryOptions).map((category) => ({
-      params: { category: formatSlugName(categoryOptions[category]?.name) }
+      params: { category: formatNameToSlug(categoryOptions[category]?.name) }
     })),
     fallback: true
   };
