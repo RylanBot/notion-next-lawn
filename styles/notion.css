@@ -2246,6 +2246,19 @@ figure.notion-asset-wrapper.notion-asset-wrapper-video > div {
   height: 100% !important;
 }
 
+.notion-page-icon-inline {
+  @apply flex justify-center items-center;
+}
+
+/* 数据库 Gallery 视图*/
 .notion-gallery {
   margin: 0px 5px;
+}
+
+.notion-gallery .notion-property.notion-property-text {
+  @apply block leading-tight whitespace-normal;
+}
+
+.notion-gallery .notion-collection-card-body{
+  @apply pb-2;
 }
