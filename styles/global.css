@@ -134,6 +134,7 @@ nav {
   pointer-events: none;
 }
 
+/* ----- Waline START -----*/
 [data-waline] p {
   color: var(--waline-color);
   @apply dark:text-gray-200 !important;
@@ -161,8 +162,6 @@ nav {
   margin: -0.125em 0.25em;
 }
 
-/* ----- waline START -----*/
-
 .wl-header {
   font-size: 1.1em !important;
 }
@@ -182,7 +181,10 @@ nav {
   background-position: right bottom !important;
 }
 
-/* ----- waline END -----*/
+.wl-power {
+  display: none;
+}
+/* ----- Waline END -----*/
 
 /* Webmention style */
 .webmention-block {
