@@ -1571,6 +1571,9 @@ div[class*='notion-property-checkbox-checked'] svg {
 .notion-collection-card {
   cursor: default !important;
 }
+.notion-collection-card:is(.dark *) {
+  background-color: black !important;
+}
 
 .notion-collection-card-property .notion-link {
   border-bottom: 0 none;
