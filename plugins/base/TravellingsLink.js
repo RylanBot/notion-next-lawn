@@ -76,7 +76,7 @@ const TravellingsLink = () => {
               href="https://www.travellings.cn/go.html"
               className="float-right cursor-pointer"
             >
-              <LazyImage className="w-28 h-7" src={TRAVEL_IMAGE} />
+              <img className="w-28 h-7" src={TRAVEL_IMAGE} />
             </a>
           </div>
         </div>

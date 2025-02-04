@@ -1,22 +1,32 @@
 import { siteConfig } from '@/libs/common/config';
 
 const Footer = () => {
-  const since = siteConfig('SINCE');
+  const AUTHOR = siteConfig('AUTHOR');
+  const SINCE = siteConfig('SINCE');
   const BEI_AN = siteConfig('BEI_AN');
   const ANALYTICS_BUSUANZI_ENABLE = siteConfig('ANALYTICS_BUSUANZI_ENABLE');
 
-  const d = new Date();
-  const currentYear = d.getFullYear();
-  const copyrightDate = parseInt(since) < currentYear ? since + '-' + currentYear : currentYear;
+  const currentYear = new Date().getFullYear();
+  const copyrightDate = parseInt(SINCE) < currentYear ? SINCE + ' - ' + currentYear : currentYear;
 
   return (
-    <footer className="z-10 pt-4 pb-2 flex flex-col items-center justify-center w-full text-sm relative dark:bg-black bg-lawn-light-gray text-gray-600 dark:text-gray-100">
-      <div className="mb-2" >
-        <i className="fas fa-copyright" />
-        <span> {`${copyrightDate}`}</span>
+    <footer className="z-10 py-1 flex flex-col items-center justify-center w-full text-sm relative bg-teal-700 dark:bg-lawn-black-gray text-white">
+      <div className="flex items-center justify-center my-1 space-x-6 font-oleo">
+        <div className="flex items-center">
+          <i className="fa-solid fa-robot mx-1" />
+          <span className="text-base">{AUTHOR}</span>
+        </div>
+        <div className="flex items-center">
+          <i className="fas fa-copyright mx-1" />
+          <span>{copyrightDate}</span>
+        </div>
+        {/* 公共版权协议 */}
+        <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank">
+          <img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" />
+        </a>
       </div>
       {BEI_AN && (
-        <div className="mb-2">
+        <div className="my-1">
           <i className="fas fa-shield-alt" />
           <a href="https://beian.miit.gov.cn/" className="px-1 my-2">
             {BEI_AN}
@@ -25,7 +35,7 @@ const Footer = () => {
         </div>
       )}
       {ANALYTICS_BUSUANZI_ENABLE && (
-        <div className='mb-2'>
+        <div className="my-1">
           <span className="hidden busuanzi_container_site_pv mx-1">
             <i className="fas fa-eye" />
             <span className="px-1 busuanzi_value_site_pv"> </span>
@@ -36,7 +46,7 @@ const Footer = () => {
           </span>
         </div>
       )}
-    </footer >
+    </footer>
   );
 };
 
