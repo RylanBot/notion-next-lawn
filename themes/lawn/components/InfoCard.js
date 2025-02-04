@@ -1,5 +1,5 @@
-import LazyImage from '@/plugins/base/LazyImage';
 import { siteConfig } from '@/libs/common/config';
+import LazyImage from '@/plugins/base/LazyImage';
 
 import Card from './Card';
 // import MenuGroupCard from './MenuGroupCard';
@@ -15,19 +15,19 @@ function InfoCard(props) {
   const BIO = siteConfig('BIO');
 
   return (
-    <div className={`max-md:hidden ${className}`}>
+    <div className={`max-md:hidden ${className || ''}`}>
       <Card>
-        <div className="flex justify-center items-center py-4">
+        <div className="flex justify-center items-center py-2">
           <LazyImage
             src={siteInfo?.icon}
             alt={AUTHOR}
             priority={true}
             fetchpriority="high"
-            className="rounded-full w-36 h-36"
+            className="rounded-full w-28 h-28"
           />
         </div>
-        <div className="font-oleo font-medium text-center text-2xl mb-3">{AUTHOR}</div>
-        <div className="text-sm text-center mb-6">{BIO}</div>
+        <div className="font-oleo font-medium text-center text-2xl mb-2">{AUTHOR}</div>
+        <div className="text-sm text-center mb-4">{BIO}</div>
         {/* <MenuGroupCard {...props} /> */}
         <SocialButton />
       </Card>

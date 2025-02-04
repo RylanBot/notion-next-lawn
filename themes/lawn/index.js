@@ -103,7 +103,7 @@ export const LayoutBase = (props) => {
               }`}
             >
               <div
-                className={`w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10 ${
+                className={`w-full mx-auto lg:flex lg:space-x-6 justify-center relative z-10 ${
                   LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : ''
                 }`}
               >

@@ -70,12 +70,12 @@ const Catalog = ({ toc }) => {
               <a
                 key={tocIds[index]}
                 href={`#${tocIds[index]}`}
-                className={`notion-table-of-contents-item duration-300 transform font-light dark:text-gray-200 notion-table-of-contents-item-indent-level-${tocItem.indentLevel}`}
+                className={`rounded-sm notion-table-of-contents-item duration-300 transform font-light dark:text-gray-200 notion-table-of-contents-item-indent-level-${tocItem.indentLevel}`}
                 title={tocItem.text}
               >
                 <span
-                  style={{ display: 'inline-block', marginLeft: tocItem.indentLevel * 16 }}
-                  className={`truncate ${
+                  style={{ marginLeft: tocItem.indentLevel * 16 }}
+                  className={`inline-block truncate ${
                     activeId === tocIds[index] ? 'font-bold text-teal-600 dark:text-teal-400' : ''
                   }`}
                 >

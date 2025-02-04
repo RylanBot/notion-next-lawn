@@ -19,7 +19,7 @@ const SocialButton = () => {
   ];
 
   return (
-    <div className="w-full justify-center flex-wrap flex my-2">
+    <div className="w-full justify-center flex-wrap flex">
       <div className="space-x-3 text-xl text-gray-600 dark:text-gray-300 ">
         {socialMedia.map(
           ({ name, icon, url }) =>

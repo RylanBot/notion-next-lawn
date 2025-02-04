@@ -298,3 +298,13 @@ a.avatar-wrapper {
   border-color: transparent;
   @apply border-l-teal-500 dark:border-l-teal-600;
 }
+
+/* 允许滚动但隐藏滚动条  */
+.scrollbar-hidden {
+  overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
