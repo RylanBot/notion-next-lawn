@@ -1,4 +1,3 @@
-import throttle from 'lodash/throttle';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 
@@ -39,30 +38,24 @@ const SideRight = (props) => {
     if (!sideRightRef.current) return;
 
     // 同步侧边栏和整体页面的滚动进度
-    const handleSyncScroll = throttle(() => {
+    const handleSyncScroll = () => {
       const pageScrollHeight = document.documentElement.scrollHeight - window.innerHeight;
       const pageScrollTop = window.scrollY;
       const sideRightScrollHeight = sideRightRef.current.scrollHeight - sideRightRef.current.clientHeight;
 
       // 判断滚动方向
       const isScrollingUp = pageScrollTop < lastScrollTop.current;
-      const scrollDelta = Math.abs(pageScrollTop - lastScrollTop.current);
       lastScrollTop.current = pageScrollTop;
-
-      // 如果增量小于阈值，忽略此次滚动 -> 否则容易有抖动现象
-      const scrollThreshold = 10;
-      if (scrollDelta < scrollThreshold) return;
 
       let sideRightScrollTop = (pageScrollTop / pageScrollHeight) * sideRightScrollHeight;
 
-      // 向上滚动 -> 加快看到顶部 Tab
+      // 向上滚动时跳转距离增大 -> 加快看到顶部 Tab
       if (isScrollingUp) {
-        sideRightScrollTop = Math.max(0, sideRightScrollTop - 100);
+        sideRightScrollTop = Math.max(0, sideRightScrollTop - 150);
       }
 
-      // 四舍五入 -> 避免小数点导致的抖动
       sideRightRef.current.scrollTop = Math.round(sideRightScrollTop);
-    }, 100);
+    };
 
     window.addEventListener('scroll', handleSyncScroll);
     return () => {
