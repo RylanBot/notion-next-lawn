@@ -23,7 +23,7 @@ import TagGroups from './TagGroups';
  */
 const TopNav = (props) => {
   const { tags, currentTag, categories, currentCategory } = props;
-  const showSearchButton = siteConfig('LAWN_MENU_SEARCH', false, CONFIG);
+  const SHOW_SEARCH_BUTTON = siteConfig('LAWN_MENU_SEARCH', false, CONFIG);
 
   const { locale } = useGlobal();
   const { isDarkMode } = useDarkMode();
@@ -31,8 +31,22 @@ const TopNav = (props) => {
 
   const searchDrawer = useRef();
   const windowTopRef = useRef(0);
+  const autoHideTimerRef = useRef(null);
+  const navRef = useRef(null);
 
-  const [isOpen, changeShow] = useState(false);
+  const [isMouseOverNav, setIsMouseOverNav] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const handleMouseEnter = () => {
+    setIsMouseOverNav(true);
+    if (autoHideTimerRef.current) {
+      clearTimeout(autoHideTimerRef.current);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setIsMouseOverNav(false);
+  };
 
   const handleNavStyle = throttle(() => {
     const scrollS = window.scrollY;
@@ -86,11 +100,24 @@ const TopNav = (props) => {
       }
     });
 
-    const showNav = scrollS <= windowTopRef.current || scrollS < 5 || (header && scrollS <= header.clientHeight);
+    const isScrollUp = scrollS <= windowTopRef.current; // 是否为向上滚动
+    const isInHeaderView = scrollS <= header?.clientHeight; // 在顶部封面可见范围
+    const showNav = isScrollUp || isInHeaderView || scrollS < 5;
     if (!showNav) {
-      nav && nav.classList.replace('top-0', '-top-20');
+      nav?.classList.replace('top-0', '-top-20');
     } else {
-      nav && nav.classList.replace('-top-20', 'top-0');
+      nav?.classList.replace('-top-20', 'top-0');
+
+      if (autoHideTimerRef.current) {
+        clearTimeout(autoHideTimerRef.current);
+      }
+
+      // 3 秒后如果用户没有新的滚动，且鼠标不在 nav 上，则自动隐藏
+      autoHideTimerRef.current = setTimeout(() => {
+        if (!isMouseOverNav && !isInHeaderView) {
+          nav?.classList.replace('top-0', '-top-20');
+        }
+      }, 3000);
     }
 
     windowTopRef.current = scrollS;
@@ -164,7 +191,7 @@ const TopNav = (props) => {
   );
 
   return (
-    <nav id="lawn-top-nav">
+    <nav id="lawn-top-nav" ref={navRef} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <SearchDrawer cRef={searchDrawer} slot={searchDrawerSlot} />
 
       {/* 导航栏 */}
@@ -184,20 +211,20 @@ const TopNav = (props) => {
               <MenuListTop {...props} />
             </div>
             <div
-              onClick={() => changeShow(!isOpen)}
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="w-8 justify-center items-center h-8 cursor-pointer flex lg:hidden"
             >
               <span className="menu-title text-gray-700 dark:text-gray-200">
-                {isOpen ? <i className="fas fa-times" /> : <i className="fas fa-bars" />}
+                {isMenuOpen ? <i className="fas fa-times" /> : <i className="fas fa-bars" />}
               </span>
             </div>
-            {showSearchButton && <SearchButton />}
+            {SHOW_SEARCH_BUTTON && <SearchButton />}
           </div>
         </div>
       </div>
 
       {/* 折叠侧边栏 */}
-      <SideBarDrawer isOpen={isOpen} onClose={() => changeShow(false)}>
+      <SideBarDrawer isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)}>
         <SideBar {...props} />
       </SideBarDrawer>
     </nav>
