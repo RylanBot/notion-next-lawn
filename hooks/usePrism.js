@@ -37,6 +37,13 @@ const usePrism = () => {
 
   const MERMAID_CDN = siteConfig('MERMAID_CDN');
 
+  const highlightAllUnder = (el) => {
+    if (window?.Prism?.plugins?.autoloader) {
+      window.Prism.plugins.autoloader.languages_path = PRISM_PATH;
+    }
+    Prism.highlightAllUnder(el);
+  };
+
   const initPrism = async () => {
     // 加载脚本
     loadPrismThemeCSS(isDarkMode, PRISM_THEME_SWITCH, PRISM_DARK, PRISM_LIGHT, PRISM_PREFIX);
@@ -48,7 +55,7 @@ const usePrism = () => {
 
       // 代码高亮
       const articleEl = document.querySelector('#notion-article');
-      Prism.highlightAllUnder(articleEl);
+      highlightAllUnder(articleEl);
 
       loadMermaid(MERMAID_CDN);
 
@@ -67,10 +74,6 @@ const usePrism = () => {
         renderCollapseCode(CODE_COLLAPSE_DEFAULT);
       }
     });
-  };
-
-  const highlightAllUnder = (el) => {
-    Prism.highlightAllUnder(el);
   };
 
   useEffect(() => {

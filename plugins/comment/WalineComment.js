@@ -8,6 +8,7 @@ import useGlobal from '@/hooks/useGlobal';
 import usePrism from '@/hooks/usePrism';
 
 import { siteConfig } from '@/libs/common/config';
+import { loadExternalResource } from '@/libs/common/util';
 
 /**
  * @see https://waline.js.org/guide/get-started.html
@@ -63,6 +64,8 @@ const WalineComment = (props) => {
   useEffect(() => {
     mountedRef.current = true;
 
+    loadExternalResource('/css/waline-custom.css', 'css');
+
     if (!walineInstanceRef.current && walineRef.current) {
       setCurrentPath(window.location.pathname);
 
@@ -91,7 +94,18 @@ const WalineComment = (props) => {
           ],
           search: false,
           imageUploader: false,
-          requiredMeta: ['nick']
+          requiredMeta: ['nick'],
+          highlighter: (code, lang) => {
+            if (!window.Prism.languages[lang]) {
+              window.Prism.plugins.autoloader.loadLanguages(lang);
+            }
+  
+            return window.Prism.highlight(
+              code,
+              window.Prism.languages[lang] || window.Prism.languages.text,
+              lang,
+            );
+          },
         });
       } catch (err) {
         console.error('Waline initialization failed', err);
@@ -99,49 +113,6 @@ const WalineComment = (props) => {
     }
 
     router.events.on('routeChangeComplete', updateWaline);
-
-    const handleAnchorScroll = () => {
-      const anchor = window.location.hash;
-      if (!anchor) return;
-
-      const findTarget = () => {
-        const commentCard = document.getElementsByClassName('wl-cards')[0];
-        if (!commentCard) {
-          if (mountedRef.current) {
-            setTimeout(findTarget, 200);
-          }
-          return;
-        }
-
-        let observer = new MutationObserver((mutations) => {
-          if (!mountedRef.current) return;
-
-          for (const mutation of mutations) {
-            if (mutation.type === 'childList') {
-              const anchorElement = document.getElementById(anchor.substring(1));
-              if (anchorElement && anchorElement.className === 'wl-item') {
-                anchorElement.scrollIntoView({ block: 'end', behavior: 'smooth' });
-                setTimeout(() => {
-                  if (mountedRef.current && anchorElement) {
-                    anchorElement.classList.add('animate__animated');
-                    anchorElement.classList.add('animate__bounceInRight');
-                  }
-                }, 300);
-
-                observer.disconnect();
-              }
-            }
-          }
-        });
-
-        observer.observe(commentCard, { childList: true });
-      };
-
-      setTimeout(findTarget, 100);
-    };
-
-    handleAnchorScroll();
-
     return () => {
       mountedRef.current = false;
       router.events.off('routeChangeComplete', updateWaline);
@@ -155,7 +126,7 @@ const WalineComment = (props) => {
   }, []);
 
   useEffect(() => {
-    // 修复代码高亮异常
+    // 避免评论区代码高亮失败
     const commentEl = document.getElementById('comment');
     if (!commentEl) return;
 
@@ -168,9 +139,9 @@ const WalineComment = (props) => {
             if (!wlCountEl) return;
 
             // wl-count 后面的 wl-cards -> 实际的评论内容列表
-            const commentCards = Array.from(commentEl.getElementsByClassName('wl-cards'));
-            commentCards.forEach((card) => {
-              highlightAllUnder(card);
+            const preEls = Array.from(commentEl.querySelectorAll('pre'));
+            preEls.forEach((pre) => {
+              highlightAllUnder(pre);
             });
           }
         });
