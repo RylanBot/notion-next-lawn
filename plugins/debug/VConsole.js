@@ -30,7 +30,7 @@ const VConsole = () => {
   };
 
   useEffect(() => {
-    if (!isMobile() || onLoading || router.isFallback) return;
+    if (!isMobile || onLoading || router.isFallback) return;
 
     const clickListener = (event) => {
       const now = Date.now();

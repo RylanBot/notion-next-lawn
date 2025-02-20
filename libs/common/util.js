@@ -33,29 +33,24 @@ export const isSearchEngineBot = () => {
 /**
  * 判断是否移动设备
  */
-export const isMobile = () => {
-  let isMobile = false;
-  if (!isBrowser) return isMobile;
+export const isMobile = (() => {
+  if (!isBrowser) return false;
 
   // 这个判断会引发 TypeError: navigator.userAgentData.mobile is undefined 问题，导致博客无法正常工作
-  // if (!isMobile && navigator.userAgentData.mobile) {
-  //   isMobile = true
+  // if (navigator.userAgentData?.mobile) {
+  //   return true;
   // }
 
-  if (!isMobile && /Mobi|Android|iPhone/i.test(navigator.userAgent)) {
-    isMobile = true;
+  if (/Mobi|Android|iPhone/i.test(navigator.userAgent)) {
+    return true;
   }
 
   if (/Android|iPhone|iPad|iPod/i.test(navigator.platform)) {
-    isMobile = true;
+    return true;
   }
 
-  if (typeof window.orientation !== 'undefined') {
-    isMobile = true;
-  }
-
-  return isMobile;
-};
+  return false;
+})();
 
 // 转换外链
 export function sliceUrlFromHttp(str) {

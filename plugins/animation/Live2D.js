@@ -3,15 +3,13 @@ import { isBrowser } from 'react-notion-x';
 
 import { useGlobal } from '@/hooks/useGlobal';
 import { siteConfig } from '@/libs/common/config';
-import { isMobile } from '@/libs/common/util';
 
 const Live2D = () => {
   const { theme, switchTheme } = useGlobal();
-  const SHOW_PET = JSON.parse(siteConfig('WIDGET_PET'));
   const PET_LINK = siteConfig('WIDGET_PET_LINK');
 
   useEffect(() => {
-    if(!isBrowser) return;
+    if (!isBrowser) return;
 
     const script = document.createElement('script');
     script.src = '/js/live2d.min.js';
@@ -40,8 +38,6 @@ const Live2D = () => {
       switchTheme();
     }
   }
-
-  if ((!SHOW_PET) || isMobile()) return <></>;
 
   return (
     <canvas

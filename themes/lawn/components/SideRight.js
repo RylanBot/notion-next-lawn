@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 
 import { siteConfig } from '@/libs/common/config';
+import { isMobile } from '@/libs/common/util';
 import Live2D from '@/plugins/animation/Live2D';
 
 import CONFIG from '../config';
@@ -21,7 +22,9 @@ import TagGroups from './TagGroups';
 const SideRight = (props) => {
   const { post, rightAreaSlot, notice } = props;
   const router = useRouter();
-  const LAWN_WIDGET_ANALYTICS = siteConfig('LAWN_WIDGET_ANALYTICS', null, CONFIG);
+
+  const WIDGET_ANALYTICS = siteConfig('LAWN_WIDGET_ANALYTICS', null, CONFIG);
+  const WIDGET_PET = JSON.parse(siteConfig('WIDGET_PET'));
 
   const [hasToc, setHasToc] = useState(false);
   const [showToc, setShowToc] = useState(false);
@@ -111,7 +114,7 @@ const SideRight = (props) => {
             <InfoCard className={post || router.route === '/' ? undefined : 'mt-16'} {...props} />
 
             {/* 网站数据卡 */}
-            {LAWN_WIDGET_ANALYTICS && <AnalyticsCard {...props} />}
+            {WIDGET_ANALYTICS && <AnalyticsCard {...props} />}
 
             {/* 归档卡 */}
             <ArchiveCard postCount={props.allNavPages?.length ?? 0} />
@@ -131,7 +134,7 @@ const SideRight = (props) => {
             {/* {siteConfig('COMMENT_WALINE_SERVER_URL') && siteConfig('COMMENT_WALINE_RECENT') && <LawnRecentComments />} */}
 
             {rightAreaSlot}
-            <Live2D />
+            {WIDGET_PET && !isMobile && <Live2D />}
           </div>
         </div>
       </div>
