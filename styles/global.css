@@ -184,6 +184,20 @@ nav {
 .wl-power {
   display: none;
 }
+
+.wl-content pre[class*='language-'] {
+  font-size: 0.8rem !important;
+  padding: 1rem !important;
+}
+
+.wl-content .code-toolbar {
+  top: 10px;
+}
+
+.wl-content .toolbar-item span {
+  line-height: 1.2 !important;
+}
+
 /* ----- Waline END -----*/
 
 /* Webmention style */

@@ -16,9 +16,9 @@ import { siteConfig } from '@/libs/common/config';
 import { loadExternalResource } from '@/libs/common/util';
 
 /**
- * 代码美化相关
+ * 代码美化
  */
-const PrismCode = () => {
+const usePrism = () => {
   const router = useRouter();
   const { isDarkMode } = useDarkMode();
 
@@ -37,25 +37,49 @@ const PrismCode = () => {
 
   const MERMAID_CDN = siteConfig('MERMAID_CDN');
 
-  useEffect(() => {
-    if (CODE_MAC_BAR) {
-      loadExternalResource('/css/prism-mac-style.css', 'css');
-    }
-    // 加载 prism 样式
+  const initPrism = async () => {
+    // 加载脚本
     loadPrismThemeCSS(isDarkMode, PRISM_THEME_SWITCH, PRISM_DARK, PRISM_LIGHT, PRISM_PREFIX);
-    // 折叠代码
-    loadExternalResource(PRISM_AUTO_LOADER, 'js').then((url) => {
+
+    loadExternalResource(PRISM_AUTO_LOADER, 'js').then(() => {
       if (window?.Prism?.plugins?.autoloader) {
         window.Prism.plugins.autoloader.languages_path = PRISM_PATH;
       }
 
-      renderPrismMac(CODE_LINE_NUMBER);
-      renderMermaid(MERMAID_CDN);
-      renderCollapseCode(CODE_COLLAPSE, CODE_COLLAPSE_DEFAULT);
+      // 代码高亮
+      const articleEl = document.querySelector('#notion-article');
+      Prism.highlightAllUnder(articleEl);
+
+      loadMermaid(MERMAID_CDN);
+
+      /* ----- 额外插件 ----- */
+      if (CODE_MAC_BAR) {
+        loadExternalResource('/css/prism-mac-style.css', 'css').then(() => {
+          renderMacStyle();
+        });
+      }
+
+      if (CODE_LINE_NUMBER) {
+        renderLineNumber();
+      }
+
+      if (CODE_COLLAPSE) {
+        renderCollapseCode(CODE_COLLAPSE_DEFAULT);
+      }
     });
+  };
+
+  const highlightAllUnder = (el) => {
+    Prism.highlightAllUnder(el);
+  };
+
+  useEffect(() => {
+    initPrism();
   }, [router, isDarkMode]);
 
-  return <></>;
+  return {
+    highlightAllUnder
+  };
 };
 
 const loadPrismThemeCSS = (
@@ -84,10 +108,49 @@ const loadPrismThemeCSS = (
   }
 };
 
-const renderCollapseCode = (codeCollapse, codeCollapseExpandDefault) => {
-  if (!codeCollapse) return;
+const loadMermaid = async (mermaidCDN) => {
+  const observer = new MutationObserver(async (mutationsList) => {
+    for (const m of mutationsList) {
+      if (m.target.className === 'language-mermaid') {
+        const chart = m.target.querySelector('code').textContent;
+        if (chart && !m.target.querySelector('.mermaid')) {
+          const mermaidChart = document.createElement('div');
+          mermaidChart.className = 'mermaid';
+          mermaidChart.innerHTML = chart;
+          m.target.appendChild(mermaidChart);
+        }
 
-  const codeBlocks = document.querySelectorAll('.code-toolbar');
+        const mermaidsSvg = document?.querySelectorAll('.mermaid');
+        if (mermaidsSvg) {
+          let needLoad = false;
+          for (const e of mermaidsSvg) {
+            if (e?.firstChild?.nodeName !== 'svg') {
+              needLoad = true;
+            }
+          }
+          if (needLoad) {
+            loadExternalResource(mermaidCDN, 'js').then((url) => {
+              setTimeout(() => {
+                const mermaid = window.mermaid;
+                mermaid?.initialize({
+                  theme: 'neutral'
+                });
+                mermaid?.contentLoaded();
+              }, 100);
+            });
+          }
+        }
+      }
+    }
+  });
+
+  if (document.querySelector('#notion-article')) {
+    observer.observe(document.querySelector('#notion-article'), { attributes: true, subtree: true });
+  }
+};
+
+const renderCollapseCode = (expandDefault) => {
+  const codeBlocks = document?.querySelectorAll('.code-toolbar');
   for (const codeBlock of codeBlocks) {
     if (codeBlock.closest('.collapse-wrapper')) {
       continue;
@@ -129,76 +192,15 @@ const renderCollapseCode = (codeCollapse, codeCollapseExpandDefault) => {
     // 点击后折叠展开代码
     header.addEventListener('click', collapseCode);
     // 是否自动展开
-    if (codeCollapseExpandDefault) {
+    if (expandDefault) {
       header.click();
     }
   }
 };
 
-const renderMermaid = async (mermaidCDN) => {
-  const observer = new MutationObserver(async (mutationsList) => {
-    for (const m of mutationsList) {
-      if (m.target.className === 'notion-code language-mermaid') {
-        const chart = m.target.querySelector('code').textContent;
-        if (chart && !m.target.querySelector('.mermaid')) {
-          const mermaidChart = document.createElement('div');
-          mermaidChart.className = 'mermaid';
-          mermaidChart.innerHTML = chart;
-          m.target.appendChild(mermaidChart);
-        }
-
-        const mermaidsSvg = document.querySelectorAll('.mermaid');
-        if (mermaidsSvg) {
-          let needLoad = false;
-          for (const e of mermaidsSvg) {
-            if (e?.firstChild?.nodeName !== 'svg') {
-              needLoad = true;
-            }
-          }
-          if (needLoad) {
-            loadExternalResource(mermaidCDN, 'js').then((url) => {
-              setTimeout(() => {
-                const mermaid = window.mermaid;
-                mermaid?.initialize({
-                  theme: 'neutral'
-                });
-                mermaid?.contentLoaded();
-              }, 100);
-            });
-          }
-        }
-      }
-    }
-  });
-  if (document.querySelector('#notion-article')) {
-    observer.observe(document.querySelector('#notion-article'), { attributes: true, subtree: true });
-  }
-};
-
-const renderPrismMac = (codeLineNumbers) => {
+const renderMacStyle = () => {
   const container = document?.getElementById('notion-article');
-
-  // Add line numbers
-  if (codeLineNumbers) {
-    const codeBlocks = container?.getElementsByTagName('pre');
-    if (codeBlocks) {
-      Array.from(codeBlocks).forEach((item) => {
-        if (!item.classList.contains('line-numbers')) {
-          item.classList.add('line-numbers');
-          item.style.whiteSpace = 'pre-wrap';
-        }
-      });
-    }
-  }
-  // 重新渲染之前检查所有的多余text
-  try {
-    Prism.highlightAll();
-  } catch (err) {
-    console.log('代码渲染', err);
-  }
-
   const codeToolBars = container?.getElementsByClassName('code-toolbar');
-  // Add pre-mac element for Mac Style UI
   if (codeToolBars) {
     Array.from(codeToolBars).forEach((item) => {
       const existPreMac = item.getElementsByClassName('pre-mac');
@@ -210,35 +212,44 @@ const renderPrismMac = (codeLineNumbers) => {
       }
     });
   }
-
-  // 折叠代码行号bug
-  if (codeLineNumbers) {
-    fixCodeLineStyle();
-  }
 };
 
-/**
- * 行号样式在首次渲染或被detail折叠后行高判断错误
- * 在此手动 resize 计算
- */
-const fixCodeLineStyle = () => {
-  const observer = new MutationObserver((mutationsList) => {
-    for (const m of mutationsList) {
-      if (m.target.nodeName === 'DETAILS') {
-        const preCodes = m.target.querySelectorAll('pre.notion-code');
-        for (const preCode of preCodes) {
-          Prism.plugins.lineNumbers.resize(preCode);
+const renderLineNumber = () => {
+  /**
+   * 行号样式在首次渲染或被 detail 折叠后行高判断错误
+   * 在此手动 resize 计算
+   */
+  const fixCodeLineStyle = () => {
+    const observer = new MutationObserver((mutationsList) => {
+      for (const m of mutationsList) {
+        if (m.target.nodeName === 'DETAILS') {
+          const preCodes = m.target.querySelectorAll('pre.notion-code');
+          for (const preCode of preCodes) {
+            Prism.plugins.lineNumbers.resize(preCode);
+          }
         }
       }
-    }
-  });
-  observer.observe(document.querySelector('#notion-article'), { attributes: true, subtree: true });
-  setTimeout(() => {
-    const preCodes = document.querySelectorAll('pre.notion-code');
-    for (const preCode of preCodes) {
-      Prism.plugins.lineNumbers.resize(preCode);
-    }
-  }, 10);
+    });
+    observer.observe(document.querySelector('#notion-article'), { attributes: true, subtree: true });
+    setTimeout(() => {
+      const preCodes = document.querySelectorAll('pre.notion-code');
+      for (const preCode of preCodes) {
+        Prism.plugins.lineNumbers.resize(preCode);
+      }
+    }, 10);
+  };
+
+  const container = document.getElementById('notion-article');
+  const codeBlocks = container.getElementsByTagName('pre');
+  if (codeBlocks) {
+    Array.from(codeBlocks).forEach((item) => {
+      if (!item.classList.contains('line-numbers')) {
+        item.classList.add('line-numbers');
+        item.style.whiteSpace = 'pre-wrap';
+      }
+    });
+  }
+  fixCodeLineStyle();
 };
 
-export default PrismCode;
+export default usePrism;

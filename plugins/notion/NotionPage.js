@@ -5,6 +5,8 @@ import { isBrowser, NotionRenderer } from 'react-notion-x';
 import mediumZoom from '@fisch0920/medium-zoom';
 import 'katex/dist/katex.min.css';
 
+import usePrism from '@/hooks/usePrism';
+
 import { siteConfig } from '@/libs/common/config';
 import { compressImage, mapImgUrl } from '@/libs/notion/image';
 import { mapPageUrl } from '@/libs/notion/page';
@@ -16,9 +18,6 @@ const Code = dynamic(
     }),
   { ssr: false }
 );
-const PrismCode = dynamic(() => import('@/plugins/notion/PrismCode'), {
-  ssr: false
-});
 
 const Equation = dynamic(() => import('react-notion-x/build/third-party/equation').then((m) => m.Equation), {
   ssr: false
@@ -105,7 +104,9 @@ const NotionPage = ({ post, className }) => {
     }
   }, []);
 
-  if (!post || !post.blockMap) return <>{post?.summary || ''}</>;
+  usePrism();
+
+  if (!post?.blockMap) return <>{post?.summary || ''}</>;
 
   return (
     <>
@@ -125,7 +126,6 @@ const NotionPage = ({ post, className }) => {
             Pdf
           }}
         />
-        <PrismCode />
       </div>
     </>
   );
