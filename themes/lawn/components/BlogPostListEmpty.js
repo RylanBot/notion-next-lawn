@@ -1,4 +1,4 @@
-import { useGlobal } from '@/hooks/useGlobal';
+import useGlobal from '@/hooks/useGlobal';
 
 /**
  * 空白博客列表

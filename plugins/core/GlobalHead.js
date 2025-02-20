@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-import { useGlobal } from '@/hooks/useGlobal';
+import useGlobal from '@/hooks/useGlobal';
 import { siteConfig } from '@/libs/common/config';
 import { formatSlugToName, isChinese } from '@/libs/common/util';
 

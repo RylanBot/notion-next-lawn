@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import React, { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
 
-import { useGlobal } from '@/hooks/useGlobal';
+import useGlobal from '@/hooks/useGlobal';
 import { siteConfig } from '@/libs/common/config';
 
 import AlgoliaSearchModal from '@/plugins/algolia/AlgoliaSearchModal';

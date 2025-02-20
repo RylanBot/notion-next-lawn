@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { isBrowser } from 'react-notion-x';
 
-import { useGlobal } from '@/hooks/useGlobal';
+import useGlobal from '@/hooks/useGlobal';
 import { siteConfig } from '@/libs/common/config';
 
 const Live2D = () => {

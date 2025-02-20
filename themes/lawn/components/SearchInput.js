@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useImperativeHandle, useRef, useState } from 'react';
 
-import { useGlobal } from '@/hooks/useGlobal';
+import useGlobal from '@/hooks/useGlobal';
 
 let lock = false;
 

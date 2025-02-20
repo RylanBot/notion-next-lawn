@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { init } from '@waline/client';
 import '@waline/client/style';
 
-import { useGlobal } from '@/hooks/useGlobal';
+import useGlobal from '@/hooks/useGlobal';
 import usePrism from '@/hooks/usePrism';
 
 import { siteConfig } from '@/libs/common/config';

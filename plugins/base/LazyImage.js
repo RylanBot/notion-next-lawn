@@ -8,7 +8,7 @@ import { siteConfig } from '@/libs/common/config';
  */
 const LazyImage = React.forwardRef(
   ({ priority, src, placeholderSrc, className, width, height, onLoad, ...props }, ref) => {
-    const maxWidth = siteConfig('IMAGE_COMPRESS_WIDTH');
+    const COMPRESS_WIDTH = siteConfig('IMAGE_COMPRESS_WIDTH');
     const imageRef = ref || useRef(null);
 
     const [imageLoaded, setImageLoaded] = useState(false);
@@ -32,7 +32,7 @@ const LazyImage = React.forwardRef(
     };
 
     useEffect(() => {
-      const adjustedImageSrc = adjustImgSize(src || imageRef.current.src, maxWidth);
+      const adjustedImageSrc = adjustImgSize(src || imageRef.current.src, COMPRESS_WIDTH);
       setAdjustedSrc(adjustedImageSrc);
     
       const observer = new IntersectionObserver(

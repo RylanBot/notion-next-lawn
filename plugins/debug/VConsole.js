@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
 
-import { useGlobal } from '@/hooks/useGlobal';
+import useGlobal from '@/hooks/useGlobal';
 import { isMobile, loadExternalResource } from '@/libs/common/util';
 
 /**

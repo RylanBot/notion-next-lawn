@@ -1,4 +1,4 @@
-import { useGlobal } from '@/hooks/useGlobal';
+import useGlobal from '@/hooks/useGlobal';
 import { siteConfig } from '@/libs/common/config';
 import TravellingsLink from '@/plugins/base/TravellingsLink';
 

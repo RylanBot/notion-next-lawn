@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import useDarkMode from '@/hooks/useDarkMode';
-import { useGlobal } from '@/hooks/useGlobal';
+import useGlobal from '@/hooks/useGlobal';
 import useWindowSize from '@/hooks/useWindowSize';
 
 import { siteConfig } from '@/libs/common/config';

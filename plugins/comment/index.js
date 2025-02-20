@@ -3,8 +3,8 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { isBrowser } from 'react-notion-x';
 
+import useGlobal from '@/hooks/useGlobal';
 import Tabs from '@/plugins/base/Tabs';
-import { useGlobal } from '@/hooks/useGlobal';
 
 import { siteConfig } from '@/libs/common/config';
 import { isSearchEngineBot } from '@/libs/common/util';

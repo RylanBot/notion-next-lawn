@@ -13,7 +13,7 @@ const GlobalContext = createContext();
 /**
  * 全局变量，包括语言、主题、深色模式、加载状态等
  */
-export function GlobalContextProvider(props) {
+export const GlobalContextProvider = (props) => {
   const { post, children, siteInfo, categoryOptions, tagOptions, NOTION_CONFIG } = props;
   const fullWidth = post?.fullWidth ?? false;
 
@@ -51,24 +51,27 @@ export function GlobalContextProvider(props) {
   }, [isBrowser]);
 
   return (
-    <GlobalContext.Provider value={{
-      siteInfo,
-      categoryOptions,
-      tagOptions,
-      NOTION_CONFIG,
-      fullWidth,
-      onLoading,
-      setOnLoading,
-      lang,
-      locale,
-      changeLang,
-      theme,
-      setTheme,
-      switchTheme,
-    }}>
+    <GlobalContext.Provider
+      value={{
+        siteInfo,
+        categoryOptions,
+        tagOptions,
+        NOTION_CONFIG,
+        fullWidth,
+        onLoading,
+        setOnLoading,
+        lang,
+        locale,
+        changeLang,
+        theme,
+        setTheme,
+        switchTheme
+      }}
+    >
       {children}
     </GlobalContext.Provider>
   );
-}
+};
 
-export const useGlobal = () => useContext(GlobalContext);
+const useGlobal = () => useContext(GlobalContext);
+export default useGlobal;

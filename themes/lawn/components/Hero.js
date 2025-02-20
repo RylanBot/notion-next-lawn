@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Typed from 'typed.js';
 
-import { useGlobal } from '@/hooks/useGlobal';
+import useGlobal from '@/hooks/useGlobal';
 import { siteConfig } from '@/libs/common/config';
 import LazyImage from '@/plugins/base/LazyImage';
 

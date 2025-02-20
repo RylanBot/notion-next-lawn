@@ -1,6 +1,5 @@
+import useGlobal from '@/hooks/useGlobal';
 import { useEffect, useRef, useState } from 'react';
-import { useGlobal } from '@/hooks/useGlobal';
-import LazyImage from './LazyImage';
 
 const TRAVEL_IMAGE = 'https://www.travellings.cn/assets/logo.gif';
 /**

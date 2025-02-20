@@ -1,8 +1,8 @@
+import { RecentComments } from '@waline/client';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { RecentComments } from '@waline/client';
 
-import { useGlobal } from '@/hooks/useGlobal';
+import useGlobal from '@/hooks/useGlobal';
 import { siteConfig } from '@/libs/common/config';
 
 import Card from './Card';

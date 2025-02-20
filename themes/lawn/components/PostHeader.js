@@ -2,7 +2,7 @@ import LazyImage from '@/plugins/base/LazyImage';
 import WordCount from '@/plugins/base/WordCount';
 import NotionIcon from '@/plugins/notion/NotionIcon';
 
-import { useGlobal } from '@/hooks/useGlobal';
+import useGlobal from '@/hooks/useGlobal';
 
 import CategoryMini from './CategoryMini';
 import TagItemMini from './TagItemMini';

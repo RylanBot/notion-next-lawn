@@ -1,7 +1,7 @@
 'use client';
 
 import BLOG from '@/blog.config';
-import { useGlobal } from '@/hooks/useGlobal';
+import useGlobal from '@/hooks/useGlobal';
 
 import { deepClone } from './util';
 

@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 
-import { useGlobal } from '@/hooks/useGlobal';
+import useGlobal from '@/hooks/useGlobal';
 import { formatNameToSlug } from '@/libs/common/util';
 
 import Card from './Card';

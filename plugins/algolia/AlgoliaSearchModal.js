@@ -3,7 +3,7 @@ import throttle from 'lodash/throttle';
 import Link from 'next/link';
 import { useImperativeHandle, useRef, useState } from 'react';
 
-import { useGlobal } from '@/hooks/useGlobal';
+import useGlobal from '@/hooks/useGlobal';
 import { siteConfig } from '@/libs/common/config';
 
 import { replaceSearchResult } from './highlight';
