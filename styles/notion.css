@@ -1793,7 +1793,8 @@ div[class*='notion-property-checkbox-checked'] svg {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 155px !important;
+  width: 100%;
+  height: auto;
 }
 
 .notion-page-cover .lazy-image-preview,
