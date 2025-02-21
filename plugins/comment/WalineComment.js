@@ -20,7 +20,7 @@ const WalineComment = (props) => {
 
   const walineRef = useRef(null);
   const walineInstanceRef = useRef(null);
-  const mountedRef = useRef(true);
+  const mountedRef = useRef(false);
 
   const [currentPath, setCurrentPath] = useState('');
 
@@ -63,56 +63,51 @@ const WalineComment = (props) => {
 
   useEffect(() => {
     mountedRef.current = true;
-
     loadExternalResource('/css/waline-custom.css', 'css');
 
-    if (!walineInstanceRef.current && walineRef.current) {
-      setCurrentPath(window.location.pathname);
+    if (walineInstanceRef.current || !walineRef.current) return;
+    setCurrentPath(window.location.pathname);
 
-      try {
-        walineInstanceRef.current = init({
-          ...props,
-          el: walineRef.current,
-          serverURL: WALINE_SERVER_URL,
-          lang: LANG,
-          locale: {
-            reactionTitle: '',
-            placeholder: locale.MAILCHIMP.COMMENT_PLACEHOLDER
-          },
-          reaction: [
-            'https://s2.loli.net/2024/04/03/PmDLpdZNf3b1YK2.png', // fish
-            'https://s2.loli.net/2024/04/03/9idwY84afBRrkmU.png', // bear
-            'https://s2.loli.net/2024/04/03/Zkq29DXepMOrS5t.png', // wine
-            'https://s2.loli.net/2024/04/04/9ZfQkLrMRdB2lzi.png', // flower
-            'https://s2.loli.net/2024/04/04/brJgseL7RZ5mV4E.png' // leaf
-          ],
-          dark: 'html.dark',
-          emoji: [
-            '//npm.elemecdn.com/@waline/emojis@1.1.0/weibo',
-            '//npm.elemecdn.com/@waline/emojis@1.1.0/tieba',
-            '//npm.elemecdn.com/@waline/emojis@1.1.0/bilibili'
-          ],
-          search: false,
-          imageUploader: false,
-          requiredMeta: ['nick'],
-          highlighter: (code, lang) => {
-            if (!window.Prism.languages[lang]) {
-              window.Prism.plugins.autoloader.loadLanguages(lang);
-            }
-  
-            return window.Prism.highlight(
-              code,
-              window.Prism.languages[lang] || window.Prism.languages.text,
-              lang,
-            );
-          },
-        });
-      } catch (err) {
-        console.error('Waline initialization failed', err);
-      }
+    try {
+      walineInstanceRef.current = init({
+        ...props,
+        el: walineRef.current,
+        serverURL: WALINE_SERVER_URL,
+        lang: LANG,
+        locale: {
+          reactionTitle: '',
+          placeholder: locale.COMMENT.PLACEHOLDER
+        },
+        reaction: [
+          'https://s2.loli.net/2024/04/03/PmDLpdZNf3b1YK2.png', // fish
+          'https://s2.loli.net/2024/04/03/9idwY84afBRrkmU.png', // bear
+          'https://s2.loli.net/2024/04/03/Zkq29DXepMOrS5t.png', // wine
+          'https://s2.loli.net/2024/04/04/9ZfQkLrMRdB2lzi.png', // flower
+          'https://s2.loli.net/2024/04/04/brJgseL7RZ5mV4E.png' // leaf
+        ],
+        dark: 'html.dark',
+        emoji: [
+          '//npm.elemecdn.com/@waline/emojis@1.1.0/weibo',
+          '//npm.elemecdn.com/@waline/emojis@1.1.0/tieba',
+          '//npm.elemecdn.com/@waline/emojis@1.1.0/bilibili'
+        ],
+        search: false,
+        imageUploader: false,
+        requiredMeta: ['nick'],
+        highlighter: (code, lang) => {
+          if (!window.Prism.languages[lang]) {
+            window.Prism.plugins.autoloader.loadLanguages(lang);
+          }
+
+          return window.Prism.highlight(code, window.Prism.languages[lang] || window.Prism.languages.text, lang);
+        }
+      });
+    } catch (err) {
+      console.error('Waline initialization failed', err);
     }
 
     router.events.on('routeChangeComplete', updateWaline);
+
     return () => {
       mountedRef.current = false;
       router.events.off('routeChangeComplete', updateWaline);
@@ -126,25 +121,74 @@ const WalineComment = (props) => {
   }, []);
 
   useEffect(() => {
-    // 避免评论区代码高亮失败
     const commentEl = document.getElementById('comment');
     if (!commentEl) return;
 
+    const processedQuotes = new Set();
+
+    /**
+     * 代码高亮
+     */
+    const handleCodeHighlight = () => {
+      const countEl = commentEl.getElementsByClassName('wl-count')[0];
+      // wl-count 后面的 wl-cards -> 实际的评论内容列表（排除 wl-preview）
+      if (!countEl) return;
+
+      const preEls = Array.from(commentEl.querySelectorAll('pre'));
+      preEls.forEach((pre) => {
+        highlightAllUnder(pre);
+      });
+    };
+
+    /**
+     * 折叠评论回复
+     */
+    const handleCollapsedQuote = () => {
+      const quoteEls = Array.from(document.querySelectorAll('.wl-quote')).filter((el) => el.children.length > 0);
+
+      quoteEls.forEach((quoteElement) => {
+        if (processedQuotes.has(quoteElement)) return;
+
+        if (!quoteElement.previousElementSibling?.classList.contains('wl-collapse')) {
+          const toggleButton = document.createElement('button');
+          toggleButton.textContent = locale.COMMENT.SHOW_REPLY;
+          toggleButton.classList.add('wl-collapse');
+
+          quoteElement.insertAdjacentElement('beforebegin', toggleButton);
+
+          let isCollapsed = true;
+          quoteElement.style.display = 'none';
+
+          toggleButton.addEventListener('click', () => {
+            isCollapsed = !isCollapsed;
+            quoteElement.style.display = isCollapsed ? 'none' : 'block';
+            toggleButton.textContent = isCollapsed ? locale.COMMENT.SHOW_REPLY : locale.COMMENT.HIDE_REPLY;
+          });
+
+          processedQuotes.add(quoteElement);
+        }
+      });
+    };
+
     const observer = new MutationObserver((mutationsList) => {
       mutationsList.forEach((mutation) => {
+        // 监听删除节点 -> loading 完成时
         mutation.removedNodes.forEach((node) => {
           if (node instanceof HTMLElement && node.classList.contains('wl-loading')) {
-            // 评论加载完成
-            const wlCountEl = commentEl.getElementsByClassName('wl-count')[0];
-            if (!wlCountEl) return;
-
-            // wl-count 后面的 wl-cards -> 实际的评论内容列表
-            const preEls = Array.from(commentEl.querySelectorAll('pre'));
-            preEls.forEach((pre) => {
-              highlightAllUnder(pre);
-            });
+            handleCodeHighlight();
           }
         });
+
+        if (mutation.type === 'childList') {
+          // 排除已处理的按钮
+          if (
+            ![...mutation.addedNodes].some(
+              (node) => node instanceof HTMLElement && node.classList.contains('wl-collapse')
+            )
+          ) {
+            handleCollapsedQuote();
+          }
+        }
       });
     });
 
@@ -153,8 +197,12 @@ const WalineComment = (props) => {
       subtree: true
     });
 
+    handleCodeHighlight();
+    handleCollapsedQuote();
+
     return () => {
       observer.disconnect();
+      processedQuotes.clear();
     };
   }, []);
 

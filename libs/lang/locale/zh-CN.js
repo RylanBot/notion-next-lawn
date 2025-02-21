@@ -55,7 +55,7 @@ export default {
     MINUTE: '分钟',
     WORD_COUNT: '字数',
     READ_TIME: '阅读时长',
-    ERROR_INFO: '页面不存在 | 渲染超时 | 尝试重新打开',
+    ERROR_INFO: '页面不存在 | 渲染超时 | 尝试重新打开'
   },
   PAGINATION: {
     PREV: '上页',
@@ -72,11 +72,15 @@ export default {
   MAILCHIMP: {
     SUBSCRIBE: '邮件订阅',
     MSG: '订阅以获取每月更新的新闻和文章，直接发送至您的邮箱。',
-    EMAIL: '邮箱',
-    COMMENT_PLACEHOLDER: '回复信息会发送到您的邮箱~'
+    EMAIL: '邮箱'
   },
   TRVELLINGS: {
     TITLE: '友链接力计划',
     GUIDE: '点击下方按钮将随机跳转到一个博客网站'
+  },
+  COMMENT: {
+    PLACEHOLDER: '回复消息会通过邮件向您发送提醒',
+    SHOW_REPLY: '展开回复',
+    HIDE_REPLY: '收起回复'
   }
-}
+};

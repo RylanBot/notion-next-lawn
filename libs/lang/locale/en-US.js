@@ -36,7 +36,8 @@ export default {
     ARTICLE: 'Article',
     VISITORS: 'Visitors',
     VIEWS: 'Views',
-    COPYRIGHT_NOTICE: 'All articles in this blog, except for special statements, adopt BY-NC-SA agreement. Please indicate the source!',
+    COPYRIGHT_NOTICE:
+      'All articles in this blog, except for special statements, adopt BY-NC-SA agreement. Please indicate the source!',
     RESULT_OF_SEARCH: 'Results Found',
     ARTICLE_DETAIL: 'Article Details',
     NO_RESULTS_FOUND: 'No results found.',
@@ -70,11 +71,15 @@ export default {
   MAILCHIMP: {
     SUBSCRIBE: 'Subscribe',
     MSG: 'Get the latest news and articles to your inbox every month.',
-    EMAIL: 'Email',
-    COMMENT_PLACEHOLDER: 'Reply will be sent to your email~'
+    EMAIL: 'Email'
   },
   TRVELLINGS: {
     TITLE: 'Let Friend Link Relay',
     GUIDE: 'Click the button below to randomly visit a blog website'
+  },
+  COMMENT: {
+    PLACEHOLDER: 'You’ll be notified via email when there is a reply',
+    SHOW_REPLY: 'Show Reply',
+    HIDE_REPLY: 'Hide Reply'
   }
 };

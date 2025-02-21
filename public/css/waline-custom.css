@@ -1,5 +1,7 @@
 :root {
-  --waline-theme-color: #55ae99 !important;
+  --waline-theme-color: #38b5a7 !important;
+  --waline-active-color: #2dd4bf !important;
+  --waline-avatar-size: 2.5rem !important;
   --waline-avatar-radius: 3px !important;
 }
 
@@ -23,13 +25,6 @@
   vertical-align: text-bottom !important;
 }
 
-.vcontent .wl-emoji {
-  display: inline-block;
-  vertical-align: baseline;
-  height: 1.25em;
-  margin: -0.125em 0.25em;
-}
-
 .wl-header {
   font-size: 1.1em !important;
 }
@@ -46,11 +41,6 @@
   background: url('https://s2.loli.net/2025/02/21/xELZjqDVobt4IFH.png') no-repeat;
   background-size: 40% auto !important;
   background-position: right bottom !important;
-}
-@media (max-width: 768px) {
-  #wl-edit {
-    background-size: 70% auto !important;
-  }
 }
 
 .wl-power {
@@ -77,4 +67,33 @@ html.dark .wl-content pre[class*='language-'] {
 
 .wl-content .toolbar-item span {
   line-height: 1.2 !important;
+}
+
+.wl-collapse {
+  position: relative;
+  display: block;
+  width: 97%;
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: var(--waline-theme-color);
+  padding: 1px 10px;
+  border-radius: 15px;
+  background-color: rgba(0, 128, 128, 0.1);
+  border: 1px dotted var(--waline-theme-color);
+  margin-bottom: 15px;
+  transition: all 0.3s ease;
+}
+
+.wl-collapse:hover {
+  background-color: rgba(0, 128, 128, 0.2);
+}
+
+@media (max-width: 768px) {
+  #wl-edit {
+    background-size: 70% auto !important;
+  }
+
+  .wl-collapse {
+    width: 95%;
+  }
 }
