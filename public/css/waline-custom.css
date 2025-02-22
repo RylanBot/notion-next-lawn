@@ -88,6 +88,12 @@ html.dark .wl-content pre[class*='language-'] {
   background-color: rgba(0, 128, 128, 0.2);
 }
 
+.wl-card .wl-meta > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
 @media (max-width: 768px) {
   #wl-edit {
     background-size: 70% auto !important;
