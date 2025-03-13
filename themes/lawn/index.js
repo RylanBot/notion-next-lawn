@@ -98,7 +98,7 @@ export const LayoutBase = (props) => {
             {/* 主区块 */}
             <main
               id="lawn-main-wrapper"
-              className={`bg-lawn-background-gray dark:bg-black w-full py-8 md:px-32 min-h-screen relative ${
+              className={`bg-lawn-background-gray dark:bg-black w-full py-8 md:px-40 2xl:px-72 min-h-screen relative ${
                 LAWN_HOME_BANNER_ENABLE ? 'pt-14 max-md:pt-6' : ''
               }`}
             >
@@ -142,7 +142,6 @@ export const LayoutIndex = (props) => {
  * 博客列表
  */
 export const LayoutPostList = (props) => {
-  const LAWN_SLOT_BAR = siteConfig('LAWN_SLOT_BAR', null, CONFIG);
   const POST_LIST = siteConfig('POST_LIST_STYLE') === 'page';
   return (
     <div>
