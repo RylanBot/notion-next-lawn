@@ -39,3 +39,4 @@ yarn-error.log*
 /public/rss/*
 
 .env*.local
+.vercel
