@@ -31,7 +31,7 @@ const BLOG = {
   BACKGROUND_DARK: '#000000', // use hex value, don't forget '#'
 
   /* 文章配置 */
-  POST_SUB_PATH:  process.env.NEXT_PUBLIC_POST_SUB_PATH || 'article', // POST类型文章的默认路径前缀，例如  /article/[slug]
+  POST_SUB_PATH: process.env.NEXT_PUBLIC_POST_SUB_PATH || 'article', // POST类型文章的默认路径前缀，例如  /article/[slug]
   POST_LIST_STYLE: process.env.NEXT_PUBLIC_POST_LIST_STYLE || 'page', // ['page','scroll] 文章列表样式:页码分页、单页滚动加载
   POST_LIST_PREVIEW: process.env.NEXT_PUBLIC_POST_PREVIEW || 'false', //  是否在列表加载文章预览
   POST_PREVIEW_LINES: process.env.NEXT_PUBLIC_POST_POST_PREVIEW_LINES || 12, // 文章预览行数
@@ -72,7 +72,7 @@ const BLOG = {
   /* 字体 */
   FONT_STYLE: process.env.NEXT_PUBLIC_FONT_STYLE || 'font-serif', // ['font-serif','font-sans']
   FONT_URL: [
-    'https://npm.elemecdn.com/lxgw-wenkai-webfont@1.6.0/style.css',
+    'https://npm.elemecdn.com/lxgw-wenkai-webfont@1.6.0/style.css'
     // 'https://fonts.googleapis.com/css2?family=Oleo+Script:wght@400;700&display=swap'
     // 'https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300&display=swap',
     // 'https://fonts.googleapis.com/css2?family=Noto+Serif+SC&display=swap'
@@ -91,7 +91,7 @@ const BLOG = {
     '"Helvetica Neue"',
     'Helvetica',
     '"Source Han Sans SC"',
-    'Arial',
+    'Arial'
   ],
   FONT_SERIF: ['"LXGW WenKai"', '"Noto Serif SC"', '"Times New Roman"', 'Times', 'serif'],
   FONT_AWESOME:
@@ -119,7 +119,7 @@ const BLOG = {
   CODE_COLLAPSE: process.env.NEXT_PUBLIC_CODE_COLLAPSE || true, // 是否支持折叠代码框
   CODE_COLLAPSE_EXPAND_DEFAULT: process.env.NEXT_PUBLIC_CODE_COLLAPSE_EXPAND_DEFAULT || true, // 折叠代码默认是展开状态
   MERMAID_CDN:
-    process.env.NEXT_PUBLIC_MERMAID_CDN || 'https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.2.4/mermaid.min.js', // CDN
+    process.env.NEXT_PUBLIC_MERMAID_CDN || 'https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js',
 
   ALGOLIA_APP_ID: process.env.NEXT_PUBLIC_ALGOLIA_APP_ID || null, // 在这里查看 https://dashboard.algolia.com/account/api-keys/
   ALGOLIA_ADMIN_APP_KEY: process.env.ALGOLIA_ADMIN_APP_KEY || null, // 管理后台的 KEY，不要暴露在代码中，在这里查看 https://dashboard.algolia.com/account/api-keys/

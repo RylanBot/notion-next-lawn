@@ -2189,6 +2189,10 @@ code.language-mermaid {
   margin: auto;
 }
 
+.mermaid .invisible{
+  visibility: inherit;
+}
+
 .notion-equation-inline .katex-display {
   margin: 0 0 !important;
 }

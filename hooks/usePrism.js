@@ -102,7 +102,7 @@ const loadPrismThemeCSS = (
       PRISM_PREVIOUS = prismThemeDarkPath;
     }
     const previousTheme = document.querySelector(`link[href="${PRISM_PREVIOUS}"]`);
-    if (previousTheme && previousTheme.parentNode && previousTheme.parentNode.contains(previousTheme)) {
+    if (previousTheme?.parentNode?.contains(previousTheme)) {
       previousTheme.parentNode.removeChild(previousTheme);
     }
     loadExternalResource(PRISM_THEME, 'css');
@@ -114,10 +114,10 @@ const loadPrismThemeCSS = (
 const loadMermaid = async (mermaidCDN) => {
   const observer = new MutationObserver(async (mutationsList) => {
     for (const m of mutationsList) {
-      if (m.target.className === 'language-mermaid') {
-        const chart = m.target.querySelector('code').textContent;
+      if (m.target.className === 'notion-code language-mermaid') {
+        const chart = m.target.querySelector('code')?.textContent;
         if (chart && !m.target.querySelector('.mermaid')) {
-          const mermaidChart = document.createElement('div');
+          const mermaidChart = document.createElement('pre');
           mermaidChart.className = 'mermaid';
           mermaidChart.innerHTML = chart;
           m.target.appendChild(mermaidChart);
