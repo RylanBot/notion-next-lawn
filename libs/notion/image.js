@@ -1,4 +1,4 @@
-import { defaultMapImageUrl } from 'react-notion-x';
+import { defaultMapImageUrl } from 'notion-utils';
 import BLOG from '@/blog.config';
 
 export function getPageCover(postInfo) {
