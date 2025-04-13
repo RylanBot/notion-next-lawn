@@ -26,7 +26,7 @@ function InfoCard(props) {
             className="rounded-full w-28 h-28"
           />
         </div>
-        <div className="font-oleo font-medium text-center text-2xl mb-2">{AUTHOR}</div>
+        <div className="font-times font-medium text-center text-2xl mb-2">{AUTHOR}</div>
         <div className="text-sm text-center mb-4">{BIO}</div>
         {/* <MenuGroupCard {...props} /> */}
         <SocialButton />

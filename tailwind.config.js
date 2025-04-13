@@ -8,7 +8,8 @@ module.exports = {
     fontFamily: {
       sans: BLOG.FONT_SANS,
       serif: BLOG.FONT_SERIF,
-      oleo: ['Oleo Script', 'Times New Roman']
+      // oleo: ['Oleo Script', 'Times New Roman'],
+      times: ['Times New Roman']
     },
     extend: {
       colors: {

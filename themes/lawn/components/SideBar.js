@@ -1,5 +1,5 @@
-import LazyImage from '@/plugins/base/LazyImage';
 import { siteConfig } from '@/libs/common/config';
+import LazyImage from '@/plugins/base/LazyImage';
 
 // import MenuGroupCard from './MenuGroupCard';
 import MenuListSide from './MenuListSide';
@@ -27,7 +27,7 @@ const SideBar = (props) => {
               className="rounded-full w-28 h-28"
             />
           </div>
-          <div className="font-oleo text-2xl font-medium text-center mb-1">{AUTHOR}</div>
+          <div className="font-times text-2xl font-medium text-center mb-1">{AUTHOR}</div>
           <div className="text-sm text-center mb-4">{BIO}</div>
           <SocialButton />
         </div>
