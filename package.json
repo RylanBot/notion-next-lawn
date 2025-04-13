@@ -20,11 +20,11 @@
     "memory-cache": "^0.2.0",
     "mongodb": "^4.6.0",
     "next": "^15.1.4",
-    "notion-client": "^7.1.5",
-    "notion-utils": "^7.1.5",
+    "notion-client": "^7.3.0",
+    "notion-utils": "^7.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-notion-x": "^7.2.5",
+    "react-notion-x": "^7.3.0",
     "typed.js": "^2.0.12"
   },
   "devDependencies": {
