@@ -8,8 +8,11 @@ export const Loading = () => {
     document.body.style.overflow = 'hidden';
     return () => {
       document.body.style.overflow = '';
-      if (!document.body.getAttribute('style')) {
+      if (!document.body.style.cssText) {
         document.body.removeAttribute('style');
+      }
+      if (!document.documentElement.style.cssText) {
+        document.documentElement.removeAttribute('style');
       }
     };
   }, []);
