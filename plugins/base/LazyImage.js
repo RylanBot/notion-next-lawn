@@ -115,8 +115,6 @@ const LazyImage = React.forwardRef(
 
 /**
  * 根据窗口尺寸决定压缩图片宽度
- * @param {*} src
- * @param {*} maxWidth
  */
 const adjustImgSize = (src, maxWidth) => {
   if (!src) {
@@ -150,7 +148,7 @@ const generatePlaceholder = (width = 400, height = 320) => {
   const totalCharWidth = text.length * characterWidth;
   const fontSize = Math.floor(minDimension / totalCharWidth);
   const sizeParam = width && height ? `${width}x${height}` : width || (height ? `${height}x${height}` : '440x320');
-  return `https://fakeimg.pl/${sizeParam}/?text=${placeholderText}&font=lobster&font_size=${fontSize}`;
+  return `https://fakeimg.ryd.tools/${sizeParam}/?text=${placeholderText}&font=lobster&font_size=${fontSize}`;
 };
 
 export default LazyImage;
