@@ -1967,7 +1967,7 @@ svg + .notion-page-title-text {
 .notion-table-view {
   position: relative;
   float: left;
-  min-width: var(--notion-max-width);
+  min-width: 100%;
   padding-left: 0;
   transition: padding 200ms ease-out;
   @apply px-0 !important;
@@ -1979,7 +1979,7 @@ svg + .notion-page-title-text {
   z-index: 30;
   height: 33px;
   color: var(--fg-color-3);
-  min-width: var(--notion-max-width);
+  min-width: 100%;
 }
 
 .notion-table-header-inner {
