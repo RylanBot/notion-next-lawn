@@ -740,13 +740,16 @@ svg.notion-page-icon {
 }
 
 .notion-inline-code {
-  /* color: #eb5757; */
-  color: inherit;
+  color: #eb5757;
   padding: 0.2em 0.4em;
   background: var(--bg-color-2);
   border-radius: 3px;
   font-size: 85%;
   font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+}
+
+span > .notion-inline-code {
+  color: inherit;
 }
 
 .notion-inline-underscore {
