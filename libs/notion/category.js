@@ -1,4 +1,3 @@
-import BLOG from '@/blog.config';
 import { isIterable } from '../common/util';
 
 export function getAllCategories({ allPages, categoryOptions, sliceCount = 0 }) {
@@ -15,7 +14,7 @@ export function getAllCategories({ allPages, categoryOptions, sliceCount = 0 }) 
       categoryObj[category] = 1;
     }
   });
-  
+
   const list = [];
   if (isIterable(categoryOptions)) {
     for (const c of categoryOptions) {

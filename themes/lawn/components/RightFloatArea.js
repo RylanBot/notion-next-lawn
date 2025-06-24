@@ -1,15 +1,15 @@
+import throttle from 'lodash.throttle';
 import { useCallback, useEffect, useState } from 'react';
 
-import throttle from 'lodash.throttle';
 import FloatDarkModeButton from './FloatDarkModeButton';
 import JumpToTopButton from './JumpToTopButton';
 
 /**
  * 右下角悬浮按钮
  */
-const RightFloatArea = ({ floatSlot }) =>{
+const RightFloatArea = ({ floatSlot }) => {
   const [showFloatButton, switchShow] = useState(false);
-  
+
   const scrollListener = useCallback(
     throttle(() => {
       const targetRef = document.getElementById('lawn-main-wrapper');
@@ -34,14 +34,18 @@ const RightFloatArea = ({ floatSlot }) =>{
   }, [scrollListener]);
 
   return (
-    <div className={`duration-300 transition-all bottom-14 right-1 fixed justify-end z-20 rounded-sm text-white bg-teal-500 dark:bg-teal-600 p-2 lg:scale-125 lg:mr-2 ${showFloatButton ? 'opacity-100' : 'invisible opacity-0'}`}>
-      <div className='justify-center flex flex-col items-center cursor-pointer space-y-2'>
+    <div
+      className={`duration-300 transition-all bottom-14 right-1 fixed justify-end z-20 rounded-sm text-white bg-teal-500 dark:bg-teal-600 p-2 lg:scale-125 lg:mr-2 ${
+        showFloatButton ? 'opacity-100' : 'invisible opacity-0'
+      }`}
+    >
+      <div className="justify-center flex flex-col items-center cursor-pointer space-y-2">
         <FloatDarkModeButton />
         {floatSlot}
         <JumpToTopButton />
       </div>
     </div>
   );
-}
+};
 
 export default RightFloatArea;

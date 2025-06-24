@@ -41,9 +41,9 @@ const LatestPostsGroup = ({ latestPosts, siteInfo }) => {
                 : 'hover:bg-teal-400 hover:text-white dark:hover:bg-teal-500'
             } `}
           >
-            <Link title={post.title} href={`/${POST_SUB_PATH}/${post.slug}`} passHref className="flex">
+            <Link className="flex" title={post.title} href={`/${POST_SUB_PATH}/${post.slug}`} passHref>
               <div className="w-20 h-14 overflow-hidden relative">
-                <LazyImage src={headerImage} className="object-cover w-full h-full rounded-sm" />
+                <LazyImage className="object-cover w-full h-full rounded-sm" src={headerImage} />
               </div>
               <div className="overflow-x-hidden px-2 w-full rounded cursor-pointer flex items-center">
                 <div className="w-full">

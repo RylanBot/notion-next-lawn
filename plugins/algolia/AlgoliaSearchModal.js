@@ -185,12 +185,11 @@ function TagGroups(props) {
       {firstTenTags?.map((tag, index) => {
         return (
           <Link
+            className="cursor-pointer inline-block whitespace-nowrap"
             passHref
-            legacyBehavior
             key={index}
             href="/tag/[tag]"
             as={`/tag/${tag.name}`}
-            className={'cursor-pointer inline-block whitespace-nowrap'}
           >
             <div className="flex items-center text-black dark:text-gray-300 hover:bg-blue-600 dark:hover:bg-yellow-600 hover:scale-110 hover:text-white rounded-lg px-2 py-0.5 duration-150 transition-all">
               <div className="text-lg">{tag.name} </div>

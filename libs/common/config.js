@@ -18,7 +18,7 @@ export const siteConfig = (key, defaultVal = null, extendConfig = null) => {
   let global = null;
   try {
     global = useGlobal();
-  } catch (error) { }
+  } catch (error) {}
 
   // 首先 配置最优先读取 NOTION 中的表格配置
   let val = null;

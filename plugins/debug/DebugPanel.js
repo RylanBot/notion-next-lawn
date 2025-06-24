@@ -53,10 +53,10 @@ const DebugPanel = () => {
       {/* 调试按钮 */}
       <div>
         <div
-          style={{ writingMode: 'vertical-lr' }}
           className={`bg-black text-xs text-white shadow-2xl p-1.5 rounded-l-xl cursor-pointer ${
             show ? 'right-96' : 'right-0'
           } fixed bottom-72 duration-200 z-50`}
+          style={{ writingMode: 'vertical-lr' }}
           onClick={toggleShow}
         >
           {show ? (

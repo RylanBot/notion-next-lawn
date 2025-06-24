@@ -7,7 +7,7 @@ import { isBrowser } from 'react-notion-x';
 const Progress = ({ targetRef, showPercent = true }) => {
   const currentRef = targetRef?.current || targetRef;
   const [percent, changePercent] = useState(0);
-  
+
   const scrollListener = () => {
     const target = currentRef || (isBrowser && document.getElementById('article-wrapper'));
     if (target) {

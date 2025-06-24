@@ -9,17 +9,11 @@ export default function FloatDarkModeButton() {
   const { locale } = useGlobal();
   const { isDarkMode, toggleDarkMode } = useDarkMode();
 
-  if (!siteConfig('LAWN_WIDGET_DARK_MODE', null, CONFIG)) {
-    return <></>;
-  }
+  if (!siteConfig('LAWN_WIDGET_DARK_MODE', null, CONFIG)) return <></>;
 
   return (
     <div className="group right-float-tooltip-parent">
-      <i
-        id="darkModeButton"
-        onClick={toggleDarkMode}
-        className={`${isDarkMode ? 'fa-sun' : 'fa-moon'} fas text-xs`}
-      />
+      <i id="darkModeButton" className={`${isDarkMode ? 'fa-sun' : 'fa-moon'} fas text-xs`} onClick={toggleDarkMode} />
       <span className="right-float-tooltip -left-[17px]">
         {`${isDarkMode ? locale.MENU.LIGHT_MODE : locale.MENU.DARK_MODE}`}
       </span>

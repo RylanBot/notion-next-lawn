@@ -3,8 +3,6 @@ import { useRouter } from 'next/router';
 
 /**
  * 数字翻页插件
- * @param page 当前页码
- * @param showNext 是否有下一页
  */
 const PaginationNumber = ({ page, totalPage }) => {
   const router = useRouter();
@@ -20,13 +18,14 @@ const PaginationNumber = ({ page, totalPage }) => {
     <div className="mt-10 flex justify-center items-end font-medium text-black dark:text-gray-300 space-x-2">
       {/* 上一页 */}
       <Link
+        className={`${
+          currentPage === 1 ? 'invisible' : 'block'
+        } pb-0.5 border-transparent hover:border-teal-400 w-6 text-center cursor-pointer hover:font-bold`}
+        rel="prev"
         href={{
           pathname: currentPage === 2 ? `${pagePrefix}/` : `${pagePrefix}/page/${currentPage - 1}`,
           query: router.query.s ? { s: router.query.s } : {}
         }}
-        rel="prev"
-        className={`${currentPage === 1 ? 'invisible' : 'block'
-          } pb-0.5 border-transparent hover:border-teal-400 w-6 text-center cursor-pointer hover:font-bold`}
       >
         <i className="fas fa-angle-left" />
       </Link>
@@ -35,13 +34,14 @@ const PaginationNumber = ({ page, totalPage }) => {
 
       {/* 下一页 */}
       <Link
+        className={`${
+          +showNext ? 'block' : 'invisible'
+        } pb-0.5 border-transparent hover:border-teal-400 w-6 text-center cursor-pointer hover:font-bold`}
+        rel="next"
         href={{
           pathname: `${pagePrefix}/page/${currentPage + 1}`,
           query: router.query.s ? { s: router.query.s } : {}
         }}
-        rel="next"
-        className={`${+showNext ? 'block' : 'invisible'
-          } pb-0.5 border-transparent hover:border-teal-400 w-6 text-center cursor-pointer hover:font-bold`}
       >
         <i className="fas fa-angle-right" />
       </Link>
@@ -52,14 +52,15 @@ const PaginationNumber = ({ page, totalPage }) => {
 function getPageElement(page, currentPage, pagePrefix) {
   return (
     <Link
-      href={page === 1 ? `${pagePrefix}/` : `${pagePrefix}/page/${page}`}
       key={page}
+      className={`pb-0.5 w-6 text-center ${
+        page == currentPage
+          ? 'pointer-events-none rounded-sm font-bold bg-teal-400 dark:bg-teal-500 text-white'
+          : 'border-b hover:border-teal-400'
+      }`}
       passHref
-      className={`pb-0.5 w-6 text-center ${page == currentPage ?
-        'pointer-events-none rounded-sm font-bold bg-teal-400 dark:bg-teal-500 text-white' :
-        'border-b hover:border-teal-400'}`}
+      href={page === 1 ? `${pagePrefix}/` : `${pagePrefix}/page/${page}`}
     >
-
       {page}
     </Link>
   );

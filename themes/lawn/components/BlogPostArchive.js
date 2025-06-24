@@ -1,6 +1,7 @@
-import { siteConfig } from '@/libs/common/config';
 import Link from 'next/link';
 import { useState } from 'react';
+
+import { siteConfig } from '@/libs/common/config';
 
 /**
  * 博客每年归档列表
@@ -26,9 +27,9 @@ const BlogPostArchive = ({ posts = [], year, collapsed }) => {
             <div id={post.date.start}>
               <span className="text-gray-600 dark:text-gray-300">{post.date.start}</span> &nbsp;
               <Link
-                href={`/${POST_SUB_PATH}/${post.slug}`}
-                passHref
                 className="notion-link leading-loose hover:font-bold hover:text-teal-500 dark:hover:text-teal-300"
+                passHref
+                href={`/${POST_SUB_PATH}/${post.slug}`}
               >
                 {post.title}
               </Link>

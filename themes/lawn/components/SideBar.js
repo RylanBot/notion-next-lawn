@@ -19,13 +19,7 @@ const SideBar = (props) => {
       <div className="my-8 w-full">
         <div className="dark:text-gray-100">
           <div className="flex justify-center item-center mb-3">
-            <LazyImage
-              src={siteInfo?.icon}
-              alt={AUTHOR}
-              width={100}
-              height={100}
-              className="rounded-full w-28 h-28"
-            />
+            <LazyImage src={siteInfo?.icon} alt={AUTHOR} width={100} height={100} className="rounded-full w-28 h-28" />
           </div>
           <div className="font-times text-2xl font-medium text-center mb-1">{AUTHOR}</div>
           <div className="text-sm text-center mb-4">{BIO}</div>

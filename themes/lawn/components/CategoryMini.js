@@ -12,9 +12,9 @@ const CategoryMini = ({ name, count, icon, className }) => {
 
   return (
     <>
-      <Link className={className} href={`/category/${formatNameToSlug(name)}`} passHref>
+      <Link className={className} passHref href={`/category/${formatNameToSlug(name)}`}>
         {icon && <i className={`${icon}`} />}
-        {isChinese ? CATEGORY_SLUG_MAP[name] ?? name : name}
+        {isChinese ? (CATEGORY_SLUG_MAP[name] ?? name) : name}
         {count && <>({count})</>}
       </Link>
     </>

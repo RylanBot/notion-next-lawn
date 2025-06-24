@@ -155,9 +155,9 @@ const TopNav = (props) => {
               {locale.COMMON.CATEGORY}
             </div>
             <Link
+              className="mb-3 text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer"
               passHref
               href={'/category'}
-              className="mb-3 text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer"
             >
               {locale.COMMON.MORE} <i className="fas fa-angle-double-right" />
             </Link>
@@ -174,9 +174,9 @@ const TopNav = (props) => {
               {locale.COMMON.TAGS}
             </div>
             <Link
+              className="text-gray-400 hover:text-black dark:hover:text-white hover:underline cursor-pointer"
               passHref
               href={'/tag'}
-              className="text-gray-400 hover:text-black dark:hover:text-white hover:underline cursor-pointer"
             >
               {locale.COMMON.MORE} <i className="fas fa-angle-double-right" />
             </Link>

@@ -15,12 +15,13 @@ const SearchDrawer = ({ cRef, slot }) => {
       }
     };
   });
-  const hidden = () => {
+
+  const handleHideDrawer = () => {
     searchDrawer?.current?.classList?.add('hidden');
   };
 
-  Router.events.on('routeChangeComplete', (...args) => {
-    hidden();
+  Router.events.on('routeChangeComplete', () => {
+    handleHideDrawer();
   });
 
   return (
@@ -35,8 +36,8 @@ const SearchDrawer = ({ cRef, slot }) => {
       {/* 背景蒙版 */}
       <div
         id="search-drawer-background"
-        onClick={hidden}
         className="animate__animated animate__faster animate__fadeIn fixed bg-day dark:bg-night top-0 left-0 z-40 w-full h-full"
+        onClick={handleHideDrawer}
       />
     </div>
   );

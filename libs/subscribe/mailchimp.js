@@ -1,14 +1,12 @@
-import BLOG from '@/blog.config'
+import BLOG from '@/blog.config';
 
 /**
-* 订阅邮件-服务端接口
-*/
+ * 订阅邮件-服务端接口
+ */
 export default function subscribeToMailchimpApi({ email, first_name = '', last_name = '' }) {
-  const listId = BLOG.MAILCHIMP_LIST_ID // 替换为你的邮件列表 ID
-  const apiKey = BLOG.MAILCHIMP_API_KEY // 替换为你的 API KEY
-  if (!email || !listId || !apiKey) {
-    return {}
-  }
+  const listId = BLOG.MAILCHIMP_LIST_ID; // 替换为你的邮件列表 ID
+  const apiKey = BLOG.MAILCHIMP_API_KEY; // 替换为你的 API KEY
+  if (!email || !listId || !apiKey) return {};
   const data = {
     email_address: email,
     status: 'subscribed',
@@ -16,7 +14,7 @@ export default function subscribeToMailchimpApi({ email, first_name = '', last_n
       FNAME: first_name,
       LNAME: last_name
     }
-  }
+  };
   return fetch(`https://us18.api.mailchimp.com/3.0/lists/${listId}/members`, {
     method: 'POST',
     headers: {
@@ -24,7 +22,7 @@ export default function subscribeToMailchimpApi({ email, first_name = '', last_n
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(data)
-  })
+  });
 }
 
 /**
@@ -37,7 +35,7 @@ export async function subscribeToNewsletter(email, firstName, lastName) {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({ email, first_name: firstName, last_name: lastName })
-  })
-  const data = await response.json()
-  return data
+  });
+  const data = await response.json();
+  return data;
 }

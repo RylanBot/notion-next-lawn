@@ -6,7 +6,7 @@ import { getPostBlocks, getSingleBlock } from './block';
 import { getAllCategories, getCategoryOptions } from './category';
 import { compressImage, mapImgUrl } from './image';
 import { getAllPageIds } from './page';
-import { getPageProperties, getDatabaseProperties } from './property';
+import { getDatabaseProperties, getPageProperties } from './property';
 import { getAllTags, getTagOptions } from './tag';
 
 import { getDataFromCache, setDataToCache } from '../cache';
