@@ -1,8 +1,7 @@
+import throttle from 'lodash.throttle';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
-
-import throttle from 'lodash.throttle';
 
 import useDarkMode from '@/hooks/useDarkMode';
 import useGlobal from '@/hooks/useGlobal';
@@ -25,11 +24,11 @@ const TopNav = (props) => {
   const { tags, currentTag, categories, currentCategory } = props;
   const SHOW_SEARCH_BUTTON = siteConfig('LAWN_MENU_SEARCH', false, CONFIG);
 
+  const router = useRouter();
   const { locale } = useGlobal();
   const { isDarkMode } = useDarkMode();
-  const router = useRouter();
 
-  const searchDrawer = useRef();
+  const searchDrawer = useRef(null);
   const windowTopRef = useRef(0);
   const autoHideTimerRef = useRef(null);
   const navRef = useRef(null);
@@ -49,7 +48,7 @@ const TopNav = (props) => {
   };
 
   const handleNavStyle = throttle(() => {
-    const scrollS = window.scrollY;
+    const scrollY = window.scrollY;
 
     const header = document.querySelector('#lawn-header');
     const nav = document.querySelector('#sticky-nav');
@@ -59,7 +58,7 @@ const TopNav = (props) => {
     const headerHeight = remToPx(25);
 
     const isHome = router.route === '/';
-    const navTransparent = (scrollS < headerHeight && isHome) || scrollS < 300;
+    const navTransparent = (scrollY < headerHeight && isHome) || scrollY < 300;
 
     if (header && navTransparent) {
       nav?.classList.replace('bg-white', 'bg-none');
@@ -100,9 +99,9 @@ const TopNav = (props) => {
       }
     });
 
-    const isScrollUp = scrollS <= windowTopRef.current; // 是否为向上滚动
-    const isInHeaderView = scrollS <= header?.clientHeight; // 在顶部封面可见范围
-    const showNav = isScrollUp || isInHeaderView || scrollS < 5;
+    const isScrollUp = scrollY <= windowTopRef.current; // 是否为向上滚动
+    const isInHeaderView = scrollY <= header?.clientHeight; // 在顶部封面可见范围
+    const showNav = isScrollUp || isInHeaderView || scrollY < 5;
     if (!showNav) {
       nav?.classList.replace('top-0', '-top-20');
     } else {
@@ -114,13 +113,13 @@ const TopNav = (props) => {
 
       // 3 秒后如果用户没有新的滚动，且鼠标不在 nav 上，则自动隐藏
       autoHideTimerRef.current = setTimeout(() => {
-        if (!isMouseOverNav && !isInHeaderView) {
+        if (scrollY > 0 && !isMouseOverNav && !isInHeaderView) {
           nav?.classList.replace('top-0', '-top-20');
         }
       }, 3000);
     }
 
-    windowTopRef.current = scrollS;
+    windowTopRef.current = scrollY;
   }, 200);
 
   useEffect(() => {
@@ -156,8 +155,8 @@ const TopNav = (props) => {
               {locale.COMMON.CATEGORY}
             </div>
             <Link
-              href={'/category'}
               passHref
+              href={'/category'}
               className="mb-3 text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer"
             >
               {locale.COMMON.MORE} <i className="fas fa-angle-double-right" />
@@ -175,8 +174,8 @@ const TopNav = (props) => {
               {locale.COMMON.TAGS}
             </div>
             <Link
-              href={'/tag'}
               passHref
+              href={'/tag'}
               className="text-gray-400 hover:text-black dark:hover:text-white hover:underline cursor-pointer"
             >
               {locale.COMMON.MORE} <i className="fas fa-angle-double-right" />
@@ -197,8 +196,8 @@ const TopNav = (props) => {
       {/* 导航栏 */}
       <div
         id="sticky-nav"
-        style={{ backdropFilter: 'blur(3px)' }}
         className="top-0 transition-all shadow-none fixed bg-none dark:bg-lawn-black-gray dark:text-gray-200 text-black w-full z-20 transform border-transparent dark:border-transparent"
+        style={{ backdropFilter: 'blur(3px)' }}
       >
         <div className="w-full flex justify-between items-center px-4 py-2">
           <div id="nav-title" className="opacity-100 pointer-events-auto">
