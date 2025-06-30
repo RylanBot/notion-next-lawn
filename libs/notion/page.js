@@ -1,11 +1,8 @@
 import { idToUuid } from 'notion-utils';
-
 import { getLastPartOfUrl } from '../common/util';
 
 export const getAllPageIds = (collectionQuery, collectionId, collectionView, viewIds) => {
-  if (!collectionQuery && !collectionView) {
-    return [];
-  }
+  if (!collectionQuery && !collectionView) return [];
   // 优先按照第一个视图排序
   let pageIds = [];
   try {
@@ -50,6 +47,7 @@ export const handleInternalUrls = (allPages, subPath) => {
     const matchedPage = allPages.find((page) => hrefUuid.includes(page.id));
     if (matchedPage) {
       link.href = `/${matchedPage.slug}`;
+      link.target = '_black';
     }
   });
 
@@ -61,5 +59,6 @@ export const handleInternalUrls = (allPages, subPath) => {
   const notionPageLinks = document?.getElementById('notion-article')?.querySelectorAll('a.notion-page-link');
   notionPageLinks.forEach((link) => {
     link.href = `${window.location.pathname}/${getLastPartOfUrl(link.href)}`;
+    link.target = '_black';
   });
 };
