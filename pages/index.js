@@ -4,8 +4,8 @@ import BLOG from '@/blog.config';
 import { getLayoutByTheme } from '@/themes';
 
 import { siteConfig } from '@/libs/common/config';
-import { getGlobalData } from '@/libs/notion/site';
 import { getPostBlocks } from '@/libs/notion/block';
+import { getGlobalData } from '@/libs/notion/site';
 import { generateRobotsTxt } from '@/libs/subscribe/robots.txt';
 import { generateRss } from '@/libs/subscribe/rss';
 
@@ -35,14 +35,8 @@ export async function getStaticProps() {
     }
   }
 
-  // 生成robotTxt
-  generateRobotsTxt();
-  // 生成Feed订阅
-  if (JSON.parse(BLOG.ENABLE_RSS)) {
-    generateRss(props?.latestPosts || []);
-  }
-
-  // 生成全文索引 - 仅在 yarn build 时执行 && process.env.npm_lifecycle_event === 'build'
+  await generateRobotsTxt();
+  await generateRss(props?.latestPosts || []);
 
   delete props.allPages;
 

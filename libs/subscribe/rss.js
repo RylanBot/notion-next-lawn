@@ -10,7 +10,9 @@ import { getPostBlocks } from '../notion/block';
 /**
  * 生成 RSS 内容
  */
-const createFeedContent = async (post) => {
+const createRssContent = async (post) => {
+  if (!JSON.parse(BLOG.ENABLE_RSS)) return;
+
   const blockMap = await getPostBlocks(post.id, 'rss-content');
   if (blockMap) {
     post.blockMap = blockMap;
@@ -41,7 +43,7 @@ export async function generateRss(posts) {
       title: post.title,
       link: `${BLOG.LINK}/${BLOG.POST_SUB_PATH}/${post.slug}`,
       description: post.summary,
-      content: await createFeedContent(post),
+      content: await createRssContent(post),
       date: post.date.start
     });
   }
