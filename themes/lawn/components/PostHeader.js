@@ -50,7 +50,7 @@ export default function PostHeader({ post, siteInfo }) {
           {/* 发布时间 */}
           <section className="flex-wrap shadow-text-md flex text-sm justify-center mt-4 text-white font-light leading-8">
             <div className="flex justify-center">
-              {post.type !== 'Page' && (
+              {post.date.start && (
                 <>
                   <span className="mx-3">
                     <i className="fas fa-hourglass-half pr-2"></i>
