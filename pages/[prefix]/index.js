@@ -21,25 +21,27 @@ const Slug = (props) => {
   const router = useRouter();
   const [reloaded, setReloaded] = useState(false);
 
+  const POST_WAITING_TIME_FOR_404 = siteConfig('POST_WAITING_TIME_FOR_404');
+
   // 文章加载
   useEffect(() => {
-    if (!post) {
-      const timeout = setTimeout(() => {
-        if (isBrowser) {
-          const article = document.getElementById('notion-article');
-          if (!article && !reloaded) {
-            setReloaded(true);
-            console.warn('Try to reload: ', router.asPath);
-            router.replace(router.asPath);
-          } else {
-            router.push('/404');
-          }
-        }
-      }, siteConfig('POST_WAITING_TIME_FOR_404') * 1000);
+    if (post) return;
 
-      return () => clearTimeout(timeout);
-    }
-  }, [post]);
+    const timeout = setTimeout(() => {
+      if (isBrowser) {
+        const article = document.getElementById('notion-article');
+        if (!article && !reloaded) {
+          setReloaded(true);
+          console.warn('Try to reload: ', router.asPath);
+          router.replace(router.asPath);
+        } else {
+          router.push('/404');
+        }
+      }
+    }, POST_WAITING_TIME_FOR_404 * 1000);
+
+    return () => clearTimeout(timeout);
+  }, [post, router]);
 
   props = { ...props };
   const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() });

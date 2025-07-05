@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React, { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 import useGlobal from '@/hooks/useGlobal';
 import { siteConfig } from '@/libs/common/config';
@@ -286,16 +286,9 @@ export const Layout404 = (props) => {
 
   return (
     <div id="lawn-404" className="w-full h-screen flex flex-col justify-center items-center">
-      <div className="flex justify-center items-center dark:text-gray-200 text-xl max-md:text-sm relative -top-8">
-        <span className="px-3 border-r-2 font-bold text-gray-600 dark:text-white">Error</span>
-        <span className="px-3 flex">
-          {locale.COMMON.ERROR_INFO.split(' | ').map((part, index, array) => (
-            <React.Fragment key={index}>
-              {part}
-              {index < array.length - 1 && <span className="border-r-2 text-gray-300 mx-3"></span>}
-            </React.Fragment>
-          ))}
-        </span>
+      <div className="flex justify-center items-center dark:text-gray-200 text-2xl max-md:text-sm relative -top-8">
+        <span className="px-4 border-r-2 font-bold text-gray-600 dark:text-white">404</span>
+        <span className="px-4 flex">{locale.COMMON.ERROR_INFO}</span>
       </div>
     </div>
   );

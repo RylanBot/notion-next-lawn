@@ -55,7 +55,7 @@ export default {
     MINUTE: '分钟',
     WORD_COUNT: '字数',
     READ_TIME: '阅读时长',
-    ERROR_INFO: '页面不存在 | 渲染超时 | 尝试重新打开'
+    ERROR_INFO: '页面不存在'
   },
   PAGINATION: {
     PREV: '上页',
