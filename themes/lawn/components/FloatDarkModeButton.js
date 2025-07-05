@@ -13,7 +13,7 @@ export default function FloatDarkModeButton() {
 
   return (
     <div className="group right-float-tooltip-parent">
-      <i id="darkModeButton" className={`${isDarkMode ? 'fa-sun' : 'fa-moon'} fas text-xs`} onClick={toggleDarkMode} />
+      <i className={`${isDarkMode ? 'fa-sun' : 'fa-moon'} fas text-xs`} onClick={toggleDarkMode} />
       <span className="right-float-tooltip -left-[17px]">
         {`${isDarkMode ? locale.MENU.LIGHT_MODE : locale.MENU.DARK_MODE}`}
       </span>

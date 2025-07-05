@@ -19,7 +19,7 @@ const TagGroups = () => {
 
   return (
     <Card className="my-4">
-      <div id="tags-group" className="dark:border-gray-600 space-y-2">
+      <div className="dark:border-gray-600 space-y-2">
         <div className="ml-2 mb-1 ">
           <i className="fas fa-tag" /> {locale.COMMON.TAGS}
         </div>

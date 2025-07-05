@@ -20,7 +20,7 @@ const CategoryGroup = () => {
           <i className="fa-solid fa-layer-group" /> {locale.COMMON.CATEGORY}
         </div>
 
-        <div id="category-list" className="dark:border-gray-600 flex flex-col mx-4">
+        <div className="flex flex-col mx-4 dark:border-gray-600 ">
           {categoryOptions.map((category) => {
             const selected = currentCategory === formatNameToSlug(category.name);
             return (

@@ -188,7 +188,7 @@ export const LayoutSearch = (props) => {
       {!currentSearch ? (
         <SearchNav {...props} />
       ) : (
-        <div id="posts-wrapper">{POST_LIST ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}</div>
+        <div>{POST_LIST ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}</div>
       )}
     </div>
   );
@@ -253,7 +253,7 @@ export const LayoutSlug = (props) => {
 
   return (
     <div className="article w-full lg:hover:shadow rounded-t-xl lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-lawn-black-gray lg:border-2 border-teal-600 dark:border-teal-500">
-      <div id="article-wrapper" className="overflow-x-auto flex-grow mx-auto md:w-full md:px-5 ">
+      <div id="lawn-article-wrapper" className="overflow-x-auto flex-grow mx-auto md:w-full md:px-5 ">
         <article itemScope itemType="https://schema.org/Blog" className="subpixel-antialiased overflow-y-hidden">
           {/* 文章主体 */}
           <section className="px-5 justify-center mx-auto max-w-2xl lg:max-w-full">
@@ -307,7 +307,7 @@ export const LayoutCategoryIndex = (props) => {
         <div className="dark:text-gray-200 mb-2 mx-3">
           <i className="mr-2 fas fa-th" /> {locale.COMMON.CATEGORY}
         </div>
-        <div id="category-list" className="duration-200 flex flex-wrap mx-8">
+        <div className="duration-200 flex flex-wrap mx-8">
           {categoryOptions?.map((category) => {
             return (
               <CategoryMini
@@ -337,7 +337,7 @@ export const LayoutTagIndex = (props) => {
         <div className="dark:text-gray-200 mb-2 ml-4">
           <i className="mr-2 fas fa-tag" /> {locale.COMMON.TAGS}
         </div>
-        <div id="tags-list" className="duration-200 flex flex-wrap ml-8">
+        <div className="duration-200 flex flex-wrap ml-8">
           {tagOptions.map((tag) => (
             <div key={tag.name} className="p-2">
               <TagItemMini key={tag.name} tag={tag} />

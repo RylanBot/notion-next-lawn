@@ -58,7 +58,7 @@ export default function AlgoliaSearchModal({ cRef }) {
       setTotalHit(nbHits);
       setSearchResults(hits);
 
-      const doms = document.getElementById('search-wrapper').getElementsByClassName('replace');
+      const doms = document.getElementById('algolia-search-wrapper').getElementsByClassName('replace');
 
       setTimeout(() => {
         replaceSearchResult({
@@ -103,7 +103,7 @@ export default function AlgoliaSearchModal({ cRef }) {
 
   return (
     <div
-      id="search-wrapper"
+      id="algolia-search-wrapper"
       className={`${
         isModalOpen ? 'opacity-100' : 'invisible opacity-0 pointer-events-none'
       } z-30 fixed h-screen w-screen left-0 top-0 mt-12 flex items-start justify-center`}
@@ -181,13 +181,13 @@ function TagGroups(props) {
   const firstTenTags = tagOptions?.slice(0, 10);
 
   return (
-    <div id="tags-group" className="dark:border-gray-700 space-y-2">
+    <div className="dark:border-gray-700 space-y-2">
       {firstTenTags?.map((tag, index) => {
         return (
           <Link
+            key={index}
             className="cursor-pointer inline-block whitespace-nowrap"
             passHref
-            key={index}
             href="/tag/[tag]"
             as={`/tag/${tag.name}`}
           >

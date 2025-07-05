@@ -12,7 +12,6 @@ import CategoryGroup from './CategoryGroup';
 import Logo from './Logo';
 import MenuListTop from './MenuListTop';
 import SearchButton from './SearchButton';
-import SearchDrawer from './SearchDrawer';
 import SideBar from './SideBar';
 import SideBarDrawer from './SideBarDrawer';
 import TagGroups from './TagGroups';
@@ -51,8 +50,8 @@ const TopNav = (props) => {
     const scrollY = window.scrollY;
 
     const header = document.querySelector('#lawn-header');
-    const nav = document.querySelector('#sticky-nav');
-    const navTitle = document.querySelector('#nav-title');
+    const stickyNav = document.querySelector('#lawn-sticky-nav');
+    const navTitle = document.querySelector('#lawn-nav-title');
 
     const remToPx = (rem) => rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
     const headerHeight = remToPx(25);
@@ -61,11 +60,11 @@ const TopNav = (props) => {
     const navTransparent = (scrollY < headerHeight && isHome) || scrollY < 300;
 
     if (header && navTransparent) {
-      nav?.classList.replace('bg-white', 'bg-none');
-      nav?.classList.replace('text-gray', 'text-white');
-      nav?.classList.replace('border', 'border-transparent');
-      nav?.classList.replace('drop-shadow-md', 'shadow-none');
-      nav?.classList.replace('dark:bg-lawn-black-gray', 'transparent');
+      stickyNav?.classList.replace('bg-white', 'bg-none');
+      stickyNav?.classList.replace('text-gray', 'text-white');
+      stickyNav?.classList.replace('border', 'border-transparent');
+      stickyNav?.classList.replace('drop-shadow-md', 'shadow-none');
+      stickyNav?.classList.replace('dark:bg-lawn-black-gray', 'transparent');
 
       if (isHome) {
         navTitle?.classList.replace('opacity-100', 'opacity-0');
@@ -75,11 +74,11 @@ const TopNav = (props) => {
         navTitle?.classList.replace('pointer-events-none', 'pointer-events-auto');
       }
     } else {
-      nav?.classList.replace('bg-none', 'bg-white');
-      nav?.classList.replace('text-white', 'text-gray');
-      nav?.classList.replace('border-transparent', 'border');
-      nav?.classList.replace('shadow-none', 'drop-shadow-md');
-      nav?.classList.replace('transparent', 'dark:bg-lawn-black-gray');
+      stickyNav?.classList.replace('bg-none', 'bg-white');
+      stickyNav?.classList.replace('text-white', 'text-gray');
+      stickyNav?.classList.replace('border-transparent', 'border');
+      stickyNav?.classList.replace('shadow-none', 'drop-shadow-md');
+      stickyNav?.classList.replace('transparent', 'dark:bg-lawn-black-gray');
 
       if (isHome) {
         // 首页禁止点击 Logo 跳转
@@ -103,9 +102,9 @@ const TopNav = (props) => {
     const isInHeaderView = scrollY <= header?.clientHeight; // 在顶部封面可见范围
     const showNav = isScrollUp || isInHeaderView || scrollY < 5;
     if (!showNav) {
-      nav?.classList.replace('top-0', '-top-20');
+      stickyNav?.classList.replace('top-0', '-top-20');
     } else {
-      nav?.classList.replace('-top-20', 'top-0');
+      stickyNav?.classList.replace('-top-20', 'top-0');
 
       if (autoHideTimerRef.current) {
         clearTimeout(autoHideTimerRef.current);
@@ -114,7 +113,7 @@ const TopNav = (props) => {
       // 3 秒后如果用户没有新的滚动，且鼠标不在 nav 上，则自动隐藏
       autoHideTimerRef.current = setTimeout(() => {
         if (scrollY > 0 && !isMouseOverNav && !isInHeaderView) {
-          nav?.classList.replace('top-0', '-top-20');
+          stickyNav?.classList.replace('top-0', '-top-20');
         }
       }, 3000);
     }
@@ -191,16 +190,14 @@ const TopNav = (props) => {
 
   return (
     <nav id="lawn-top-nav" ref={navRef} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      <SearchDrawer cRef={searchDrawer} slot={searchDrawerSlot} />
-
       {/* 导航栏 */}
       <div
-        id="sticky-nav"
+        id="lawn-sticky-nav"
         className="top-0 transition-all shadow-none fixed bg-none dark:bg-lawn-black-gray dark:text-gray-200 text-black w-full z-20 transform border-transparent dark:border-transparent"
         style={{ backdropFilter: 'blur(3px)' }}
       >
         <div className="w-full flex justify-between items-center px-4 py-2">
-          <div id="nav-title" className="opacity-100 pointer-events-auto">
+          <div id="lawn-nav-title" className="opacity-100 pointer-events-auto">
             <Logo />
           </div>
 

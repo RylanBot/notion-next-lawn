@@ -52,13 +52,11 @@ const MenuListTop = (props) => {
     links = customMenu;
   }
 
-  if (!links || links.length === 0) {
-    return null;
-  }
+  if (!links || links.length === 0) return;
 
   return (
     <>
-      <nav id="nav-pc" className="leading-8 justify-center w-full flex">
+      <nav className="leading-8 justify-center w-full flex">
         {links?.map((link, index) => link && link.show && <MenuItemDrop key={index} link={link} />)}
         {TRAVELLING_LINK && (
           <span className="pl-4 pr-2">

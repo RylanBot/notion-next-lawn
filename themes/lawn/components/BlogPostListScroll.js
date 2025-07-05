@@ -55,7 +55,7 @@ const BlogPostListScroll = ({ posts = [], currentSearch, siteInfo }) => {
   }
 
   return (
-    <div id="container" ref={targetRef} className="w-full">
+    <div ref={targetRef} className="w-full">
       {/* 文章列表 */}
       <div className="space-y-6 px-2">
         {postsToShow.map((post) => (

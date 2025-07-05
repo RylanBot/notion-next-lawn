@@ -20,7 +20,7 @@ const BlogPostListPage = ({ page = 1, posts = [], postCount, siteInfo }) => {
   }
 
   return (
-    <div id="container" className={`w-full ${pathname === '/page/[page]' ? 'pt-16' : ''}`}>
+    <div className={`w-full ${pathname === '/page/[page]' ? 'pt-16' : ''}`}>
       {/* 文章列表 */}
       <div className="space-y-6 px-2">
         {posts?.map((post) => (
