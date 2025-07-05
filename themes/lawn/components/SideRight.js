@@ -134,6 +134,7 @@ const SideRight = (props) => {
             {/* {siteConfig('COMMENT_WALINE_SERVER_URL') && siteConfig('COMMENT_WALINE_RECENT') && <LawnRecentComments />} */}
 
             {rightAreaSlot}
+
             {WIDGET_PET && !isMobile && <Live2D />}
           </div>
         </div>

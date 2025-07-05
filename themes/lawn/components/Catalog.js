@@ -74,10 +74,10 @@ const Catalog = ({ toc }) => {
                 title={tocItem.text}
               >
                 <span
-                  style={{ marginLeft: tocItem.indentLevel * 16 }}
                   className={`inline-block truncate ${
                     activeId === tocIds[index] ? 'font-bold text-teal-600 dark:text-teal-400' : ''
                   }`}
+                  style={{ marginLeft: tocItem.indentLevel * 16 }}
                 >
                   {tocItem.text}
                 </span>

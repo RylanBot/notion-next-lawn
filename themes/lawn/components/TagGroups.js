@@ -10,10 +10,10 @@ import TagItemMini from './TagItemMini';
  * 标签组
  */
 const TagGroups = () => {
-  const { tagOptions, locale } = useGlobal();
-
   const router = useRouter();
   const currentTag = router.query.tag;
+
+  const { tagOptions, locale } = useGlobal();
 
   if (!tagOptions) return;
 

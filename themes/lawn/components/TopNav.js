@@ -27,7 +27,6 @@ const TopNav = (props) => {
   const { locale } = useGlobal();
   const { isDarkMode } = useDarkMode();
 
-  const searchDrawer = useRef(null);
   const windowTopRef = useRef(0);
   const autoHideTimerRef = useRef(null);
   const navRef = useRef(null);
@@ -207,8 +206,8 @@ const TopNav = (props) => {
               <MenuListTop {...props} />
             </div>
             <div
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="w-8 justify-center items-center h-8 cursor-pointer flex lg:hidden"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               <span className="menu-title text-gray-700 dark:text-gray-200">
                 {isMenuOpen ? <i className="fas fa-times" /> : <i className="fas fa-bars" />}

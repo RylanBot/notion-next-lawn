@@ -10,10 +10,12 @@ import { getQueryParam } from '@/libs/common/util';
 import Select from '../base/Select';
 
 const DebugPanel = () => {
-  const [show, setShow] = useState(false);
-  const { theme, switchTheme, locale } = useGlobal();
   const router = useRouter();
   const currentTheme = getQueryParam(router.asPath, 'theme') || theme;
+
+  const { theme, switchTheme, locale } = useGlobal();
+
+  const [show, setShow] = useState(false);
   const [siteConfig, updateSiteConfig] = useState({});
 
   // 主题下拉框

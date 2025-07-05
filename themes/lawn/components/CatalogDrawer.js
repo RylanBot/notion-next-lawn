@@ -28,8 +28,8 @@ const CatalogDrawer = ({ toc }) => {
   return (
     <>
       <button
-        onClick={switchVisible}
         className="cursor-pointer transform duration-200 flex justify-center items-center text-center lg:hidden"
+        onClick={switchVisible}
       >
         <i className="fas fa-list-ol text-xs" />
       </button>

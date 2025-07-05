@@ -7,11 +7,12 @@ let lock = false;
 
 const SearchInput = (props) => {
   const { currentSearch, ref } = props;
+
+  const router = useRouter();
   const { locale } = useGlobal();
 
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
   const searchInputRef = useRef();
+  const [loading, setLoading] = useState(false);
 
   useImperativeHandle(ref, () => {
     return {
@@ -73,13 +74,13 @@ const SearchInput = (props) => {
         ref={searchInputRef}
         type="text"
         className="outline-none w-full text-sm pl-5 rounded-lg transition focus:shadow-lg dark:text-gray-300 font-light leading-10 text-black border-2 border-teal-500"
+        defaultValue={currentSearch || ''}
+        placeholder={locale.SEARCH.ARTICLES}
         onKeyUp={handleKeyUp}
         onCompositionStart={lockSearchInput}
         onCompositionUpdate={lockSearchInput}
         onCompositionEnd={unLockSearchInput}
-        placeholder={locale.SEARCH.ARTICLES}
         onChange={(e) => updateSearchKey(e.target.value)}
-        defaultValue={currentSearch || ''}
       />
 
       <div className="-ml-8 cursor-pointer float-right items-center justify-center py-2" onClick={handleSearch}>

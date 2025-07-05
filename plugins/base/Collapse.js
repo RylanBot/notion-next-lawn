@@ -5,8 +5,9 @@ import { useEffect, useImperativeHandle, useRef } from 'react';
  */
 const Collapse = (props) => {
   const { collapseRef } = props;
-  const ref = useRef(null);
   const type = props.type || 'vertical';
+
+  const ref = useRef(null);
 
   useImperativeHandle(collapseRef, () => {
     return {
@@ -81,8 +82,8 @@ const Collapse = (props) => {
   return (
     <div
       ref={ref}
+      className={`${props.className || ''} overflow-hidden duration-200`}
       style={type === 'vertical' ? { height: '0px', willChange: 'height' } : { width: '0px', willChange: 'width' }}
-      className={`${props.className || ''} overflow-hidden duration-200 `}
     >
       {props.children}
     </div>

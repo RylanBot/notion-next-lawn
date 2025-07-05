@@ -75,13 +75,13 @@ const Hero = ({ onLoad, ...props }) => {
       }`}
     >
       <LazyImage
-        src={siteInfo?.pageCover}
-        onLoad={() => handleCoverLoaded()}
-        priority={true}
-        fetchpriority="high"
         className={`brightness-75 w-full h-[25rem] object-cover object-center ${
           LAWN_HOME_NAV_BACKGROUND_IMG_FIXED ? 'fixed' : ''
         }`}
+        src={siteInfo?.pageCover}
+        priority={true}
+        fetchpriority="high"
+        onLoad={handleCoverLoaded}
       />
 
       <div className="text-gray-200 absolute bottom-6 flex flex-col h-full items-center justify-center w-full">
@@ -99,8 +99,8 @@ const Hero = ({ onLoad, ...props }) => {
         {/* 开始阅读按钮 */}
         {LAWN_HOME_START_READING && (
           <div
-            onClick={scrollToWrapper}
             className="z-10 cursor-pointer w-full text-center py-4 text-3xl absolute bottom-4 text-white"
+            onClick={scrollToWrapper}
           >
             <div className="opacity-70 animate-bounce text-xs">{locale.COMMON.START_READING}</div>
             <i className="opacity-70 animate-bounce fas fa-angle-down" />

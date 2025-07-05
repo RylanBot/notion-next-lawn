@@ -10,8 +10,7 @@ import { replaceSearchResult } from './highlight';
 
 /**
  * 结合 Algolia 实现的弹出式搜索框
- * 打开方式 cRef.current.openSearch()
- * https://www.algolia.com/doc/api-reference/search-api-parameters/
+ * @see https://www.algolia.com/doc/api-reference/search-api-parameters/
  */
 export default function AlgoliaSearchModal({ cRef }) {
   const [searchResults, setSearchResults] = useState([]);
@@ -225,10 +224,10 @@ function Pagination(props) {
 function getPageElement(i, selected, switchPage) {
   return (
     <div
-      onClick={() => switchPage(i)}
       className={`${
         selected ? 'font-bold text-white bg-blue-600 rounded' : 'hover:text-blue-600 hover:font-bold'
       } text-center cursor-pointer  w-6 h-6 `}
+      onClick={() => switchPage(i)}
     >
       {i + 1}
     </div>

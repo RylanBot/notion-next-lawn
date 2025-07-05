@@ -28,7 +28,7 @@ const MyApp = ({ Component, pageProps }) => {
 
   const GLayout = useCallback(
     (props) => {
-      // 根据页面路径加载不同Layout文件
+      // 根据页面路径加载不同 Layout 文件
       const Layout = getGlobalLayoutByTheme(queryParam);
       return <Layout {...props} />;
     },
