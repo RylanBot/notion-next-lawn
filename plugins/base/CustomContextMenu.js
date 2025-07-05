@@ -14,23 +14,26 @@ import { THEMES } from '@/themes';
  */
 export default function CustomContextMenu(props) {
   const { latestPosts } = props;
-  const router = useRouter();
 
+  const router = useRouter();
   const { locale } = useGlobal();
   const { isDarkMode, toggleDarkMode } = useDarkMode();
   const windowSize = useWindowSize();
+
+  const CUSTOM_RIGHT_CLICK_CONTEXT_MENU_THEME_SWITCH = siteConfig('CUSTOM_RIGHT_CLICK_CONTEXT_MENU_THEME_SWITCH');
+  const POST_SUB_PATH = siteConfig('POST_SUB_PATH');
+
+  const menuRef = useRef(null);
 
   const [position, setPosition] = useState({ x: '0px', y: '0px' });
   const [show, setShow] = useState(false);
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
 
-  const menuRef = useRef(null);
-
   function handleJumpToRandomPost() {
     const randomIndex = Math.floor(Math.random() * latestPosts.length);
     const randomPost = latestPosts[randomIndex];
-    router.push(`${siteConfig('POST_SUB_PATH')}/${randomPost?.slug}`);
+    router.push(`${POST_SUB_PATH}/${randomPost?.slug}`);
   }
 
   function handleBack() {
@@ -181,7 +184,7 @@ export default function CustomContextMenu(props) {
             {isDarkMode ? <i className="fa-regular fa-sun mr-2" /> : <i className="fa-regular fa-moon mr-2" />}
             <div className="whitespace-nowrap"> {isDarkMode ? locale.MENU.LIGHT_MODE : locale.MENU.DARK_MODE}</div>
           </div>
-          {siteConfig('CUSTOM_RIGHT_CLICK_CONTEXT_MENU_THEME_SWITCH') && (
+          {CUSTOM_RIGHT_CLICK_CONTEXT_MENU_THEME_SWITCH && (
             <div
               className="w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all"
               title={locale.MENU.THEME_SWITCH}

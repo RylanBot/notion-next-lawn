@@ -9,6 +9,10 @@ const MenuListSide = (props) => {
   const { customNav, customMenu } = props;
   const { locale } = useGlobal();
 
+  const LAWN_MENU_ARCHIVE = siteConfig('LAWN_MENU_ARCHIVE', null, CONFIG);
+  const LAWN_MENU_SEARCH = siteConfig('LAWN_MENU_SEARCH', null, CONFIG);
+  const LAWN_MENU_CATEGORY = siteConfig('LAWN_MENU_CATEGORY', null, CONFIG);
+  const LAWN_MENU_TAG = siteConfig('LAWN_MENU_TAG', null, CONFIG);
   const CUSTOM_MENU = siteConfig('CUSTOM_MENU');
   const TRAVELLING_LINK = siteConfig('TRAVELLING_LINK');
 
@@ -17,21 +21,26 @@ const MenuListSide = (props) => {
       icon: 'fas fa-archive',
       name: locale.NAV.ARCHIVE,
       to: '/archive',
-      show: siteConfig('LAWN_MENU_ARCHIVE', null, CONFIG)
+      show: LAWN_MENU_ARCHIVE
     },
     {
       icon: 'fas fa-search',
       name: locale.NAV.SEARCH,
       to: '/search',
-      show: siteConfig('LAWN_MENU_SEARCH', null, CONFIG)
+      show: LAWN_MENU_SEARCH
     },
     {
       icon: 'fas fa-folder',
       name: locale.COMMON.CATEGORY,
       to: '/category',
-      show: siteConfig('LAWN_MENU_CATEGORY', null, CONFIG)
+      show: LAWN_MENU_CATEGORY
     },
-    { icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: siteConfig('LAWN_MENU_TAG', null, CONFIG) }
+    {
+      icon: 'fas fa-tag',
+      name: locale.COMMON.TAGS,
+      to: '/tag',
+      show: LAWN_MENU_TAG
+    }
   ];
 
   if (customNav) {
@@ -44,10 +53,10 @@ const MenuListSide = (props) => {
     }
   }
 
-  // 如果 开启自定义菜单，则覆盖 Page 生成的菜单
+  // 如果开启自定义菜单，则覆盖 Page 生成的菜单
   if (CUSTOM_MENU) links = customMenu;
 
-  if (!links || links.length === 0) return <></>;
+  if (!links || links.length === 0) return;
 
   return (
     <nav id="nav-mobile">

@@ -10,13 +10,16 @@ import Card from './Card';
 /**
  * @see https://waline.js.org/guide/get-started.html
  */
-const LawnRecentComments = (props) => {
-  const [comments, updateComments] = useState([]);
+const LawnRecentComments = () => {
   const { locale } = useGlobal();
+  const COMMENT_WALINE_SERVER_URL = siteConfig('COMMENT_WALINE_SERVER_URL');
+
+  const [comments, updateComments] = useState([]);
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     RecentComments({
-      serverURL: siteConfig('COMMENT_WALINE_SERVER_URL'),
+      serverURL: COMMENT_WALINE_SERVER_URL,
       count: 5
     }).then(({ comments }) => {
       setLoading(false);
