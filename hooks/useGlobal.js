@@ -5,24 +5,25 @@ import { isBrowser } from 'react-notion-x';
 import { LANG, THEME } from '@/blog.config';
 import { THEMES } from '@/themes';
 
-import { getQueryVariable } from '@/libs/common/util';
-import { generateLocaleDict } from '@/libs/lang';
+import { generateLocaleDict, getPreferredLang } from '@/libs/lang';
 
 const GlobalContext = createContext();
 
 /**
- * 全局变量，包括语言、主题、深色模式、加载状态等
+ * 全局变量
  */
 export const GlobalContextProvider = (props) => {
-  const { post, children, siteInfo, categoryOptions, tagOptions, NOTION_CONFIG } = props;
+  const { NOTION_CONFIG, post, children, siteInfo, categoryOptions, tagOptions } = props;
   const fullWidth = post?.fullWidth ?? false;
 
   const router = useRouter();
 
   const [theme, setTheme] = useState(NOTION_CONFIG?.THEME || THEME);
-  const [lang, setLang] = useState(NOTION_CONFIG?.LANG || LANG);
-  const [locale, setLocale] = useState(generateLocaleDict(NOTION_CONFIG?.LANG || LANG));
+  const [lang, setLang] = useState(LANG);
+  const [locale, setLocale] = useState(generateLocaleDict(lang));
   const [onLoading, setOnLoading] = useState(false);
+
+  const isChinese = lang.startsWith('zh');
 
   const switchTheme = () => {
     const currentIndex = THEMES.indexOf(theme);
@@ -41,27 +42,30 @@ export const GlobalContextProvider = (props) => {
 
   useEffect(() => {
     if (!isBrowser) return;
-
-    const initLocale = () => {
-      const localLang = getQueryVariable('lang') || window.navigator.language;
-      changeLang(localLang);
-    };
-
-    initLocale();
+    const preferredLang = getPreferredLang();
+    changeLang(preferredLang);
   }, [isBrowser]);
+
+  useEffect(() => {
+    const newLang = router.query.lang || router.query.locale;
+    if (newLang) {
+      changeLang(newLang);
+    }
+  }, [router.asPath]);
 
   return (
     <GlobalContext.Provider
       value={{
+        NOTION_CONFIG,
         siteInfo,
         categoryOptions,
         tagOptions,
-        NOTION_CONFIG,
         fullWidth,
         onLoading,
         setOnLoading,
         lang,
         locale,
+        isChinese,
         changeLang,
         theme,
         setTheme,

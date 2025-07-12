@@ -1,5 +1,5 @@
 export default {
-  LOCALE: '中文(简体)',
+  LOCALE: '中文（简体）',
   MENU: {
     WALK_AROUND: '随便逛逛',
     CATEGORY: '博客分类',
@@ -79,7 +79,7 @@ export default {
     GUIDE: '点击下方按钮将随机跳转到一个博客网站'
   },
   COMMENT: {
-    PLACEHOLDER: '回复消息会通过邮件向您发送提醒',
+    PLACEHOLDER: '回复消息会通过邮件向您发送提醒～',
     SHOW_REPLY: '展开回复',
     HIDE_REPLY: '收起回复'
   }

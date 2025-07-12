@@ -1,10 +1,7 @@
-import useGlobal from '@/hooks/useGlobal';
 import { useRouter } from 'next/router';
+import useGlobal from '@/hooks/useGlobal';
 
-/**
- * 随机跳转到一个文章
- */
-export default function ButtonRandomPost(props) {
+export default function FloatRandomPostButton(props) {
   const { allNavPages } = props;
   const router = useRouter();
   const { locale } = useGlobal();
@@ -17,7 +14,7 @@ export default function ButtonRandomPost(props) {
 
   return (
     <div className="group right-float-tooltip-parent">
-      <i onClick={handleWalkAround} className="fa-solid fa-podcast text-xs"></i>
+      <i className="fa-solid fa-podcast text-xs" onClick={handleWalkAround}></i>
       <span className="right-float-tooltip -left-4">{locale.MENU.WALK_AROUND}</span>
     </div>
   );

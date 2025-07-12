@@ -78,7 +78,7 @@ export default {
     GUIDE: 'Click the button below to randomly visit a blog website'
   },
   COMMENT: {
-    PLACEHOLDER: 'You’ll be notified via email when there is a reply',
+    PLACEHOLDER: 'You’ll be notified via email when there is a reply~',
     SHOW_REPLY: 'Show Reply',
     HIDE_REPLY: 'Hide Reply'
   }

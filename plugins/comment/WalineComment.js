@@ -16,7 +16,7 @@ import { loadExternalResource } from '@/libs/common/util';
  */
 const WalineComment = (props) => {
   const router = useRouter();
-  const { locale } = useGlobal();
+  const { lang, locale } = useGlobal();
   const { highlightAllUnder } = usePrism();
 
   const walineRef = useRef(null);
@@ -25,7 +25,6 @@ const WalineComment = (props) => {
 
   const [currentPath, setCurrentPath] = useState('');
 
-  const LANG = siteConfig('LANG');
   const WALINE_SERVER_URL = siteConfig('COMMENT_WALINE_SERVER_URL');
 
   const safeWalineOps = {
@@ -74,7 +73,7 @@ const WalineComment = (props) => {
         ...props,
         el: walineRef.current,
         serverURL: WALINE_SERVER_URL,
-        lang: LANG,
+        lang,
         locale: {
           reactionTitle: '',
           placeholder: locale.COMMENT.PLACEHOLDER

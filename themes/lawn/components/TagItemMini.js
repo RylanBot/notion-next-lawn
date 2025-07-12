@@ -1,16 +1,20 @@
 import Link from 'next/link';
 
+import useGlobal from '@/hooks/useGlobal';
+
 import { siteConfig } from '@/libs/common/config';
-import { formatNameToSlug, isChinese } from '@/libs/common/util';
+import { formatNameToSlug } from '@/libs/common/util';
 
 const TagItemMini = ({ tag, selected = false }) => {
+  const { isChinese } = useGlobal();
+
   let TAG_SLUG_MAP = {};
   try {
     // 确保 JSON 字符串格式正确
     TAG_SLUG_MAP = JSON.parse(siteConfig('TAG_SLUG_MAP', {}));
   } catch (error) {}
 
-  const displayName = isChinese ? (TAG_SLUG_MAP[tag.name] ?? tag.name) : tag.name;
+  const displayName = isChinese ? TAG_SLUG_MAP[tag.name] ?? tag.name : tag.name;
 
   return (
     <Link
@@ -22,7 +26,7 @@ const TagItemMini = ({ tag, selected = false }) => {
       passHref
       href={`/tag/${formatNameToSlug(tag.name)}`}
     >
-      <div className="font-light">{displayName + (tag.count ? `(${tag.count})` : '')} </div>
+      <div className="font-light">{displayName + (tag.count ? ` (${tag.count})` : '')} </div>
     </Link>
   );
 };

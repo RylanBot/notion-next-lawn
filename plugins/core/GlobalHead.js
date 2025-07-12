@@ -2,8 +2,9 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import useGlobal from '@/hooks/useGlobal';
+
 import { siteConfig } from '@/libs/common/config';
-import { formatSlugToName, isChinese } from '@/libs/common/util';
+import { formatSlugToName } from '@/libs/common/util';
 
 /**
  * 页面的 Head，用于促进 SEO
@@ -77,7 +78,7 @@ const GlobalHead = (props) => {
  * 获取 SEO 信息
  */
 const getSEOMeta = (props, router, global) => {
-  const { locale } = global;
+  const { locale, isChinese } = global;
   const { post, siteInfo, tag, category, page } = props;
   const keyword = router?.query?.s;
 

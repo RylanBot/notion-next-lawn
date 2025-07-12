@@ -15,7 +15,9 @@ export const formatSlugToName = (slug) => {
     .join(' ');
 };
 
-export const isChinese = isBrowser && navigator.language.startsWith('zh');
+export const getPreferredLang = () => {
+  return getQueryVariable('lang') || getQueryVariable('locale') || window.navigator.language;
+};
 
 /**
  * Google 机器人
@@ -152,8 +154,6 @@ export function getQueryParam(url, param) {
 
 /**
  * 深度合并两个对象
- * @param target
- * @param sources
  */
 export function mergeDeep(target, ...sources) {
   if (!sources.length) return target;
@@ -183,7 +183,7 @@ export function isIterable(obj) {
 
 /**
  * 深拷贝对象
- * 根据源对象类型深度复制，支持object和array
+ * 根据源对象类型深度复制，支持 object 和 array
  */
 export function deepClone(obj) {
   if (Array.isArray(obj)) {

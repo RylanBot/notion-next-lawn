@@ -14,15 +14,15 @@ import {
   BlogPostArchive,
   BlogPostListPage,
   BlogPostListScroll,
-  ButtonRandomPost,
   Card,
   CatalogDrawer,
   CategoryMini,
+  FloatRandomPostButton,
+  FloatRightArea,
   Footer,
   Hero,
   JumpToCommentButton,
   PostHeader,
-  RightFloatArea,
   SearchNav,
   SideRight,
   SlotBar,
@@ -67,7 +67,7 @@ export const LayoutBase = (props) => {
       <>
         {post?.toc?.length > 1 && <CatalogDrawer toc={post.toc} />}
         <JumpToCommentButton />
-        <ButtonRandomPost {...props} />
+        <FloatRandomPostButton {...props} />
       </>
     ),
     [post, post?.toc]
@@ -117,7 +117,7 @@ export const LayoutBase = (props) => {
             </main>
 
             {/* 悬浮菜单 */}
-            <RightFloatArea floatSlot={floatSlot} />
+            <FloatRightArea floatSlot={floatSlot} />
 
             {/* 全文搜索 */}
             <AlgoliaSearchModal cRef={searchModal} {...props} />

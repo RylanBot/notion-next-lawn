@@ -21,7 +21,7 @@ const ArchiveCard = ({ postCount }) => {
     >
       <div>
         <i className="fa-solid fa-archive mr-1.5 max-md:mr-[7px]"></i>
-        {locale.NAV.ARCHIVE}({postCount})
+        {locale.NAV.ARCHIVE} ({postCount})
       </div>
     </Link>
   );
