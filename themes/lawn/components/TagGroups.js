@@ -20,10 +20,10 @@ const TagGroups = () => {
   return (
     <Card className="my-4">
       <div className="dark:border-gray-600 space-y-2">
-        <div className="ml-2 mb-1 ">
+        <div className="ml-2 mb-1">
           <i className="fas fa-tag" /> {locale.COMMON.TAGS}
         </div>
-        <div className="px-4">
+        <div className="px-4 flex flex-wrap gap-x-2">
           {tagOptions.map((tag) => {
             return <TagItemMini key={tag.name} tag={tag} selected={currentTag === formatNameToSlug(tag.name)} />;
           })}
