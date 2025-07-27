@@ -14,6 +14,7 @@ import {
   BlogPostArchive,
   BlogPostListPage,
   BlogPostListScroll,
+  BlogPostRelatedList,
   Card,
   CatalogDrawer,
   CategoryMini,
@@ -261,6 +262,8 @@ export const LayoutSlug = (props) => {
           </section>
           {/* 版权 */}
           {post?.type === 'Post' && <ArticleCopyright {...props} />}
+          {/* 相关文章 */}
+          <BlogPostRelatedList relatedPosts={post?.related} />
         </article>
 
         {/* 评论互动 */}

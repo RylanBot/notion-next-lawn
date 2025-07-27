@@ -29,8 +29,6 @@ export async function getStaticPaths() {
     ?.filter((row) => row.status === 'Published' && row.type === 'Post')
     .map((row) => ({
       params: {
-        // prefix: row.slug.split('/')[0],
-        // slug: row.slug.split('/')[1]
         prefix: BLOG.POST_SUB_PATH,
         slug: row.slug
       }
@@ -52,6 +50,33 @@ export async function getStaticProps({ params: { prefix, slug } }) {
   props.post = props?.allPages?.find((p) => {
     return p.slug.toLowerCase() === slug.toLowerCase();
   });
+
+  const findRelatedPosts = () => {
+    if (!props.post.related) return [];
+
+    const relatedSlugs = props.post.related
+      .split(',')
+      .map((s) => s.trim())
+      .filter(Boolean);
+
+    return relatedSlugs.map((slug) => {
+      const page = props?.allPages?.find((p) => p.slug === slug);
+      return page
+        ? {
+            slug: page.slug,
+            pageCover: page.pageCover,
+            title: page.title
+          }
+        : null;
+    });
+  };
+
+  const relatedPosts = findRelatedPosts();
+  if (relatedPosts.length > 0) {
+    props.post.related = relatedPosts;
+  } else {
+    delete props.post.related;
+  }
 
   // 处理非数据库文章的信息 -> 是否为子页面
   if (!props?.post && slug.length >= 32) {

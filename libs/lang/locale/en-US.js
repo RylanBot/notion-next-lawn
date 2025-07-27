@@ -28,7 +28,7 @@ export default {
     SCAN_QR_CODE: 'Scan QRCode',
     URL_COPIED: 'URL has copied!',
     TABLE_OF_CONTENTS: 'Catalog',
-    RELATE_POSTS: 'Relate Posts',
+    RELATED_POSTS: 'Related Posts',
     COPYRIGHT: 'Copyright',
     AUTHOR: 'Author',
     URL: 'URL',

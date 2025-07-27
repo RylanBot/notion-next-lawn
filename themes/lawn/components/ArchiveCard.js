@@ -15,7 +15,7 @@ const ArchiveCard = ({ postCount }) => {
       className={`lg:my-4 rounded-lg px-4 pl-6 py-3 bg-white dark:bg-lawn-black-gray dark:text-gray-300 flex justify-between items-center ${
         inArchive
           ? 'pointer-events-none border-2 border-dotted border-teal-500'
-          : 'hover:bg-teal-400 border dark:border-black hover:text-white dark:hover:bg-teal-500 dark:hover:text-white'
+          : 'hover:bg-teal-400 border dark:border-zinc-500 hover:text-white dark:hover:bg-teal-500 dark:hover:text-white'
       }`}
       href="/archive"
     >

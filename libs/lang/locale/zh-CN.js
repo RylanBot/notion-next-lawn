@@ -29,7 +29,7 @@ export default {
     SCAN_QR_CODE: '微信扫码分享',
     URL_COPIED: '链接已复制！',
     TABLE_OF_CONTENTS: '目录',
-    RELATE_POSTS: '相关文章',
+    RELATED_POSTS: '相关文章',
     COPYRIGHT: '声明',
     AUTHOR: '作者',
     URL: '链接',

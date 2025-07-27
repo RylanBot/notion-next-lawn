@@ -2,6 +2,7 @@ export { default as ArticleCopyright } from './ArticleCopyright';
 export { default as BlogPostArchive } from './BlogPostArchive';
 export { default as BlogPostListPage } from './BlogPostListPage';
 export { default as BlogPostListScroll } from './BlogPostListScroll';
+export { default as BlogPostRelatedList } from './BlogPostRelatedList';
 export { default as Card } from './Card';
 export { default as CatalogDrawer } from './CatalogDrawer';
 export { default as CategoryMini } from './CategoryMini';

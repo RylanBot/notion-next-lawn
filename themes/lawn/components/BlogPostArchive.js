@@ -10,7 +10,7 @@ const BlogPostArchive = ({ posts = [], year, collapsed }) => {
   const POST_SUB_PATH = siteConfig('POST_SUB_PATH');
   const [isCollapsed, setIsCollapsed] = useState(collapsed);
 
-  if (!posts || posts.length === 0) return <></>;
+  if (!posts || posts.length === 0) return;
 
   return (
     <div className="mb-8">
@@ -21,9 +21,12 @@ const BlogPostArchive = ({ posts = [], year, collapsed }) => {
         <i className={`text-gray-400 ${isCollapsed ? 'fa-solid fa-plus' : 'fas fa-chevron-down'}`}></i>
       </button>
 
-      <ul className={isCollapsed ? 'hidden' : undefined}>
+      <ul className={isCollapsed ? 'hidden' : 'ml-2'}>
         {posts?.map((post) => (
-          <li key={post.id} className="border-l-2 px-4 py-2 text-base items-center dark:border-zinc-600">
+          <li
+            key={post.id}
+            className="border-dotted border-l-2 my-[2px] px-4 py-2 text-base items-center dark:border-zinc-600"
+          >
             <div id={post.date.start}>
               <span className="text-gray-600 dark:text-gray-300">{post.date.start}</span> &nbsp;
               <Link
