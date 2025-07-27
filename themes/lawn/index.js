@@ -263,8 +263,6 @@ export const LayoutSlug = (props) => {
           {post?.type === 'Post' && <ArticleCopyright {...props} />}
         </article>
 
-        <div className="pt-4 border-dashed"></div>
-
         {/* 评论互动 */}
         <div className="duration-200 overflow-x-auto bg-white dark:bg-lawn-black-gray px-3">
           <Comment post={post} />
