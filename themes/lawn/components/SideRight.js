@@ -94,7 +94,7 @@ const SideRight = (props) => {
       <div
         id="sideRight"
         ref={sideRightRef}
-        className={`bg-lawn-background-gray dark:bg-black scroll-smooth scrollbar-hidden lg:max-h-screen lg:sticky ${
+        className={`bg-lawn-background-gray dark:bg-black overflow-hidden lg:max-h-screen lg:sticky ${
           hasToc ? 'top-[68px]' : 'top-4'
         }`}
       >
