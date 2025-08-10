@@ -52,7 +52,7 @@ export async function getStaticProps({ params: { prefix, slug } }) {
   });
 
   const findRelatedPosts = () => {
-    if (!props.post.related) return [];
+    if (!props.post?.related) return [];
 
     const relatedSlugs = props.post.related
       .split(',')
@@ -60,7 +60,7 @@ export async function getStaticProps({ params: { prefix, slug } }) {
       .filter(Boolean);
 
     return relatedSlugs.map((slug) => {
-      const page = props?.allPages?.find((p) => p.slug === slug);
+      const page = props.allPages?.find((p) => p.slug === slug);
       return page
         ? {
             slug: page.slug,
