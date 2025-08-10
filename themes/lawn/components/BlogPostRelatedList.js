@@ -26,9 +26,9 @@ const BlogPostRelatedList = ({ relatedPosts }) => {
           >
             <Link className="w-full h-full flex flex-col" href={`/${POST_SUB_PATH}/${p.slug}`}>
               <LazyImage className="w-full flex-shrink-0" src={p.pageCover} />
-              <div className="flex-1 px-3 pt-3 text-sm dark:text-lawn-light-gray overflow-hidden line-clamp-2">
+              <p className="flex-1 px-3 pt-3 text-sm dark:text-lawn-light-gray overflow-hidden line-clamp-2">
                 {p.title}
-              </div>
+              </p>
             </Link>
           </Card>
         ))}
