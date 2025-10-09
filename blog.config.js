@@ -1,5 +1,6 @@
 const BLOG = {
   /* 基本配置 */
+  NOTION_API_BASE_URL: process.env.NOTION_API_BASE_URL || 'https://www.notion.so/api/v3',
   NOTION_PAGE_ID: process.env.NOTION_PAGE_ID || '02ab3b8678004aa69e9e415905ef32a5',
   NOTION_HOST: process.env.NEXT_PUBLIC_NOTION_HOST || 'https://www.notion.so', // Notion 域名，您可以选择用自己的域名进行反向代理，如果不懂得什么是反向代理，请勿修改此项
   NOTION_ACCESS_TOKEN: process.env.NEXT_PUBLIC_NOTION_ACCESS_TOKEN || '', // Useful if you prefer not to make your database public

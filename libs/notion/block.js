@@ -1,6 +1,6 @@
 import { NotionAPI } from 'notion-client';
-import BLOG from '@/blog.config';
 
+import BLOG from '@/blog.config';
 import { getDataFromCache, setDataToCache } from '../cache';
 import { deepClone, delay } from '../common/util';
 
@@ -47,8 +47,25 @@ async function getBlockWithRetry(id, from, retryAttempts = 3) {
   if (retryAttempts && retryAttempts > 0) {
     console.log('[请求API]', `from:${from}`, `id:${id}`, retryAttempts < 3 ? `剩余重试次数:${retryAttempts}` : '');
     try {
-      const authToken = BLOG.NOTION_ACCESS_TOKEN || null;
-      const api = new NotionAPI({ authToken, userTimeZone: Intl.DateTimeFormat().resolvedOptions().timeZone });
+      const api = new NotionAPI({
+        apiBaseUrl: BLOG.NOTION_API_BASE_URL || 'https://www.notion.so/api/v3',
+        authToken: BLOG.NOTION_ACCESS_TOKEN || null,
+        userTimeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        kyOptions: {
+          mode: 'cors',
+          hooks: {
+            beforeRequest: [
+              (request) => {
+                const url = request.url.toString();
+                if (url.includes('/api/v3/syncRecordValues')) {
+                  return new Request(url.replace('/api/v3/syncRecordValues', '/api/v3/syncRecordValuesMain'), request);
+                }
+                return request;
+              }
+            ]
+          }
+        }
+      });
       const pageData = await api.getPage(id);
       // console.log('stringfy', JSON.stringify(pageData))
       console.info('[响应成功]:', `from:${from}`);
