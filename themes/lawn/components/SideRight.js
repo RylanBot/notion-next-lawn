@@ -24,6 +24,7 @@ const SideRight = (props) => {
   const router = useRouter();
 
   const WIDGET_ANALYTICS = siteConfig('LAWN_WIDGET_ANALYTICS', null, CONFIG);
+  const WIDGET_LATEST_POSTS = siteConfig('LAWN_WIDGET_LATEST_POSTS', null, CONFIG);
   const WIDGET_PET = JSON.parse(siteConfig('WIDGET_PET'));
 
   const [hasToc, setHasToc] = useState(false);
@@ -126,7 +127,7 @@ const SideRight = (props) => {
             <TagGroups />
 
             {/* 最新文章 */}
-            <LatestPostsGroup {...props} />
+            {WIDGET_LATEST_POSTS && <LatestPostsGroup {...props} />}
 
             {/* 公告 */}
             <Announcement post={notice} className="mt-8" />
