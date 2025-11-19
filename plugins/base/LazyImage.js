@@ -9,78 +9,12 @@ import { siteConfig } from '@/libs/common/config';
 const LazyImage = React.forwardRef(
   ({ priority, src, placeholderSrc, className, width, height, onLoad, ...props }, ref) => {
     const COMPRESS_WIDTH = siteConfig('IMAGE_COMPRESS_WIDTH');
+    const PLACEHOLDER_TEXT = `${siteConfig('AUTHOR')}'s Blog`;
+
     const imageRef = ref || useRef(null);
 
     const [imageLoaded, setImageLoaded] = useState(false);
     const [adjustedSrc, setAdjustedSrc] = useState(placeholderSrc || '');
-
-    if (!placeholderSrc) {
-      placeholderSrc = generatePlaceholder(width, height);
-    }
-
-    const handleImageLoad = () => {
-      setImageLoaded(true);
-      if (typeof onLoad === 'function') {
-        onLoad();
-      }
-    };
-
-    const handleImageError = () => {
-      if (imageRef.current) {
-        imageRef.current.src = placeholderSrc;
-      }
-    };
-
-    useEffect(() => {
-      const adjustedImageSrc = adjustImgSize(src || imageRef.current.src, COMPRESS_WIDTH);
-      setAdjustedSrc(adjustedImageSrc);
-    
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              const lazyImage = new Image();
-              lazyImage.src = adjustedImageSrc;
-    
-              if (lazyImage.complete) {
-                handleImageLoad();
-              } else {
-                lazyImage.onload = () => handleImageLoad();
-              }
-    
-              lazyImage.onerror = handleImageError;
-    
-              observer.unobserve(entry.target);
-            }
-          });
-        },
-        { rootMargin: '50px 0px' }
-      );
-    
-      if (imageRef.current) {
-        observer.observe(imageRef.current);
-      }
-    
-      // 强制检查图片是否已经加载
-      if (imageRef.current && imageRef.current.complete) {
-        handleImageLoad();
-      }
-
-      const handleVisibilityChange = () => {
-        if (document.visibilityState === 'visible' && imageRef.current?.complete) {
-          handleImageLoad();
-        }
-      };
-    
-      document.addEventListener('visibilitychange', handleVisibilityChange);
-    
-      return () => {
-        if (imageRef.current) {
-          observer.unobserve(imageRef.current);
-        }
-        document.removeEventListener('visibilitychange', handleVisibilityChange);
-      };
-    }, [src, adjustedSrc]);    
 
     const imgProps = {
       ref: imageRef,
@@ -99,6 +33,74 @@ const LazyImage = React.forwardRef(
     if (height && height !== 'auto') {
       imgProps.height = height;
     }
+
+    if (!placeholderSrc) {
+      placeholderSrc = generatePlaceholder(PLACEHOLDER_TEXT, width, height);
+    }
+
+    const handleImageLoad = () => {
+      setImageLoaded(true);
+      if (typeof onLoad === 'function') {
+        onLoad();
+      }
+    };
+
+    const handleImageError = () => {
+      if (imageRef.current) {
+        imageRef.current.src = placeholderSrc;
+      }
+    };
+
+    useEffect(() => {
+      const adjustedImageSrc = adjustImgSize(src || imageRef.current.src, COMPRESS_WIDTH);
+      setAdjustedSrc(adjustedImageSrc);
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const lazyImage = new Image();
+              lazyImage.src = adjustedImageSrc;
+
+              if (lazyImage.complete) {
+                handleImageLoad();
+              } else {
+                lazyImage.onload = () => handleImageLoad();
+              }
+
+              lazyImage.onerror = handleImageError;
+
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { rootMargin: '500px 0px' }
+      );
+
+      if (imageRef.current) {
+        observer.observe(imageRef.current);
+      }
+
+      // 强制检查图片是否已经加载
+      if (imageRef.current && imageRef.current.complete) {
+        handleImageLoad();
+      }
+
+      const handleVisibilityChange = () => {
+        if (document.visibilityState === 'visible' && imageRef.current?.complete) {
+          handleImageLoad();
+        }
+      };
+
+      document.addEventListener('visibilitychange', handleVisibilityChange);
+
+      return () => {
+        if (imageRef.current) {
+          observer.unobserve(imageRef.current);
+        }
+        document.removeEventListener('visibilitychange', handleVisibilityChange);
+      };
+    }, [src, adjustedSrc]);
 
     return (
       <>
@@ -139,16 +141,45 @@ const adjustImgSize = (src, maxWidth) => {
 /**
  * 生成自定义的占位图片
  */
-const generatePlaceholder = (width = 400, height = 320) => {
-  const text = `${siteConfig('AUTHOR')}'s Blog`;
-  const placeholderText = encodeURIComponent(text);
 
-  const minDimension = Math.min(width || 400, height || 320);
-  const characterWidth = 0.5;
-  const totalCharWidth = text.length * characterWidth;
-  const fontSize = Math.floor(minDimension / totalCharWidth);
-  const sizeParam = width && height ? `${width}x${height}` : width || (height ? `${height}x${height}` : '440x320');
-  return `https://fakeimg.ryd.tools/${sizeParam}/?text=${placeholderText}&font=lobster&font_size=${fontSize}`;
+const generatePlaceholder = (text, width = 400, height = 320) => {
+  const BG_COLOR = '#e0e0e0';
+  const TEXT_COLOR = '#999999';
+  const FONT_FAMILY = 'Times New Roman';
+  const CHAR_WIDTH = 0.45;
+
+  const totalCharWidth = text.length * CHAR_WIDTH;
+  const minDimension = Math.min(width, height);
+  const fontSize = Math.max(14, Math.floor((minDimension / totalCharWidth) * 0.8));
+
+  const escapeXml = (str) =>
+    str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&apos;');
+
+  const svg = `
+    <svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
+      <rect width="${width}" height="${height}" fill="${BG_COLOR}"/>
+      <text
+        x="50%"
+        y="50%"
+        font-style="italic"
+        font-family="${FONT_FAMILY}"
+        font-size="${fontSize}"
+        fill="${TEXT_COLOR}"
+        text-anchor="middle"
+        dominant-baseline="central"
+        letter-spacing="2"
+      >
+        ${escapeXml(text)}
+      </text>
+    </svg>
+  `.trim();
+
+  return `data:image/svg+xml;base64,${btoa(svg)}`;
 };
 
 export default LazyImage;
