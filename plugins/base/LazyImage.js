@@ -148,13 +148,13 @@ const generatePlaceholder = (text, width = 400, height = 320) => {
   const FONT_FAMILY = 'Times New Roman';
   const CHAR_WIDTH = 0.45;
 
-  const totalCharWidth = text.length * CHAR_WIDTH;
+  const totalCharWidth = text?.length * CHAR_WIDTH || 0;
   const minDimension = Math.min(width, height);
   const fontSize = Math.max(14, Math.floor((minDimension / totalCharWidth) * 0.8));
 
   const escapeXml = (str) =>
     str
-      .replace(/&/g, '&amp;')
+      ?.replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;')

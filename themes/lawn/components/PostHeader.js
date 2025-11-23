@@ -15,7 +15,7 @@ export default function PostHeader({ post, siteInfo }) {
   const { locale, fullWidth } = useGlobal();
 
   if (!post) return <></>;
-  if (fullWidth) <div className="my-8" />;
+  if (fullWidth) return <div className="my-8" />;
 
   const headerImage = post?.pageCover ? post.pageCover : siteInfo?.pageCover;
 
@@ -44,7 +44,7 @@ export default function PostHeader({ post, siteInfo }) {
           {/* 文章 Title */}
           <div className="px-1 leading-snug font-bold text-2xl md:text-5xl shadow-text-md flex justify-center text-center text-white">
             <NotionIcon icon={post.pageIcon} className="text-4xl mx-1" />
-            {post.title}
+            <span className="mx-1">{post.title}</span>
           </div>
 
           {/* 发布时间 */}

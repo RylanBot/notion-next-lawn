@@ -14,7 +14,7 @@ import { loadExternalResource } from '@/libs/common/util';
 /**
  * @see https://waline.js.org/guide/get-started.html
  */
-const WalineComment = (props) => {
+const WalineComment = () => {
   const router = useRouter();
   const { lang, locale } = useGlobal();
   const { highlightAllUnder } = usePrism();
@@ -57,7 +57,7 @@ const WalineComment = (props) => {
   const updateWaline = (url) => {
     if (url !== currentPath) {
       setCurrentPath(url);
-      setTimeout(() => safeWalineOps.update(props), 50);
+      setTimeout(() => safeWalineOps.update(), 50);
     }
   };
 
@@ -70,7 +70,6 @@ const WalineComment = (props) => {
 
     try {
       walineInstanceRef.current = init({
-        ...props,
         el: walineRef.current,
         serverURL: WALINE_SERVER_URL,
         lang,

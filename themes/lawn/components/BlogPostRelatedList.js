@@ -22,7 +22,7 @@ const BlogPostRelatedList = ({ relatedPosts }) => {
         {relatedPosts.map((p) => (
           <Card
             key={p.slug}
-            className="px-0 py-0 pb-2 w-52 max-md:w-40 hover:border-teal-500 dark:hover:border-teal-400 hover:scale-105 transition duration-200 overflow-hidden"
+            className="px-0 py-0 pb-2 w-52 shadow-sm max-md:w-40 hover:border-[1px] hover:border-teal-500 dark:hover:border-teal-400 hover:scale-105 transition duration-200 overflow-hidden"
           >
             <Link className="w-full h-full flex flex-col" href={`/${POST_SUB_PATH}/${p.slug}`}>
               <LazyImage className="w-full flex-shrink-0" src={p.pageCover} />

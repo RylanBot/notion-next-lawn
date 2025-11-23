@@ -597,6 +597,7 @@ summary > .notion-h {
 }
 
 .notion-hr {
+  border-bottom: none !important;
   width: 100%;
   height: 1px;
   display: block;
@@ -699,7 +700,7 @@ summary > .notion-h {
 }
 
 .notion-page-link:hover {
-  /*background: var(--bg-color-0);*/
+  @apply rounded-sm;
 }
 
 .notion-collection-column-title svg {
@@ -722,8 +723,8 @@ svg.notion-page-icon {
   object-fit: fill;
   border-radius: 3px;
   /* padding: 1px; */
-  max-width: 22px;
-  max-height: 22px;
+  max-width: 18px;
+  max-height: 18px;
 }
 
 .notion-icon {
@@ -749,7 +750,7 @@ svg.notion-page-icon {
   background: var(--bg-color-2);
   border-radius: 3px;
   font-size: 85%;
-  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+  @apply font-mono;
 }
 
 span > .notion-inline-code {

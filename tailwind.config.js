@@ -8,6 +8,7 @@ module.exports = {
     fontFamily: {
       sans: BLOG.FONT_SANS,
       serif: BLOG.FONT_SERIF,
+      mono: ['SFMono-Regular', 'Consolas', 'Liberation Mono', 'Menlo', 'Courier', 'monospace'],
       // oleo: ['Oleo Script', 'Times New Roman'],
       times: ['Times New Roman']
     },
