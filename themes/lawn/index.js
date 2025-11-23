@@ -218,11 +218,11 @@ export const LayoutArchive = (props) => {
   return (
     <div className="pt-16 mx-2 mb-2">
       <Card className="w-full">
-        <div className="mb-10 pb-20 bg-white md:p-12 p-3 min-h-full dark:bg-lawn-black-gray">
+        <div className="lg:px-10 lg:py-4 bg-white p-3 min-h-full dark:bg-lawn-black-gray">
           {Object.keys(archivePosts)
             .sort((a, b) => b - a)
-            .map((year, index) => (
-              <BlogPostArchive key={year} posts={archivePosts[year]} year={year} collapsed={index >= 2} />
+            .map((year, index, array) => (
+              <BlogPostArchive key={year} posts={archivePosts[year]} year={year} isFinal={index === array.length - 1} />
             ))}
         </div>
       </Card>
