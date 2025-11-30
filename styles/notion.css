@@ -68,7 +68,7 @@
 }
 
 .notion {
-  font-size: 16px;
+  font-size: 1em;
   line-height: 1.5;
   color: var(--fg-color);
   caret-color: var(--fg-color);
@@ -429,14 +429,8 @@ em span[class^='notion-'][class$='_background'] {
   background-color: var(--notion-item-gray);
 }
 
-.notion b {
-  font-weight: 600;
-}
-
 .notion-title {
   width: 100%;
-  font-size: 2.5em;
-  font-weight: 700;
   margin-bottom: 20px;
   line-height: 1.2;
 }
@@ -450,24 +444,22 @@ summary > .notion-h {
   font-weight: 600;
   line-height: 1.3;
   padding: 3px 2px;
-  margin-bottom: 1px;
+  margin-top: 24px;
   max-width: 100%;
   white-space: pre-wrap;
   word-break: break-word;
 }
 
 .notion-h1 {
-  font-size: 1.575em;
-  margin-top: 1.08em;
-  /* @apply border-b w-full; */
+  font-size: 1.6rem;
 }
 
 .notion-h2 {
-  @apply w-full;
+  font-size: 1.45rem;
 }
 
 .notion-h3 {
-  @apply w-full;
+  font-size: 1.3rem;
 }
 
 .notion-header-anchor {
@@ -484,19 +476,6 @@ summary > .notion-h {
 
 .notion-h1:first-child {
   margin-top: 0;
-}
-
-/* .notion-h1:first-of-type {
-  margin-top: 2px;
-} */
-.notion-h2 {
-  font-size: 1.4em;
-  margin-top: 1.1em;
-}
-
-.notion-h3 {
-  font-size: 1.25em;
-  margin-top: 1em;
 }
 
 .notion-h:hover .notion-hash-link {
@@ -852,7 +831,6 @@ span > .notion-inline-code {
   word-break: break-word;
   padding: 3px 5px !important;
   margin: 1px 0 !important;
-  border-radius: 2px;
 }
 
 .notion-text:first-child {
