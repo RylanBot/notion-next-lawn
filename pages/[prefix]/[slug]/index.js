@@ -51,33 +51,6 @@ export async function getStaticProps({ params: { prefix, slug } }) {
     return p.slug.toLowerCase() === slug.toLowerCase();
   });
 
-  const findRelatedPosts = () => {
-    if (!props.post?.related) return [];
-
-    const relatedSlugs = props.post.related
-      .split(',')
-      .map((s) => s.trim())
-      .filter(Boolean);
-
-    return relatedSlugs.map((slug) => {
-      const page = props.allPages?.find((p) => p.slug === slug);
-      return page
-        ? {
-            slug: page.slug,
-            pageCover: page.pageCover,
-            title: page.title
-          }
-        : null;
-    });
-  };
-
-  const relatedPosts = findRelatedPosts();
-  if (relatedPosts.length > 0) {
-    props.post.related = relatedPosts;
-  } else {
-    delete props.post.related;
-  }
-
   // 处理非数据库文章的信息 -> 是否为子页面
   if (!props?.post && slug.length >= 32) {
     const post = await getNotionPost(slug);
