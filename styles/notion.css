@@ -1026,7 +1026,7 @@ code[class*='language-'] {
 }
 
 .notion-callout {
-  padding: 16px 8px;
+  padding: 12px 16px;
   display: inline-flex;
   width: 100%;
   border-radius: 3px;
@@ -1053,23 +1053,15 @@ code[class*='language-'] {
   word-break: break-word;
 }
 
-.notion-callout-text > .notion-text:first-of-type {
-  margin-top: -3px !important;
-}
-
-.notion-callout-text > .notion-text {
-  padding: 3px 0px !important;
-}
-
 .notion-toggle {
   padding: 3px 2px;
-  margin: 8px 0;
   width: 100%;
 }
 
 .notion-toggle > summary {
   cursor: pointer;
   outline: none;
+  margin-bottom: 8px;
 }
 
 .notion-toggle > div {
@@ -1807,7 +1799,6 @@ div[class*='notion-property-checkbox-checked'] svg {
 .notion-text,
 .notion-quote,
 .notion-h-title {
-  @apply leading-8;
   @apply p-0;
   @apply my-3;
 }
