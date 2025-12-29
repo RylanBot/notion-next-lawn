@@ -1,7 +1,8 @@
 import { siteConfig } from '@/libs/common/config';
+import NotByAI from '@/plugins/base/NotByAI';
 
 const Footer = () => {
-  const AUTHOR = siteConfig('AUTHOR');
+  // const AUTHOR = siteConfig('AUTHOR');
   const SINCE = siteConfig('SINCE');
   const BEI_AN = siteConfig('BEI_AN');
   const ANALYTICS_BUSUANZI_ENABLE = siteConfig('ANALYTICS_BUSUANZI_ENABLE');
@@ -11,15 +12,21 @@ const Footer = () => {
 
   return (
     <footer className="z-10 py-1 flex flex-col items-center justify-center w-full text-sm relative bg-teal-700 dark:bg-lawn-black-gray text-white">
-      <div className="flex items-center justify-center my-1 space-x-6 font-times">
-        <div className="flex items-center">
-          <i className="fa-solid fa-robot mx-1" />
+      <div className="flex items-center justify-center my-1 space-x-4 font-times">
+        {/* <div className="flex items-center">
+          <i className="fa-solid fa-robot mr-1" />
           <span className="text-base">{AUTHOR}</span>
-        </div>
+        </div> */}
+
         <div className="flex items-center">
-          <i className="fas fa-copyright mx-1" />
+          <i className="fas fa-copyright mr-1" />
           <span>{copyrightDate}</span>
         </div>
+
+        <div>
+          <NotByAI />
+        </div>
+
         {/* 公共版权协议 */}
         <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank">
           <img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" />
