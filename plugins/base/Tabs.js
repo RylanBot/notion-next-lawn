@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
 import { siteConfig } from '@/libs/common/config';
+import React, { useState } from 'react';
 
 /**
  * 可切换标签
@@ -11,7 +11,7 @@ const Tabs = ({ className, children }) => {
   if (validTab.length === 0) return;
 
   return (
-    <div className={`mb-5 duration-200 ${className || ''}`}>
+    <div className={`mb-5 duration-300 ${className || ''}`}>
       {!(validTab.length === 1 && siteConfig('COMMENT_HIDE_SINGLE_TAB')) && (
         <ul className="flex justify-center space-x-5 pb-4 dark:text-gray-400 text-gray-600 overflow-auto">
           {validTab.map((item, index) => (

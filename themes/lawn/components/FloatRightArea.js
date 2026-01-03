@@ -1,7 +1,7 @@
 import throttle from 'lodash.throttle';
 import { useCallback, useEffect, useState } from 'react';
 
-import FloatDarkModeButton from './FloatDarkModeButton';
+// import FloatDarkModeButton from './FloatDarkModeButton';
 // import FloatLangSwitchButton from './FloatLangSwitchButton';
 import JumpToTopButton from './JumpToTopButton';
 
@@ -36,12 +36,12 @@ const FloatRightArea = ({ floatSlot }) => {
 
   return (
     <div
-      className={`duration-300 transition-all bottom-16 right-1 fixed justify-end z-20 rounded-sm text-white bg-teal-500 dark:bg-teal-600 p-2 lg:scale-125 lg:mr-2 ${
+      className={`duration-300 transition-all bottom-12 right-4 fixed justify-end z-20 rounded-sm text-white bg-teal-500 dark:bg-teal-600 p-2 lg:scale-125 ${
         showFloatButton ? 'opacity-100' : 'invisible opacity-0'
       }`}
     >
-      <div className="justify-center flex flex-col items-center cursor-pointer space-y-2">
-        <FloatDarkModeButton />
+      <div className="justify-center flex flex-col items-center cursor-pointer gap-2">
+        {/* <FloatDarkModeButton /> */}
         {/* <FloatLangSwitchButton /> */}
         {floatSlot}
         <JumpToTopButton />

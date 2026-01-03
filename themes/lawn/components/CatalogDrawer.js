@@ -28,7 +28,7 @@ const CatalogDrawer = ({ toc }) => {
   return (
     <>
       <button
-        className="cursor-pointer transform duration-200 flex justify-center items-center text-center lg:hidden"
+        className="cursor-pointer flex justify-center items-center text-center lg:hidden"
         onClick={switchVisible}
       >
         <i className="fas fa-list-ol text-xs" />
@@ -36,7 +36,7 @@ const CatalogDrawer = ({ toc }) => {
 
       <div className="fixed top-0 right-0 z-40 lg:hidden">
         <div
-          className={`animate__animated animate__fast w-60 duration-100 fixed right-12 bottom-12 rounded py-2 bg-white dark:bg-lawn-black-gray shadow-sm shadow-gray-400 ${
+          className={`animate__animated animate__fast w-60 fixed right-12 bottom-12 rounded py-2 bg-white dark:bg-lawn-black-gray shadow-sm shadow-gray-400 ${
             showDrawer ? 'animate__slideInRight' : '-mr-72 animate__slideOutRight'
           }`}
         >

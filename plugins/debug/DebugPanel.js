@@ -57,7 +57,7 @@ const DebugPanel = () => {
         <div
           className={`bg-black text-xs text-white shadow-2xl p-1.5 rounded-l-xl cursor-pointer ${
             show ? 'right-96' : 'right-0'
-          } fixed bottom-72 duration-200 z-50`}
+          } fixed bottom-72 duration-300 z-50`}
           style={{ writingMode: 'vertical-lr' }}
           onClick={toggleShow}
         >
@@ -73,7 +73,7 @@ const DebugPanel = () => {
       <div
         className={` ${
           show ? 'w-96 right-0 ' : '-right-96 invisible w-0'
-        } overflow-y-scroll h-full p-5 bg-white fixed bottom-0 z-50 duration-200`}
+        } overflow-y-scroll h-full p-5 bg-white fixed bottom-0 z-50 duration-300`}
       >
         <div className="flex justify-between space-x-1 my-5">
           <div className="flex">

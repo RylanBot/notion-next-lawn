@@ -1,6 +1,5 @@
 import useGlobal from '@/hooks/useGlobal';
 import { siteConfig } from '@/libs/common/config';
-import TravellingsLink from '@/plugins/base/TravellingsLink';
 
 import CONFIG from '../config';
 import MenuItemCollapse from './MenuItemCollapse';
@@ -14,7 +13,6 @@ const MenuListSide = (props) => {
   const LAWN_MENU_CATEGORY = siteConfig('LAWN_MENU_CATEGORY', null, CONFIG);
   const LAWN_MENU_TAG = siteConfig('LAWN_MENU_TAG', null, CONFIG);
   const CUSTOM_MENU = siteConfig('CUSTOM_MENU');
-  const TRAVELLING_LINK = siteConfig('TRAVELLING_LINK');
 
   let links = [
     {
@@ -60,17 +58,9 @@ const MenuListSide = (props) => {
 
   return (
     <nav>
-      <div className="pr-1">
-        {links?.map((link, index) => (
-          <MenuItemCollapse key={index} link={link} />
-        ))}
-      </div>
-
-      {TRAVELLING_LINK && (
-        <div className="w-full px-10 tracking-widest flex justify-center align-bottom absolute bottom-4">
-          <TravellingsLink />
-        </div>
-      )}
+      {links?.map((link, index) => (
+        <MenuItemCollapse key={index} link={link} />
+      ))}
     </nav>
   );
 };

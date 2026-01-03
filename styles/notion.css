@@ -1061,7 +1061,7 @@ code[class*='language-'] {
 .notion-toggle > summary {
   cursor: pointer;
   outline: none;
-  margin-bottom: 8px;
+  margin: 8px 0;
 }
 
 .notion-toggle > div {

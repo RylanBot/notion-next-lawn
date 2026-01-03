@@ -1,15 +1,12 @@
 import useGlobal from '@/hooks/useGlobal';
 import { siteConfig } from '@/libs/common/config';
-import TravellingsLink from '@/plugins/base/TravellingsLink';
 
 import CONFIG from '../config';
 import MenuItemDrop from './MenuItemDrop';
 
 const MenuListTop = (props) => {
   const { customNav, customMenu } = props;
-
   const { locale } = useGlobal();
-  const TRAVELLING_LINK = siteConfig('TRAVELLING_LINK');
 
   let links = [
     {
@@ -56,13 +53,8 @@ const MenuListTop = (props) => {
 
   return (
     <>
-      <nav className="leading-8 justify-center w-full flex">
+      <nav className="leading-8 justify-center w-full flex gap-6">
         {links?.map((link, index) => link && link.show && <MenuItemDrop key={index} link={link} />)}
-        {TRAVELLING_LINK && (
-          <span className="pl-4 pr-2">
-            <TravellingsLink />
-          </span>
-        )}
       </nav>
     </>
   );

@@ -11,6 +11,7 @@ import CONFIG from '../config';
 import CategoryGroup from './CategoryGroup';
 import Logo from './Logo';
 import MenuListTop from './MenuListTop';
+import NavActionArea from './NavActionArea';
 import SearchButton from './SearchButton';
 import SideBar from './SideBar';
 import SideBarDrawer from './SideBarDrawer';
@@ -21,6 +22,7 @@ import TagGroups from './TagGroups';
  */
 const TopNav = (props) => {
   const { tags, currentTag, categories, currentCategory } = props;
+
   const SHOW_SEARCH_BUTTON = siteConfig('LAWN_MENU_SEARCH', false, CONFIG);
 
   const router = useRouter();
@@ -134,12 +136,14 @@ const TopNav = (props) => {
     });
     observer.observe(document.body, {
       childList: true,
-      subtree: true
+      subtree: true,
+      attributes: false
     });
 
     window.addEventListener('scroll', handleNavStyle);
     return () => {
       window.removeEventListener('scroll', handleNavStyle);
+      observer.disconnect();
     };
   }, [router.asPath]);
 
@@ -195,16 +199,24 @@ const TopNav = (props) => {
         className="top-0 transition-all shadow-none fixed bg-none dark:bg-lawn-black-gray dark:text-gray-200 text-black w-full z-20 transform border-transparent dark:border-transparent"
         style={{ backdropFilter: 'blur(3px)' }}
       >
-        <div className="w-full flex justify-between items-center px-4 py-2">
-          <div id="lawn-nav-title" className="opacity-100 pointer-events-auto">
+        <div className="w-full flex items-center px-4 py-2 relative">
+          <div id="lawn-nav-title" className="opacity-100 pointer-events-auto z-10">
             <Logo />
           </div>
 
-          {/* 右侧菜单 */}
-          <div className="mr-1 flex justify-end items-center text-xl">
-            <div className="hidden lg:flex">
-              <MenuListTop {...props} />
+          <div className="hidden lg:flex absolute left-1/2 -translate-x-1/2">
+            <MenuListTop {...props} />
+          </div>
+
+          <div className="max-sm:hidden ml-auto z-10">
+            <div className="menu-title">
+              <NavActionArea />
             </div>
+          </div>
+
+          {SHOW_SEARCH_BUTTON && <SearchButton />}
+
+          <div className="mr-1 flex justify-end items-center text-xl ml-auto lg:ml-0 z-10">
             <div
               className="w-8 justify-center items-center h-8 cursor-pointer flex lg:hidden"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -213,7 +225,6 @@ const TopNav = (props) => {
                 {isMenuOpen ? <i className="fas fa-times" /> : <i className="fas fa-bars" />}
               </span>
             </div>
-            {SHOW_SEARCH_BUTTON && <SearchButton />}
           </div>
         </div>
       </div>

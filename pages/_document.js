@@ -1,5 +1,4 @@
 import Document, { Head, Html, Main, NextScript } from 'next/document';
-
 import BLOG from '@/blog.config';
 
 class MyDocument extends Document {
@@ -12,14 +11,16 @@ class MyDocument extends Document {
     return (
       <Html lang={BLOG.LANG}>
         <Head>
-          <link rel='icon' href={`${BLOG.BLOG_FAVICON}`} />
+          <link rel="icon" href={`${BLOG.BLOG_FAVICON}`} />
           {/* 初始化亮暗模式，避免闪烁 */}
-          <script src='/js/dark.js'></script>
+          <script src="/js/dark.js"></script>
           {/* 预加载字体 */}
-          {BLOG.FONT_AWESOME && <>
-            <link rel='prefetch' href={BLOG.FONT_AWESOME} as="style" crossOrigin="anonymous" />
-            <link rel="stylesheet" href={BLOG.FONT_AWESOME} crossOrigin="anonymous" referrerPolicy="no-referrer" />
-          </>}
+          {BLOG.FONT_AWESOME && (
+            <>
+              <link rel="prefetch" href={BLOG.FONT_AWESOME} as="style" crossOrigin="anonymous" />
+              <link rel="stylesheet" href={BLOG.FONT_AWESOME} crossOrigin="anonymous" referrerPolicy="no-referrer" />
+            </>
+          )}
 
           {BLOG.FONT_URL?.map((fontUrl, index) => {
             if (fontUrl.includes('css')) {
@@ -31,6 +32,7 @@ class MyDocument extends Document {
         </Head>
         <body className="font-light scroll-smooth">
           <Main />
+          <div id="__portals__"></div>
           <NextScript />
         </body>
       </Html>

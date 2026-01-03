@@ -15,9 +15,11 @@ const JumpToTopButton = () => {
   }
 
   return (
-    <div className="group right-float-tooltip-parent">
+    <div
+    // className="group right-float-tooltip-parent"
+    >
       <i onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="fas fa-arrow-up text-xs" />
-      <span className="right-float-tooltip -left-4">{locale.POST.TOP}</span>
+      {/* <span className="right-float-tooltip -left-4">{locale.POST.TOP}</span> */}
     </div>
   );
 };

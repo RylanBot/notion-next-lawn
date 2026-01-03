@@ -70,12 +70,12 @@ const Hero = ({ onLoad, ...props }) => {
   return (
     <div
       id="lawn-header"
-      className={`relative flex flex-col justify-center items-center bg-white z-1 w-full h-[25rem] ${
+      className={`relative flex flex-col justify-center items-center bg-white z-1 w-full h-[30rem] ${
         showHero ? '' : 'opacity-0'
       }`}
     >
       <LazyImage
-        className={`brightness-75 w-full h-[25rem] object-cover object-center ${
+        className={`brightness-75 w-full h-[30rem] object-cover object-center ${
           LAWN_HOME_NAV_BACKGROUND_IMG_FIXED ? 'fixed' : ''
         }`}
         src={siteInfo?.pageCover}
@@ -84,7 +84,7 @@ const Hero = ({ onLoad, ...props }) => {
         onLoad={handleCoverLoaded}
       />
 
-      <div className="text-gray-200 absolute bottom-6 flex flex-col h-full items-center justify-center w-full">
+      <div className="text-gray-200 absolute flex flex-col h-full items-center justify-center w-full">
         {/* 站点标题 */}
         <div className="font-times shadow-text text-center text-7xl lg:text-9xl z-10">{TITLE}</div>
 

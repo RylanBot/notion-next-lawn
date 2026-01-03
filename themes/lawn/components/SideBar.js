@@ -3,6 +3,7 @@ import LazyImage from '@/plugins/base/LazyImage';
 
 // import MenuGroupCard from './MenuGroupCard';
 import MenuListSide from './MenuListSide';
+import NavActionArea from './NavActionArea';
 import SocialButton from './SocialButton';
 
 /**
@@ -27,7 +28,12 @@ const SideBar = (props) => {
         </div>
         {/* <MenuGroupCard {...props} /> */}
       </div>
+
       <MenuListSide {...props} />
+
+      <div className="w-full absolute bottom-6">
+        <NavActionArea />
+      </div>
     </div>
   );
 };

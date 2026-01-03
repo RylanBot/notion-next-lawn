@@ -6,6 +6,7 @@ import { siteConfig } from '@/libs/common/config';
 
 import AlgoliaSearchModal from '@/plugins/algolia/AlgoliaSearchModal';
 import { replaceSearchResult } from '@/plugins/algolia/highlight';
+import { TravellingsModal, TravellingsProvider } from '@/plugins/base/TravellingsLink';
 import Comment from '@/plugins/comment';
 import NotionPage from '@/plugins/notion/NotionPage';
 
@@ -17,7 +18,6 @@ import {
   Card,
   CatalogDrawer,
   CategoryMini,
-  FloatRandomPostButton,
   FloatRightArea,
   Footer,
   Hero,
@@ -67,7 +67,7 @@ export const LayoutBase = (props) => {
       <>
         {post?.toc?.length > 1 && <CatalogDrawer toc={post.toc} />}
         <JumpToCommentButton />
-        <FloatRandomPostButton {...props} />
+        {/* <FloatRandomPostButton {...props} /> */}
       </>
     ),
     [post, post?.toc]
@@ -83,50 +83,55 @@ export const LayoutBase = (props) => {
 
   return (
     <ThemeGlobalLawn.Provider value={{ SEARCH_MODAL: searchModal }}>
-      <div id="theme-lawn" className={`${FONT_STYLE} dark:bg-black scroll-smooth`}>
-        {/* 特定主题 CSS */}
-        <Style />
+      <TravellingsProvider>
+        <div id="theme-lawn" className={`${FONT_STYLE} dark:bg-black scroll-smooth`}>
+          {/* 特定主题 CSS */}
+          <Style />
 
-        {hydrated && (
-          <div className={layoutLoaded ? null : 'opacity-0'}>
-            {/* 顶部嵌入 */}
-            <header>
-              <TopNav {...props} />
-              {headerSlot}
-            </header>
+          {hydrated && (
+            <div className={layoutLoaded ? null : 'opacity-0'}>
+              {/* 顶部嵌入 */}
+              <header>
+                <TopNav {...props} />
+                {headerSlot}
+              </header>
 
-            {/* 主区块 */}
-            <main
-              id="lawn-main-wrapper"
-              className={`bg-lawn-background-gray dark:bg-black w-full min-h-screen relative py-8 md:px-40 ${
-                post ? '' : '2xl:px-64'
-              } ${LAWN_HOME_BANNER_ENABLE ? 'pt-14 max-md:pt-6' : ''}`}
-            >
-              <div
-                className={`w-full mx-auto lg:flex lg:space-x-6 justify-center relative z-10 ${
-                  LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : ''
-                }`}
+              {/* 主区块 */}
+              <main
+                id="lawn-main-wrapper"
+                className={`bg-lawn-background-gray dark:bg-black w-full min-h-screen relative py-8 md:px-40 ${
+                  post ? '' : '2xl:px-64'
+                } ${LAWN_HOME_BANNER_ENABLE ? 'pt-14 max-md:pt-6' : ''}`}
               >
-                <div className={`w-full h-full overflow-hidden pb-12 ${fullWidth ? 'max-w-4xl' : ''}`}>
-                  {slotTop}
-                  {children}
+                <div
+                  className={`w-full mx-auto lg:flex lg:space-x-6 justify-center relative z-10 ${
+                    LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : ''
+                  }`}
+                >
+                  <div className={`w-full h-full overflow-hidden pb-12 ${fullWidth ? 'max-w-4xl' : ''}`}>
+                    {slotTop}
+                    {children}
+                  </div>
+                  {/* 右侧栏 */}
+                  <SideRight {...props} />
                 </div>
-                {/* 右侧栏 */}
-                <SideRight {...props} />
-              </div>
-            </main>
+              </main>
 
-            {/* 悬浮菜单 */}
-            <FloatRightArea floatSlot={floatSlot} />
+              {/* 悬浮菜单 */}
+              <FloatRightArea floatSlot={floatSlot} />
 
-            {/* 全文搜索 */}
-            <AlgoliaSearchModal cRef={searchModal} {...props} />
+              {/* 全文搜索 */}
+              <AlgoliaSearchModal cRef={searchModal} {...props} />
 
-            {/* 页脚 */}
-            <Footer />
-          </div>
-        )}
-      </div>
+              {/* Travellings 弹窗 */}
+              <TravellingsModal />
+
+              {/* 页脚 */}
+              <Footer />
+            </div>
+          )}
+        </div>
+      </TravellingsProvider>
     </ThemeGlobalLawn.Provider>
   );
 };

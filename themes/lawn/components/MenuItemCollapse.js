@@ -34,7 +34,7 @@ const MenuItemCollapse = (props) => {
             href={link?.to}
             target={link?.to?.indexOf('http') === 0 ? '_blank' : '_self'}
           >
-            <div className="transition-all flex justify-center items-center duration-200 space-x-4">
+            <div className="transition-all flex justify-center items-center duration-300 space-x-4">
               {link?.icon && <i className={link.icon} />}
               <span>{link?.name}</span>
             </div>
@@ -45,12 +45,12 @@ const MenuItemCollapse = (props) => {
             onClick={hasSubMenu ? toggleOpenSubMenu : null}
             className="font-extralight flex items-center justify-between pl-2 pr-4 cursor-pointer  dark:text-gray-200 no-underline tracking-widest pb-1"
           >
-            <span className="transition-all items-center duration-200">
+            <span className="transition-all items-center duration-300">
               {link?.icon && <i className={link.icon + ' mr-4'} />}
               {link?.name}
             </span>
             <i
-              className={`px-2 fas fa-chevron-left transition-all duration-200 ${
+              className={`px-2 fas fa-chevron-left transition-all duration-300 ${
                 isOpen ? '-rotate-90' : ''
               } text-gray-400`}
             ></i>
@@ -65,7 +65,7 @@ const MenuItemCollapse = (props) => {
             return (
               <div
                 key={index}
-                className="dark:bg-black dark:text-gray-200 text-left px-10 justify-start bg-gray-50 hover:bg-gray-50 dark:hover:bg-gray-900 tracking-widest transition-all duration-200  py-3 pr-6"
+                className="dark:bg-black dark:text-gray-200 text-left px-10 justify-start bg-gray-50 hover:bg-gray-50 dark:hover:bg-gray-900 tracking-widest transition-all duration-300  py-3 pr-6"
               >
                 <Link href={sLink.to} target={link?.to?.indexOf('http') === 0 ? '_blank' : '_self'}>
                   <span className="text-sm ml-4 whitespace-nowrap">

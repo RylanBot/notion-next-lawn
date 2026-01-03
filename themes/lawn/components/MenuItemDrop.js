@@ -12,7 +12,7 @@ const MenuItemDrop = ({ link }) => {
       {!hasSubMenu && (
         <Link
           href={link?.to}
-          className="menu-title pl-2 pr-4 text-gray-700 dark:text-gray-200 no-underline tracking-widest pb-1"
+          className="menu-title text-lg pl-2 pr-4 text-gray-700 dark:text-gray-200 no-underline tracking-widest pb-1"
         >
           {link?.icon && <i className={link?.icon} />} {link?.name}
           {hasSubMenu && <i className="px-2 fa fa-angle-down"></i>}
@@ -31,14 +31,16 @@ const MenuItemDrop = ({ link }) => {
       {/* 子菜单 */}
       {hasSubMenu && (
         <ul
-          className={`${show ? 'visible opacity-100 top-12' : 'invisible opacity-0 top-20'} drop-shadow-md overflow-hidden rounded-md bg-white transition-all duration-300 z-20 absolute block`}
+          className={`${
+            show ? 'visible opacity-100 top-12' : 'invisible opacity-0 top-20'
+          } drop-shadow-md overflow-hidden rounded-md bg-white transition-all duration-300 z-20 absolute block`}
           style={{ backdropFilter: 'blur(3px)' }}
         >
           {link.subMenus.map((sLink, index) => {
             return (
               <li
                 key={index}
-                className="cursor-pointer hover:bg-teal-400 text-gray-900 hover:text-black tracking-widest transition-all duration-200 dark:border-gray-800 py-1 pr-6 pl-3"
+                className="cursor-pointer hover:bg-teal-400 text-gray-900 hover:text-black tracking-widest transition-all duration-300 dark:border-gray-800 py-1 pr-6 pl-3"
               >
                 <Link href={sLink.to}>
                   <span className="text-sm text-nowrap font-extralight">

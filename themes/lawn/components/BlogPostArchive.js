@@ -77,7 +77,7 @@ const BlogPostArchive = ({ posts = [], year, isFinal }) => {
           >
             {/* 圆点 */}
             <div
-              className={`absolute border-2 left-0 top-1/2 -translate-y-1/2 rounded-full transition-all duration-200 ${
+              className={`absolute border-2 left-0 top-1/2 -translate-y-1/2 rounded-full transition-all duration-300 ${
                 hoveredIndex === index
                   ? 'bg-teal-500 dark:bg-teal-400 border-teal-500 dark:border-teal-400'
                   : 'bg-lawn-background-gray dark:bg-black border-gray-300 dark:border-zinc-500'

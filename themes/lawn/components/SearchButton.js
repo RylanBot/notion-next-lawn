@@ -24,7 +24,7 @@ export default function SearchButton() {
   return (
     <>
       <div
-        className="cursor-pointer hover:bg-black hover:bg-opacity-10 rounded-full w-10 h-10 flex justify-center items-center duration-200 transition-all"
+        className="cursor-pointer hover:bg-black hover:bg-opacity-10 rounded-full w-10 h-10 flex justify-center items-center duration-300 transition-all"
         title={locale.NAV.SEARCH}
         alt={locale.NAV.SEARCH}
         onClick={handleSearch}

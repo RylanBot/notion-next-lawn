@@ -85,7 +85,7 @@ const SearchInput = (props) => {
 
       <div className="-ml-8 cursor-pointer float-right items-center justify-center py-2" onClick={handleSearch}>
         <i
-          className={`hover:text-black transform duration-200 text-gray-500 dark:text-gray-200 cursor-pointer fas ${
+          className={`hover:text-black transform duration-300 text-gray-500 dark:text-gray-200 cursor-pointer fas ${
             loading ? 'fa-spinner animate-spin' : 'fa-search'
           }`}
         />
@@ -94,7 +94,7 @@ const SearchInput = (props) => {
       {showClean && (
         <div className="-ml-12 cursor-pointer float-right items-center justify-center py-2">
           <i
-            className="hover:text-black transform duration-200 text-gray-400 dark:text-gray-300 cursor-pointer fas fa-times"
+            className="hover:text-black transform duration-300 text-gray-400 dark:text-gray-300 cursor-pointer fas fa-times"
             onClick={cleanSearch}
           />
         </div>

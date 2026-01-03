@@ -22,7 +22,7 @@ const JumpToCommentButton = () => {
 
   return (
     <div
-      className="flex space-x-1 items-center justify-center transform hover:scale-105 duration-200 w-7 h-7 text-center"
+      className="flex space-x-1 items-center justify-center transform hover:scale-105 duration-300 w-7 h-7 text-center"
       onClick={navToComment}
     >
       <i className="fas fa-comment text-xs" />

@@ -106,7 +106,7 @@ export default function CustomContextMenu(props) {
   return (
     <div
       ref={menuRef}
-      className={`${show ? '' : 'invisible opacity-0'} select-none transition-opacity duration-200 fixed z-50`}
+      className={`${show ? '' : 'invisible opacity-0'} select-none transition-opacity duration-300 fixed z-50`}
       style={{ top: position.y, left: position.x }}
     >
       {/* 菜单内容 */}
@@ -136,7 +136,7 @@ export default function CustomContextMenu(props) {
         {/* 跳转导航按钮 */}
         <div className="w-full px-2">
           <div
-            className="w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all"
+            className="w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-300 transition-all"
             title={locale.MENU.WALK_AROUND}
             onClick={handleJumpToRandomPost}
           >
@@ -145,7 +145,7 @@ export default function CustomContextMenu(props) {
           </div>
 
           <Link
-            className="w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all"
+            className="w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-300 transition-all"
             href="/category"
             title={locale.MENU.CATEGORY}
           >
@@ -154,7 +154,7 @@ export default function CustomContextMenu(props) {
           </Link>
 
           <Link
-            className="w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all"
+            className="w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-300 transition-all"
             href="/tag"
             title={locale.MENU.TAGS}
           >
@@ -168,7 +168,7 @@ export default function CustomContextMenu(props) {
         {/* 功能按钮 */}
         <div className="w-full px-2">
           <div
-            className="w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all"
+            className="w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-300 transition-all"
             title={locale.MENU.COPY_URL}
             onClick={handleCopyLink}
           >
@@ -177,7 +177,7 @@ export default function CustomContextMenu(props) {
           </div>
 
           <div
-            className="w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all"
+            className="w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-300 transition-all"
             title={isDarkMode ? locale.MENU.LIGHT_MODE : locale.MENU.DARK_MODE}
             onClick={toggleDarkMode}
           >
@@ -186,7 +186,7 @@ export default function CustomContextMenu(props) {
           </div>
           {CUSTOM_RIGHT_CLICK_CONTEXT_MENU_THEME_SWITCH && (
             <div
-              className="w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all"
+              className="w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-300 transition-all"
               title={locale.MENU.THEME_SWITCH}
               onClick={handleChangeTheme}
             >

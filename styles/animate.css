@@ -1,11 +1,11 @@
 :root {
-  --animate-duration: 1s;
-  --animate-delay: 1s;
+  --animate-duration: 0.5s;
+  --animate-delay: 0.5s;
   --animate-repeat: 1;
 }
 .animate__animated {
-  -webkit-animation-duration: 1s;
-  animation-duration: 1s;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
   -webkit-animation-duration: var(--animate-duration);
   animation-duration: var(--animate-duration);
   -webkit-animation-fill-mode: both;
@@ -13,14 +13,14 @@
 }
 
 .animate__animated.animate__faster {
-  -webkit-animation-duration: calc(1s / 2);
-  animation-duration: calc(1s / 2);
+  -webkit-animation-duration: calc(0.5s / 2);
+  animation-duration: calc(0.5s / 2);
   -webkit-animation-duration: calc(var(--animate-duration) / 2);
   animation-duration: calc(var(--animate-duration) / 2);
 }
 .animate__animated.animate__fast {
-  -webkit-animation-duration: calc(1s * 0.8);
-  animation-duration: calc(1s * 0.8);
+  -webkit-animation-duration: calc(0.5s * 0.8);
+  animation-duration: calc(0.5s * 0.8);
   -webkit-animation-duration: calc(var(--animate-duration) * 0.8);
   animation-duration: calc(var(--animate-duration) * 0.8);
 }

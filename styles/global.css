@@ -10,6 +10,7 @@
   background: var(--theme-color-teal) !important;
   color: white;
 }
+
 *::-moz-selection {
   background: var(--theme-color-teal) !important;
   color: white;
@@ -120,7 +121,7 @@ nav {
   text-shadow: 0.1em 0.1em 0.3em black;
 }
 
-.notion-code-copy-button > svg {
+.notion-code-copy-button>svg {
   pointer-events: none;
 }
 
@@ -167,7 +168,7 @@ nav {
   margin-right: 0.2rem;
 }
 
-.webmention-counts .counts > span:not(:last-child):after {
+.webmention-counts .counts>span:not(:last-child):after {
   content: ' • ';
 }
 
@@ -222,11 +223,11 @@ a.avatar-wrapper {
 }
 
 .right-float-tooltip-parent {
-  @apply cursor-pointer hover:bg-opacity-10 rounded-full flex justify-center items-center duration-200 transition-all relative;
+  @apply cursor-pointer hover:bg-opacity-10 rounded-full flex justify-center items-center duration-300 transition-all relative;
 }
 
 .right-float-tooltip {
-  @apply hidden max-w-xs whitespace-nowrap text-xs text-center absolute transform -translate-x-full bg-teal-500 dark:bg-teal-600 text-white p-2 rounded-md transition-opacity duration-200;
+  @apply hidden max-w-xs whitespace-nowrap text-xs text-center absolute transform -translate-x-full bg-teal-500 dark:bg-teal-600 text-white p-2 rounded-md transition-opacity duration-300;
 }
 
 .group:hover .right-float-tooltip {
@@ -251,6 +252,7 @@ a.avatar-wrapper {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
 .scrollbar-hidden::-webkit-scrollbar {
   display: none;
 }
