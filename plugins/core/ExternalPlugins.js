@@ -1,7 +1,6 @@
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { isBrowser } from 'react-notion-x';
 
 import BLOG from '@/blog.config';
 import { siteConfig } from '@/libs/common/config';
@@ -46,9 +45,8 @@ const ExternalPlugin = (props) => {
   const MUSIC_PLAYER = siteConfig('MUSIC_PLAYER');
 
   useEffect(() => {
-    if (!isBrowser) return;
     handleInternalUrls(props?.allNavPages, POST_SUB_PATH);
-  }, [router, isBrowser]);
+  }, [router]);
 
   return (
     <>

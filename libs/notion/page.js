@@ -39,7 +39,7 @@ export const mapPageUrl = (id) => {
  */
 export const handleInternalUrls = (allPages, subPath) => {
   // 引用其它 Notion 文章
-  const notionLinks = document?.getElementById('notion-article')?.querySelectorAll('a.notion-link');
+  const notionLinks = document.getElementById('notion-article')?.querySelectorAll('a.notion-link');
   if (!notionLinks) return;
 
   notionLinks.forEach((link) => {
@@ -47,7 +47,7 @@ export const handleInternalUrls = (allPages, subPath) => {
     const matchedPage = allPages.find((page) => hrefUuid.includes(page.id));
     if (matchedPage) {
       link.href = `/${matchedPage.slug}`;
-      link.target = '_black';
+      link.target = '_blank';
     }
   });
 
@@ -59,6 +59,6 @@ export const handleInternalUrls = (allPages, subPath) => {
   const notionPageLinks = document?.getElementById('notion-article')?.querySelectorAll('a.notion-page-link');
   notionPageLinks.forEach((link) => {
     link.href = `${window.location.pathname}/${getLastPartOfUrl(link.href)}`;
-    link.target = '_black';
+    link.target = '_blank';
   });
 };

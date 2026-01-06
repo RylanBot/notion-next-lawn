@@ -748,6 +748,10 @@ span > .notion-inline-code {
   @apply w-full;
 }
 
+div > ul.notion-list:last-child {
+  margin-bottom: 0.5em;
+}
+
 .notion-list-disc {
   list-style-type: disc;
   padding-inline-start: 1.4em;
@@ -1066,6 +1070,14 @@ code[class*='language-'] {
 
 .notion-toggle > div {
   margin-left: 1.1em;
+}
+
+details.notion-toggle summary > .notion-h {
+  display: inline;
+}
+
+details.notion-toggle > div > .notion-h {
+  display: block;
 }
 
 .notion-list-view {
@@ -1681,7 +1693,7 @@ div[class*='notion-property-checkbox-checked'] svg {
   }
 
   .notion-asset-wrapper {
-    max-width: 100%;
+    max-width: 70vw;
   }
 
   .notion-asset-wrapper-full {

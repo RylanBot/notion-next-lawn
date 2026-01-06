@@ -16,7 +16,6 @@ import ExternalPlugins from '@/plugins/core/ExternalPlugins';
 import GlobalHead from '@/plugins/core/GlobalHead';
 import LoadingProgress from '@/plugins/animation/LoadingProgress';
 
-import useAdjustStyle from '@/hooks/useAdjustStyle';
 import { GlobalContextProvider } from '@/hooks/useGlobal';
 
 const MyApp = ({ Component, pageProps }) => {
@@ -34,8 +33,6 @@ const MyApp = ({ Component, pageProps }) => {
     },
     [queryParam]
   );
-
-  useAdjustStyle();
 
   return (
     <GlobalContextProvider {...pageProps}>
