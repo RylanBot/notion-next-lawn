@@ -59,7 +59,7 @@ const SideBarDrawer = ({ children, isOpen, onOpen, onClose, className }) => {
   }, [isOpen]);
 
   return (
-    <div className={`block lg:hidden top-0 relative z-50 ${className || ''}`}>
+    <div className={`block xl:hidden top-0 relative z-50 ${className || ''}`}>
       <div
         id="lawn-sidebar-drawer"
         className={`${

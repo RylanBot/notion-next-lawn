@@ -1686,14 +1686,14 @@ div[class*='notion-property-checkbox-checked'] svg {
   max-width: 100% !important;
 }
 
-@media only screen and (max-width: 730px) {
+@media only screen and (max-width: 1024px) {
   .notion-page {
     padding-left: 2vw;
     padding-right: 2vw;
   }
 
   .notion-asset-wrapper {
-    max-width: 70vw;
+    max-width: 10vw;
   }
 
   .notion-asset-wrapper-full {

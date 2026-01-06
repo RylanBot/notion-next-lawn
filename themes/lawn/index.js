@@ -51,10 +51,8 @@ export const LayoutBase = (props) => {
   const LAWN_HOME_BANNER_ENABLE = siteConfig('LAWN_HOME_BANNER_ENABLE', null, CONFIG);
   const LAYOUT_SIDEBAR_REVERSE = JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE'));
 
-  const [hydrated, setHydrated] = useState(false);
-  const [layoutLoaded, setLayoutLoaded] = useState(false);
-
   const searchModal = useRef(null);
+  const [layoutLoaded, setLayoutLoaded] = useState(false);
 
   const headerSlot = post ? (
     <PostHeader {...props} />
@@ -74,7 +72,6 @@ export const LayoutBase = (props) => {
   );
 
   useEffect(() => {
-    setHydrated(true);
     if (router.pathname === '/') return;
     setTimeout(() => {
       setLayoutLoaded(true);
@@ -82,54 +79,50 @@ export const LayoutBase = (props) => {
   }, [router]);
 
   return (
-    <ThemeGlobalLawn.Provider value={{ SEARCH_MODAL: searchModal }}>
+    <ThemeGlobalLawn.Provider value={{ searchModal }}>
       <TravellingsProvider>
-        <div id="theme-lawn" className={`${FONT_STYLE} dark:bg-black scroll-smooth`}>
+        <div id="theme-lawn" className={`${FONT_STYLE} dark:bg-black scroll-smooth ${layoutLoaded ? '' : 'opacity-0'}`}>
           {/* 特定主题 CSS */}
           <Style />
 
-          {hydrated && (
-            <div className={layoutLoaded ? null : 'opacity-0'}>
-              {/* 顶部嵌入 */}
-              <header>
-                <TopNav {...props} />
-                {headerSlot}
-              </header>
+          {/* 顶部嵌入 */}
+          <header>
+            <TopNav {...props} />
+            {headerSlot}
+          </header>
 
-              {/* 主区块 */}
-              <main
-                id="lawn-main-wrapper"
-                className={`bg-lawn-background-gray dark:bg-black w-full min-h-screen relative py-8 md:px-40 ${
-                  post ? '' : '2xl:px-64'
-                } ${LAWN_HOME_BANNER_ENABLE ? 'pt-14 max-md:pt-6' : ''}`}
-              >
-                <div
-                  className={`w-full mx-auto lg:flex lg:space-x-6 justify-center relative z-10 ${
-                    LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : ''
-                  }`}
-                >
-                  <div className={`w-full h-full overflow-hidden pb-12 ${fullWidth ? 'max-w-4xl' : ''}`}>
-                    {slotTop}
-                    {children}
-                  </div>
-                  {/* 右侧栏 */}
-                  <SideRight {...props} />
-                </div>
-              </main>
-
-              {/* 悬浮菜单 */}
-              <FloatRightArea floatSlot={floatSlot} />
-
-              {/* 全文搜索 */}
-              <AlgoliaSearchModal cRef={searchModal} {...props} />
-
-              {/* Travellings 弹窗 */}
-              <TravellingsModal />
-
-              {/* 页脚 */}
-              <Footer />
+          {/* 主区块 */}
+          <main
+            id="lawn-main-wrapper"
+            className={`bg-lawn-background-gray dark:bg-black w-full min-h-screen relative py-8 xl:px-40 ${
+              post ? '' : '2xl:px-64'
+            } ${LAWN_HOME_BANNER_ENABLE ? 'pt-14 max-md:pt-6' : ''}`}
+          >
+            <div
+              className={`w-full mx-auto xl:flex xl:space-x-6 justify-center relative z-10 ${
+                LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : ''
+              }`}
+            >
+              <div className={`w-full h-full overflow-hidden px-1 pb-12 ${fullWidth ? 'max-w-4xl' : ''}`}>
+                {slotTop}
+                {children}
+              </div>
+              {/* 右侧栏 */}
+              <SideRight {...props} />
             </div>
-          )}
+          </main>
+
+          {/* 悬浮菜单 */}
+          <FloatRightArea floatSlot={floatSlot} />
+
+          {/* 全文搜索 */}
+          <AlgoliaSearchModal cRef={searchModal} {...props} />
+
+          {/* Travellings 弹窗 */}
+          <TravellingsModal />
+
+          {/* 页脚 */}
+          <Footer />
         </div>
       </TravellingsProvider>
     </ThemeGlobalLawn.Provider>
@@ -257,21 +250,21 @@ export const LayoutSlug = (props) => {
   }, [post]);
 
   return (
-    <div className="article w-full lg:hover:shadow rounded-t-xl lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-lawn-black-gray lg:border-2 border-teal-600 dark:border-teal-500">
+    <div className="article w-full rounded-md xl:px-2 xl:py-4 bg-white dark:bg-lawn-black-gray xl:border-2 border-teal-600 dark:border-teal-500">
       <div id="lawn-article-wrapper" className="overflow-x-auto flex-grow mx-auto md:w-full md:px-5 ">
         <article itemScope itemType="https://schema.org/Blog" className="subpixel-antialiased overflow-y-hidden">
           {/* 文章主体 */}
-          <section className="px-5 justify-center mx-auto max-w-2xl lg:max-w-full">
-            {post && <NotionPage post={post} />}
-          </section>
+          <section className="px-5">{post && <NotionPage post={post} />}</section>
           {/* 版权 */}
           {post?.type === 'Post' && <ArticleCopyright {...props} />}
         </article>
 
         {/* 评论互动 */}
-        <div className="duration-200 overflow-x-auto bg-white dark:bg-lawn-black-gray px-3">
+        <div className="rounded-md overflow-x-auto bg-white dark:bg-lawn-black-gray px-3">
           <Comment post={post} />
         </div>
+
+        <Comment post={post} />
       </div>
     </div>
   );

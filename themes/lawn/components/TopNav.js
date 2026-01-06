@@ -204,11 +204,11 @@ const TopNav = (props) => {
             <Logo />
           </div>
 
-          <div className="hidden lg:flex absolute left-1/2 -translate-x-1/2">
+          <div className="hidden xl:flex absolute left-1/2 -translate-x-1/2">
             <MenuListTop {...props} />
           </div>
 
-          <div className="max-sm:hidden ml-auto z-10">
+          <div className="max-xl:hidden ml-auto z-10">
             <div className="menu-title">
               <NavActionArea />
             </div>
@@ -216,9 +216,9 @@ const TopNav = (props) => {
 
           {SHOW_SEARCH_BUTTON && <SearchButton />}
 
-          <div className="mr-1 flex justify-end items-center text-xl ml-auto lg:ml-0 z-10">
+          <div className="mr-1 flex justify-end items-center text-xl ml-auto xl:ml-0 z-10">
             <div
-              className="w-8 justify-center items-center h-8 cursor-pointer flex lg:hidden"
+              className="w-8 justify-center items-center h-8 cursor-pointer flex xl:hidden"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               <span className="menu-title text-gray-700 dark:text-gray-200">

@@ -15,7 +15,7 @@ function InfoCard(props) {
   const BIO = siteConfig('BIO');
 
   return (
-    <div className={`max-md:hidden ${className || ''}`}>
+    <div className={`max-xl:hidden ${className || ''}`}>
       <Card>
         <div className="flex justify-center items-center py-2">
           <LazyImage

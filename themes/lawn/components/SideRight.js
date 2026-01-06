@@ -70,7 +70,7 @@ const SideRight = (props) => {
   if (post?.fullWidth) return null;
 
   return (
-    <div className="flex flex-col px-1 lg:w-96">
+    <div className="flex flex-col px-1 xl:w-96">
       {/* 切换 Tab */}
       {hasToc && (
         <div className="flex justify-center items-center mb-4 lg:sticky top-6">
@@ -95,7 +95,7 @@ const SideRight = (props) => {
       <div
         id="sideRight"
         ref={sideRightRef}
-        className={`bg-lawn-background-gray dark:bg-black overflow-hidden lg:max-h-screen lg:sticky ${
+        className={`bg-lawn-background-gray dark:bg-black overflow-hidden xl:max-h-screen xl:sticky ${
           hasToc ? 'top-[68px]' : 'top-4'
         }`}
       >
