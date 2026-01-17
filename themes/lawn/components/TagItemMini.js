@@ -1,19 +1,13 @@
 import Link from 'next/link';
 
 import useGlobal from '@/hooks/useGlobal';
-
 import { siteConfig } from '@/libs/common/config';
-import { formatNameToSlug } from '@/libs/common/util';
+import { formatNameToSlug, safeJSONParse } from '@/libs/common/util';
 
 const TagItemMini = ({ tag, selected = false }) => {
   const { isChinese } = useGlobal();
 
-  let TAG_SLUG_MAP = {};
-  try {
-    // 确保 JSON 字符串格式正确
-    TAG_SLUG_MAP = JSON.parse(siteConfig('TAG_SLUG_MAP', {}));
-  } catch (error) {}
-
+  const TAG_SLUG_MAP = safeJSONParse(siteConfig('TAG_SLUG_MAP', {}));
   const displayName = isChinese ? TAG_SLUG_MAP[tag.name] ?? tag.name : tag.name;
 
   return (

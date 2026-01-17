@@ -77,9 +77,9 @@ html.dark .wl-content pre[class*='language-'] {
   font-weight: bold;
   color: var(--waline-theme-color);
   padding: 1px 10px;
-  border-radius: 15px;
   background-color: rgba(0, 128, 128, 0.1);
   border: 1px dotted var(--waline-theme-color);
+  border-radius: 5px;
   margin-bottom: 15px;
   transition: all 0.3s ease;
 }
@@ -92,6 +92,11 @@ html.dark .wl-content pre[class*='language-'] {
   display: inline-flex;
   align-items: center;
   gap: 3px;
+}
+
+.wl-card .wl-comment-actions {
+  display: flex;
+  gap: 15px;
 }
 
 @media (max-width: 768px) {

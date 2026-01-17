@@ -210,3 +210,11 @@ export function deepClone(obj) {
  * 延时
  */
 export const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+export const safeJSONParse = (text) => {
+  try {
+    return JSON.parse(text);
+  } catch {
+    return {};
+  }
+};

@@ -120,7 +120,7 @@ const WalineComment = () => {
   }, []);
 
   useEffect(() => {
-    const commentEl = document.getElementById('comment');
+    const commentEl = walineRef.current;
     if (!commentEl) return;
 
     const processedQuotes = new Set();

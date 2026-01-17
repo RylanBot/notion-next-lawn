@@ -86,7 +86,7 @@ const SideRight = (props) => {
             className={`w-1/2 px-4 py-1 rounded ${!showToc ? 'bg-teal-500 text-white' : 'bg-gray-200 text-gray-700'}`}
             onClick={() => setShowToc(false)}
           >
-            <i className="fas fa-seedling" />
+            <i className="fa-solid fa-ghost" />
           </button>
         </div>
       )}

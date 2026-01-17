@@ -263,8 +263,6 @@ export const LayoutSlug = (props) => {
         <div className="rounded-md overflow-x-auto bg-white dark:bg-lawn-black-gray px-3">
           <Comment post={post} />
         </div>
-
-        <Comment post={post} />
       </div>
     </div>
   );

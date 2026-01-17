@@ -1,18 +1,12 @@
 import Link from 'next/link';
 
 import useGlobal from '@/hooks/useGlobal';
-
 import { siteConfig } from '@/libs/common/config';
-import { formatNameToSlug } from '@/libs/common/util';
+import { formatNameToSlug, safeJSONParse } from '@/libs/common/util';
 
 const CategoryMini = ({ name, count, icon, className }) => {
   const { isChinese } = useGlobal();
-
-  let CATEGORY_SLUG_MAP = {};
-  try {
-    // 确保 JSON 字符串格式正确
-    CATEGORY_SLUG_MAP = JSON.parse(siteConfig('CATEGORY_SLUG_MAP', {}));
-  } catch (error) {}
+  const CATEGORY_SLUG_MAP = safeJSONParse(siteConfig('CATEGORY_SLUG_MAP', {}));
 
   return (
     <>

@@ -23,9 +23,7 @@ const Footer = () => {
           <span>{copyrightDate}</span>
         </div>
 
-        <div>
-          <NotByAI />
-        </div>
+        <NotByAI />
 
         {/* 公共版权协议 */}
         <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank">

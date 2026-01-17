@@ -2,9 +2,8 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import useGlobal from '@/hooks/useGlobal';
-
 import { siteConfig } from '@/libs/common/config';
-import { formatSlugToName } from '@/libs/common/util';
+import { formatSlugToName, safeJSONParse } from '@/libs/common/util';
 
 /**
  * 页面的 Head，用于促进 SEO
@@ -82,13 +81,8 @@ const getSEOMeta = (props, router, global) => {
   const { post, siteInfo, tag, category, page } = props;
   const keyword = router?.query?.s;
 
-  let CATEGORY_SLUG_MAP = {};
-  let TAG_SLUG_MAP = {};
-  try {
-    // 确保 JSON 字符串格式正确
-    CATEGORY_SLUG_MAP = JSON.parse(siteConfig('CATEGORY_SLUG_MAP', {}));
-    TAG_SLUG_MAP = JSON.parse(siteConfig('TAG_SLUG_MAP', {}));
-  } catch (error) {}
+  const CATEGORY_SLUG_MAP = safeJSONParse(siteConfig('CATEGORY_SLUG_MAP', {}));
+  const TAG_SLUG_MAP = safeJSONParse(siteConfig('TAG_SLUG_MAP', {}));
 
   switch (router.route) {
     case '/':
