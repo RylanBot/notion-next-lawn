@@ -2,7 +2,7 @@ import { idToUuid } from 'notion-utils';
 
 import BLOG from '@/blog.config';
 
-import { getPostBlocks, getSingleBlock } from './block';
+import { getPostBlocks, getSingleBlock, normalizeMetadata } from './block';
 import { getAllCategories, getCategoryOptions } from './category';
 import { compressImage, mapImgUrl } from './image';
 import { getAllPageIds } from './page';
@@ -54,13 +54,13 @@ async function getNotionDatabase({ pageId, from }) {
   pageId = idToUuid(pageId);
 
   const block = pageRecordMap.block || {};
-  const rawMetadata = block[pageId]?.value;
+  const rawMetadata = normalizeMetadata(block, pageId);
   if (rawMetadata?.type !== 'collection_view_page' && rawMetadata?.type !== 'collection_view') {
-    console.error(`pageId "${pageId}" is not a database`);
+    console.error(`[getNotionDatabase] pageId "${pageId}" is not a database`);
     return getEmptyData(pageId);
   }
 
-  const collection = Object.values(pageRecordMap.collection)[0]?.value || {};
+  const collection = Object.values(pageRecordMap.collection)[0]?.value.value || {};
   const siteInfo = getSiteInfo({ collection, block });
   const collectionId = rawMetadata?.collection_id;
   const collectionQuery = pageRecordMap.collection_query;
@@ -83,15 +83,16 @@ async function getNotionDatabase({ pageId, from }) {
 
   const collectionData = [];
   const schema = collection?.schema;
+
   // 获取每篇文章基础数据
   for (let i = 0; i < pageIds.length; i++) {
     const id = pageIds[i];
-    const value = block[id]?.value;
+    const value = normalizeMetadata(block, id);
     if (!value) {
       // 如果找不到文章对应的 block，说明发生了溢出，使用 pageID 再去请求
       const pageBlock = await getSingleBlock(id, from);
       if (pageBlock.block[id].value) {
-        const properties = await getPageProperties(id, pageBlock.block[id].value, schema, getTagOptions(schema));
+        const properties = await getPageProperties(id, normalizeMetadata(block, id), schema, getTagOptions(schema));
         if (properties) {
           collectionData.push(properties);
         }
@@ -195,46 +196,37 @@ async function getConfigMapFromConfigPage(allPages) {
 
   const configPageId = configPage.id;
   let pageRecordMap = await getPostBlocks(configPageId, 'config-table');
-  let content = pageRecordMap.block[configPageId].value.content;
-  for (const table of ['Config-Table', 'CONFIG-TABLE']) {
+  let content;
+  for (const table of ['config-table', 'Config-Table', 'CONFIG-TABLE']) {
     if (content) break;
     pageRecordMap = await getPostBlocks(configPageId, table);
-    content = pageRecordMap.block[configPageId].value.content;
+    content = normalizeMetadata(pageRecordMap.block, configPageId).content;
   }
 
   if (!content) {
-    console.warn(
-      '[Notion配置] 未找到配置表格',
-      pageRecordMap.block[configPageId],
-      pageRecordMap.block[configPageId].value
-    );
+    console.warn('[Notion配置] 未找到配置表格');
     return null;
   }
 
   const configTableId = content?.find((contentId) => {
-    return pageRecordMap.block[contentId].value.type === 'collection_view';
+    return normalizeMetadata(pageRecordMap.block, contentId)?.type === 'collection_view';
   });
 
   if (!configTableId) {
-    console.warn(
-      '[Notion配置]未找到配置表格数据',
-      pageRecordMap.block[configPageId],
-      pageRecordMap.block[configPageId].value
-    );
+    console.warn('[Notion配置]未找到配置表格数据');
     return null;
   }
 
   // 页面查找
-  const databaseRecordMap = pageRecordMap.block[configTableId];
+  const rawMetadata = normalizeMetadata(pageRecordMap.block, configTableId);
   const block = pageRecordMap.block || {};
-  const rawMetadata = databaseRecordMap.value;
   if (rawMetadata?.type !== 'collection_view_page' && rawMetadata?.type !== 'collection_view') {
-    console.error(`pageId "${configTableId}" is not a database`);
+    console.error(`[getConfigMapFromConfigPage] pageId "${configTableId}" is not a database`);
     return null;
   }
 
   const collectionId = rawMetadata?.collection_id;
-  const collection = pageRecordMap.collection[collectionId].value;
+  const collection = normalizeMetadata(pageRecordMap.collection, collectionId);
   const collectionQuery = pageRecordMap.collection_query;
   const collectionView = pageRecordMap.collection_view;
   const schema = collection?.schema;
@@ -247,7 +239,7 @@ async function getConfigMapFromConfigPage(allPages) {
       collection,
       collectionView,
       viewIds,
-      databaseRecordMap
+      rawMetadata
     );
   }
 
@@ -255,10 +247,10 @@ async function getConfigMapFromConfigPage(allPages) {
   // 遍历用户的表格
   for (let i = 0; i < pageIds.length; i++) {
     const id = pageIds[i];
-    const value = block[id]?.value;
+    const value = normalizeMetadata(block, id);
     if (!value) continue;
 
-    const rawProperties = Object.entries(block?.[id]?.value?.properties || []);
+    const rawProperties = Object.entries(value.properties || []);
     const properties = getDatabaseProperties(schema, rawProperties);
 
     if (properties) {
@@ -283,7 +275,7 @@ function getSiteInfo({ collection, block }) {
   const title = collection?.name?.[0][0] || BLOG.TITLE;
   const description = collection?.description ? Object.assign(collection).description[0][0] : BLOG.DESCRIPTION;
   const pageCover = collection?.cover
-    ? mapImgUrl(collection?.cover, block[idToUuid(BLOG.NOTION_PAGE_ID)]?.value)
+    ? mapImgUrl(collection?.cover, normalizeMetadata(block, idToUuid(BLOG.NOTION_PAGE_ID)))
     : BLOG.HOME_BANNER_IMAGE;
 
   let icon = collection?.icon ? mapImgUrl(collection?.icon, collection, 'collection') : BLOG.AVATAR;

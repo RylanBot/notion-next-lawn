@@ -4,6 +4,12 @@ import BLOG from '@/blog.config';
 import { getDataFromCache, setDataToCache } from '../cache';
 import { deepClone, delay } from '../common/util';
 
+export function normalizeMetadata(block, pageId) {
+  const rawValue = block?.[pageId]?.value;
+  if (!rawValue) return null;
+  return rawValue.type ? rawValue : (rawValue.value ?? null);
+}
+
 export async function getPostBlocks(id, from, slice) {
   const cacheKey = 'page_block_' + id;
   let pageBlock = await getDataFromCache(cacheKey);

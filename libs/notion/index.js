@@ -1,6 +1,6 @@
 import { idToUuid } from 'notion-utils';
 
-import { getPostBlocks } from './block';
+import { getPostBlocks, normalizeMetadata } from './block';
 import { getPageCover } from './image';
 
 /**
@@ -10,8 +10,7 @@ import { getPageCover } from './image';
 export async function getNotionPost(postId) {
   const blockMap = await getPostBlocks(postId, 'slug');
   if (!blockMap) return null;
-
-  const postInfo = blockMap?.block?.[idToUuid(postId)]?.value;
+  const postInfo = normalizeMetadata(blockMap?.block, idToUuid(postId));
   return {
     id: postId,
     type: postInfo,

@@ -1,4 +1,5 @@
 import { getTextContent } from 'notion-utils';
+import { normalizeMetadata } from './block';
 
 const indentLevels = {
   header: 0,
@@ -59,7 +60,7 @@ function getBlockHeader(contents, recordMap, toc) {
   if (!contents) return toc;
 
   for (const blockId of contents) {
-    const block = recordMap.block[blockId]?.value;
+    const block = normalizeMetadata(recordMap.block, blockId);
     if (!block) continue;
     const { type } = block;
 
