@@ -5,36 +5,41 @@ import { getDataFromCache, setDataToCache } from '../cache';
 import { deepClone, delay } from '../common/util';
 
 export async function getPostBlocks(id, from, slice) {
-  const cacheKey = 'page_block_' + id;
-  let pageBlock = await getDataFromCache(cacheKey);
-  if (pageBlock) {
+  const cacheKey = `page_block_${id}`;
+  const cachedBlock = await getDataFromCache(cacheKey);
+  if (cachedBlock) {
     console.log('[缓存]:', `from:${from}`, cacheKey);
-    return filterPostBlocks(id, pageBlock, slice);
+    return cachedBlock;
   }
 
-  const start = new Date().getTime();
-  pageBlock = await getBlockWithRetry(id, from);
-  const end = new Date().getTime();
+  const start = Date.now();
+
+  let pageBlock = await getBlocksWithRetry(id, from);
+  pageBlock = unwrapBlocks(pageBlock);
+  pageBlock = filterPostBlocks(id, pageBlock, slice);
+
+  const end = Date.now();
   console.log('[API耗时]', `${end - start}ms`);
 
-  if (pageBlock) {
-    await setDataToCache(cacheKey, pageBlock);
-    return filterPostBlocks(id, pageBlock, slice);
-  }
+  await setDataToCache(cacheKey, pageBlock);
+
   return pageBlock;
 }
 
 export async function getSingleBlock(id, from) {
   const cacheKey = 'single_block_' + id;
-  let pageBlock = await getDataFromCache(cacheKey);
-  if (pageBlock) {
+  const cachedBlock = await getDataFromCache(cacheKey);
+  if (cachedBlock) {
     console.log('[缓存]:', `from:${from}`, cacheKey);
-    return pageBlock;
+    return cachedBlock;
   }
 
-  const start = new Date().getTime();
-  pageBlock = await getBlockWithRetry(id, from);
-  const end = new Date().getTime();
+  const start = Date.now();
+
+  const pageBlock = await getBlocksWithRetry(id, from);
+  pageBlock = unwrapBlocks(pageBlock);
+
+  const end = Date.now();
   console.log('[API耗时]', `${end - start}ms`);
 
   if (pageBlock) {
@@ -43,7 +48,7 @@ export async function getSingleBlock(id, from) {
   return pageBlock;
 }
 
-async function getBlockWithRetry(id, from, retryAttempts = 3) {
+async function getBlocksWithRetry(id, from, retryAttempts = 3) {
   if (retryAttempts && retryAttempts > 0) {
     console.log('[请求API]', `from:${from}`, `id:${id}`, retryAttempts < 3 ? `剩余重试次数:${retryAttempts}` : '');
     try {
@@ -67,7 +72,6 @@ async function getBlockWithRetry(id, from, retryAttempts = 3) {
         }
       });
       const pageData = await api.getPage(id);
-      // console.log('stringfy', JSON.stringify(pageData))
       console.info('[响应成功]:', `from:${from}`);
       return pageData;
     } catch (e) {
@@ -79,7 +83,7 @@ async function getBlockWithRetry(id, from, retryAttempts = 3) {
         console.log('[重试缓存]', `from:${from}`, `id:${id}`);
         return pageBlock;
       }
-      return await getBlockWithRetry(id, from, retryAttempts - 1);
+      return await getBlocksWithRetry(id, from, retryAttempts - 1);
     }
   } else {
     console.error('[请求失败]:', `from:${from}`, `id:${id}`);
@@ -88,25 +92,62 @@ async function getBlockWithRetry(id, from, retryAttempts = 3) {
 }
 
 /**
- * 获取到的页面BLOCK特殊处理
- * 1.删除冗余字段
- * 2.比如文件、视频、音频、url格式化
- * 3.代码块等元素兼容
+ * 强制解包 Notion 数据格式为旧版
+ * - 旧版：block: { id: { value: {...} } }
+ * - 新版：block: { spaceId: { id: { value: {...} } } }
  */
-function filterPostBlocks(id, pageBlock, slice) {
-  const clonePageBlock = deepClone(pageBlock);
+function unwrapBlocks(recordMap) {
+  if (!recordMap) return recordMap;
+
+  const unwrapValue = (obj) => {
+    let cur = obj;
+    let guard = 0;
+    // 最多 5 层防止异常循环
+    while (cur?.value && typeof cur.value === 'object' && guard < 5) {
+      cur = cur.value;
+      guard++;
+    }
+    return cur;
+  };
+
+  const block = {};
+  const collection = {};
+
+  for (const [id, item] of Object.entries(recordMap.block || {})) {
+    block[id] = { value: unwrapValue(item) };
+  }
+
+  for (const [id, item] of Object.entries(recordMap.collection || {})) {
+    collection[id] = { value: unwrapValue(item) };
+  }
+
+  return {
+    ...recordMap,
+    block,
+    collection
+  };
+}
+
+/**
+ * 特殊处理获取到的页面数据
+ * 1. 删除冗余字段
+ * 2. 比如文件、视频、音频、url格式化
+ * 3. 代码块等元素兼容
+ */
+function filterPostBlocks(id, recordMap, slice) {
+  const clonePageBlock = deepClone(recordMap);
   let count = 0;
 
-  // 循环遍历文档的每个block
+  // 循环遍历文档的每个 block
   for (const i in clonePageBlock?.block) {
     const b = clonePageBlock?.block[i];
     if (slice && slice > 0 && count > slice) {
       delete clonePageBlock?.block[i];
       continue;
     }
-    // 当BlockId等于PageId时移除
+    // 当 BlockId 等于 PageId 时移除
     if (b?.value?.id === id) {
-      // 此block含有敏感信息
+      // 此 block 含有敏感信息
       delete b?.value?.properties;
       continue;
     }
