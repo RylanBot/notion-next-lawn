@@ -81,9 +81,9 @@ const TopNav = (props) => {
       stickyNav?.classList.replace('shadow-none', 'drop-shadow-md');
       stickyNav?.classList.replace('transparent', 'dark:bg-lawn-black-gray');
 
+      navTitle?.classList.replace('opacity-0', 'opacity-100');
       if (isHome) {
         // 首页禁止点击 Logo 跳转
-        navTitle?.classList.replace('opacity-0', 'opacity-100');
         navTitle?.classList.replace('pointer-events-auto', 'pointer-events-none');
       } else {
         navTitle?.classList.replace('pointer-events-none', 'pointer-events-auto');
