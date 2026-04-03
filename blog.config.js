@@ -73,7 +73,7 @@ const BLOG = {
   /* 字体 */
   FONT_STYLE: process.env.NEXT_PUBLIC_FONT_STYLE || 'font-serif', // ['font-serif','font-sans']
   FONT_URL: [
-    'https://npm.elemecdn.com/lxgw-wenkai-webfont@1.6.0/style.css'
+    // 'https://npm.elemecdn.com/lxgw-wenkai-webfont@1.6.0/style.css'
     // 'https://fonts.googleapis.com/css2?family=Oleo+Script:wght@400;700&display=swap'
     // 'https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300&display=swap',
     // 'https://fonts.googleapis.com/css2?family=Noto+Serif+SC&display=swap'
@@ -94,7 +94,16 @@ const BLOG = {
     '"Source Han Sans SC"',
     'Arial'
   ],
-  FONT_SERIF: ['"LXGW WenKai"', '"Noto Serif SC"', '"Times New Roman"', 'Times', 'serif'],
+  FONT_SERIF: [
+    // '"LXGW WenKai"',
+    // '"Noto Serif SC"',
+    'Source Han Serif CN',
+    'Source Han Serif SC',
+    'Songti SC',
+    '"Times New Roman"',
+    'Times',
+    'serif'
+  ],
   FONT_AWESOME:
     process.env.NEXT_PUBLIC_FONT_AWESOME_PATH ||
     'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',

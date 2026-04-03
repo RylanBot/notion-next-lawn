@@ -89,10 +89,6 @@
   outline: 0;
 }
 
-.notion em {
-  font-family: 'Times New Roman', Times, serif;
-}
-
 .notion-page-content {
   width: 100%;
   display: flex;
