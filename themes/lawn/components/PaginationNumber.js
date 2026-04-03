@@ -53,10 +53,10 @@ function getPageElement(page, currentPage, pagePrefix) {
   return (
     <Link
       key={page}
-      className={`pb-0.5 w-6 text-center ${
+      className={`pb-0.5 w-6 text-center rounded-sm ${
         page == currentPage
-          ? 'pointer-events-none rounded-sm font-bold bg-teal-400 dark:bg-teal-500 text-white'
-          : 'border-b hover:border-teal-400'
+          ? 'pointer-events-none font-bold bg-teal-400 dark:bg-teal-500 text-white'
+          : 'border border-dotted hover:border-teal-400'
       }`}
       passHref
       href={page === 1 ? `${pagePrefix}/` : `${pagePrefix}/page/${page}`}

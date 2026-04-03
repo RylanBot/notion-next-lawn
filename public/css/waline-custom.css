@@ -25,6 +25,14 @@
   vertical-align: text-bottom !important;
 }
 
+.wl-panel {
+  border-radius: 0.25em !important;
+}
+
+.wl-btn {
+  padding: 0.25em 0.5em !important;
+}
+
 .wl-header {
   font-size: 1.1em !important;
 }
@@ -88,7 +96,7 @@ html.dark .wl-content pre[class*='language-'] {
   background-color: rgba(0, 128, 128, 0.2);
 }
 
-.wl-card .wl-meta > span {
+.wl-card .wl-meta>span {
   display: inline-flex;
   align-items: center;
   gap: 3px;

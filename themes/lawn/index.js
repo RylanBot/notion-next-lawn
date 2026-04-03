@@ -250,8 +250,8 @@ export const LayoutSlug = (props) => {
   }, [post]);
 
   return (
-    <div className="article w-full rounded-md xl:px-2 xl:py-4 bg-white dark:bg-lawn-black-gray xl:border-2 border-teal-600 dark:border-teal-500">
-      <div id="lawn-article-wrapper" className="overflow-x-auto flex-grow mx-auto md:w-full md:px-5 ">
+    <div className="w-full rounded-sm xl:px-2 xl:py-4 bg-white dark:bg-lawn-black-gray xl:border-2 border-teal-600 dark:border-teal-500">
+      <div id="lawn-article-wrapper" className="overflow-x-auto flex-grow mx-auto md:w-full md:px-5">
         <article itemScope itemType="https://schema.org/Blog" className="subpixel-antialiased overflow-y-hidden">
           {/* 文章主体 */}
           <section className="px-5">{post && <NotionPage post={post} />}</section>

@@ -75,7 +75,7 @@ export const TravellingsModal = () => {
         {/* 内容 */}
         <div
           ref={modalRef}
-          className="relative w-[425px] p-6 bg-zinc-100 dark:bg-zinc-900 border-4 border-teal-500 max-sm:mb-10"
+          className="relative w-[425px] p-6 bg-zinc-100 dark:bg-zinc-900 border-2 border-teal-500 max-sm:mb-10"
         >
           {/* 关闭按钮 */}
           <button
