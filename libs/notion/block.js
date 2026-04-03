@@ -93,21 +93,30 @@ async function getBlocksWithRetry(id, from, retryAttempts = 3) {
 
 /**
  * 强制解包 Notion 数据格式为旧版
- * - 旧版：block: { id: { value: {...} } }
- * - 新版：block: { spaceId: { id: { value: {...} } } }
  */
 function unwrapBlocks(recordMap) {
   if (!recordMap) return recordMap;
 
   const unwrapValue = (obj) => {
-    let cur = obj;
-    let guard = 0;
-    // 最多 5 层防止异常循环
-    while (cur?.value && typeof cur.value === 'object' && guard < 5) {
-      cur = cur.value;
-      guard++;
+    if (!obj) return obj;
+
+    // new format: outer wrapper has spaceId, inner value has role + value
+    if (obj?.value?.value?.id && obj?.value?.role) {
+      return obj.value.value;
     }
-    return cur;
+
+    // semi-new format: { value: { id, type, ... }, role }
+    if (obj?.value?.id && obj?.role !== undefined) {
+      return obj.value;
+    }
+
+    // old format: { value: { id, type, ... } }
+    if (obj?.value?.id) {
+      return obj.value;
+    }
+
+    // fallback
+    return obj?.value ?? obj;
   };
 
   const block = {};
