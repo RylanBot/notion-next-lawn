@@ -73,25 +73,41 @@ const SideRight = (props) => {
     <div className="flex flex-col px-1 xl:w-96">
       {/* 切换 Tab */}
       {hasToc && (
-        <div className="flex justify-center items-center mb-4 lg:sticky top-6">
-          <button
-            className={`w-1/2 px-4 py-1 rounded mr-2 ${
-              showToc ? 'bg-teal-500 text-white' : 'bg-gray-200 text-gray-700'
-            }`}
-            onClick={() => setShowToc(true)}
-          >
-            <i className="fas fa-stream" />
-          </button>
-          <button
-            className={`w-1/2 px-4 py-1 rounded ${!showToc ? 'bg-teal-500 text-white' : 'bg-gray-200 text-gray-700'}`}
-            onClick={() => setShowToc(false)}
-          >
-            <i className="fa-solid fa-ghost" />
-          </button>
+        <div className="flex justify-center mb-4 lg:sticky top-6">
+          <div className="relative flex w-full rounded-md p-1 bg-gray-200 dark:bg-neutral-800">
+            {/* 高亮滑块 */}
+            <div
+              className={`absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] rounded-sm bg-teal-500 dark:bg-teal-400 transition-all duration-300 ease-in-out shadow-sm dark:shadow-none ${
+                showToc ? 'translate-x-0' : 'translate-x-full'
+              }`}
+            />
+
+            <button
+              className={`relative w-1/2 py-1 text-center ${
+                showToc
+                  ? 'text-white dark:text-black'
+                  : 'text-gray-600 dark:text-neutral-400 hover:text-gray-800 dark:hover:text-neutral-200'
+              }`}
+              onClick={() => setShowToc(true)}
+            >
+              <i className="fas fa-stream" />
+            </button>
+
+            <button
+              className={`relative w-1/2 py-1 text-center ${
+                !showToc
+                  ? 'text-white dark:text-black'
+                  : 'text-gray-600 dark:text-neutral-400 hover:text-gray-800 dark:hover:text-neutral-200'
+              }`}
+              onClick={() => setShowToc(false)}
+            >
+              <i className="fa-solid fa-ghost" />
+            </button>
+          </div>
         </div>
       )}
 
-      {/* ⚠️ sticky 元素应该是可滚动元素的直接子元素，否则不生效*/}
+      {/* ⚠️ sticky 元素应该是可滚动元素的直接子元素，否则不生效 */}
       <div
         id="sideRight"
         ref={sideRightRef}
