@@ -29,7 +29,7 @@ export default function PostHeader({ post, siteInfo }) {
         className="w-full h-full object-cover object-center absolute top-0"
       />
 
-      <div className="bg-black bg-opacity-70 absolute top-0 w-full h-full py-10 flex justify-center items-center ">
+      <div className="bg-black bg-opacity-70 dark:bg-opacity-80 absolute top-0 w-full h-full py-10 flex justify-center items-center ">
         <div>
           {/* 分类 */}
           <div className="mb-3 flex justify-center">

@@ -52,8 +52,8 @@ const DarkModeButton = () => {
 
   return (
     <button
-      onClick={toggleDarkMode}
       className={`relative h-10 w-10 rounded-full cursor-pointer text-gray-700 dark:text-gray-200 transition-colors`}
+      onClick={toggleDarkMode}
     >
       <span
         className={`absolute inset-0 flex items-center justify-center transition-all ${
