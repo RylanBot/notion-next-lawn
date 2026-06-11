@@ -645,7 +645,6 @@ summary > .notion-h {
   text-decoration: inherit;
   border-bottom: 0.05em dashed !important;
   border-color: var(--fg-color-1);
-  padding-bottom: 2px;
   opacity: 0.6;
   transition: border-color 100ms ease-in, opacity 100ms ease-in;
 }
@@ -1542,8 +1541,11 @@ div[class*='notion-property-checkbox-checked'] svg {
   width: 22px;
   border-radius: 3px;
   flex-shrink: 0;
-  margin-left: 2px;
-  margin-right: 6px;
+  margin-right: 3px;
+}
+
+.notion-page-title .notion-page-icon-inline {
+  margin: 0;
 }
 
 .notion-collection {

@@ -70,7 +70,7 @@ async function getNotionDatabase({ pageId, from }) {
   const pageIds = getAllPageIds(collectionQuery, collectionId, collectionView, viewIds);
   if (pageIds?.length === 0) {
     console.error(
-      '获取到的文章列表为空，请检查notion模板',
+      '[Notion 数据库] 获取到的文章列表为空，请检查模板',
       collectionQuery,
       collection,
       collectionView,
@@ -242,7 +242,7 @@ async function getConfigMapFromConfigPage(allPages) {
   const pageIds = getAllPageIds(collectionQuery, collectionId, collectionView, viewIds);
   if (pageIds?.length === 0) {
     console.error(
-      '[Notion配置]获取到的文章列表为空，请检查notion模板',
+      '[Notion配置] 获取到的文章列表为空，请检查模板',
       collectionQuery,
       collection,
       collectionView,

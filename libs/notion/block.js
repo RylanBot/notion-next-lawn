@@ -8,7 +8,7 @@ export async function getPostBlocks(id, from, slice) {
   const cacheKey = `page_block_${id}`;
   const cachedBlock = await getDataFromCache(cacheKey);
   if (cachedBlock) {
-    console.log('[缓存]:', `from:${from}`, cacheKey);
+    console.log('[缓存]', `from:${from}`, cacheKey);
     return cachedBlock;
   }
 
@@ -72,10 +72,10 @@ async function getBlocksWithRetry(id, from, retryAttempts = 3) {
         }
       });
       const pageData = await api.getPage(id);
-      console.info('[响应成功]:', `from:${from}`);
+      console.info('[响应成功]', `from:${from}`);
       return pageData;
     } catch (e) {
-      console.warn('[响应异常]:', e);
+      console.warn('[响应异常]', e);
       await delay(1000);
       const cacheKey = 'page_block_' + id;
       const pageBlock = await getDataFromCache(cacheKey);
