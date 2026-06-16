@@ -56,7 +56,7 @@ function getPageElement(page, currentPage, pagePrefix) {
       className={`pb-0.5 w-6 text-center rounded-sm ${
         page == currentPage
           ? 'pointer-events-none font-bold bg-teal-400 dark:bg-teal-500 text-white'
-          : 'border border-dotted hover:border-teal-400'
+          : 'border border-dotted'
       }`}
       passHref
       href={page === 1 ? `${pagePrefix}/` : `${pagePrefix}/page/${page}`}

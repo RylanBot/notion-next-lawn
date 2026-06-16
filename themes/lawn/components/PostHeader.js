@@ -36,7 +36,7 @@ export default function PostHeader({ post, siteInfo }) {
             {post.category && (
               <CategoryMini
                 name={post.category}
-                className="cursor-pointer px-2 py-1 mb-2 rounded-sm text-sm font-medium text-white border border-white hover:border-teal-300 hover:text-teal-300 duration-300 shadow-text-md"
+                className="cursor-pointer px-2 py-1 mb-2 rounded-sm text-sm font-medium text-white border border-white hover:border-teal-300 hover:text-teal-300"
               />
             )}
           </div>

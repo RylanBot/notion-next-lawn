@@ -94,8 +94,8 @@ export const LayoutBase = (props) => {
           {/* 主区块 */}
           <main
             id="lawn-main-wrapper"
-            className={`bg-lawn-background-gray dark:bg-black w-full min-h-screen relative py-8 xl:px-40 ${
-              post ? '' : '2xl:px-64'
+            className={`bg-lawn-background-gray dark:bg-black w-full min-h-screen relative py-8 xl:px-32 ${
+              post ? '' : '2xl:px-56'
             } ${LAWN_HOME_BANNER_ENABLE ? 'pt-14 max-md:pt-6' : ''}`}
           >
             <div

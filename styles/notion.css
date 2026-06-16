@@ -1558,7 +1558,14 @@ div[class*='notion-property-checkbox-checked'] svg {
 
 .notion-collection-card {
   cursor: default !important;
+  @apply border border-transparent transition-all duration-200
+         hover:border-dashed hover:border-teal-500 hover:-translate-y-0.5;
+         /* 用 tw 确保 hoverOnlyWhenSupported 有效 */
 }
+.notion-collection-card:hover {
+  background: none !important;
+}
+
 .notion-collection-card:is(.dark *) {
   background-color: black !important;
 }
@@ -1773,8 +1780,16 @@ div[class*='notion-property-checkbox-checked'] svg {
   height: 100%;
 }
 
+.notion-gallery-grid {
+  border-top: 0 !important;
+}
+
+.notion-collection-card-cover:has(.notion-collection-card-cover-empty) {
+  display: none !important;
+}
+
 .notion-gallery-grid-size-small {
-  grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
 }
 
 .notion-collection-card-size-small .notion-collection-card-cover {
@@ -2175,7 +2190,7 @@ code.language-mermaid {
   margin: auto;
 }
 
-.mermaid .invisible{
+.mermaid .invisible {
   visibility: inherit;
 }
 

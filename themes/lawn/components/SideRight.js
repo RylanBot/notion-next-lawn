@@ -74,7 +74,7 @@ const SideRight = (props) => {
       {/* 切换 Tab */}
       {hasToc && (
         <div className="flex justify-center mb-4 lg:sticky top-6">
-          <div className="relative flex w-full rounded-md p-1 bg-gray-200 dark:bg-neutral-800">
+          <div className="relative flex w-full rounded-md p-1 bg-zinc-200 dark:bg-zinc-800">
             {/* 高亮滑块 */}
             <div
               className={`absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] rounded-sm bg-teal-500 dark:bg-teal-400 transition-all duration-300 ease-in-out shadow-sm dark:shadow-none ${
@@ -86,7 +86,7 @@ const SideRight = (props) => {
               className={`relative w-1/2 py-1 text-center ${
                 showToc
                   ? 'text-white dark:text-black'
-                  : 'text-gray-600 dark:text-neutral-400 hover:text-gray-800 dark:hover:text-neutral-200'
+                  : 'text-gray-600 dark:text-zinc-400 hover:text-gray-800 dark:hover:text-zinc-200'
               }`}
               onClick={() => setShowToc(true)}
             >
@@ -97,7 +97,7 @@ const SideRight = (props) => {
               className={`relative w-1/2 py-1 text-center ${
                 !showToc
                   ? 'text-white dark:text-black'
-                  : 'text-gray-600 dark:text-neutral-400 hover:text-gray-800 dark:hover:text-neutral-200'
+                  : 'text-gray-600 dark:text-zinc-400 hover:text-gray-800 dark:hover:text-zinc-200'
               }`}
               onClick={() => setShowToc(false)}
             >
