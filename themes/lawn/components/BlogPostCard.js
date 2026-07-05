@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import clsx from 'clsx';
 
 import { siteConfig } from '@/libs/common/config';
 import LazyImage from '@/plugins/base/LazyImage';
@@ -23,9 +24,14 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
   return (
     <div
       key={post.id}
-      className={`group w-full flex justify-between md:flex-row flex-col-reverse overflow-hidden border-2 border-teal-600 dark:border-teal-500 rounded-sm bg-white dark:bg-lawn-black-gray ${
-        SHOW_POST_COVER ? 'md:h-56' : ''
-      } ${POST_LIST_IMG_CROSSOVER && index % 2 === 1 ? 'md:flex-row-reverse' : ''}`}
+      className={clsx(
+        'group w-full rounded-sm flex justify-between md:flex-row flex-col-reverse',
+        'transition-all duration-200',
+        'bg-white dark:bg-lawn-black-gray',
+        'ring-1 ring-transparent hover:ring-2 hover:ring-teal-500',
+        SHOW_POST_COVER && 'md:h-56',
+        POST_LIST_IMG_CROSSOVER && index % 2 === 1 && 'md:flex-row-reverse'
+      )}
     >
       {/* 文字内容 */}
       <BlogPostCardInfo

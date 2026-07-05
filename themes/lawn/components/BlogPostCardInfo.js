@@ -33,7 +33,7 @@ const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary }) => 
         {/* 分类 */}
         {post?.category && (
           <CategoryMini
-            className="cursor-pointer font-bold text-sm menu-link text-teal-800 dark:text-teal-600 hover:text-teal-700 dark:hover:text-teal-500"
+            className="cursor-pointer font-bold text-sm menu-link text-teal-800 dark:text-teal-500 hover:text-teal-700 dark:hover:text-teal-500"
             name={post.category}
             icon="mr-2 fa-regular fa-folder-open"
           />
@@ -66,7 +66,7 @@ const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary }) => 
       {/* Tags */}
       <div className="flex items-center justify-between">
         {/* 日期 */}
-        <div className="font-bold text-xs leading-tight text-gray-500 dark:text-gray-400">
+        <div className="font-mono text-xs leading-tight text-gray-500 dark:text-gray-300">
           {/* <i class="fa-regular fa-calendar mr-1"></i> */}
           {post.date.start}
           {post.date.end && <> - {post.date.end} </>}

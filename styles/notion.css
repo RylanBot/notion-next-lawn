@@ -600,7 +600,9 @@ summary > .notion-h {
 }
 
 .notion-hr:after {
-  transition: opacity 0.3s ease, animation 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    animation 0.3s ease;
   background: linear-gradient(
     to right,
     #62efab 5%,
@@ -646,7 +648,9 @@ summary > .notion-h {
   border-bottom: 0.05em dashed !important;
   border-color: var(--fg-color-1);
   opacity: 0.6;
-  transition: border-color 100ms ease-in, opacity 100ms ease-in;
+  transition:
+    border-color 100ms ease-in,
+    opacity 100ms ease-in;
 }
 
 .notion-link:hover {
@@ -683,8 +687,9 @@ summary > .notion-h {
 }
 
 .notion-page-icon {
-  font-family: 'Apple Color Emoji', 'Segoe UI Emoji', NotoColorEmoji, 'Noto Color Emoji', 'Segoe UI Symbol',
-    'Android Emoji', EmojiSymbols;
+  font-family:
+    'Apple Color Emoji', 'Segoe UI Emoji', NotoColorEmoji, 'Noto Color Emoji', 'Segoe UI Symbol', 'Android Emoji',
+    EmojiSymbols;
   font-size: 1.1em;
   fill: var(--fg-color-6);
   color: var(--fg-color-icon);
@@ -782,7 +787,7 @@ div > ul.notion-list:last-child {
 }
 
 .notion-list li {
-  padding: 1px 0;
+  padding: 0.2em 0;
   white-space: pre-wrap;
 }
 
@@ -828,8 +833,8 @@ div > ul.notion-list:last-child {
   white-space: normal;
   white-space: pre-wrap;
   word-break: break-word;
-  padding: 3px 5px !important;
-  margin: 1px 0 !important;
+  padding: 0px !important;
+  margin: 0.5rem 0 !important;
 }
 
 .notion-text:first-child {
@@ -1038,18 +1043,16 @@ code[class*='language-'] {
 }
 
 .notion-callout .notion-page-icon {
-  align-self: flex-start;
+  align-self: center;
   width: 40px;
   height: 40px;
   font-size: 1em;
   line-height: 1em;
-  margin-top: 5px;
+  margin-top: 0.2em;
 }
 
-.notion-callout-text {
-  margin: 0 8px;
-  white-space: pre-wrap;
-  word-break: break-word;
+.notion-callout-text .notion-text:first-of-type {
+  margin-top: 0 !important;
 }
 
 .notion-toggle {
@@ -1560,7 +1563,7 @@ div[class*='notion-property-checkbox-checked'] svg {
   cursor: default !important;
   @apply border border-transparent transition-all duration-200
          hover:border-dashed hover:border-teal-500 hover:-translate-y-0.5;
-         /* 用 tw 确保 hoverOnlyWhenSupported 有效 */
+  /* 用 tw 确保 hoverOnlyWhenSupported 有效 */
 }
 .notion-collection-card:hover {
   background: none !important;
@@ -1749,7 +1752,9 @@ div[class*='notion-property-checkbox-checked'] svg {
 }
 
 .lazy-image-real.medium-zoom-image {
-  transition: transform 0.3s cubic-bezier(0.2, 0, 0.2, 1), opacity 400ms ease-out !important;
+  transition:
+    transform 0.3s cubic-bezier(0.2, 0, 0.2, 1),
+    opacity 400ms ease-out !important;
   will-change: opacity, transform;
 }
 

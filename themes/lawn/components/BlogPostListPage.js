@@ -22,7 +22,7 @@ const BlogPostListPage = ({ page = 1, posts = [], postCount, siteInfo }) => {
   return (
     <div className={`w-full ${pathname === '/page/[page]' ? 'pt-16' : ''}`}>
       {/* 文章列表 */}
-      <div className="space-y-6 px-2">
+      <div className="space-y-6 p-1">
         {posts?.map((post) => (
           <BlogPostCard index={posts.indexOf(post)} key={post.id} post={post} siteInfo={siteInfo} />
         ))}

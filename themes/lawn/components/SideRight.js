@@ -70,20 +70,20 @@ const SideRight = (props) => {
   if (post?.fullWidth) return null;
 
   return (
-    <div className="flex flex-col px-1 xl:w-96">
+    <div className="flex flex-col p-1 xl:w-96">
       {/* 切换 Tab */}
       {hasToc && (
         <div className="flex justify-center mb-4 lg:sticky top-6">
-          <div className="relative flex w-full rounded-md p-1 bg-zinc-200 dark:bg-zinc-800">
+          <div className="relative text-sm flex w-full rounded-md p-1 bg-zinc-200 dark:bg-zinc-800">
             {/* 高亮滑块 */}
             <div
-              className={`absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] rounded-sm bg-teal-500 dark:bg-teal-400 transition-all duration-300 ease-in-out shadow-sm dark:shadow-none ${
+              className={`absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] rounded-sm bg-teal-500 dark:bg-teal-600 transition-all duration-300 ease-in-out shadow-sm dark:shadow-none ${
                 showToc ? 'translate-x-0' : 'translate-x-full'
               }`}
             />
 
             <button
-              className={`relative w-1/2 py-1 text-center ${
+              className={`relative w-1/2 py-0.5 text-center ${
                 showToc
                   ? 'text-white dark:text-black'
                   : 'text-gray-600 dark:text-zinc-400 hover:text-gray-800 dark:hover:text-zinc-200'
@@ -94,7 +94,7 @@ const SideRight = (props) => {
             </button>
 
             <button
-              className={`relative w-1/2 py-1 text-center ${
+              className={`relative w-1/2 py-0.5 text-center ${
                 !showToc
                   ? 'text-white dark:text-black'
                   : 'text-gray-600 dark:text-zinc-400 hover:text-gray-800 dark:hover:text-zinc-200'
@@ -111,7 +111,7 @@ const SideRight = (props) => {
       <div
         id="sideRight"
         ref={sideRightRef}
-        className={`bg-lawn-background-gray dark:bg-black overflow-hidden xl:max-h-screen xl:sticky ${
+        className={`overflow-hidden xl:max-h-screen xl:sticky ${
           hasToc ? 'top-[68px]' : 'top-4'
         }`}
       >

@@ -250,7 +250,7 @@ export const LayoutSlug = (props) => {
   }, [post]);
 
   return (
-    <div className="w-full rounded-sm xl:px-2 xl:py-4 bg-white dark:bg-lawn-black-gray xl:border-2 border-teal-600 dark:border-teal-500">
+    <div className="w-full rounded-md xl:px-2 xl:py-4 bg-white dark:bg-lawn-black-gray">
       <div id="lawn-article-wrapper" className="overflow-x-auto flex-grow mx-auto md:w-full md:px-5">
         <article itemScope itemType="https://schema.org/Blog" className="subpixel-antialiased overflow-y-hidden">
           {/* 文章主体 */}
@@ -260,7 +260,7 @@ export const LayoutSlug = (props) => {
         </article>
 
         {/* 评论互动 */}
-        <div className="rounded-md overflow-x-auto bg-white dark:bg-lawn-black-gray px-3">
+        <div className="rounded-md overflow-x-auto px-3">
           <Comment post={post} />
         </div>
       </div>
@@ -271,7 +271,7 @@ export const LayoutSlug = (props) => {
 /**
  * 404
  */
-export const Layout404 = (props) => {
+export const Layout404 = () => {
   const { locale, setOnLoading } = useGlobal();
 
   useEffect(() => {

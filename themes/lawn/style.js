@@ -24,6 +24,23 @@ export const Style = () => {
           background-color: #5ae9c7;
         }
 
+        #lawn-main-wrapper::before {
+          content: '';
+          position: fixed;
+          top: 50vh;
+          right: -50vw;
+          width: 100vw;
+          height: 100vw;
+          z-index: 1;
+          filter: blur(50px);
+          background: radial-gradient(
+            circle,
+            rgba(20, 184, 166, 0.18) 0%,
+            rgba(20, 184, 166, 0.08) 35%,
+            transparent 70%
+          );
+        }
+
         body {
           background-color: #f5f5f5;
         }

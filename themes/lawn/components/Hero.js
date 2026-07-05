@@ -70,12 +70,12 @@ const Hero = ({ onLoad, ...props }) => {
   return (
     <div
       id="lawn-header"
-      className={`relative flex flex-col justify-center items-center bg-white z-1 w-full h-[30rem] ${
+      className={`relative flex flex-col justify-center items-center bg-white z-1 w-full h-[40vh] ${
         showHero ? '' : 'opacity-0'
       }`}
     >
       <LazyImage
-        className={`brightness-75 dark:brightness-50 w-full h-[30rem] object-cover object-center ${
+        className={`brightness-75 dark:brightness-50 w-full h-[40vh] object-cover object-center ${
           LAWN_HOME_NAV_BACKGROUND_IMG_FIXED ? 'fixed' : ''
         }`}
         src={siteInfo?.pageCover}
