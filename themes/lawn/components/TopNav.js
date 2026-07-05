@@ -56,6 +56,7 @@ const TopNav = (props) => {
 
     const remToPx = (rem) => rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
     const headerHeight = remToPx(25);
+    const paddingTop = remToPx(4); // pt-16
 
     const isHome = router.route === '/';
     const navTransparent = (scrollY < headerHeight && isHome) || scrollY < 300;
@@ -101,7 +102,7 @@ const TopNav = (props) => {
 
     const isScrollUp = scrollY <= windowTopRef.current; // 是否为向上滚动
     const isInHeaderView = scrollY <= header?.clientHeight; // 在顶部封面可见范围
-    const showNav = isScrollUp || isInHeaderView || scrollY < 5;
+    const showNav = isScrollUp || isInHeaderView || scrollY < paddingTop;
     if (!showNav) {
       stickyNav?.classList.replace('top-0', '-top-20');
     } else {
