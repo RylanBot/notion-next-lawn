@@ -28,16 +28,16 @@
   --notion-brown: rgb(177, 126, 99);
   --notion-gray: rgb(155, 154, 151);
 
-  --notion-red_background: rgb(251, 228, 228);
-  --notion-pink_background: rgb(244, 223, 235);
-  --notion-blue_background: rgb(226, 246, 255);
-  --notion-purple_background: rgb(234, 228, 242);
-  --notion-teal_background: rgb(221, 237, 234);
-  --notion-yellow_background: rgb(251, 243, 219);
-  --notion-orange_background: rgb(250, 235, 221);
-  --notion-brown_background: rgb(214, 194, 184);
-  --notion-gray_background: rgb(241, 241, 239);
-  --notion-green_background: rgb(219, 237, 219);
+  --notion-red_background: rgb(255, 235, 238);
+  --notion-pink_background: rgb(252, 237, 245);
+  --notion-blue_background: rgb(235, 247, 255);
+  --notion-purple_background: rgb(243, 238, 255);
+  --notion-teal_background: rgb(229, 247, 243);
+  --notion-yellow_background: rgb(255, 249, 227);
+  --notion-orange_background: rgb(255, 241, 228);
+  --notion-brown_background: rgb(242, 231, 223);
+  --notion-gray_background: rgb(234, 241, 243);
+  --notion-green_background: rgb(234, 248, 232);
   --notion-default_background: transparent;
 
   --notion-red_background_co: rgba(255, 199, 199, 0.87);
@@ -1561,8 +1561,8 @@ div[class*='notion-property-checkbox-checked'] svg {
 
 .notion-collection-card {
   cursor: default !important;
-  @apply border border-transparent transition-all duration-200
-         hover:border-dashed hover:border-teal-500 hover:-translate-y-0.5;
+  @apply border border-transparent transition-all
+         hover:border-dashed hover:border-teal-500;
   /* 用 tw 确保 hoverOnlyWhenSupported 有效 */
 }
 .notion-collection-card:hover {
