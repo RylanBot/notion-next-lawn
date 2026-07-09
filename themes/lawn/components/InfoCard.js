@@ -1,36 +1,28 @@
-import { siteConfig } from '@/libs/common/config';
-import LazyImage from '@/plugins/base/LazyImage';
+import clsx from 'clsx';
 
-import Card from './Card';
 // import MenuGroupCard from './MenuGroupCard';
-import SocialButton from './SocialButton';
+import ColorDots from './ColorDots';
+import ProfileInfo from './ProfileInfo';
 
 /**
  * 社交信息卡
  */
 function InfoCard(props) {
-  const { className, siteInfo } = props;
-
-  const AUTHOR = siteConfig('AUTHOR');
-  const BIO = siteConfig('BIO');
+  const { className } = props;
 
   return (
-    <div className={`max-xl:hidden ${className || ''}`}>
-      <Card>
-        <div className="flex justify-center items-center py-2">
-          <LazyImage
-            src={siteInfo?.icon}
-            alt={AUTHOR}
-            priority={true}
-            fetchpriority="high"
-            className="rounded-full w-28 h-28"
-          />
+    <div className={clsx('max-xl:hidden', className)}>
+      <div className="relative overflow-hidden p-0 rounded-md bg-white dark:bg-lawn-black-gray shadow-sm">
+        {/* 装饰圆点 */}
+        <ColorDots />
+
+        {/* 内容层 */}
+        <div className="relative h-full">
+          <ProfileInfo />
+
+          {/* <MenuGroupCard {...props} /> */}
         </div>
-        <div className="font-times font-medium text-center text-2xl mb-2">{AUTHOR}</div>
-        <div className="text-sm text-center mb-4">{BIO}</div>
-        {/* <MenuGroupCard {...props} /> */}
-        <SocialButton />
-      </Card>
+      </div>
     </div>
   );
 }

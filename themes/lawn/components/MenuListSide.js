@@ -57,7 +57,7 @@ const MenuListSide = (props) => {
   if (!links || links.length === 0) return;
 
   return (
-    <nav>
+    <nav className="mt-6">
       {links?.map((link, index) => (
         <MenuItemCollapse key={index} link={link} />
       ))}

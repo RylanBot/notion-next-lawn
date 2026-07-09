@@ -21,7 +21,7 @@ const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary }) => 
       <div>
         {/* 标题 */}
         <Link
-          className={`mb-2 line-clamp-2 replace cursor-pointer text-xl leading-tight font-semibold text-teal-500 hover:text-teal-400 dark:text-teal-400 dark:hover:text-teal-300 ${
+          className={`mb-2 line-clamp-2 replace cursor-pointer text-xl leading-tight font-bold text-teal-500 hover:text-teal-400 dark:text-teal-400 dark:hover:text-teal-300 ${
             showPreview ? 'text-center' : ''
           }`}
           passHref
@@ -33,7 +33,7 @@ const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary }) => 
         {/* 分类 */}
         {post?.category && (
           <CategoryMini
-            className="cursor-pointer font-bold text-sm menu-link text-teal-800 dark:text-teal-500 hover:text-teal-700 dark:hover:text-teal-500"
+            className="cursor-pointer font-semibold text-sm menu-link text-teal-800 dark:text-teal-500 hover:text-teal-700 dark:hover:text-teal-500"
             name={post.category}
             icon="mr-2 fa-regular fa-folder-open"
           />

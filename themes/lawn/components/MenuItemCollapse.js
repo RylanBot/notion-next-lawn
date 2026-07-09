@@ -27,7 +27,7 @@ const MenuItemCollapse = (props) => {
 
   return (
     <>
-      <div className="w-full px-8 py-2 text-lg text-left dark:bg-lawn-black-gray" onClick={toggleShow}>
+      <div className="w-full px-8 py-2 text-lg text-left" onClick={toggleShow}>
         {!hasSubMenu && (
           <Link
             className="font-extralight flex justify-between pl-2 pr-4 dark:text-gray-200 no-underline tracking-widest pb-1"
