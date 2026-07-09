@@ -1,7 +1,9 @@
-import throttle from 'lodash.throttle';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
+
+import clsx from 'clsx';
+import throttle from 'lodash.throttle';
 
 import useDarkMode from '@/hooks/useDarkMode';
 import useGlobal from '@/hooks/useGlobal';
@@ -197,8 +199,13 @@ const TopNav = (props) => {
       {/* 导航栏 */}
       <div
         id="lawn-sticky-nav"
-        className="top-0 transition-all shadow-none fixed bg-none dark:bg-lawn-black-gray dark:text-gray-200 text-black w-full z-20 transform border-transparent dark:border-transparent"
-        style={{ backdropFilter: 'blur(3px)' }}
+        className={clsx(
+          'fixed top-0 z-20 w-full',
+          'transition-all backdrop-blur-[2px]',
+          'bg-none dark:bg-lawn-black-gray',
+          'text-black dark:text-gray-200',
+          'shadow-none border-transparent dark:border-transparent'
+        )}
       >
         <div className="w-full flex items-center px-4 py-2 relative">
           <div id="lawn-nav-title" className="opacity-100 pointer-events-auto z-10">

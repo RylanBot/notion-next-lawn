@@ -20,7 +20,7 @@ export default function PostHeader({ post, siteInfo }) {
   const headerImage = post?.pageCover ? post.pageCover : siteInfo?.pageCover;
 
   return (
-    <div id="lawn-header" className="w-full h-[40vh] relative md:flex-shrink-0 z-10">
+    <div id="lawn-header" className="w-full h-[30rem] relative md:flex-shrink-0 z-10">
       <LazyImage
         key={headerImage}
         src={headerImage}

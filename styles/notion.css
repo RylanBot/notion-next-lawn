@@ -1055,6 +1055,10 @@ code[class*='language-'] {
   margin-top: 0 !important;
 }
 
+.notion-callout-text .notion-text:only-of-type {
+  margin-bottom: 0 !important;
+}
+
 .notion-toggle {
   padding: 3px 2px;
   width: 100%;
