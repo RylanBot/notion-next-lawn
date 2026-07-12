@@ -8,7 +8,7 @@ import ProfileInfo from './ProfileInfo';
  */
 const SideBar = (props) => {
   return (
-    <div id="lawn-side-bar" className="relative overflow-hidden min-h-screen">
+    <div id="lawn-side-bar" className="relative overflow-hidden min-h-dvh">
       {/* 装饰圆点 */}
       <ColorDots />
 

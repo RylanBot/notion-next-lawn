@@ -11,7 +11,7 @@ const ProfileInfo = () => {
   const BIO = siteConfig('BIO');
 
   return (
-    <div className="py-8">
+    <div className="py-4">
       <div className="flex justify-center items-center">
         <LazyImage
           src={siteInfo?.icon}
