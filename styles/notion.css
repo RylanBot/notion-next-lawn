@@ -69,7 +69,7 @@
 
 .notion {
   font-size: 1em;
-  line-height: 1.5;
+  line-height: 1.8;
   color: var(--fg-color);
   caret-color: var(--fg-color);
   font-family: inherit !important;
@@ -437,13 +437,17 @@ summary > .notion-h {
 
 .notion-h {
   position: relative;
-  font-weight: 600;
+  font-weight: 800;
   line-height: 1.3;
   padding: 3px 2px;
   margin-top: 24px;
   max-width: 100%;
   white-space: pre-wrap;
   word-break: break-word;
+}
+
+.notion-h b {
+  font-weight: inherit;
 }
 
 .notion-h1 {
@@ -743,6 +747,7 @@ span > .notion-inline-code {
 
 .notion-list {
   margin: 0;
+  padding: 0;
   margin-block-start: 0.6em;
   margin-block-end: 0.6em;
   @apply w-full;
@@ -750,6 +755,10 @@ span > .notion-inline-code {
 
 div > ul.notion-list:last-child {
   margin-bottom: 0.5em;
+}
+
+.notion-callout ul.notion-list:last-child {
+  margin-bottom: 0;
 }
 
 .notion-list-disc {
@@ -787,8 +796,8 @@ div > ul.notion-list:last-child {
 }
 
 .notion-list li {
-  padding: 0.2em 0;
   white-space: pre-wrap;
+  padding: 0;
 }
 
 .notion-asset-wrapper {
@@ -835,6 +844,10 @@ div > ul.notion-list:last-child {
   word-break: break-word;
   padding: 0px !important;
   margin: 0.5rem 0 !important;
+}
+
+.notion-callout .notion-text:last-child {
+  margin-bottom: 0 !important;
 }
 
 .notion-text:first-child {

@@ -8,7 +8,7 @@
   padding-bottom: 0 !important;
   width: 100%;
   border-radius: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin: 0.5rem 0;
 }
 
 .collapse-wrapper .code-toolbar {
@@ -26,7 +26,6 @@
 
 pre[class*='language-'] {
   margin-top: 0rem !important;
-  // margin-bottom: 0rem !important;
   padding-top: 1.5rem !important;
 }
 

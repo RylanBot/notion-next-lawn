@@ -31,7 +31,7 @@ const BlogPostArchive = ({ posts = [], year, isFinal }) => {
     <div className={isFinal ? (isCollapsed ? '' : 'mb-6') : 'mb-6'}>
       <button onClick={() => setIsCollapsed(!isCollapsed)} className="w-full flex items-center gap-4 py-3">
         {/* 年份 */}
-        <span className="text-2xl lg:text-3xl font-bold tracking-widest text-teal-500 dark:text-teal-400">{year}</span>
+        <span className="text-2xl lg:text-3xl font-bold text-teal-500 dark:text-teal-400">{year}</span>
 
         {/* 文章数量 */}
         <span className="text-sm text-gray-500 dark:text-gray-400">

@@ -11,8 +11,8 @@ const ProfileInfo = () => {
   const BIO = siteConfig('BIO');
 
   return (
-    <div className="py-4">
-      <div className="flex justify-center items-center">
+    <div className="py-4 text-center">
+      <div className="flex justify-center items-center pt-1">
         <LazyImage
           src={siteInfo?.icon}
           alt={AUTHOR}
@@ -22,8 +22,8 @@ const ProfileInfo = () => {
         />
       </div>
 
-      <h2 className="font-times font-medium text-center text-2xl my-2 dark:text-gray-300">{AUTHOR}</h2>
-      <p className="text-sm text-center text-gray-600 dark:text-gray-400 mb-4">{BIO}</p>
+      <h2 className="font-medium text-2xl my-2 dark:text-gray-300">{AUTHOR}</h2>
+      <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">{BIO}</p>
 
       <SocialButton />
     </div>

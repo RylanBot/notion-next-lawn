@@ -10,7 +10,6 @@ module.exports = {
       serif: BLOG.FONT_SERIF,
       mono: ['SFMono-Regular', 'Consolas', 'Liberation Mono', 'Menlo', 'Courier', 'monospace'],
       // oleo: ['Oleo Script', 'Times New Roman'],
-      times: ['Times New Roman']
     },
     extend: {
       colors: {
