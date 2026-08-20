@@ -14,10 +14,9 @@ const ProfileInfo = () => {
     <div className="py-4 text-center">
       <div className="flex justify-center items-center pt-1">
         <LazyImage
+          priority
           src={siteInfo?.icon}
           alt={AUTHOR}
-          priority={true}
-          fetchpriority="high"
           className="w-28 h-28 rounded-full bg-white border-4 border-white dark:bg-zinc-900 dark:border-zinc-900 shadow-md"
         />
       </div>

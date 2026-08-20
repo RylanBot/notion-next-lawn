@@ -86,7 +86,7 @@ async function getBlocksWithRetry(id, from, retryAttempts = 3) {
       return await getBlocksWithRetry(id, from, retryAttempts - 1);
     }
   } else {
-    console.error('[请求失败]:', `from:${from}`, `id:${id}`);
+    console.error('[请求失败]', `from:${from}`, `id:${id}`);
     return null;
   }
 }

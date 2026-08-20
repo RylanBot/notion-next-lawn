@@ -10,6 +10,7 @@ import usePrism from '@/hooks/usePrism';
 import { siteConfig } from '@/libs/common/config';
 import { compressImage, mapImgUrl } from '@/libs/notion/image';
 import { mapPageUrl } from '@/libs/notion/page';
+import LazyImage from '@/plugins/base/LazyImage';
 
 const Code = dynamic(
   () =>
@@ -118,12 +119,14 @@ const NotionPage = ({ post, className }) => {
           recordMap={post.blockMap}
           mapPageUrl={mapPageUrl}
           mapImageUrl={mapImgUrl}
+          forceCustomImages
           components={{
             Code,
             Collection,
             Equation,
             Modal,
-            Pdf
+            Pdf,
+            Image: LazyImage
           }}
         />
       </div>

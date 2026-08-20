@@ -78,13 +78,12 @@ const Hero = ({ onLoad, ...props }) => {
       )}
     >
       <LazyImage
+        priority
         className={clsx(
           'brightness-75 dark:brightness-50 w-full h-[30rem] object-cover object-center',
           LAWN_HOME_NAV_BACKGROUND_IMG_FIXED && 'fixed'
         )}
         src={siteInfo?.pageCover}
-        priority={true}
-        fetchpriority="high"
         onLoad={handleCoverLoaded}
       />
 

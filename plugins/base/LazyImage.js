@@ -7,19 +7,43 @@ import { siteConfig } from '@/libs/common/config';
  * 图片懒加载
  */
 const LazyImage = React.forwardRef(
-  ({ priority, src, placeholderSrc, className, width, height, onLoad, ...props }, ref) => {
+  (
+    {
+      priority,
+      src,
+      placeholderSrc,
+      className,
+      width,
+      height,
+      onLoad,
+      fill,
+      sizes,
+      style,
+      blurDataURL,
+      // react-notion-x 按 next/image 接口传入，原生 img 用不上，解构掉避免落到 DOM 上
+      placeholder: _placeholder,
+      unoptimized: _unoptimized,
+      ...props
+    },
+    ref
+  ) => {
     const COMPRESS_WIDTH = siteConfig('IMAGE_COMPRESS_WIDTH');
     const PLACEHOLDER_TEXT = `${siteConfig('AUTHOR')}'s Blog`;
 
     const imageRef = ref || useRef(null);
 
     const [imageLoaded, setImageLoaded] = useState(false);
-    const [adjustedSrc, setAdjustedSrc] = useState(placeholderSrc || '');
+    const [adjustedSrc, setAdjustedSrc] = useState(placeholderSrc || blurDataURL || '');
+
+    if (!placeholderSrc) {
+      placeholderSrc = blurDataURL || (fill ? '' : generatePlaceholder(PLACEHOLDER_TEXT, width, height));
+    }
 
     const imgProps = {
       ref: imageRef,
       src: imageLoaded ? adjustedSrc : placeholderSrc,
       className: imageLoaded ? '' : 'animate-pulse',
+      decoding: 'async',
       ...props
     };
 
@@ -27,22 +51,26 @@ const LazyImage = React.forwardRef(
       imgProps.className = `${className} ${imgProps.className}`;
     }
 
-    if (width && width !== 'auto') {
-      imgProps.width = width;
-    }
-    if (height && height !== 'auto') {
-      imgProps.height = height;
+    if (fill) {
+      imgProps.style = { objectFit: 'cover', width: '100%', height: '100%', ...style };
+    } else {
+      if (style) {
+        imgProps.style = style;
+      }
+      if (width && width !== 'auto') {
+        imgProps.width = width;
+      }
+      if (height && height !== 'auto') {
+        imgProps.height = height;
+      }
     }
 
-    if (!placeholderSrc) {
-      placeholderSrc = generatePlaceholder(PLACEHOLDER_TEXT, width, height);
+    if (sizes) {
+      imgProps.sizes = sizes;
     }
 
     const handleImageLoad = () => {
       setImageLoaded(true);
-      if (typeof onLoad === 'function') {
-        onLoad();
-      }
     };
 
     const handleImageError = () => {
@@ -50,6 +78,12 @@ const LazyImage = React.forwardRef(
         imageRef.current.src = placeholderSrc;
       }
     };
+
+    useEffect(() => {
+      if (imageLoaded && typeof onLoad === 'function') {
+        onLoad({ target: imageRef.current });
+      }
+    }, [imageLoaded]);
 
     useEffect(() => {
       const adjustedImageSrc = adjustImgSize(src || imageRef.current.src, COMPRESS_WIDTH);
@@ -60,6 +94,9 @@ const LazyImage = React.forwardRef(
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
               const lazyImage = new Image();
+              if (priority) {
+                lazyImage.fetchPriority = 'high';
+              }
               lazyImage.src = adjustedImageSrc;
 
               if (lazyImage.complete) {

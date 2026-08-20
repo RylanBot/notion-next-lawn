@@ -22,10 +22,9 @@ export default function PostHeader({ post, siteInfo }) {
   return (
     <div id="lawn-header" className="w-full h-[30rem] relative md:flex-shrink-0 z-10">
       <LazyImage
+        priority
         key={headerImage}
         src={headerImage}
-        priority={true}
-        fetchpriority="high"
         className="w-full h-full object-cover object-center absolute top-0"
       />
 

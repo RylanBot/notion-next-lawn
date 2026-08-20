@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@next/bundle-analyzer": "^12.1.1",
-    "@vercel/analytics": "^1.0.0",
+    "@vercel/analytics": "^1.5.0",
     "algoliasearch": "^4.18.0",
     "animejs": "^3.2.1",
     "aos": "^3.0.0-beta.6",
@@ -21,11 +21,11 @@
     "memory-cache": "^0.2.0",
     "mongodb": "^4.6.0",
     "next": "15.3.6",
-    "notion-client": "^7.10.0",
-    "notion-utils": "^7.10.0",
+    "notion-client": "^8.0.2",
+    "notion-utils": "^8.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-notion-x": "^7.10.0",
+    "react-notion-x": "^8.0.2",
     "typed.js": "^2.0.12"
   },
   "devDependencies": {
