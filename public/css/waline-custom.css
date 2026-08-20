@@ -77,6 +77,10 @@ html.dark .wl-content pre[class*='language-'] {
   line-height: 1.2 !important;
 }
 
+.wl-card .wl-quote {
+  border-inline-start: 0;
+}
+
 .wl-collapse {
   position: relative;
   display: block;
@@ -89,14 +93,38 @@ html.dark .wl-content pre[class*='language-'] {
   border: 1px dotted var(--waline-theme-color);
   border-radius: 5px;
   margin-bottom: 15px;
-  transition: all 0.3s ease;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
 }
 
-.wl-collapse:hover {
-  background-color: rgba(0, 128, 128, 0.2);
+@media (hover: hover) and (pointer: fine) {
+  .wl-collapse:hover {
+    background-color: rgba(0, 128, 128, 0.2);
+  }
 }
 
-.wl-card .wl-meta>span {
+.wl-quote-collapsed {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition:
+    max-height 0.35s ease,
+    opacity 0.3s ease;
+}
+
+.wl-quote-collapsed.is-open {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wl-quote-collapsed {
+    transition: none;
+  }
+}
+
+.wl-card .wl-meta > span {
   display: inline-flex;
   align-items: center;
   gap: 3px;

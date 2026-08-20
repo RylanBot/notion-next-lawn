@@ -145,26 +145,53 @@ const WalineComment = () => {
     const handleCollapsedQuote = () => {
       const quoteEls = Array.from(document.querySelectorAll('.wl-quote')).filter((el) => el.children.length > 0);
 
-      quoteEls.forEach((quoteElement) => {
-        if (processedQuotes.has(quoteElement)) return;
+      quoteEls.forEach((el) => {
+        if (processedQuotes.has(el)) return;
 
-        if (!quoteElement.previousElementSibling?.classList.contains('wl-collapse')) {
-          const toggleButton = document.createElement('button');
-          toggleButton.textContent = locale.COMMENT.SHOW_REPLY;
-          toggleButton.classList.add('wl-collapse');
+        if (!el.previousElementSibling?.classList.contains('wl-collapse')) {
+          const toggleBtn = document.createElement('button');
+          toggleBtn.type = 'button';
+          toggleBtn.textContent = locale.COMMENT.SHOW_REPLY;
+          toggleBtn.classList.add('wl-collapse');
+          toggleBtn.setAttribute('aria-expanded', 'false');
 
-          quoteElement.insertAdjacentElement('beforebegin', toggleButton);
+          processedQuotes.add(el);
+          el.classList.add('wl-quote-collapsed');
+          el.style.maxHeight = '0';
+          el.insertAdjacentElement('beforebegin', toggleBtn);
 
           let isCollapsed = true;
-          quoteElement.style.display = 'none';
 
-          toggleButton.addEventListener('click', () => {
+          toggleBtn.addEventListener('click', () => {
             isCollapsed = !isCollapsed;
-            quoteElement.style.display = isCollapsed ? 'none' : 'block';
-            toggleButton.textContent = isCollapsed ? locale.COMMENT.SHOW_REPLY : locale.COMMENT.HIDE_REPLY;
-          });
+            toggleBtn.classList.toggle('is-open', !isCollapsed);
+            toggleBtn.setAttribute('aria-expanded', String(!isCollapsed));
+            toggleBtn.textContent = isCollapsed ? locale.COMMENT.SHOW_REPLY : locale.COMMENT.HIDE_REPLY;
 
-          processedQuotes.add(quoteElement);
+            if (isCollapsed) {
+              el.style.maxHeight = `${el.scrollHeight}px`;
+              el.classList.remove('is-open');
+              el.offsetHeight;
+              el.style.maxHeight = '0';
+              return;
+            }
+
+            el.classList.add('is-open');
+            el.style.maxHeight = 'none';
+            const height = el.scrollHeight;
+            el.style.maxHeight = '0';
+            el.offsetHeight;
+            el.style.maxHeight = `${height}px`;
+            el.addEventListener(
+              'transitionend',
+              (event) => {
+                if (event.propertyName === 'max-height' && !isCollapsed) {
+                  el.style.maxHeight = 'none';
+                }
+              },
+              { once: true }
+            );
+          });
         }
       });
     };
