@@ -1,4 +1,7 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+
+import clsx from 'clsx';
 
 import { siteConfig } from '@/libs/common/config';
 import NotionPage from '@/plugins/notion/NotionPage';
@@ -10,20 +13,31 @@ import TagItemMini from './TagItemMini';
  * 博客列表的文字内容
  */
 const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary }) => {
+  const router = useRouter();
   const POST_SUB_PATH = siteConfig('POST_SUB_PATH');
+
+  const handleCardClick = (e) => {
+    if (e.target.closest('a')) return;
+    router.push(`/${POST_SUB_PATH}/${post.slug}`);
+  };
 
   return (
     <div
-      className={`flex flex-col justify-between p-4 ${
+      className={clsx(
+        'flex flex-col justify-between p-4 cursor-pointer',
         showPageCover && !showPreview ? 'md:w-7/12 w-full md:max-h-64' : 'w-full'
-      }`}
+      )}
+      onClick={handleCardClick}
     >
       <div>
         {/* 标题 */}
         <Link
-          className={`mb-2 line-clamp-2 replace cursor-pointer text-xl leading-tight font-bold text-teal-500 hover:text-teal-400 dark:text-teal-400 dark:hover:text-teal-300 ${
-            showPreview ? 'text-center' : ''
-          }`}
+          className={clsx(
+            'mb-2 line-clamp-2 replace cursor-pointer text-xl leading-tight font-bold text-teal-500 hover:text-teal-400 dark:text-teal-400 dark:hover:text-teal-300',
+            {
+              'text-center': showPreview
+            }
+          )}
           passHref
           href={`/${POST_SUB_PATH}/${post.slug}`}
         >
