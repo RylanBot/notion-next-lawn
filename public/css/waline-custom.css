@@ -91,7 +91,7 @@ html.dark .wl-content pre[class*='language-'] {
   padding: 1px 10px;
   background-color: rgba(0, 128, 128, 0.1);
   border: 1px dotted var(--waline-theme-color);
-  border-radius: 5px;
+  border-radius: 4px;
   margin-bottom: 15px;
   cursor: pointer;
   transition:
