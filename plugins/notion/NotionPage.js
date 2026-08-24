@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic';
-import { useEffect, useRef } from 'react';
+import { createContext, forwardRef, useContext, useEffect, useRef, useState } from 'react';
 import { isBrowser, NotionRenderer } from 'react-notion-x';
 
 import mediumZoom from '@fisch0920/medium-zoom';
@@ -34,6 +34,18 @@ const Collection = dynamic(() => import('react-notion-x/build/third-party/collec
 
 const Modal = dynamic(() => import('react-notion-x/build/third-party/modal').then((m) => m.Modal), { ssr: false });
 
+const FIRST_EAGER_IMAGES = 2;
+const EagerCountContext = createContext({ current: 0 });
+
+const NotionLazyImage = forwardRef(({ priority: priorityProp, loading, ...props }, ref) => {
+  const eagerCountRef = useContext(EagerCountContext);
+  const [eager] = useState(
+    () => Boolean(priorityProp) || loading === 'eager' || eagerCountRef.current++ < FIRST_EAGER_IMAGES
+  );
+  return <LazyImage {...props} ref={ref} priority={priorityProp} loading={eager ? 'eager' : loading} />;
+});
+NotionLazyImage.displayName = 'NotionLazyImage';
+
 const NotionPage = ({ post, className }) => {
   const POST_DISABLE_GALLERY_CLICK = siteConfig('POST_DISABLE_GALLERY_CLICK');
   const POST_DISABLE_DATABASE_CLICK = siteConfig('POST_DISABLE_DATABASE_CLICK');
@@ -46,6 +58,13 @@ const NotionPage = ({ post, className }) => {
       margin: getMediumZoomMargin()
     });
   const zoomRef = useRef(zoom ? zoom.clone() : null);
+
+  const eagerCountRef = useRef(0);
+  const lastPostIdRef = useRef(post?.id);
+  if (lastPostIdRef.current !== post?.id) {
+    lastPostIdRef.current = post?.id;
+    eagerCountRef.current = 0;
+  }
 
   useEffect(() => {
     autoScrollToTarget();
@@ -110,7 +129,7 @@ const NotionPage = ({ post, className }) => {
   if (!post?.blockMap) return <>{post?.summary || ''}</>;
 
   return (
-    <>
+    <EagerCountContext.Provider value={eagerCountRef}>
       <div
         id="notion-article"
         className={`mx-auto overflow-hidden transition duration-100 ease-in-out ${className || ''}`}
@@ -126,11 +145,11 @@ const NotionPage = ({ post, className }) => {
             Equation,
             Modal,
             Pdf,
-            Image: LazyImage
+            Image: NotionLazyImage
           }}
         />
       </div>
-    </>
+    </EagerCountContext.Provider>
   );
 };
 

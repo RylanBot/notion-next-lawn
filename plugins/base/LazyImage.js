@@ -1,10 +1,13 @@
 import Head from 'next/head';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { siteConfig } from '@/libs/common/config';
 
 /**
  * 图片懒加载
+ * - 真实 src 直接写到 img 上，方便浏览器解析 HTML / 命中缓存
+ * - 首屏 / priority 用 eager + preload；其余走原生 loading="lazy"
+ * - 已缓存图片在挂载时立刻结束占位态
  */
 const LazyImage = React.forwardRef(
   (
@@ -20,36 +23,82 @@ const LazyImage = React.forwardRef(
       sizes,
       style,
       blurDataURL,
+      loading: loadingProp,
+      fetchPriority: fetchPriorityProp,
       // react-notion-x 按 next/image 接口传入，原生 img 用不上，解构掉避免落到 DOM 上
       placeholder: _placeholder,
       unoptimized: _unoptimized,
       ...props
     },
-    ref
+    forwardedRef
   ) => {
-    const COMPRESS_WIDTH = siteConfig('IMAGE_COMPRESS_WIDTH');
     const PLACEHOLDER_TEXT = `${siteConfig('AUTHOR')}'s Blog`;
+    const fallbackPlaceholder =
+      placeholderSrc || blurDataURL || (fill ? '' : generatePlaceholder(PLACEHOLDER_TEXT, width, height));
 
-    const imageRef = ref || useRef(null);
+    const innerRef = useRef(null);
+    const loadedRef = useRef(false);
+    const onLoadRef = useRef(onLoad);
+    onLoadRef.current = onLoad;
 
-    const [imageLoaded, setImageLoaded] = useState(false);
-    const [adjustedSrc, setAdjustedSrc] = useState(placeholderSrc || blurDataURL || '');
+    const [loaded, setLoaded] = useState(false);
+    const [failed, setFailed] = useState(false);
 
-    if (!placeholderSrc) {
-      placeholderSrc = blurDataURL || (fill ? '' : generatePlaceholder(PLACEHOLDER_TEXT, width, height));
-    }
+    const eager = Boolean(priority) || loadingProp === 'eager';
+    const displaySrc = src || fallbackPlaceholder;
+    const showPulse = Boolean(src) && !loaded && !failed;
 
-    const imgProps = {
-      ref: imageRef,
-      src: imageLoaded ? adjustedSrc : placeholderSrc,
-      className: imageLoaded ? '' : 'animate-pulse',
-      decoding: 'async',
-      ...props
+    const setRefs = useCallback(
+      (node) => {
+        innerRef.current = node;
+        if (typeof forwardedRef === 'function') {
+          forwardedRef(node);
+        } else if (forwardedRef) {
+          forwardedRef.current = node;
+        }
+      },
+      [forwardedRef]
+    );
+
+    const markLoaded = useCallback((event) => {
+      if (loadedRef.current) return;
+      loadedRef.current = true;
+      setLoaded(true);
+      const handler = onLoadRef.current;
+      if (typeof handler === 'function') {
+        handler(event || { target: innerRef.current });
+      }
+    }, []);
+
+    const handleError = () => {
+      setFailed(true);
+      if (innerRef.current && fallbackPlaceholder) {
+        innerRef.current.src = fallbackPlaceholder;
+      }
     };
 
-    if (className) {
-      imgProps.className = `${className} ${imgProps.className}`;
-    }
+    useEffect(() => {
+      loadedRef.current = false;
+      setLoaded(false);
+      setFailed(false);
+
+      const img = innerRef.current;
+      if (img && img.complete && img.naturalWidth > 0) {
+        markLoaded({ target: img });
+      }
+    }, [src, markLoaded]);
+
+    const imgProps = {
+      ...props,
+      ref: setRefs,
+      src: failed ? fallbackPlaceholder || displaySrc : displaySrc,
+      className: [className, showPulse ? 'animate-pulse' : ''].filter(Boolean).join(' '),
+      decoding: 'async',
+      loading: eager ? 'eager' : loadingProp || 'lazy',
+      fetchPriority: priority ? 'high' : fetchPriorityProp || 'auto',
+      onLoad: markLoaded,
+      onError: handleError
+    };
 
     if (fill) {
       imgProps.style = { objectFit: 'cover', width: '100%', height: '100%', ...style };
@@ -69,116 +118,24 @@ const LazyImage = React.forwardRef(
       imgProps.sizes = sizes;
     }
 
-    const handleImageLoad = () => {
-      setImageLoaded(true);
-    };
-
-    const handleImageError = () => {
-      if (imageRef.current) {
-        imageRef.current.src = placeholderSrc;
-      }
-    };
-
-    useEffect(() => {
-      if (imageLoaded && typeof onLoad === 'function') {
-        onLoad({ target: imageRef.current });
-      }
-    }, [imageLoaded]);
-
-    useEffect(() => {
-      const adjustedImageSrc = adjustImgSize(src || imageRef.current.src, COMPRESS_WIDTH);
-      setAdjustedSrc(adjustedImageSrc);
-
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              const lazyImage = new Image();
-              if (priority) {
-                lazyImage.fetchPriority = 'high';
-              }
-              lazyImage.src = adjustedImageSrc;
-
-              if (lazyImage.complete) {
-                handleImageLoad();
-              } else {
-                lazyImage.onload = () => handleImageLoad();
-              }
-
-              lazyImage.onerror = handleImageError;
-
-              observer.unobserve(entry.target);
-            }
-          });
-        },
-        { rootMargin: '500px 0px' }
-      );
-
-      if (imageRef.current) {
-        observer.observe(imageRef.current);
-      }
-
-      // 强制检查图片是否已经加载
-      if (imageRef.current && imageRef.current.complete) {
-        handleImageLoad();
-      }
-
-      const handleVisibilityChange = () => {
-        if (document.visibilityState === 'visible' && imageRef.current?.complete) {
-          handleImageLoad();
-        }
-      };
-
-      document.addEventListener('visibilitychange', handleVisibilityChange);
-
-      return () => {
-        if (imageRef.current) {
-          observer.unobserve(imageRef.current);
-        }
-        document.removeEventListener('visibilitychange', handleVisibilityChange);
-      };
-    }, [src, adjustedSrc]);
-
     return (
       <>
-        <img {...imgProps} />
-        {priority && (
+        {priority && isPreloadableSrc(src) && (
           <Head>
-            <link rel="prefetch" as="image" href={adjustedSrc} />
+            <link rel="preload" as="image" href={src} />
           </Head>
         )}
+        <img {...imgProps} />
       </>
     );
   }
 );
 
-/**
- * 根据窗口尺寸决定压缩图片宽度
- */
-const adjustImgSize = (src, maxWidth) => {
-  if (!src) {
-    return generatePlaceholder();
-  }
-  const screenWidth = window.screen.width;
-
-  // 屏幕尺寸大于默认图片尺寸，没必要再压缩
-  if (screenWidth > maxWidth) {
-    return src;
-  }
-
-  // 匹配 URL 中的 width 参数
-  const widthRegex = /width=\d+/;
-  // 匹配 URL 中的 w 参数
-  const wRegex = /w=\d+/;
-
-  // 替换 width/w 参数
-  return src.replace(widthRegex, `width=${screenWidth}`).replace(wRegex, `w=${screenWidth}`);
-};
+const isPreloadableSrc = (value) => typeof value === 'string' && value.length > 0 && !value.startsWith('data:');
 
 /**
  * 生成自定义的占位图片
  */
-
 const generatePlaceholder = (text, width = 400, height = 320) => {
   const BG_COLOR = '#e0e0e0';
   const TEXT_COLOR = '#999999';
@@ -216,7 +173,9 @@ const generatePlaceholder = (text, width = 400, height = 320) => {
     </svg>
   `.trim();
 
-  return `data:image/svg+xml;base64,${btoa(svg)}`;
+  return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
 };
+
+LazyImage.displayName = 'LazyImage';
 
 export default LazyImage;

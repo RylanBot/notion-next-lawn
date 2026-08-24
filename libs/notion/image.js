@@ -27,6 +27,10 @@ export const mapImgUrl = (img, block, type = 'block', needCompress = true) => {
     ret = img;
   }
 
+  // react-notion-x 8 会先通过 getSignedFileUrl 换出带签名的地址
+  // 这类 URL 不能再拼接 query，否则签名失效，图片会一直停在 placeholder
+  if (isSignedFileUrl(ret)) return ret;
+
   const hasConverted =
     ret.indexOf('https://www.notion.so/image') === 0 || ret.includes('notion.site/images/page-cover/');
 
@@ -64,7 +68,7 @@ export const mapImgUrl = (img, block, type = 'block', needCompress = true) => {
     }
 
     // 图片 url 优化，确保每一篇文章的图片 url 唯一
-    if (ret && ret.length > 4 && !ret.includes('https://www.notion.so/images/')) {
+    if (ret && ret.length > 4 && !ret.includes('https://www.notion.so/images/') && !isSignedFileUrl(ret)) {
       // 图片接口拼接唯一识别参数，防止请求的图片被缓，而导致随机结果相同
       const separator = ret.includes('?') ? '&' : '?';
       ret = `${ret.trim()}${separator}t=${block.id}`;
@@ -79,6 +83,21 @@ export const mapImgUrl = (img, block, type = 'block', needCompress = true) => {
 
   return ret;
 };
+
+/**
+ * Notion 签名文件地址
+ */
+function isSignedFileUrl(url) {
+  if (!url || typeof url !== 'string') return false;
+  if (url.includes('X-Amz-Signature') || url.includes('X-Amz-Credential')) return true;
+
+  try {
+    const hostname = new URL(url).hostname.toLowerCase();
+    return hostname === 'file.notion.so' || hostname === 'file.notion.com';
+  } catch {
+    return false;
+  }
+}
 
 /**
  * 是否 emoji 图标
