@@ -1160,11 +1160,11 @@ code[class*='language-'] {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: var(--callout-line-height);
+  width: auto;
   height: var(--callout-line-height);
-  max-width: var(--callout-line-height);
+  max-width: none;
   max-height: var(--callout-line-height);
-  margin: 0 0.55em 0 0;
+  margin: 0 0.25em 0 0;
   font-size: 1em;
   line-height: 1;
   border-radius: var(--notion-corner-radius);
