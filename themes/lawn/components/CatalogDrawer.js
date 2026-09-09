@@ -27,21 +27,24 @@ const CatalogDrawer = ({ toc }) => {
 
   return (
     <>
-      <button className="cursor-pointer flex justify-center items-center text-center xl:hidden" onClick={switchVisible}>
+      <button
+        type="button"
+        className="flex h-7 w-7 cursor-pointer items-center justify-center text-center xl:hidden"
+        onClick={switchVisible}
+      >
         <i className="fas fa-list-ol text-xs" />
       </button>
 
       <div className="fixed top-0 right-0 z-40 xl:hidden">
         <div
-          className={`animate__animated animate__fast w-60 fixed right-12 bottom-12 rounded py-2 bg-white dark:bg-lawn-black-gray shadow-sm shadow-gray-400 ${
-            showDrawer ? 'animate__slideInRight' : '-mr-72 animate__slideOutRight'
+          className={`animate__animated animate__fast w-72 fixed right-12 bottom-12 ${
+            showDrawer ? 'animate__slideInRight' : '-mr-80 animate__slideOutRight'
           }`}
         >
           <Catalog toc={toc} />
         </div>
       </div>
 
-      {/* 背景蒙版 */}
       <div
         className={`${showDrawer ? 'block' : 'hidden'} fixed top-0 left-0 z-30 w-full h-full`}
         onClick={switchVisible}

@@ -1,100 +1,91 @@
+import Link from 'next/link';
+
 import LazyImage from '@/plugins/base/LazyImage';
 import WordCount from '@/plugins/base/WordCount';
 import NotionIcon from '@/plugins/notion/NotionIcon';
 
 import useGlobal from '@/hooks/useGlobal';
+import { siteConfig } from '@/libs/common/config';
+import { formatNameToSlug, safeJSONParse } from '@/libs/common/util';
 
 import CategoryMini from './CategoryMini';
-import TagItemMini from './TagItemMini';
-import WavesArea from './WavesArea';
+import { formatSlashDate } from './homeFormat';
 
 /**
- * 文章头部背景
+ * 文章头部
  */
 export default function PostHeader({ post, siteInfo }) {
-  const { locale, fullWidth } = useGlobal();
-
-  if (!post) return <></>;
-  if (fullWidth) return <div className="my-8" />;
+  const { locale, isChinese } = useGlobal();
+  const TAG_SLUG_MAP = safeJSONParse(siteConfig('TAG_SLUG_MAP', {}));
 
   const headerImage = post?.pageCover ? post.pageCover : siteInfo?.pageCover;
+  const published = post.date?.start ? formatSlashDate(post.date.start) : '';
+  const updated = post.date?.end ? formatSlashDate(post.date.end) : '';
+
+  if (!post) return;
 
   return (
-    <div id="lawn-header" className="w-full h-[30rem] relative md:flex-shrink-0 z-10">
-      <LazyImage
-        priority
-        key={headerImage}
-        src={headerImage}
-        className="w-full h-full object-cover object-center absolute top-0"
-      />
+    <div id="lawn-header" className="relative z-10 w-full overflow-hidden bg-lawn-header">
+      {headerImage && (
+        <LazyImage
+          priority
+          key={headerImage}
+          src={headerImage}
+          className="lawn-header-cover absolute inset-0 h-full w-full object-cover object-center opacity-10"
+        />
+      )}
+      <div className="lawn-header-fade pointer-events-none absolute inset-x-0 bottom-0 h-32" />
 
-      <div className="bg-black bg-opacity-70 dark:bg-opacity-80 absolute top-0 w-full h-full py-10 flex justify-center items-center ">
-        <div>
-          {/* 分类 */}
-          <div className="mb-3 flex justify-center">
-            {post.category && (
-              <CategoryMini
-                name={post.category}
-                className="cursor-pointer px-2 py-1 mb-2 rounded-sm text-sm font-medium text-white border border-white hover:border-teal-300 hover:text-teal-300"
-              />
-            )}
-          </div>
+      <div className="relative mx-auto flex w-full max-w-4xl flex-col items-center px-6 pb-24 pt-28 text-center md:px-4 md:pb-28 md:pt-32">
+        {post.category && (
+          <CategoryMini
+            name={post.category}
+            className="mb-4 inline-flex rounded-full border border-teal-900/20 bg-white/80 px-3 py-1 text-md font-semibold tracking-wider text-teal-900 transition-colors hover:border-teal-700 hover:text-teal-700 dark:border-white/20 dark:bg-zinc-900/80 dark:text-white dark:hover:border-teal-400 dark:hover:text-teal-400"
+          />
+        )}
 
-          {/* 文章 Title */}
-          <div className="px-1 leading-snug font-bold text-2xl md:text-5xl shadow-text-md flex justify-center text-center text-white">
-            <NotionIcon icon={post.pageIcon} className="text-4xl mx-1" />
-            <span className="mx-1">{post.title}</span>
-          </div>
+        <h1 className="flex items-center justify-center gap-2 font-bold text-3xl leading-tight text-zinc-900 dark:text-white md:text-5xl">
+          <NotionIcon icon={post.pageIcon} className="text-3xl md:text-4xl" />
+          <span>{post.title}</span>
+        </h1>
 
-          {/* 发布时间 */}
-          <section className="flex-wrap shadow-text-md flex text-sm justify-center mt-4 text-white font-light leading-8">
-            <div className="flex justify-center">
-              {post.type !== 'Page' && post.date.start && (
-                <>
-                  <span className="mx-3">
-                    <i className="fas fa-hourglass-half pr-2"></i>
-                    <span>
-                      {locale.COMMON.POST_TIME}: {post.date.start}
-                    </span>
-                  </span>
-                </>
-              )}
-              {/* 最后更新 */}
-              {post.date.end && (
-                <div className="mx-3">
-                  <i className="far fa-calendar-check pr-2"></i>
-                  {locale.COMMON.LAST_EDITED_TIME}: {post.date.end}
-                </div>
-              )}
-            </div>
-
-            {/* 文章字数 */}
-            <span className="mx-2">
-              <WordCount />
+        <div className="mt-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm text-zinc-900 dark:text-white">
+          {post.type !== 'Page' && published && (
+            <span className="inline-flex items-center gap-1.5">
+              <i className="fas fa-hourglass-half text-xs" />
+              <span>
+                {locale.COMMON.POST_TIME}: {published}
+              </span>
             </span>
-
-            {/* 查看次数 */}
-            {/* {JSON.parse(siteConfig('ANALYTICS_BUSUANZI_ENABLE')) && (
-              <div className='busuanzi_container_page_pv font-light mr-2'>
-                <span className='mr-2 busuanzi_value_page_pv' />
-                {locale.COMMON.VIEWS}
-              </div>
-            )} */}
-          </section>
-
-          <div className="mt-4 mb-1">
-            {post.tagItems && (
-              <div className="flex justify-center flex-nowrap overflow-x-auto">
-                {post.tagItems.map((tag) => (
-                  <TagItemMini key={tag.name} tag={tag} />
-                ))}
-              </div>
-            )}
-          </div>
+          )}
+          {updated && (
+            <span className="inline-flex items-center gap-1.5">
+              <i className="far fa-calendar-check text-xs" />
+              <span>
+                {locale.COMMON.LAST_EDITED_TIME}: {updated}
+              </span>
+            </span>
+          )}
+          <WordCount />
         </div>
-      </div>
 
-      <WavesArea />
+        {post.tagItems?.length > 0 && (
+          <div className="mt-5 flex flex-wrap justify-center gap-1.5">
+            {post.tagItems.map((tag) => {
+              const name = isChinese ? (TAG_SLUG_MAP[tag.name] ?? tag.name) : tag.name;
+              return (
+                <Link
+                  key={tag.name}
+                  href={`/tag/${formatNameToSlug(tag.name)}`}
+                  className="max-w-full truncate rounded border border-zinc-900/40 bg-white/80 px-1.5 py-0.5 text-xs leading-4 text-zinc-900 dark:border-white/30 dark:bg-zinc-800 dark:text-white"
+                >
+                  {name}
+                </Link>
+              );
+            })}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

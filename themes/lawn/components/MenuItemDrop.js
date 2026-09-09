@@ -1,56 +1,63 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 
+import clsx from 'clsx';
+
+const isActiveLink = (pathname, asPath, to) => {
+  if (!to) return false;
+  if (to === '/') return pathname === '/';
+  return asPath === to || asPath.startsWith(`${to}/`);
+};
+
 const MenuItemDrop = ({ link }) => {
+  const router = useRouter();
   const [show, changeShow] = useState(false);
   const hasSubMenu = link?.subMenus?.length > 0;
+  const active = isActiveLink(router.pathname, router.asPath, link?.to);
 
   if (!link || !link.show) return null;
 
+  const pillClass = clsx(
+    'inline-flex items-center rounded-full px-4 py-1.5 text-sm tracking-wide transition-colors',
+    active ? 'bg-teal-700 text-white' : 'text-teal-900 hover:bg-teal-900/10 dark:text-white dark:hover:bg-white/10'
+  );
+
   return (
-    <div onMouseOver={() => changeShow(true)} onMouseOut={() => changeShow(false)}>
+    <div className="relative" onMouseOver={() => changeShow(true)} onMouseOut={() => changeShow(false)}>
       {!hasSubMenu && (
-        <Link
-          href={link?.to}
-          className="menu-title text-lg pl-2 pr-4 text-gray-700 dark:text-gray-200 no-underline tracking-widest pb-1"
-        >
-          {link?.icon && <i className={link?.icon} />} {link?.name}
-          {hasSubMenu && <i className="px-2 fa fa-angle-down"></i>}
+        <Link href={link?.to} className={pillClass}>
+          {link?.icon && <i className={`${link.icon} mr-1.5 text-sm`} />}
+          {link?.name}
         </Link>
       )}
 
       {hasSubMenu && (
-        <>
-          <div className="cursor-pointer menu-title pl-2 pr-4 text-gray-700 dark:text-gray-200 no-underline tracking-widest pb-1">
-            {link?.icon && <i className={link?.icon} />} {link?.name}
-            <i className={`px-2 fa fa-angle-down duration-300  ${show ? 'rotate-180' : 'rotate-0'}`}></i>
-          </div>
-        </>
+        <div className={clsx(pillClass, 'cursor-pointer')}>
+          {link?.icon && <i className={`${link.icon} mr-1.5 text-sm`} />}
+          {link?.name}
+          <i className={`fa fa-angle-down pl-1.5 text-xs duration-300 ${show ? 'rotate-180' : 'rotate-0'}`}></i>
+        </div>
       )}
 
-      {/* 子菜单 */}
       {hasSubMenu && (
         <ul
-          className={`${
-            show ? 'visible opacity-100 top-12' : 'invisible opacity-0 top-20'
-          } drop-shadow-md overflow-hidden rounded-md bg-white transition-all duration-300 z-20 absolute block`}
-          style={{ backdropFilter: 'blur(3px)' }}
+          className={clsx(
+            'absolute left-1/2 z-20 mt-2 min-w-40 -translate-x-1/2 overflow-hidden rounded-2xl border border-teal-900/15 bg-stone-50 py-1 shadow-lg transition-all duration-300 dark:border-white/15 dark:bg-zinc-900',
+            show ? 'visible top-full opacity-100' : 'invisible top-full opacity-0'
+          )}
         >
-          {link.subMenus.map((sLink, index) => {
-            return (
-              <li
-                key={index}
-                className="cursor-pointer hover:bg-teal-400 text-gray-900 hover:text-black tracking-widest transition-all duration-300 dark:border-gray-800 py-1 pr-6 pl-3"
+          {link.subMenus.map((sLink, index) => (
+            <li key={index}>
+              <Link
+                href={sLink.to}
+                className="block px-4 py-2 text-sm text-teal-900 transition-colors hover:bg-teal-700/10 dark:text-white"
               >
-                <Link href={sLink.to}>
-                  <span className="text-sm text-nowrap font-extralight">
-                    {link?.icon && <i className={sLink?.icon}> &nbsp; </i>}
-                    {sLink.title}
-                  </span>
-                </Link>
-              </li>
-            );
-          })}
+                {sLink?.icon && <i className={`${sLink.icon} mr-2`} />}
+                {sLink.title}
+              </Link>
+            </li>
+          ))}
         </ul>
       )}
     </div>

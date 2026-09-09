@@ -3,14 +3,14 @@ import useDarkMode from '@/hooks/useDarkMode';
 /**
  * 文章波浪动画
  */
-export default function WavesArea() {
+export default function WavesArea({ lightColor = 'var(--lawn-bg)', darkColor = 'var(--lawn-bg)' }) {
   const { isDarkMode } = useDarkMode();
-  const color = isDarkMode ? '#000000' : '#f5f5f5';
+  const color = isDarkMode ? darkColor : lightColor;
 
   return (
     <section className="w-full absolute left-0 z-10 bottom-0">
       <svg
-        className="w-full h-[60px]"
+        className="h-16 w-full"
         xmlns="http://www.w3.org/2000/svg"
         xlink="http://www.w3.org/1999/xlink"
         viewBox="0 24 150 28"

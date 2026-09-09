@@ -22,7 +22,9 @@ module.exports = {
         lawn: {
           'background-gray': '#f5f5f5',
           'black-gray': '#101414',
-          'light-gray': '#e5e5e5'
+          'light-gray': '#e5e5e5',
+          bg: 'var(--lawn-bg)',
+          header: 'var(--lawn-header)'
         }
       },
       backgroundImage: {

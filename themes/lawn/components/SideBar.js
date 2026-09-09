@@ -14,7 +14,7 @@ const SideBar = (props) => {
 
       {/* 内容 */}
       <div className="relative h-full py-6">
-        <ProfileInfo />
+        <ProfileInfo align="center" />
 
         <MenuListSide {...props} />
 

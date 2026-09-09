@@ -1,7 +1,7 @@
 import algoliasearch from 'algoliasearch';
 
 import BLOG from '@/blog.config';
-import { getPageContentText } from '@/pages/search/[keyword]';
+import { getPageContentText } from './content';
 
 /**
  * 限制内容字节数

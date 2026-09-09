@@ -1,9 +1,11 @@
+import clsx from 'clsx';
+
 import { siteConfig } from '@/libs/common/config';
 
 /**
  * 社交按钮
  */
-const SocialButton = () => {
+const SocialButton = ({ align = 'left' }) => {
   const socialMedia = [
     { name: 'steam', icon: 'fab fa-steam', url: siteConfig('CONTACT_STEAM') },
     { name: 'github', icon: 'fab fa-github', url: siteConfig('CONTACT_GITHUB') },
@@ -19,13 +21,25 @@ const SocialButton = () => {
   ];
 
   return (
-    <div className="w-full justify-center flex-wrap flex">
-      <div className="space-x-3 text-xl text-gray-600 dark:text-gray-300 ">
+    <div className={clsx('flex w-full flex-wrap', align === 'center' ? 'justify-center' : 'justify-start')}>
+      <div className="flex flex-wrap gap-2.5">
         {socialMedia.map(
           ({ name, icon, url }) =>
             url && (
-              <a key={name} target="_blank" rel="noreferrer" title={name} href={url}>
-                <i className={`${icon} transform duration-150 hover:scale-125 hover:text-teal-500 dark:hover:text-teal-300`} />
+              <a
+                key={name}
+                target="_blank"
+                rel="noreferrer"
+                title={name}
+                href={url}
+                className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-teal-900 transition-transform hover:-translate-y-0.5"
+              >
+                <i
+                  className={clsx(
+                    icon,
+                    'text-md transform duration-150 hover:scale-125 hover:text-teal-500 dark:hover:text-teal-300'
+                  )}
+                />
               </a>
             )
         )}

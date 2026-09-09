@@ -5,24 +5,22 @@ import Typed from 'typed.js';
 
 import useGlobal from '@/hooks/useGlobal';
 import { siteConfig } from '@/libs/common/config';
-import LazyImage from '@/plugins/base/LazyImage';
 
 import CONFIG from '../config';
+import InfoCard from './InfoCard';
 import NavButtonGroup from './NavButtonGroup';
 import WavesArea from './WavesArea';
 
 /**
- * 首页大图
+ * 首页 Hero
  */
 const Hero = ({ onLoad, ...props }) => {
-  const { siteInfo } = props;
   const { locale, setOnLoading } = useGlobal();
 
   const TITLE = siteConfig('TITLE');
   const GREETING_WORDS = siteConfig('GREETING_WORDS').split(',');
   const LAWN_HOME_NAV_BUTTONS = siteConfig('LAWN_HOME_NAV_BUTTONS', null, CONFIG);
   const LAWN_HOME_START_READING = siteConfig('LAWN_HOME_START_READING', null, CONFIG);
-  const LAWN_HOME_NAV_BACKGROUND_IMG_FIXED = siteConfig('LAWN_HOME_NAV_BACKGROUND_IMG_FIXED', null, CONFIG);
 
   const typedRef = useRef(null);
   const wrapperTopRef = useRef(0);
@@ -39,26 +37,19 @@ const Hero = ({ onLoad, ...props }) => {
     });
   };
 
-  const handleCoverLoaded = () => {
-    setTimeout(() => {
-      setShowHero(true);
-      setOnLoading(false);
-      onLoad();
-    }, 1500);
-  };
-
   useEffect(() => {
-    setOnLoading(true);
-
     updateHeaderHeight();
+    setShowHero(true);
+    setOnLoading(false);
+    onLoad?.();
 
     const typed = new Typed(typedRef.current, {
       strings: GREETING_WORDS,
       loop: true,
-      typeSpeed: 100,
-      backSpeed: 50,
-      backDelay: 300,
-      showCursor: true,
+      typeSpeed: 80,
+      backSpeed: 40,
+      backDelay: 2400,
+      showCursor: false,
       smartBackspace: true
     });
 
@@ -73,45 +64,34 @@ const Hero = ({ onLoad, ...props }) => {
     <div
       id="lawn-header"
       className={clsx(
-        'relative flex flex-col justify-center items-center bg-white z-1 w-full h-[30rem]',
+        'relative z-1 w-full overflow-hidden bg-lawn-header',
+        'px-6 pb-24 pt-28 md:px-12 md:pb-28 md:pt-32 xl:px-16',
         !showHero && 'opacity-0'
       )}
     >
-      <LazyImage
-        priority
-        className={clsx(
-          'brightness-75 dark:brightness-50 w-full h-[30rem] object-cover object-center',
-          LAWN_HOME_NAV_BACKGROUND_IMG_FIXED && 'fixed'
-        )}
-        src={siteInfo?.pageCover}
-        onLoad={handleCoverLoaded}
-      />
-
-      <div className="text-gray-200 absolute flex flex-col h-full items-center justify-center w-full">
-        {/* 站点标题 */}
-        <div className="shadow-text text-center text-7xl lg:text-9xl z-10">{TITLE}</div>
-
-        {/* 站点欢迎语 */}
-        <div className="mt-6 h-12 items-center text-center font-bold text-xl lg:text-2xl z-10">
-          <span ref={typedRef} />
+      <div className="relative z-10 mx-auto flex min-h-80 w-full max-w-screen-2xl flex-col items-start justify-between gap-12 lg:min-h-96 lg:flex-row lg:items-center">
+        <div className="max-w-2xl text-zinc-900 dark:text-white">
+          <h1 className=" text-6xl leading-none md:text-7xl xl:text-8xl">{TITLE}</h1>
+          <div className="mt-5 min-h-6 text-xl font-semibold tracking-widest">
+            <span ref={typedRef} />
+          </div>
+          {LAWN_HOME_NAV_BUTTONS && <NavButtonGroup {...props} />}
         </div>
 
-        {/* 首页导航大按钮 */}
-        {LAWN_HOME_NAV_BUTTONS && <NavButtonGroup {...props} />}
-
-        {/* 开始阅读按钮 */}
-        {LAWN_HOME_START_READING && (
-          <div
-            className="z-10 cursor-pointer w-full text-center py-4 text-3xl absolute bottom-4 text-white"
-            onClick={scrollToWrapper}
-          >
-            <div className="opacity-70 animate-bounce text-xs">{locale.COMMON.START_READING}</div>
-            <i className="opacity-70 animate-bounce fas fa-angle-down" />
-          </div>
-        )}
+        <InfoCard width="w-full max-w-sm" {...props} />
       </div>
 
-      <WavesArea />
+      {LAWN_HOME_START_READING && (
+        <div
+          className="relative z-10 mt-10 cursor-pointer text-center text-teal-900 dark:text-white"
+          onClick={scrollToWrapper}
+        >
+          <div className="animate-bounce text-xs opacity-70">{locale.COMMON.START_READING}</div>
+          <i className="fas fa-angle-down animate-bounce opacity-70" />
+        </div>
+      )}
+
+      <WavesArea lightColor="var(--lawn-bg)" darkColor="var(--lawn-bg)" />
     </div>
   );
 };

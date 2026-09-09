@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
+import clsx from 'clsx';
+
 /**
  * 数字翻页插件
  */
@@ -15,15 +17,12 @@ const PaginationNumber = ({ page, totalPage }) => {
   const pages = generatePages(pagePrefix, page, currentPage, totalPage);
 
   return (
-    <div className="mt-10 flex justify-center items-end font-medium text-black dark:text-gray-300 space-x-2">
-      {/* 上一页 */}
+    <div className="mt-10 flex items-end justify-center space-x-2 font-medium text-teal-900 dark:text-white">
       <Link
-        className={`${
-          currentPage === 1 ? 'invisible' : 'block'
-        } pb-0.5 border-transparent hover:border-teal-400 w-6 text-center cursor-pointer hover:font-bold`}
+        className={clsx(currentPage === 1 ? 'invisible' : 'block', 'w-6 cursor-pointer pb-0.5 text-center hover:text-teal-700')}
         rel="prev"
         href={{
-          pathname: currentPage === 2 ? `${pagePrefix}/` : `${pagePrefix}/page/${currentPage - 1}`,
+          pathname: getPagePath(currentPage - 1, pagePrefix),
           query: router.query.s ? { s: router.query.s } : {}
         }}
       >
@@ -32,11 +31,8 @@ const PaginationNumber = ({ page, totalPage }) => {
 
       {pages}
 
-      {/* 下一页 */}
       <Link
-        className={`${
-          +showNext ? 'block' : 'invisible'
-        } pb-0.5 border-transparent hover:border-teal-400 w-6 text-center cursor-pointer hover:font-bold`}
+        className={clsx(+showNext ? 'block' : 'invisible', 'w-6 cursor-pointer pb-0.5 text-center hover:text-teal-700')}
         rel="next"
         href={{
           pathname: `${pagePrefix}/page/${currentPage + 1}`,
@@ -53,22 +49,31 @@ function getPageElement(page, currentPage, pagePrefix) {
   return (
     <Link
       key={page}
-      className={`pb-0.5 w-6 text-center rounded-sm ${
+      className={clsx(
+        'w-6 pb-0.5 text-center',
         page == currentPage
-          ? 'pointer-events-none font-bold bg-teal-400 dark:bg-teal-500 text-white'
-          : 'border border-dotted'
-      }`}
+          ? 'pointer-events-none rounded-full bg-teal-900 font-bold text-white dark:bg-white dark:text-zinc-900'
+          : 'rounded-full border border-teal-900/25 hover:border-teal-900 hover:text-teal-700 dark:border-white/25'
+      )}
       passHref
-      href={page === 1 ? `${pagePrefix}/` : `${pagePrefix}/page/${page}`}
+      href={getPagePath(page, pagePrefix)}
     >
       {page}
     </Link>
   );
 }
 
+/** 全站列表第 1 页在 /page/1；分类 / 标签第 1 页仍走索引路径 */
+function getPagePath(page, pagePrefix) {
+  if (page === 1 && pagePrefix) {
+    return `${pagePrefix}/`;
+  }
+  return `${pagePrefix}/page/${page}`;
+}
+
 function generatePages(pagePrefix, page, currentPage, totalPage) {
   const pages = [];
-  const groupCount = 7; // 最多显示页签数
+  const groupCount = 7;
   if (totalPage <= groupCount) {
     for (let i = 1; i <= totalPage; i++) {
       pages.push(getPageElement(i, page, pagePrefix));

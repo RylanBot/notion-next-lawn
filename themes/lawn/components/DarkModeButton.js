@@ -2,7 +2,7 @@ import useDarkMode from '@/hooks/useDarkMode';
 
 const SunIcon = () => {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g>
         <path
           id="fill1"
@@ -29,7 +29,7 @@ const SunIcon = () => {
 
 const MoonIcon = () => {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g>
         <path
           id="fill1"
@@ -52,7 +52,8 @@ const DarkModeButton = () => {
 
   return (
     <button
-      className={`relative h-10 w-10 rounded-full cursor-pointer text-gray-700 dark:text-gray-200 transition-colors`}
+      type="button"
+      className="relative flex h-8 w-8 cursor-pointer items-center justify-center rounded-full text-teal-900 transition-colors hover:bg-teal-700/10 hover:text-teal-700 dark:text-white dark:hover:bg-white/10 dark:hover:text-teal-400"
       onClick={toggleDarkMode}
     >
       <span

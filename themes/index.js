@@ -79,10 +79,6 @@ export const getLayoutNameByPath = (path) => {
     case '/tag/[tag]':
     case '/tag/[tag]/page/[page]':
       return 'LayoutPostList';
-    case '/search':
-    case '/search/[keyword]':
-    case '/search/[keyword]/page/[page]':
-      return 'LayoutSearch';
     case '/404':
       return 'Layout404';
     case '/tag':

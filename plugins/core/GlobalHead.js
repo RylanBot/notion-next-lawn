@@ -79,7 +79,6 @@ const GlobalHead = (props) => {
 const getSEOMeta = (props, router, global) => {
   const { locale, isChinese } = global;
   const { post, siteInfo, tag, category, page } = props;
-  const keyword = router?.query?.s;
 
   const CATEGORY_SLUG_MAP = safeJSONParse(siteConfig('CATEGORY_SLUG_MAP', {}));
   const TAG_SLUG_MAP = safeJSONParse(siteConfig('TAG_SLUG_MAP', {}));
@@ -129,16 +128,6 @@ const getSEOMeta = (props, router, global) => {
         description: `${siteInfo?.description}`,
         image: `${siteInfo?.pageCover}`,
         slug: 'tag/' + tag,
-        type: 'website'
-      };
-    case '/search':
-    case '/search/[keyword]':
-    case '/search/[keyword]/page/[page]':
-      return {
-        title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${siteInfo?.title}`,
-        description: `${siteInfo?.description}`,
-        image: `${siteInfo?.pageCover}`,
-        slug: 'search/' + (keyword || ''),
         type: 'website'
       };
     case '/404':

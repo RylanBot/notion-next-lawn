@@ -1,46 +1,68 @@
 :root {
-  /* Typography */
-  --fg-color: #3a342d;
-  --fg-color-0: rgba(58, 52, 45, 0.06);
-  --fg-color-1: rgba(58, 52, 45, 0.12);
-  --fg-color-2: rgba(58, 52, 45, 0.28);
-  --fg-color-3: rgba(58, 52, 45, 0.48);
-  --fg-color-4: #3a342d;
-  --fg-color-5: rgba(58, 52, 45, 0.02);
-  --fg-color-6: rgba(58, 52, 45, 0.72);
+  --fg-color: rgb(0, 0, 0);
+  --fg-color-0: rgba(55, 53, 47, 0.09);
+  --fg-color-1: rgba(55, 53, 47, 0.16);
+  --fg-color-2: rgba(55, 53, 47, 0.4);
+  --fg-color-3: rgba(55, 53, 47, 0.6);
+  --fg-color-4: #000;
+  --fg-color-5: rgba(55, 53, 47, 0.024);
+  --fg-color-6: rgba(55, 53, 47, 0.8);
+  --fg-color-icon: var(--fg-color);
 
-  /* Paper Background */
-  --bg-color: #faf8f3;
-  --bg-color-0: #f1ede4;
-  --bg-color-1: #f5f2ea;
-  --bg-color-2: #ece7dc;
+  --bg-color: #fff;
+  --bg-color-0: rgba(135, 131, 120, 0.15);
+  --bg-color-1: rgb(247, 246, 243);
+  --bg-color-2: rgba(135, 131, 120, 0.15);
 
-  /* Selection */
-  --select-color-0: #b87333;
-  --select-color-1: rgba(184, 115, 51, 0.18);
-  --select-color-2: #fff;
+  --select-color-0: rgb(46, 170, 220);
+  --select-color-1: rgba(45, 170, 219, 0.3);
+  --select-color-2: #ffffff;
 
-  /* Semantic Colors */
-  --notion-red: #b45b5b;
-  --notion-pink: #b96f8d;
-  --notion-blue: #5f7d95;
-  --notion-purple: #8871a8;
-  --notion-teal: #5e8c82;
-  --notion-yellow: #b8963b;
-  --notion-orange: #c07a3d;
-  --notion-brown: #8b6a53;
-  --notion-gray: #8a8379;
+  --notion-red: color-mix(in srgb, rgb(255, 46, 46) 38%, #8e8c88);
+  --notion-pink: color-mix(in srgb, rgb(255, 88, 176) 38%, #8e8c88);
+  --notion-blue: color-mix(in srgb, rgb(10, 176, 255) 38%, #8e8c88);
+  --notion-purple: color-mix(in srgb, rgb(176, 82, 255) 38%, #8e8c88);
+  --notion-teal: color-mix(in srgb, rgb(36, 214, 138) 38%, #8e8c88);
+  --notion-green: color-mix(in srgb, rgb(72, 214, 88) 38%, #8e8c88);
+  --notion-yellow: color-mix(in srgb, rgb(245, 176, 0) 38%, #8e8c88);
+  --notion-orange: color-mix(in srgb, rgb(255, 140, 28) 38%, #8e8c88);
+  --notion-brown: color-mix(in srgb, rgb(186, 118, 82) 42%, #8e8c88);
+  --notion-gray: rgb(142, 140, 136);
 
-  /* Background Colors */
-  --notion-red_background: #f4e8e5;
-  --notion-pink_background: #f6e9ef;
-  --notion-blue_background: #edf2f5;
-  --notion-purple_background: #f1edf7;
-  --notion-teal_background: #edf5f2;
-  --notion-yellow_background: #f8f3e2;
-  --notion-orange_background: #f7eee6;
-  --notion-brown_background: #f1ebe6;
-  --notion-gray_background: #f2f0ec;
+  --notion-red_background: color-mix(in srgb, var(--notion-red) 16%, #f5f5f4);
+  --notion-pink_background: color-mix(in srgb, var(--notion-pink) 16%, #f5f5f4);
+  --notion-blue_background: color-mix(in srgb, var(--notion-blue) 16%, #f5f5f4);
+  --notion-purple_background: color-mix(in srgb, var(--notion-purple) 16%, #f5f5f4);
+  --notion-teal_background: color-mix(in srgb, var(--notion-teal) 16%, #f5f5f4);
+  --notion-yellow_background: color-mix(in srgb, var(--notion-yellow) 16%, #f5f5f4);
+  --notion-orange_background: color-mix(in srgb, var(--notion-orange) 16%, #f5f5f4);
+  --notion-brown_background: color-mix(in srgb, var(--notion-brown) 16%, #f5f5f4);
+  --notion-gray_background: color-mix(in srgb, var(--notion-gray) 14%, #f5f5f4);
+  --notion-green_background: color-mix(in srgb, var(--notion-green) 16%, #f5f5f4);
+  --notion-default_background: color-mix(in srgb, var(--notion-gray) 12%, #f5f5f4);
+
+  --notion-red_background_co: color-mix(in srgb, var(--notion-red) 10%, transparent);
+  --notion-pink_background_co: color-mix(in srgb, var(--notion-pink) 10%, transparent);
+  --notion-blue_background_co: color-mix(in srgb, var(--notion-blue) 10%, transparent);
+  --notion-purple_background_co: color-mix(in srgb, var(--notion-purple) 10%, transparent);
+  --notion-teal_background_co: color-mix(in srgb, var(--notion-teal) 10%, transparent);
+  --notion-yellow_background_co: color-mix(in srgb, var(--notion-yellow) 10%, transparent);
+  --notion-orange_background_co: color-mix(in srgb, var(--notion-orange) 10%, transparent);
+  --notion-brown_background_co: color-mix(in srgb, var(--notion-brown) 10%, transparent);
+  --notion-gray_background_co: color-mix(in srgb, var(--notion-gray) 10%, transparent);
+  --notion-green_background_co: color-mix(in srgb, var(--notion-green) 10%, transparent);
+  --notion-default_background_co: transparent;
+
+  --notion-item-blue: color-mix(in srgb, var(--notion-blue) 18%, transparent);
+  --notion-item-orange: color-mix(in srgb, var(--notion-orange) 18%, transparent);
+  --notion-item-green: color-mix(in srgb, var(--notion-green) 18%, transparent);
+  --notion-item-pink: color-mix(in srgb, var(--notion-pink) 18%, transparent);
+  --notion-item-brown: color-mix(in srgb, var(--notion-brown) 18%, transparent);
+  --notion-item-red: color-mix(in srgb, var(--notion-red) 18%, transparent);
+  --notion-item-yellow: color-mix(in srgb, var(--notion-yellow) 18%, transparent);
+  --notion-item-default: color-mix(in srgb, var(--notion-gray) 22%, transparent);
+  --notion-item-purple: color-mix(in srgb, var(--notion-purple) 18%, transparent);
+  --notion-item-gray: color-mix(in srgb, var(--notion-gray) 20%, transparent);
 
   --notion-max-width: 720px;
   --notion-header-height: 45px;
@@ -241,6 +263,11 @@
 .notion-teal,
 .notion-teal_co {
   color: var(--notion-teal);
+}
+
+.notion-green,
+.notion-green_co {
+  color: var(--notion-green);
 }
 
 .notion-yellow,

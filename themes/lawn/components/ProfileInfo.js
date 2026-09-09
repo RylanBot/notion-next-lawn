@@ -1,30 +1,42 @@
+import clsx from 'clsx';
+
 import useGlobal from '@/hooks/useGlobal';
 import { siteConfig } from '@/libs/common/config';
 import LazyImage from '@/plugins/base/LazyImage';
 
 import SocialButton from './SocialButton';
 
-const ProfileInfo = () => {
+const ProfileInfo = ({ align = 'left' }) => {
   const { siteInfo } = useGlobal();
+  const centered = align === 'center';
 
   const AUTHOR = siteConfig('AUTHOR');
   const BIO = siteConfig('BIO');
 
   return (
-    <div className="py-4 text-center">
-      <div className="flex justify-center items-center pt-1">
-        <LazyImage
-          priority
-          src={siteInfo?.icon}
-          alt={AUTHOR}
-          className="w-28 h-28 rounded-full bg-white border-4 border-white dark:bg-zinc-900 dark:border-zinc-900 shadow-md"
-        />
+    <div className={clsx('px-8 py-8', centered ? 'text-center' : 'text-left')}>
+      <div className={clsx('flex items-center', centered ? 'justify-center' : 'justify-start')}>
+        <div className="rounded-full border border-dashed border-teal-900 p-1 dark:border-amber-50">
+          <LazyImage
+            priority
+            src={siteInfo?.icon}
+            alt={AUTHOR}
+            className="h-20 w-20 rounded-full bg-stone-50 object-cover dark:bg-zinc-900"
+          />
+        </div>
       </div>
 
-      <h2 className="font-medium text-2xl my-2 dark:text-gray-300">{AUTHOR}</h2>
-      <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">{BIO}</p>
+      <h2 className="mt-5 font-semibold text-xl text-zinc-900 dark:text-amber-50">{AUTHOR}</h2>
+      <p
+        className={clsx(
+          'mb-6 mt-2 max-w-64 text-sm leading-relaxed text-stone-500 dark:text-zinc-400',
+          centered && 'mx-auto'
+        )}
+      >
+        {BIO}
+      </p>
 
-      <SocialButton />
+      <SocialButton align={align} />
     </div>
   );
 };

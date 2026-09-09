@@ -5,11 +5,9 @@ import { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import throttle from 'lodash.throttle';
 
-import useDarkMode from '@/hooks/useDarkMode';
 import useGlobal from '@/hooks/useGlobal';
 import { siteConfig } from '@/libs/common/config';
 
-import CONFIG from '../config';
 import CategoryGroup from './CategoryGroup';
 import Logo from './Logo';
 import MenuListTop from './MenuListTop';
@@ -25,11 +23,10 @@ import TagGroups from './TagGroups';
 const TopNav = (props) => {
   const { tags, currentTag, categories, currentCategory } = props;
 
-  const SHOW_SEARCH_BUTTON = siteConfig('LAWN_MENU_SEARCH', false, CONFIG);
+  const SHOW_SEARCH_BUTTON = Boolean(siteConfig('ALGOLIA_APP_ID'));
 
   const router = useRouter();
   const { locale } = useGlobal();
-  const { isDarkMode } = useDarkMode();
 
   const windowTopRef = useRef(0);
   const autoHideTimerRef = useRef(null);
@@ -37,12 +34,14 @@ const TopNav = (props) => {
 
   const [isMouseOverNav, setIsMouseOverNav] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
 
   const handleMouseEnter = () => {
     setIsMouseOverNav(true);
     if (autoHideTimerRef.current) {
       clearTimeout(autoHideTimerRef.current);
     }
+    setHidden(false);
   };
 
   const handleMouseLeave = () => {
@@ -51,74 +50,24 @@ const TopNav = (props) => {
 
   const handleNavStyle = throttle(() => {
     const scrollY = window.scrollY;
-
     const header = document.querySelector('#lawn-header');
-    const stickyNav = document.querySelector('#lawn-sticky-nav');
-    const navTitle = document.querySelector('#lawn-nav-title');
-
     const remToPx = (rem) => rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
-    const headerHeight = remToPx(25);
-    const paddingTop = remToPx(4); // pt-16
+    const paddingTop = remToPx(4);
 
-    const isHome = router.route === '/';
-    const navTransparent = (scrollY < headerHeight && isHome) || scrollY < 300;
+    const headerHeight = header?.clientHeight || 0;
+    const nextInHero = Boolean(header) && scrollY < Math.max(headerHeight - 48, 120);
 
-    if (header && navTransparent) {
-      stickyNav?.classList.replace('bg-white', 'bg-none');
-      stickyNav?.classList.replace('text-gray', 'text-white');
-      stickyNav?.classList.replace('border', 'border-transparent');
-      stickyNav?.classList.replace('drop-shadow-md', 'shadow-none');
-      stickyNav?.classList.replace('dark:bg-lawn-black-gray', 'transparent');
+    const isScrollUp = scrollY <= windowTopRef.current;
+    const showNav = isScrollUp || nextInHero || scrollY < paddingTop;
 
-      if (isHome) {
-        navTitle?.classList.replace('opacity-100', 'opacity-0');
-        navTitle?.classList.replace('pointer-events-auto', 'pointer-events-none');
-      } else {
-        navTitle?.classList.replace('opacity-0', 'opacity-100');
-        navTitle?.classList.replace('pointer-events-none', 'pointer-events-auto');
-      }
-    } else {
-      stickyNav?.classList.replace('bg-none', 'bg-white');
-      stickyNav?.classList.replace('text-white', 'text-gray');
-      stickyNav?.classList.replace('border-transparent', 'border');
-      stickyNav?.classList.replace('shadow-none', 'drop-shadow-md');
-      stickyNav?.classList.replace('transparent', 'dark:bg-lawn-black-gray');
+    setHidden(!showNav);
 
-      navTitle?.classList.replace('opacity-0', 'opacity-100');
-      if (isHome) {
-        // 首页禁止点击 Logo 跳转
-        navTitle?.classList.replace('pointer-events-auto', 'pointer-events-none');
-      } else {
-        navTitle?.classList.replace('pointer-events-none', 'pointer-events-auto');
-      }
+    if (autoHideTimerRef.current) {
+      clearTimeout(autoHideTimerRef.current);
     }
-
-    const menuTitle = document.querySelectorAll('.menu-title');
-    menuTitle?.forEach((menu) => {
-      if (!isDarkMode && header && navTransparent) {
-        menu.parentNode.classList.add('dark');
-      } else {
-        menu.parentNode.classList.remove('dark');
-      }
-    });
-
-    const isScrollUp = scrollY <= windowTopRef.current; // 是否为向上滚动
-    const isInHeaderView = scrollY <= header?.clientHeight; // 在顶部封面可见范围
-    const showNav = isScrollUp || isInHeaderView || scrollY < paddingTop;
-    if (!showNav) {
-      stickyNav?.classList.replace('top-0', '-top-20');
-    } else {
-      stickyNav?.classList.replace('-top-20', 'top-0');
-
-      if (autoHideTimerRef.current) {
-        clearTimeout(autoHideTimerRef.current);
-      }
-
-      // 3 秒后如果用户没有新的滚动，且鼠标不在 nav 上，则自动隐藏
+    if (showNav && scrollY > 0 && !nextInHero) {
       autoHideTimerRef.current = setTimeout(() => {
-        if (scrollY > 0 && !isMouseOverNav && !isInHeaderView) {
-          stickyNav?.classList.replace('top-0', '-top-20');
-        }
+        if (!isMouseOverNav) setHidden(true);
       }, 3000);
     }
 
@@ -128,14 +77,12 @@ const TopNav = (props) => {
   useEffect(() => {
     handleNavStyle();
 
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach(() => {
-        const header = document.querySelector('#lawn-header'); // Hero + PostHeader
-        if (header) {
-          handleNavStyle(); // 避免偶尔路由跳转时，没有同步 Header 状态
-          observer.disconnect();
-        }
-      });
+    const observer = new MutationObserver(() => {
+      const header = document.querySelector('#lawn-header');
+      if (header) {
+        handleNavStyle();
+        observer.disconnect();
+      }
     });
     observer.observe(document.body, {
       childList: true,
@@ -147,6 +94,9 @@ const TopNav = (props) => {
     return () => {
       window.removeEventListener('scroll', handleNavStyle);
       observer.disconnect();
+      if (autoHideTimerRef.current) {
+        clearTimeout(autoHideTimerRef.current);
+      }
     };
   }, [router.asPath]);
 
@@ -194,50 +144,47 @@ const TopNav = (props) => {
     </>
   );
 
+  const isHome = router.pathname === '/';
+  const pillClass =
+    'flex h-11 items-center rounded-full border border-teal-900/10 bg-white/90 shadow-md backdrop-blur-sm dark:border-white/15 dark:bg-zinc-900/90';
+
   return (
     <nav id="lawn-top-nav" ref={navRef} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      {/* 导航栏 */}
       <div
         id="lawn-sticky-nav"
-        className={clsx(
-          'fixed top-0 z-20 w-full',
-          'transition-all backdrop-blur-[2px]',
-          'bg-none dark:bg-lawn-black-gray',
-          'text-black dark:text-gray-200',
-          'shadow-none border-transparent dark:border-transparent'
-        )}
+        className={clsx('fixed top-0 z-20 w-full transition-transform duration-300', hidden && '-translate-y-full')}
       >
-        <div className="w-full flex items-center px-4 py-2 relative">
-          <div id="lawn-nav-title" className="opacity-100 pointer-events-auto z-10">
-            <Logo />
+        <div className="mx-auto grid w-full max-w-screen-2xl grid-cols-[1fr_auto_1fr] items-center gap-3 px-4 py-3 md:px-8 xl:px-12">
+          <div className="justify-self-start">
+            {!isHome && (
+              <div id="lawn-nav-title" className={clsx(pillClass, 'group px-5')}>
+                <Logo />
+              </div>
+            )}
           </div>
 
-          <div className="hidden xl:flex absolute left-1/2 -translate-x-1/2">
+          <div className={clsx(pillClass, 'hidden px-1.5 empty:hidden xl:flex')}>
             <MenuListTop {...props} />
           </div>
 
-          <div className="max-xl:hidden ml-auto z-10">
-            <div className="menu-title">
-              <NavActionArea />
+          <div className={clsx(pillClass, 'col-start-3 justify-self-end gap-0.5 px-2 text-teal-900 dark:text-white')}>
+            <div className="menu-title max-xl:hidden">
+              <NavActionArea className="gap-0.5" />
             </div>
-          </div>
 
-          {SHOW_SEARCH_BUTTON && <SearchButton />}
+            {SHOW_SEARCH_BUTTON && <SearchButton />}
 
-          <div className="mr-1 flex justify-end items-center text-xl ml-auto xl:ml-0 z-10">
-            <div
-              className="w-8 justify-center items-center h-8 cursor-pointer flex xl:hidden"
+            <button
+              type="button"
+              className="flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-teal-700/10 hover:text-teal-700 dark:hover:bg-white/10 dark:hover:text-teal-400 xl:hidden"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
-              <span className="menu-title text-gray-700 dark:text-gray-200">
-                {isMenuOpen ? <i className="fas fa-times" /> : <i className="fas fa-bars" />}
-              </span>
-            </div>
+              <i className={isMenuOpen ? 'fas fa-times' : 'fas fa-bars'} />
+            </button>
           </div>
         </div>
       </div>
 
-      {/* 折叠侧边栏 */}
       <SideBarDrawer isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)}>
         <SideBar {...props} />
       </SideBarDrawer>

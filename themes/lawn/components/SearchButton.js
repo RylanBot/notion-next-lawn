@@ -1,5 +1,3 @@
-import { useRouter } from 'next/router';
-
 import useGlobal from '@/hooks/useGlobal';
 import { siteConfig } from '@/libs/common/config';
 
@@ -10,27 +8,22 @@ import { useLawnGlobal } from '..';
  */
 export default function SearchButton() {
   const { locale } = useGlobal();
-  const router = useRouter();
   const { searchModal } = useLawnGlobal();
 
+  if (!siteConfig('ALGOLIA_APP_ID')) return null;
+
   function handleSearch() {
-    if (siteConfig('ALGOLIA_APP_ID')) {
-      searchModal.current.openSearch();
-    } else {
-      router.push('/search');
-    }
+    searchModal.current.openSearch();
   }
 
   return (
-    <>
-      <div
-        className="cursor-pointer hover:bg-black hover:bg-opacity-10 rounded-full w-10 h-10 flex justify-center items-center duration-300 transition-all"
-        title={locale.NAV.SEARCH}
-        alt={locale.NAV.SEARCH}
-        onClick={handleSearch}
-      >
-        <i title={locale.NAV.SEARCH} className="fa-solid fa-magnifying-glass" />
-      </div>
-    </>
+    <button
+      type="button"
+      className="flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-teal-700/10 hover:text-teal-700 dark:hover:bg-white/10 dark:hover:text-teal-400"
+      title={locale.NAV.SEARCH}
+      onClick={handleSearch}
+    >
+      <i className="fa-solid fa-magnifying-glass text-sm" />
+    </button>
   );
 }

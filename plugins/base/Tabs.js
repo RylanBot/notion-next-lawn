@@ -13,14 +13,14 @@ const Tabs = ({ className, children }) => {
   return (
     <div className={`mb-5 duration-300 ${className || ''}`}>
       {!(validTab.length === 1 && siteConfig('COMMENT_HIDE_SINGLE_TAB')) && (
-        <ul className="flex justify-center space-x-5 pb-4 dark:text-gray-400 text-gray-600 overflow-auto">
+        <ul className="flex justify-center space-x-5 overflow-auto pb-4 text-teal-900 dark:text-teal-200">
           {validTab.map((item, index) => (
             <li
               key={index}
               className={`${
                 currentTab === index
-                  ? 'font-black border-b-2 border-teal-600 text-teal-600 animate__animated animate__jello'
-                  : 'font-extralight cursor-pointer'
+                  ? 'animate__animated animate__jello border-b-2 border-teal-700 font-black text-teal-700'
+                  : 'cursor-pointer font-extralight'
               } text-sm`}
               onClick={() => setCurrentTab(index)}
             >

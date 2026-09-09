@@ -1,11 +1,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
+import clsx from 'clsx';
 import throttle from 'lodash.throttle';
 import { uuidToId } from 'notion-utils';
 
 import useGlobal from '@/hooks/useGlobal';
-
-import Progress from './Progress';
 
 /**
  * 目录导航组件
@@ -32,13 +31,11 @@ const Catalog = ({ toc }) => {
         const bbox = section.getBoundingClientRect();
         const prevHeight = prevBBox ? bbox.top - prevBBox.bottom : 0;
         const offset = Math.max(150, prevHeight / 4);
-        // GetBoundingClientRect returns values relative to viewport
         if (bbox.top - offset < 0) {
           currentId = section.getAttribute('data-id');
           prevBBox = bbox;
           continue;
         }
-        // No need to continue loop, if last element has been detected
         break;
       }
       setActiveId(currentId);
@@ -58,29 +55,30 @@ const Catalog = ({ toc }) => {
   if (!toc) return <></>;
 
   return (
-    <div className="px-3 py-1">
-      <div className="w-full pb-2 font-bold text-lg text-black dark:text-white">{locale.COMMON.TABLE_OF_CONTENTS}</div>
-      <div className="w-full pb-2">
-        <Progress />
-      </div>
-      <div className="overflow-y-auto max-h-36 lg:max-h-96 overscroll-none scroll-hidden" ref={tocRef}>
-        <nav className="h-full text-black">
+    <div className="flex w-56 flex-col gap-4 rounded-lg border border-teal-900 bg-stone-50 p-6 shadow-md dark:border-white/40 dark:bg-zinc-900">
+      <div className="text-lg font-bold leading-6 text-zinc-900 dark:text-white">{locale.COMMON.TABLE_OF_CONTENTS}</div>
+      <div className="h-px w-full bg-teal-900 opacity-30 dark:bg-white" />
+      <div className="max-h-[70vh] overflow-y-auto overscroll-none scroll-hidden" ref={tocRef}>
+        <nav className="flex flex-col gap-3">
           {toc.map((tocItem, index) => {
+            const active = activeId === tocIds[index];
+            const isTopLevel = tocItem.indentLevel === 0;
             return (
               <a
                 key={tocIds[index]}
                 href={`#${tocIds[index]}`}
-                className={`rounded-sm notion-table-of-contents-item duration-300 transform font-light dark:text-gray-200 notion-table-of-contents-item-indent-level-${tocItem.indentLevel}`}
                 title={tocItem.text}
+                className={clsx(
+                  'block truncate text-sm leading-5 transition-colors',
+                  isTopLevel ? 'font-bold' : tocItem.indentLevel > 1 ? 'pl-4' : 'pl-3',
+                  active
+                    ? 'text-teal-700 dark:text-teal-400'
+                    : isTopLevel
+                      ? 'text-teal-900 hover:text-teal-700 dark:text-white dark:hover:text-teal-400'
+                      : 'text-stone-500 hover:text-teal-700 dark:text-zinc-400 dark:hover:text-teal-400'
+                )}
               >
-                <span
-                  className={`inline-block truncate ${
-                    activeId === tocIds[index] ? 'font-bold text-teal-600 dark:text-teal-400' : ''
-                  }`}
-                  style={{ marginLeft: tocItem.indentLevel * 16 }}
-                >
-                  {tocItem.text}
-                </span>
+                {tocItem.text}
               </a>
             );
           })}

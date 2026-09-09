@@ -9,7 +9,6 @@ const MenuListSide = (props) => {
   const { locale } = useGlobal();
 
   const LAWN_MENU_ARCHIVE = siteConfig('LAWN_MENU_ARCHIVE', null, CONFIG);
-  const LAWN_MENU_SEARCH = siteConfig('LAWN_MENU_SEARCH', null, CONFIG);
   const LAWN_MENU_CATEGORY = siteConfig('LAWN_MENU_CATEGORY', null, CONFIG);
   const LAWN_MENU_TAG = siteConfig('LAWN_MENU_TAG', null, CONFIG);
   const CUSTOM_MENU = siteConfig('CUSTOM_MENU');
@@ -20,12 +19,6 @@ const MenuListSide = (props) => {
       name: locale.NAV.ARCHIVE,
       to: '/archive',
       show: LAWN_MENU_ARCHIVE
-    },
-    {
-      icon: 'fas fa-search',
-      name: locale.NAV.SEARCH,
-      to: '/search',
-      show: LAWN_MENU_SEARCH
     },
     {
       icon: 'fas fa-folder',

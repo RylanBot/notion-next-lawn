@@ -57,13 +57,19 @@ export default {
     READ_TIME: '阅读时长',
     ERROR_INFO: '页面不存在'
   },
+  HOME: {
+    BROWSE_ALL: '浏览全部',
+    READ_MORE: '阅读全文',
+    ARCHIVE_COUNT: '篇'
+  },
+  LIST: {
+    CATEGORY_COUNT: '该分类下共 {count} 篇文章。',
+    TAG_COUNT: '该标签下共 {count} 篇文章。',
+    PAGE_COUNT: '共 {count} 篇文章。',
+  },
   PAGINATION: {
     PREV: '上页',
     NEXT: '下页'
-  },
-  SEARCH: {
-    ARTICLES: '搜索文章',
-    TAGS: '搜索标签'
   },
   POST: {
     BACK: '返回上页',

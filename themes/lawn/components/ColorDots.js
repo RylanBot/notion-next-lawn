@@ -1,12 +1,18 @@
+const PAPER_DOTS = [
+  { className: 'top-5 right-8 h-3.5 w-3.5 bg-emerald-300' },
+  { className: 'top-16 right-5 h-2.5 w-2.5 bg-lime-400' },
+  { className: 'top-10 right-20 h-2 w-2 bg-teal-300' },
+  { className: 'bottom-24 right-10 h-3 w-3 bg-teal-700' },
+  { className: 'bottom-16 left-24 h-2 w-2 bg-teal-400' },
+  { className: 'top-28 left-6 h-2.5 w-2.5 bg-green-400' }
+];
+
 const ColorDots = () => {
   return (
-    <div className="absolute inset-0 pointer-events-none">
-      <div className="absolute -top-10 -left-10 w-28 h-28 rounded-full bg-teal-400/10" />
-      <div className="absolute top-6 right-6 w-12 h-12 rounded-full bg-blue-400/10" />
-      <div className="absolute top-24 -right-8 w-20 h-20 rounded-full bg-purple-400/10" />
-      <div className="absolute bottom-32 left-10 w-6 h-6 rounded-full bg-green-400/10" />
-      <div className="absolute bottom-10 left-4 w-10 h-10 rounded-full bg-pink-400/10" />
-      <div className="absolute bottom-0 right-6 w-12 h-12 rounded-full bg-orange-400/10" />
+    <div className="pointer-events-none absolute inset-0">
+      {PAPER_DOTS.map((dot) => (
+        <div key={dot.className} className={`lawn-card-dot absolute rounded-full ${dot.className}`} />
+      ))}
     </div>
   );
 };

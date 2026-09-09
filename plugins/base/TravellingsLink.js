@@ -69,45 +69,42 @@ export const TravellingsModal = () => {
           showModal ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
       >
-        {/* 遮罩 */}
-        <div className="fixed inset-0 bg-black opacity-75" onClick={() => setShowModal(false)} />
+        <div className="fixed inset-0 bg-zinc-950/50" onClick={() => setShowModal(false)} />
 
-        {/* 内容 */}
         <div
           ref={modalRef}
-          className="relative w-[425px] p-6 bg-zinc-100 dark:bg-zinc-900 border-2 border-teal-500 max-sm:mb-10"
+          className="relative w-full max-w-md rounded-md border border-teal-900/15 bg-stone-50 p-8 shadow-lg max-sm:mb-10 dark:border-white/15 dark:bg-zinc-900"
         >
-          {/* 关闭按钮 */}
           <button
-            className="absolute top-0 right-2 m-2 text-zinc-800 hover:text-zinc-500 dark:text-zinc-200"
+            type="button"
+            className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full text-teal-900 transition-colors hover:bg-teal-700/10 hover:text-teal-700 dark:text-white dark:hover:bg-white/10 dark:hover:text-teal-400"
             onClick={() => setShowModal(false)}
           >
             <i className="fa-solid fa-xmark" />
           </button>
 
-          {/* 内容区 */}
-          <div className="mb-4">
+          <div className="pr-8">
             <a
-              className="text-lg font-bold mb-3 text-teal-600 dark:text-teal-300 hover:text-teal-500 dark:hover:text-teal-200 "
+              className="text-2xl text-zinc-900 transition-colors hover:text-teal-700 dark:text-white dark:hover:text-teal-400"
               rel="noreferrer"
               target="_blank"
               href="https://www.travellings.cn/"
             >
-              <span className="text-base">#</span> {locale.TRVELLINGS.TITLE}
+              {locale.TRVELLINGS.TITLE}
             </a>
 
-            <p className="text-sm font-semibold pb-2 border-b-2 border-dashed text-teal-700 dark:text-teal-400 border-teal-700 dark:border-teal-500">
+            <p className="mt-3 border-b border-dashed border-teal-900/25 pb-4 text-sm leading-relaxed text-stone-500 dark:border-white/20 dark:text-zinc-400">
               {locale.TRVELLINGS.GUIDE}
             </p>
           </div>
 
           <a
-            className="float-right cursor-pointer"
+            className="mt-6 inline-flex items-center gap-2 text-sm text-teal-800 transition-colors hover:text-teal-700 dark:text-teal-300 dark:hover:text-teal-200"
             rel="noreferrer"
             target="_blank"
             href="https://www.travellings.cn/go.html"
           >
-            <img className="w-28 h-7" src={TRAVEL_IMAGE} />
+            <img className="h-7 w-28" src={TRAVEL_IMAGE} alt="" />
           </a>
         </div>
       </div>
@@ -119,8 +116,12 @@ export const TravellingsButton = () => {
   const { setShowModal } = useTravellings();
 
   return (
-    <button onClick={() => setShowModal(true)} className="text-gray-700 dark:text-gray-200">
-      <i className="fa-solid fa-train-subway text-xl" />
+    <button
+      type="button"
+      onClick={() => setShowModal(true)}
+      className="flex h-8 w-8 items-center justify-center rounded-full text-teal-900 transition-colors hover:bg-teal-700/10 hover:text-teal-700 dark:text-white dark:hover:bg-white/10 dark:hover:text-teal-400"
+    >
+      <i className="fa-solid fa-train-subway text-sm" />
     </button>
   );
 };

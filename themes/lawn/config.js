@@ -10,7 +10,6 @@ const CONFIG = {
   LAWN_MENU_CATEGORY: true, // 显示分类
   LAWN_MENU_TAG: true, // 显示标签
   LAWN_MENU_ARCHIVE: true, // 显示归档
-  LAWN_MENU_SEARCH: false, // 显示搜索
 
   LAWN_POST_LIST_COVER: false, // 列表显示文章封面
 

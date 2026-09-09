@@ -1,26 +1,18 @@
 import clsx from 'clsx';
 
-// import MenuGroupCard from './MenuGroupCard';
 import ColorDots from './ColorDots';
 import ProfileInfo from './ProfileInfo';
 
 /**
  * 社交信息卡
  */
-function InfoCard(props) {
-  const { className } = props;
-
+function InfoCard({ className, width, ...props }) {
   return (
-    <div className={clsx('max-xl:hidden', className)}>
-      <div className="relative overflow-hidden rounded-md bg-white dark:bg-lawn-black-gray shadow-sm">
-        {/* 装饰圆点 */}
+    <div className={clsx(width, className)}>
+      <div className="relative overflow-hidden rounded-xl border border-teal-800/40 bg-stone-50 shadow-xl dark:border-teal-400/30 dark:bg-zinc-900">
         <ColorDots />
-
-        {/* 内容层 */}
         <div className="relative h-full">
-          <ProfileInfo />
-
-          {/* <MenuGroupCard {...props} /> */}
+          <ProfileInfo {...props} />
         </div>
       </div>
     </div>

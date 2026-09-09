@@ -388,7 +388,8 @@ function getNavPages({ allPages }) {
     tags: item.tags || null,
     summary: item.summary || null,
     slug: item.slug,
-    pageIcon: item.pageIcon || ''
+    pageIcon: item.pageIcon || '',
+    date: item.date || null
   }));
 }
 
