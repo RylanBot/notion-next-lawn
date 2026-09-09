@@ -95,29 +95,6 @@ export const Style = () => {
           border-color: #134e4a !important;
         }
 
-        #lawn-article-wrapper .notion {
-          font-size: 1.0625rem;
-          line-height: 1.95;
-        }
-
-        #lawn-article-wrapper .notion-h {
-          font-weight: 600;
-          margin-top: 2.35rem;
-          margin-bottom: 0.85rem;
-        }
-
-        #lawn-article-wrapper .notion-h1 {
-          font-size: 1.7rem;
-        }
-
-        #lawn-article-wrapper .notion-h2 {
-          font-size: 1.4rem;
-        }
-
-        #lawn-article-wrapper .notion-h3 {
-          font-size: 1.2rem;
-        }
-
         #lawn-article-wrapper .notion-header-anchor {
           top: -88px;
         }
@@ -173,11 +150,16 @@ export const Style = () => {
 
         .lawn-archive-rail {
           height: 1px;
+          color: #134e4a;
           background-image: repeating-linear-gradient(90deg, currentColor 0 6px, transparent 6px 12px);
           background-size: 24px 1px;
           background-repeat: repeat-x;
           opacity: 0.55;
           animation: lawn-archive-dash 1.1s linear infinite;
+        }
+
+        .dark .lawn-archive-rail {
+          color: #2dd4bf;
         }
 
         @keyframes lawn-archive-dash {

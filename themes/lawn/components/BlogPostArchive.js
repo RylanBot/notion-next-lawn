@@ -57,12 +57,12 @@ const BlogPostArchive = ({ posts = [], year }) => {
         aria-expanded={!isCollapsed}
       >
         <span className=" text-3xl leading-none text-zinc-900 dark:text-white md:text-4xl">{year}</span>
-        <span className="text-sm text-stone-500 dark:text-zinc-400">
+        <span className="ml-auto text-sm text-stone-500 dark:text-zinc-400">
           {posts.length} {locale.COMMON.POSTS}
         </span>
         <i
           className={clsx(
-            'fa-solid fa-chevron-down ml-auto text-sm text-teal-900 transition-transform duration-300 dark:text-white',
+            'fa-solid fa-chevron-down ml-3 text-sm text-teal-900 transition-transform duration-300 dark:text-white',
             isCollapsed && '-rotate-90'
           )}
         />
@@ -79,7 +79,7 @@ const BlogPostArchive = ({ posts = [], year }) => {
             {months.map((group) => (
               <div key={`${year}-${group.month}`} className="mt-5 first:mt-3">
                 {group.label && (
-                  <div className="mb-2 text-xs font-semibold tracking-widest text-teal-900 dark:text-teal-400">
+                  <div className="mb-2 text-xs font-semibold tracking-widest text-teal-900 dark:text-teal-500">
                     {group.label}
                   </div>
                 )}

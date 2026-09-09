@@ -14,7 +14,7 @@ const Logo = () => {
         <span className=" text-xl tracking-wide text-zinc-900 [backface-visibility:hidden] dark:text-white">
           {TITLE}
         </span>
-        <span className="absolute inset-0 flex items-center justify-center gap-2 text-md tracking-wide text-teal-700 [backface-visibility:hidden] [transform:rotateX(180deg)] dark:text-teal-400">
+        <span className="absolute inset-0 flex items-center justify-center gap-2 text-md tracking-wide text-teal-700 [backface-visibility:hidden] [transform:rotateX(180deg)] dark:text-teal-500">
           <i className="fas fa-house text-base" aria-hidden />
         </span>
       </span>

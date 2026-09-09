@@ -28,16 +28,16 @@ const HomeEditorial = ({ posts = [], siteInfo }) => {
       className="w-full bg-lawn-bg px-6 py-16 text-zinc-900 dark:text-white md:px-12 md:py-24 xl:px-16"
     >
       <div className="mx-auto flex max-w-screen-2xl flex-col gap-10 md:gap-14">
-        <header className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+        <header className="flex items-center justify-between gap-4 md:items-end">
           <h2 className="flex items-center gap-3  text-2xl leading-none text-zinc-900 dark:text-white md:text-4xl">
             <span aria-hidden className="inline-block h-3 w-1.5 shrink-0 rounded-sm bg-teal-700 md:h-4 md:w-2" />
             {locale.COMMON.LATEST_POSTS}
           </h2>
           <Link
             href="/page/1"
-            className="group inline-flex items-center gap-2.5 pb-2.5 text-lg font-semibold text-teal-900 dark:text-white"
+            className="group inline-flex shrink-0 items-center gap-2.5 rounded-full px-3 py-1.5 text-base font-semibold text-teal-900 transition-colors hover:bg-teal-600/10 hover:text-teal-700 dark:text-white dark:hover:bg-white/10 dark:hover:text-teal-100 md:text-xl"
           >
-            <span>{locale.HOME.BROWSE_ALL}</span>
+            <span>{locale.COMMON.MORE}</span>
             <i aria-hidden className="fas fa-arrow-right text-lg" />
           </Link>
         </header>

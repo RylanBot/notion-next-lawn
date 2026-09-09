@@ -72,10 +72,10 @@ const Catalog = ({ toc }) => {
                   'block truncate text-sm leading-5 transition-colors',
                   isTopLevel ? 'font-bold' : tocItem.indentLevel > 1 ? 'pl-4' : 'pl-3',
                   active
-                    ? 'text-teal-700 dark:text-teal-400'
+                    ? 'font-bold text-teal-600 dark:text-teal-500'
                     : isTopLevel
-                      ? 'text-teal-900 hover:text-teal-700 dark:text-white dark:hover:text-teal-400'
-                      : 'text-stone-500 hover:text-teal-700 dark:text-zinc-400 dark:hover:text-teal-400'
+                      ? 'text-teal-900 hover:text-teal-700 dark:text-white dark:hover:text-teal-500'
+                      : 'text-stone-500 hover:text-teal-700 dark:text-zinc-400 dark:hover:text-teal-500'
                 )}
               >
                 {tocItem.text}

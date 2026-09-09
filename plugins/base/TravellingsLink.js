@@ -77,7 +77,7 @@ export const TravellingsModal = () => {
         >
           <button
             type="button"
-            className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full text-teal-900 transition-colors hover:bg-teal-700/10 hover:text-teal-700 dark:text-white dark:hover:bg-white/10 dark:hover:text-teal-400"
+            className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full text-teal-900 transition-colors hover:bg-teal-700/10 hover:text-teal-700 dark:text-white dark:hover:bg-white/10 dark:hover:text-teal-500"
             onClick={() => setShowModal(false)}
           >
             <i className="fa-solid fa-xmark" />
@@ -85,7 +85,7 @@ export const TravellingsModal = () => {
 
           <div className="pr-8">
             <a
-              className="text-2xl text-zinc-900 transition-colors hover:text-teal-700 dark:text-white dark:hover:text-teal-400"
+              className="text-2xl text-zinc-900 transition-colors hover:text-teal-700 dark:text-white dark:hover:text-teal-500"
               rel="noreferrer"
               target="_blank"
               href="https://www.travellings.cn/"
@@ -99,7 +99,7 @@ export const TravellingsModal = () => {
           </div>
 
           <a
-            className="mt-6 inline-flex items-center gap-2 text-sm text-teal-800 transition-colors hover:text-teal-700 dark:text-teal-300 dark:hover:text-teal-200"
+            className="mt-6 ml-auto flex w-fit items-center gap-2 text-sm text-teal-800 transition-colors hover:text-teal-700 dark:text-teal-300 dark:hover:text-teal-200"
             rel="noreferrer"
             target="_blank"
             href="https://www.travellings.cn/go.html"
@@ -119,7 +119,7 @@ export const TravellingsButton = () => {
     <button
       type="button"
       onClick={() => setShowModal(true)}
-      className="flex h-8 w-8 items-center justify-center rounded-full text-teal-900 transition-colors hover:bg-teal-700/10 hover:text-teal-700 dark:text-white dark:hover:bg-white/10 dark:hover:text-teal-400"
+      className="flex h-8 w-8 items-center justify-center rounded-full text-teal-900 transition-colors hover:bg-teal-700/10 hover:text-teal-700 dark:text-white dark:hover:bg-white/10 dark:hover:text-teal-500"
     >
       <i className="fa-solid fa-train-subway text-sm" />
     </button>

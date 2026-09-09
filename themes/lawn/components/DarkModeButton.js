@@ -53,7 +53,7 @@ const DarkModeButton = () => {
   return (
     <button
       type="button"
-      className="relative flex h-8 w-8 cursor-pointer items-center justify-center rounded-full text-teal-900 transition-colors hover:bg-teal-700/10 hover:text-teal-700 dark:text-white dark:hover:bg-white/10 dark:hover:text-teal-400"
+      className="relative flex h-8 w-8 cursor-pointer items-center justify-center rounded-full text-teal-900 transition-colors hover:bg-teal-700/10 hover:text-teal-700 dark:text-white dark:hover:bg-white/10 dark:hover:text-teal-500"
       onClick={toggleDarkMode}
     >
       <span

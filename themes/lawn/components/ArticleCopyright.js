@@ -23,7 +23,7 @@ export default function ArticleCopyright() {
   if (!siteConfig('LAWN_ARTICLE_COPYRIGHT', null, CONFIG)) return <></>;
 
   return (
-    <section className="mt-10 text-teal-900 dark:text-teal-200">
+    <section className="mt-10 text-teal-900 dark:text-teal-100">
       <ul className="overflow-x-auto whitespace-nowrap rounded-2xl border border-teal-900/10 bg-stone-50 p-5 text-sm leading-8 dark:border-white/10 dark:bg-zinc-900">
         <li>
           <strong className="mr-2">{locale.COMMON.AUTHOR}:</strong>

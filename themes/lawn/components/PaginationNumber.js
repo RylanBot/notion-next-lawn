@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import clsx from 'clsx';
 
 /**
- * 数字翻页插件
+ * 翻页数字
  */
 const PaginationNumber = ({ page, totalPage }) => {
   const router = useRouter();
@@ -50,7 +50,7 @@ function getPageElement(page, currentPage, pagePrefix) {
     <Link
       key={page}
       className={clsx(
-        'w-6 pb-0.5 text-center',
+        'w-6 h-6 p-1 text-center',
         page == currentPage
           ? 'pointer-events-none rounded-full bg-teal-900 font-bold text-white dark:bg-white dark:text-zinc-900'
           : 'rounded-full border border-teal-900/25 hover:border-teal-900 hover:text-teal-700 dark:border-white/25'

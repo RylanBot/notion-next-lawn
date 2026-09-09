@@ -7,8 +7,6 @@ export const parsePostDate = (dateStr) => {
   return Number.isNaN(date.getTime()) ? null : date;
 };
 
-export const formatCardDate = (dateStr) => formatSlashDate(dateStr);
-
 export const formatSlashDate = (dateStr) => {
   if (!dateStr) return '';
   const match = String(dateStr)
@@ -24,7 +22,3 @@ export const formatSlashDate = (dateStr) => {
 
 export const formatArchiveMonth = (monthIndex, isChinese = true) =>
   (isChinese ? ZH_MONTHS : EN_MONTHS)[monthIndex] || '';
-
-export const formatZhMonth = (monthIndex) => formatArchiveMonth(monthIndex, true);
-
-export const padCount = (count) => String(count ?? 0).padStart(2, '0');

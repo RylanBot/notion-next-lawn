@@ -46,7 +46,7 @@ const MenuGroupCard = (props) => {
               href={link.to}
               target={link?.to?.indexOf('http') === 0 ? '_blank' : '_self'}
             >
-              <div className="w-full items-center justify-center hover:scale-105 transform dark:hover:text-teal-400 hover:text-teal-500">
+              <div className="w-full items-center justify-center hover:scale-105 transform dark:hover:text-teal-500 hover:text-teal-500">
                 <div className="text-center">{link.name}</div>
                 <div className="text-center font-semibold">{link.slot}</div>
               </div>

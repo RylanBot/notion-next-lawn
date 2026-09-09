@@ -19,7 +19,7 @@ export default function SearchButton() {
   return (
     <button
       type="button"
-      className="flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-teal-700/10 hover:text-teal-700 dark:hover:bg-white/10 dark:hover:text-teal-400"
+      className="flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-teal-700/10 hover:text-teal-700 dark:hover:bg-white/10 dark:hover:text-teal-500"
       title={locale.NAV.SEARCH}
       onClick={handleSearch}
     >

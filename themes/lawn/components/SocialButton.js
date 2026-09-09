@@ -32,7 +32,7 @@ const SocialButton = ({ align = 'left' }) => {
                 rel="noreferrer"
                 title={name}
                 href={url}
-                className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-teal-900 transition-transform hover:-translate-y-0.5"
+                className="inline-flex h-12 w-12 items-center justify-center rounded-lg text-teal-900 transition-transform hover:-translate-y-0.5"
               >
                 <i
                   className={clsx(

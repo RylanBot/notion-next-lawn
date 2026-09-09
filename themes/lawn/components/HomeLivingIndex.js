@@ -6,9 +6,7 @@ import useGlobal from '@/hooks/useGlobal';
 import { siteConfig } from '@/libs/common/config';
 import { formatNameToSlug, safeJSONParse } from '@/libs/common/util';
 
-import { padCount, parsePostDate } from './homeFormat';
-
-const TAG_SIZES = ['text-xl', 'text-sm', 'text-sm', 'text-sm', 'text-xl', 'text-sm'];
+import { parsePostDate } from './homeFormat';
 
 const CATEGORY_SLOTS = [
   { top: '42%', left: '1%', rotate: 'rotate-3' },
@@ -68,13 +66,6 @@ const HomeLivingIndex = ({ allNavPages = [] }) => {
       <div className="pointer-events-none absolute -right-10 bottom-4 h-40 w-40 rounded-full bg-teal-400 opacity-20 dark:opacity-10 md:h-60 md:w-60" />
 
       <div className="relative mx-auto max-w-screen-2xl">
-        <header className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          <h2 className="flex max-w-2xl items-center gap-3  text-2xl leading-none text-zinc-900 dark:text-white md:text-4xl">
-            <span aria-hidden className="inline-block h-3 w-1.5 shrink-0 rounded-sm bg-teal-700 md:h-4 md:w-2" />
-            全站总览
-          </h2>
-        </header>
-
         <div className="mt-6 grid grid-cols-1 items-start gap-8 xl:grid-cols-2 xl:gap-6">
           <div className="relative flex w-full items-center justify-center md:min-h-80">
             <div className="md:hidden flex flex-wrap gap-3">
@@ -128,19 +119,19 @@ const HomeLivingIndex = ({ allNavPages = [] }) => {
 
           <div className="flex flex-col gap-24">
             {tags.length > 0 && (
-              <div className="lawn-tag-field -rotate-1 rounded-3xl border border-teal-800 bg-stone-50 px-6 py-8 shadow-lg dark:border-teal-400/40 dark:bg-zinc-900 md:px-8">
+              <div className="lawn-tag-field -rotate-1 rounded-xl border border-teal-800 bg-stone-50 px-6 py-8 shadow-lg dark:border-teal-400/40 dark:bg-zinc-900 md:px-8">
                 <div className="flex flex-wrap gap-3">
-                  {tags.map((tag, index) => (
+                  {tags.map((tag) => (
                     <Link
                       key={tag.name}
                       href={`/tag/${formatNameToSlug(tag.name)}`}
                       className={clsx(
-                        'lawn-tag-chip rounded px-2.5 py-1.5 font-medium leading-6 text-zinc-900 dark:text-zinc-900',
-                        notionBackgroundClass(tag.color),
-                        TAG_SIZES[index % TAG_SIZES.length]
+                        'lawn-tag-chip inline-flex items-center gap-1 rounded px-2.5 py-1.5 text-sm font-medium leading-6 text-zinc-900 dark:text-zinc-900',
+                        notionBackgroundClass(tag.color)
                       )}
                     >
-                      {`#${displayTagName(tag.name)}`}
+                      <i aria-hidden className="fas fa-hashtag text-[0.75em]" />
+                      {displayTagName(tag.name)}
                     </Link>
                   ))}
                 </div>
@@ -150,25 +141,28 @@ const HomeLivingIndex = ({ allNavPages = [] }) => {
             {archiveYears.length > 0 && (
               <div className="flex flex-col gap-4">
                 <div className="relative">
-                  <div className="lawn-archive-rail pointer-events-none absolute left-1.5 right-1.5 top-1.5" />
+                  <div className="lawn-archive-rail pointer-events-none absolute left-[5px] right-[5px] top-[4.5px]" />
                   <div className="relative flex justify-between gap-3 overflow-x-auto">
                     {archiveYears.map((item, index) => (
                       <Link
                         key={item.year}
                         href={`/archive#archive-year-${item.year}`}
-                        className={clsx(
-                          'group flex min-w-24 flex-col gap-1.5',
-                          index === 0 && 'items-start',
-                          index === archiveYears.length - 1 && 'items-end',
-                          index !== 0 && index !== archiveYears.length - 1 && 'items-center'
-                        )}
+                        className="group flex min-w-24 flex-col items-end gap-1.5"
                       >
-                        <span className="relative z-10 h-2.5 w-2.5 rounded-full bg-teal-900 dark:bg-teal-400" />
+                        <span
+                          className={clsx(
+                            'relative z-10 h-2.5 w-2.5 rounded-full bg-teal-900 dark:bg-teal-400',
+                            index === 0 && 'self-start',
+                            index !== 0 && index !== archiveYears.length - 1 && 'self-center'
+                          )}
+                        />
                         <span className=" text-3xl leading-tight text-teal-900 group-hover:text-teal-700 dark:text-white">
                           {item.year}
                         </span>
-                        <span className="text-sm text-stone-500 dark:text-zinc-400">
-                          {item.count} {locale.HOME.ARCHIVE_COUNT}
+                        <span className="whitespace-nowrap text-sm text-stone-500 dark:text-zinc-400">
+                          <span className="tabular-nums">{item.count}</span>
+                          {isChinese ? '' : ' '}
+                          {locale.COMMON.POSTS}
                         </span>
                       </Link>
                     ))}
@@ -194,7 +188,6 @@ const CategoryChip = ({ name, slug, count, className, style }) => (
     )}
   >
     <span className="text-base font-medium">{name}</span>
-    <span className="text-xs font-bold">{padCount(count)}</span>
   </Link>
 );
 

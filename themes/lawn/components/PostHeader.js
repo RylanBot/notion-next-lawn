@@ -40,7 +40,7 @@ export default function PostHeader({ post, siteInfo }) {
         {post.category && (
           <CategoryMini
             name={post.category}
-            className="mb-4 inline-flex rounded-full border border-teal-900/20 bg-white/80 px-3 py-1 text-md font-semibold tracking-wider text-teal-900 transition-colors hover:border-teal-700 hover:text-teal-700 dark:border-white/20 dark:bg-zinc-900/80 dark:text-white dark:hover:border-teal-400 dark:hover:text-teal-400"
+            className="mb-4 inline-flex rounded-full border border-zinc-900/40 bg-white/80 px-3 py-1 text-md font-semibold tracking-wider text-zinc-900 transition-colors hover:border-teal-700 hover:text-teal-700 dark:border-white/30 dark:bg-zinc-800 dark:text-white dark:hover:border-teal-400 dark:hover:text-teal-500"
           />
         )}
 
@@ -77,7 +77,7 @@ export default function PostHeader({ post, siteInfo }) {
                 <Link
                   key={tag.name}
                   href={`/tag/${formatNameToSlug(tag.name)}`}
-                  className="max-w-full truncate rounded border border-zinc-900/40 bg-white/80 px-1.5 py-0.5 text-xs leading-4 text-zinc-900 dark:border-white/30 dark:bg-zinc-800 dark:text-white"
+                  className="max-w-full truncate rounded border border-zinc-900/40 bg-white/80 px-1.5 py-0.5 text-xs leading-4 text-zinc-900 transition-colors hover:border-teal-700 hover:text-teal-700 dark:border-white/30 dark:bg-zinc-800 dark:text-white dark:hover:border-teal-400 dark:hover:text-teal-500"
                 >
                   {name}
                 </Link>

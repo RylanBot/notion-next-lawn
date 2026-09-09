@@ -13,7 +13,7 @@ const Tabs = ({ className, children }) => {
   return (
     <div className={`mb-5 duration-300 ${className || ''}`}>
       {!(validTab.length === 1 && siteConfig('COMMENT_HIDE_SINGLE_TAB')) && (
-        <ul className="flex justify-center space-x-5 overflow-auto pb-4 text-teal-900 dark:text-teal-200">
+        <ul className="flex justify-center space-x-5 overflow-auto pb-4 text-teal-900 dark:text-teal-100">
           {validTab.map((item, index) => (
             <li
               key={index}

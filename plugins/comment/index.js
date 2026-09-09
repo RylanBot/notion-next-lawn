@@ -43,7 +43,7 @@ const Comment = ({ post }) => {
   if (isSearchEngineBot() || !post) return;
 
   return (
-    <div id="comment" key={post?.id} className="mt-5 overflow-hidden text-teal-900 dark:text-teal-200">
+    <div id="comment" key={post?.id} className="mt-5 overflow-hidden text-teal-900 dark:text-teal-100">
       <Tabs>
         {COMMENT_WALINE_SERVER_URL && (
           <div key="Waline">

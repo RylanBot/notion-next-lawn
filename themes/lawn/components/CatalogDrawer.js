@@ -37,7 +37,7 @@ const CatalogDrawer = ({ toc }) => {
 
       <div className="fixed top-0 right-0 z-40 xl:hidden">
         <div
-          className={`animate__animated animate__fast w-72 fixed right-12 bottom-12 ${
+          className={`animate__animated animate__fast w-64 fixed right-2 bottom-12 ${
             showDrawer ? 'animate__slideInRight' : '-mr-80 animate__slideOutRight'
           }`}
         >

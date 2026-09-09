@@ -36,7 +36,7 @@ const FloatRightArea = ({ floatSlot }) => {
 
   return (
     <div
-      className={`duration-300 transition-all bottom-12 right-4 fixed justify-end z-20 rounded-sm text-white bg-teal-500 dark:bg-teal-600 p-2 lg:scale-125 ${
+      className={`duration-300 transition-all bottom-12 right-2 fixed justify-end z-20 rounded-sm text-white bg-teal-500 dark:bg-teal-600 py-1 lg:p-2 lg:scale-125 ${
         showFloatButton ? 'opacity-100' : 'invisible opacity-0'
       }`}
     >

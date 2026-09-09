@@ -782,6 +782,14 @@ div > ul.notion-list:last-child {
   margin-top: 0.55em;
 }
 
+.notion-callout-text > .notion-text:has(+ .notion-list) {
+  margin-bottom: 0 !important;
+}
+
+.notion-callout-text > .notion-text + .notion-list {
+  margin-top: 0.55em;
+}
+
 .notion-list-disc {
   list-style-type: disc;
   padding-inline-start: 1.4em;

@@ -56,16 +56,6 @@ export default {
     READ_TIME: 'Read Time',
     ERROR_INFO: 'Page not found | Rendering timeout | Try reopening'
   },
-  HOME: {
-    BROWSE_ALL: 'View all posts',
-    READ_MORE: 'Read more',
-    ARCHIVE_COUNT: 'posts'
-  },
-  LIST: {
-    CATEGORY_COUNT: '{count} posts in this category.',
-    TAG_COUNT: '{count} posts with this tag.',
-    PAGE_COUNT: '{count} posts in total.'
-  },
   PAGINATION: {
     PREV: 'Prev',
     NEXT: 'Next'

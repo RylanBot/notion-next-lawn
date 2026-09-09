@@ -20,7 +20,6 @@ import {
   Hero,
   HomeEditorial,
   HomeLivingIndex,
-  InfoCard,
   JumpToCommentButton,
   PaperArchive,
   PaperPostList,
@@ -111,7 +110,7 @@ export const LayoutBase = (props) => {
 };
 
 /**
- * 首页（博客列表，嵌入一个Hero大图）
+ * 首页
  */
 export const LayoutIndex = (props) => {
   return (
@@ -165,7 +164,7 @@ export const LayoutSlug = (props) => {
         <div className="w-full">
           <div
             id="lawn-article-wrapper"
-            className="rounded-lg border-2 border-teal-900 bg-lawn-bg px-6 shadow-lg dark:border-white/25 md:px-10"
+            className="rounded-lg border-2 border-teal-900 bg-lawn-bg pb-10 px-6 shadow-lg dark:border-white/25 md:px-10"
           >
             <article
               itemScope
@@ -179,9 +178,6 @@ export const LayoutSlug = (props) => {
 
           {post && (
             <>
-              <div className="max-md:hidden mt-16 pt-4">
-                <InfoCard width="w-full" {...props} />
-              </div>
               <div className="mt-12 overflow-x-auto">
                 <Comment post={post} />
               </div>
@@ -242,7 +238,7 @@ export const LayoutCategoryIndex = (props) => {
                 name={category.name}
                 count={category.count}
                 icon="mr-1 fas fa-folder"
-                className="px-5 py-2 hover:text-teal-500 dark:hover:text-teal-400"
+                className="px-5 py-2 hover:text-teal-500 dark:hover:text-teal-500"
               />
             );
           })}

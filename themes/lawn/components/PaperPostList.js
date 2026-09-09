@@ -32,12 +32,10 @@ const PaperPostList = ({ page = 1, posts = [], postCount, siteInfo, tag, categor
   const currentTag = tagOptions.find((item) => formatNameToSlug(item.name) === tag);
 
   const heading = isTag
-    ? `#${displayTag(currentTag?.name || tag)}`
+    ? displayTag(currentTag?.name || tag)
     : isCategory
       ? displayCategory(currentCategory?.name || category)
-      : locale.COMMON.LATEST_POSTS;
-
-  const count = String(postCount || 0);
+      : null;
 
   const tagLimit = siteConfig('PREVIEW_TAG_COUNT') || 16;
   const visibleTags = (() => {
@@ -55,13 +53,15 @@ const PaperPostList = ({ page = 1, posts = [], postCount, siteInfo, tag, categor
         count: item.count,
         active: formatNameToSlug(item.name) === tag
       }))
-    : categoryOptions.map((item) => ({
-        key: item.name,
-        href: `/category/${formatNameToSlug(item.name)}`,
-        label: displayCategory(item.name),
-        count: item.count,
-        active: formatNameToSlug(item.name) === category
-      }));
+    : isCategory
+      ? categoryOptions.map((item) => ({
+          key: item.name,
+          href: `/category/${formatNameToSlug(item.name)}`,
+          label: displayCategory(item.name),
+          count: item.count,
+          active: formatNameToSlug(item.name) === category
+        }))
+      : [];
 
   return (
     <section className="w-full bg-lawn-bg px-6 pb-16 pt-24 text-zinc-900 dark:text-white md:px-12 md:pb-24 md:pt-28 xl:px-16">
@@ -93,12 +93,14 @@ const PaperPostList = ({ page = 1, posts = [], postCount, siteInfo, tag, categor
           </div>
         )}
 
-        <header className="flex flex-col gap-3">
-          <h1 className="flex items-center gap-3  text-3xl leading-none text-zinc-900 dark:text-white md:text-5xl">
-            <span aria-hidden className="inline-block h-3 w-1.5 shrink-0 rounded-sm bg-teal-700 md:h-4 md:w-2" />
-            {heading}
-          </h1>
-        </header>
+        {heading && (
+          <header className="flex flex-col gap-3">
+            <h1 className="flex items-center gap-3  text-3xl leading-none text-zinc-900 dark:text-white md:text-5xl">
+              <span aria-hidden className="inline-block h-3 w-1.5 shrink-0 rounded-sm bg-teal-700 md:h-4 md:w-2" />
+              {heading}
+            </h1>
+          </header>
+        )}
 
         {!posts?.length ? (
           <BlogPostListEmpty />

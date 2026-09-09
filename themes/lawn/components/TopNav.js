@@ -176,7 +176,7 @@ const TopNav = (props) => {
 
             <button
               type="button"
-              className="flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-teal-700/10 hover:text-teal-700 dark:hover:bg-white/10 dark:hover:text-teal-400 xl:hidden"
+              className="flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-teal-700/10 hover:text-teal-700 dark:hover:bg-white/10 dark:hover:text-teal-500 xl:hidden"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               <i className={isMenuOpen ? 'fas fa-times' : 'fas fa-bars'} />
