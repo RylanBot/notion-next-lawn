@@ -16,6 +16,10 @@
   color: white;
 }
 
+em {
+  font-family: 'Times New Roman', Times, serif;
+}
+
 .wrapper {
   min-height: 100vh;
   display: flex;
@@ -121,7 +125,7 @@ nav {
   text-shadow: 0.1em 0.1em 0.3em black;
 }
 
-.notion-code-copy-button>svg {
+.notion-code-copy-button > svg {
   pointer-events: none;
 }
 
@@ -168,7 +172,7 @@ nav {
   margin-right: 0.2rem;
 }
 
-.webmention-counts .counts>span:not(:last-child):after {
+.webmention-counts .counts > span:not(:last-child):after {
   content: ' • ';
 }
 

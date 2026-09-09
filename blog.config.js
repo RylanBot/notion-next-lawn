@@ -74,6 +74,7 @@ const BLOG = {
   FONT_STYLE: process.env.NEXT_PUBLIC_FONT_STYLE || 'font-serif', // ['font-serif','font-sans']
   FONT_URL: [
     // 'https://npm.elemecdn.com/lxgw-wenkai-webfont@1.6.0/style.css',
+    'https://cdn.jsdelivr.net/npm/@chinese-fonts/lxgw-neo-zhi-song@2.0.0/dist/LXGWNeoZhiSong/result.min.css'
     // 'https://fonts.googleapis.com/css2?family=Oleo+Script:wght@400;700&display=swap',
     // 'https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300&display=swap',
     // 'https://fonts.googleapis.com/css2?family=Noto+Serif+SC&display=swap',
@@ -96,6 +97,7 @@ const BLOG = {
     'Arial'
   ],
   FONT_SERIF: [
+    'LXGW Neo ZhiSong',
     '"Times New Roman"',
     'Times',
     'serif',
