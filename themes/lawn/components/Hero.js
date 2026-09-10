@@ -7,7 +7,6 @@ import useGlobal from '@/hooks/useGlobal';
 import { siteConfig } from '@/libs/common/config';
 
 import CONFIG from '../config';
-import InfoCard from './InfoCard';
 import NavButtonGroup from './NavButtonGroup';
 import WavesArea from './WavesArea';
 
@@ -69,7 +68,7 @@ const Hero = ({ onLoad, ...props }) => {
         !showHero && 'opacity-0'
       )}
     >
-      <div className="relative z-10 mx-auto flex min-h-36 w-full max-w-screen-2xl flex-col items-start justify-between gap-8 md:min-h-80 md:gap-12 lg:min-h-96 lg:flex-row lg:items-center">
+      <div className="relative z-10 mx-auto flex min-h-36 w-full max-w-screen-2xl flex-col items-start md:min-h-80 lg:min-h-96">
         <div className="max-w-2xl text-zinc-900 dark:text-white">
           <h1 className=" text-5xl leading-none md:text-7xl xl:text-8xl">{TITLE}</h1>
           <div className="mt-5 min-h-6 text-xl font-semibold tracking-widest">
@@ -77,8 +76,6 @@ const Hero = ({ onLoad, ...props }) => {
           </div>
           {LAWN_HOME_NAV_BUTTONS && <NavButtonGroup {...props} />}
         </div>
-
-        <InfoCard className="max-md:hidden w-full max-w-sm" {...props} />
       </div>
 
       {LAWN_HOME_START_READING && (
