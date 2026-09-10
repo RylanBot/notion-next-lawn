@@ -18,15 +18,17 @@
   --select-color-1: rgba(45, 170, 219, 0.3);
   --select-color-2: #ffffff;
 
-  --notion-red: color-mix(in srgb, rgb(255, 46, 46) 38%, #8e8c88);
-  --notion-pink: color-mix(in srgb, rgb(255, 88, 176) 38%, #8e8c88);
-  --notion-blue: color-mix(in srgb, rgb(10, 176, 255) 38%, #8e8c88);
-  --notion-purple: color-mix(in srgb, rgb(176, 82, 255) 38%, #8e8c88);
-  --notion-teal: color-mix(in srgb, rgb(36, 214, 138) 38%, #8e8c88);
-  --notion-green: color-mix(in srgb, rgb(72, 214, 88) 38%, #8e8c88);
-  --notion-yellow: color-mix(in srgb, rgb(245, 176, 0) 38%, #8e8c88);
-  --notion-orange: color-mix(in srgb, rgb(255, 140, 28) 38%, #8e8c88);
-  --notion-brown: color-mix(in srgb, rgb(186, 118, 82) 42%, #8e8c88);
+  --notion-mute: #a9a6a1;
+
+  --notion-red: color-mix(in srgb, rgb(255, 46, 46) 38%, var(--notion-mute));
+  --notion-pink: color-mix(in srgb, rgb(255, 88, 176) 38%, var(--notion-mute));
+  --notion-blue: color-mix(in srgb, rgb(10, 176, 255) 38%, var(--notion-mute));
+  --notion-purple: color-mix(in srgb, rgb(176, 82, 255) 38%, var(--notion-mute));
+  --notion-teal: color-mix(in srgb, rgb(36, 214, 138) 38%, var(--notion-mute));
+  --notion-green: color-mix(in srgb, rgb(72, 214, 88) 38%, var(--notion-mute));
+  --notion-yellow: color-mix(in srgb, rgb(245, 176, 0) 38%, var(--notion-mute));
+  --notion-orange: color-mix(in srgb, rgb(255, 140, 28) 38%, var(--notion-mute));
+  --notion-brown: color-mix(in srgb, rgb(186, 118, 82) 42%, var(--notion-mute));
   --notion-gray: rgb(142, 140, 136);
 
   --notion-red_background: color-mix(in srgb, var(--notion-red) 16%, #f5f5f4);

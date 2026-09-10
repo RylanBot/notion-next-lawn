@@ -17,9 +17,9 @@ const PaginationNumber = ({ page, totalPage }) => {
   const pages = generatePages(pagePrefix, page, currentPage, totalPage);
 
   return (
-    <div className="mt-10 flex items-end justify-center space-x-2 font-medium text-teal-900 dark:text-white">
+    <div className="mt-10 flex items-center justify-center space-x-2 font-medium text-teal-900 dark:text-white">
       <Link
-        className={clsx(currentPage === 1 ? 'invisible' : 'block', 'w-6 cursor-pointer pb-0.5 text-center hover:text-teal-700')}
+        className={clsx(currentPage === 1 ? 'invisible' : 'flex', 'h-6 w-6 items-center justify-center hover:text-teal-700')}
         rel="prev"
         href={{
           pathname: getPagePath(currentPage - 1, pagePrefix),
@@ -32,7 +32,7 @@ const PaginationNumber = ({ page, totalPage }) => {
       {pages}
 
       <Link
-        className={clsx(+showNext ? 'block' : 'invisible', 'w-6 cursor-pointer pb-0.5 text-center hover:text-teal-700')}
+        className={clsx(+showNext ? 'flex' : 'invisible', 'h-6 w-6 items-center justify-center hover:text-teal-700')}
         rel="next"
         href={{
           pathname: `${pagePrefix}/page/${currentPage + 1}`,
@@ -50,10 +50,10 @@ function getPageElement(page, currentPage, pagePrefix) {
     <Link
       key={page}
       className={clsx(
-        'w-6 h-6 p-1 text-center',
+        'inline-flex h-6 w-6 items-center justify-center rounded-full leading-none',
         page == currentPage
-          ? 'pointer-events-none rounded-full bg-teal-900 font-bold text-white dark:bg-white dark:text-zinc-900'
-          : 'rounded-full border border-teal-900/25 hover:border-teal-900 hover:text-teal-700 dark:border-white/25'
+          ? 'pointer-events-none bg-teal-900 font-bold text-white dark:bg-white dark:text-zinc-900'
+          : 'border border-teal-900/25 hover:border-teal-900 hover:text-teal-700 dark:border-white/25'
       )}
       passHref
       href={getPagePath(page, pagePrefix)}

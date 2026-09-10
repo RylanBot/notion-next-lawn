@@ -28,12 +28,18 @@ export const Style = () => {
           --lawn-bg: #fafaf9;
           --lawn-header: #e7e5e4;
           --lawn-grid-line: rgba(24, 24, 27, 0.08);
+          /* 封面饱和度普遍偏高，统一压到站点的低饱和调性 */
+          --lawn-cover-filter: saturate(0.62) brightness(1.07) contrast(0.94);
+          --lawn-wash-filter: blur(48px) saturate(0.7) brightness(1.12);
         }
 
         .dark {
           --lawn-bg: #18181b;
           --lawn-header: #09090b;
           --lawn-grid-line: rgba(255, 255, 255, 0.07);
+          --lawn-cover-filter: saturate(0.62) brightness(0.8) contrast(0.98);
+          /* 压暗时彩度会被压掉，适度补回来才不会变成深灰 */
+          --lawn-wash-filter: blur(48px) saturate(1.25) brightness(0.56);
         }
 
         body {
@@ -47,6 +53,72 @@ export const Style = () => {
 
         .lawn-header-fade {
           background: linear-gradient(to bottom, transparent, var(--lawn-bg));
+        }
+
+        .lawn-card-wash-img {
+          transform: scale(1.25);
+          -webkit-filter: var(--lawn-wash-filter);
+          filter: var(--lawn-wash-filter);
+        }
+
+        .lawn-card-wash::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            to bottom,
+            color-mix(in srgb, var(--lawn-bg) 8%, transparent) 0%,
+            color-mix(in srgb, var(--lawn-bg) 14%, transparent) 20%,
+            color-mix(in srgb, var(--lawn-bg) 24%, transparent) 34%,
+            color-mix(in srgb, var(--lawn-bg) 34%, transparent) 48%,
+            color-mix(in srgb, var(--lawn-bg) 42%, transparent) 64%,
+            color-mix(in srgb, var(--lawn-bg) 47%, transparent) 82%,
+            color-mix(in srgb, var(--lawn-bg) 50%, transparent) 100%
+          );
+        }
+
+        /* 暗色下底色保持均匀，过渡只交给封面淡出，避免两条渐变叠出色带 */
+        .dark .lawn-card-wash::after {
+          background: linear-gradient(
+            to bottom,
+            color-mix(in srgb, var(--lawn-bg) 8%, transparent) 0%,
+            color-mix(in srgb, var(--lawn-bg) 12%, transparent) 55%,
+            color-mix(in srgb, var(--lawn-bg) 18%, transparent) 100%
+          );
+        }
+
+        /* 只虚化下沿，曲线用两端斜率为零的 smoothstep，避免首尾留下折点 */
+        .lawn-card-cover-img {
+          -webkit-filter: var(--lawn-cover-filter);
+          filter: var(--lawn-cover-filter);
+          -webkit-mask-image: linear-gradient(
+            to bottom,
+            #000 62%,
+            rgba(0, 0, 0, 0.972) 65.6%,
+            rgba(0, 0, 0, 0.896) 69.2%,
+            rgba(0, 0, 0, 0.784) 72.8%,
+            rgba(0, 0, 0, 0.648) 76.4%,
+            rgba(0, 0, 0, 0.5) 80%,
+            rgba(0, 0, 0, 0.352) 83.6%,
+            rgba(0, 0, 0, 0.216) 87.2%,
+            rgba(0, 0, 0, 0.104) 90.8%,
+            rgba(0, 0, 0, 0.028) 94.4%,
+            transparent 98%
+          );
+          mask-image: linear-gradient(
+            to bottom,
+            #000 62%,
+            rgba(0, 0, 0, 0.972) 65.6%,
+            rgba(0, 0, 0, 0.896) 69.2%,
+            rgba(0, 0, 0, 0.784) 72.8%,
+            rgba(0, 0, 0, 0.648) 76.4%,
+            rgba(0, 0, 0, 0.5) 80%,
+            rgba(0, 0, 0, 0.352) 83.6%,
+            rgba(0, 0, 0, 0.216) 87.2%,
+            rgba(0, 0, 0, 0.104) 90.8%,
+            rgba(0, 0, 0, 0.028) 94.4%,
+            transparent 98%
+          );
         }
 
         .lawn-article-page {

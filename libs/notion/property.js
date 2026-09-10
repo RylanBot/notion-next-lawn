@@ -13,8 +13,16 @@ export const getDatabaseProperties = (schema, rawProperties) => {
       case 'text':
       case 'title':
       case 'checkbox':
+      case 'url':
         properties[schema[key].name] = getTextContent(val);
         break;
+      case 'file': {
+        const fileUrl = getFirstFileUrl(val);
+        if (fileUrl) {
+          properties[schema[key].name] = fileUrl;
+        }
+        break;
+      }
       case 'date':
       case 'daterange': {
         const dateProperty = getDateValue(val);
@@ -79,6 +87,9 @@ export const getPageProperties = async (id, value, schema, tagOptions) => {
   properties.pageIcon = mapImgUrl(value?.format?.page_icon, value) ?? '';
   properties.pageCover = mapImgUrl(value?.format?.page_cover, value) ?? '';
   properties.pageCoverThumbnail = mapImgUrl(value?.format?.page_cover, value, 'block', 'pageCoverThumbnail') ?? '';
+  properties.thumbnail = properties.thumbnail
+    ? (mapImgUrl(properties.thumbnail, value) ?? properties.thumbnail)
+    : properties.pageCoverThumbnail || '';
 
   properties.tagItems =
     properties?.tags?.map((tag) => {
@@ -95,4 +106,19 @@ export const getPageProperties = async (id, value, schema, tagOptions) => {
   }
 
   return properties;
+};
+
+const getFirstFileUrl = (val) => {
+  if (typeof val === 'string') {
+    if (val.startsWith('http') || val.startsWith('/') || val.startsWith('attachment:')) {
+      return val;
+    }
+    return '';
+  }
+  if (!Array.isArray(val)) return '';
+  for (const item of val) {
+    const found = getFirstFileUrl(item);
+    if (found) return found;
+  }
+  return '';
 };

@@ -104,7 +104,7 @@ const BlogPostArchive = ({ posts = [], year }) => {
                           {formatDay(post.date?.start)}
                         </span>
 
-                        <span className="min-w-0 flex-1 text-lg leading-snug text-zinc-900 transition-colors group-hover:text-teal-700 dark:text-white md:text-xl">
+                        <span className="min-w-0 flex-1 text-lg leading-snug text-zinc-900 transition-colors group-hover:text-teal-700 dark:text-white">
                           {post.title}
                         </span>
 
