@@ -6,7 +6,14 @@ import clsx from 'clsx';
 import useGlobal from '@/hooks/useGlobal';
 import { siteConfig } from '@/libs/common/config';
 
-import { formatArchiveMonth, parsePostDate } from './homeFormat';
+import { parsePostDate } from './homeFormat';
+
+const EN_MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+const ZH_MONTHS = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'];
+
+const formatArchiveMonth = (monthIndex, isChinese = true) => {
+  return (isChinese ? ZH_MONTHS : EN_MONTHS)[monthIndex] || '';
+};
 
 const formatDay = (dateStr) => {
   const date = parsePostDate(dateStr);
@@ -41,22 +48,22 @@ const BlogPostArchive = ({ posts = [], year }) => {
   const { locale, isChinese } = useGlobal();
   const [isCollapsed, setIsCollapsed] = useState(false);
 
-  if (!posts || posts.length === 0) return null;
-
   const months = groupPostsByMonth(posts, isChinese);
+
+  if (posts?.length === 0) return null;
 
   return (
     <section
       id={`archive-year-${year}`}
-      className="scroll-mt-28 overflow-hidden rounded-3xl border border-teal-900/15 bg-stone-50 shadow-lg dark:border-white/10 dark:bg-zinc-900"
+      className="scroll-mt-28 overflow-hidden rounded-lg border border-teal-900/15 bg-stone-50 shadow-sm dark:border-white/10 dark:bg-zinc-900"
     >
       <button
         type="button"
         onClick={() => setIsCollapsed(!isCollapsed)}
-        className="flex w-full items-center gap-4 px-6 py-5 text-left md:px-8"
+        className="flex w-full items-center gap-4 px-6 py-4 text-left md:px-8"
         aria-expanded={!isCollapsed}
       >
-        <span className=" text-3xl leading-none text-zinc-900 dark:text-white md:text-4xl">{year}</span>
+        <span className=" text-2xl leading-none text-zinc-900 dark:text-white md:text-3xl">{year}</span>
         <span className="ml-auto text-sm text-stone-500 dark:text-zinc-400">
           {posts.length} {locale.COMMON.POSTS}
         </span>
@@ -79,8 +86,10 @@ const BlogPostArchive = ({ posts = [], year }) => {
             {months.map((group) => (
               <div key={`${year}-${group.month}`} className="mt-5 first:mt-3">
                 {group.label && (
-                  <div className="mb-2 text-xs font-semibold tracking-widest text-teal-900 dark:text-teal-500">
-                    {group.label}
+                  <div className="mb-2">
+                    <span className="inline-flex w-16 items-center justify-center rounded-full border border-teal-900 bg-teal-700 px-3 py-1 text-xs font-semibold text-white">
+                      {group.label}
+                    </span>
                   </div>
                 )}
                 <ul className="relative pl-6">
@@ -90,17 +99,15 @@ const BlogPostArchive = ({ posts = [], year }) => {
                   />
                   {group.posts.map((post) => (
                     <li key={post.id} className="group relative">
-                      <span
-                        aria-hidden
-                        className="absolute left-1.5 top-1/2 z-10 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-teal-900 transition-colors group-hover:bg-teal-700 dark:bg-teal-400"
-                      />
-                      <Link href={`/${POST_SUB_PATH}/${post.slug}`} className="flex items-baseline gap-4 py-2.5 pr-1">
-                        <span className="w-6 shrink-0 text-xs tracking-wider text-stone-500 dark:text-zinc-400">
+                      <Link href={`/${POST_SUB_PATH}/${post.slug}`} className="flex items-start gap-4 py-2.5 pr-1">
+                        <span className="w-6 shrink-0 pt-1 text-xs tracking-wider text-stone-500 dark:text-zinc-400">
                           {formatDay(post.date?.start)}
                         </span>
-                        <span className="min-w-0 flex-1  text-lg leading-snug text-zinc-900 transition-colors group-hover:text-teal-700 dark:text-white md:text-xl">
+
+                        <span className="min-w-0 flex-1 text-lg leading-snug text-zinc-900 transition-colors group-hover:text-teal-700 dark:text-white md:text-xl">
                           {post.title}
                         </span>
+
                         <i
                           aria-hidden
                           className="fas fa-arrow-right w-0 overflow-hidden text-xs text-teal-700 opacity-0 transition-all duration-300 group-hover:w-3 group-hover:opacity-100"

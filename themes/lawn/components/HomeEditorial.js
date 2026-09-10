@@ -1,23 +1,12 @@
 import Link from 'next/link';
 
 import useGlobal from '@/hooks/useGlobal';
-import { siteConfig } from '@/libs/common/config';
 
 import BlogPostListEmpty from './BlogPostListEmpty';
-import PaperPostCard from './PaperPostCard';
-
-const CARD_ROTATES = [
-  '-rotate-2 hover:rotate-0',
-  'rotate-2 hover:rotate-0',
-  '-rotate-1 hover:rotate-0',
-  'rotate-1 hover:rotate-0',
-  '-rotate-2 hover:rotate-0',
-  'rotate-2 hover:rotate-0'
-];
+import PostCard from './PostCard';
 
 const HomeEditorial = ({ posts = [], siteInfo }) => {
   const { locale } = useGlobal();
-  const POST_SUB_PATH = siteConfig('POST_SUB_PATH');
   const essays = posts.slice(0, 6);
 
   if (!essays.length) return <BlogPostListEmpty />;
@@ -44,14 +33,7 @@ const HomeEditorial = ({ posts = [], siteInfo }) => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8 xl:gap-10">
           {essays.map((post, index) => (
-            <PaperPostCard
-              key={post.id}
-              post={post}
-              siteInfo={siteInfo}
-              postPath={POST_SUB_PATH}
-              rotate={CARD_ROTATES[index % CARD_ROTATES.length]}
-              priority={index === 0}
-            />
+            <PostCard key={post.id} post={post} siteInfo={siteInfo} priority={index === 0} />
           ))}
         </div>
       </div>

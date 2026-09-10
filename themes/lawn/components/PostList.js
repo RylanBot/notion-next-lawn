@@ -8,14 +8,14 @@ import { formatNameToSlug, safeJSONParse } from '@/libs/common/util';
 
 import BlogPostListEmpty from './BlogPostListEmpty';
 import PaginationNumber from './PaginationNumber';
-import PaperPostCard from './PaperPostCard';
+import PostCard from './PostCard';
 
 /**
  * 文章列表
  */
 const PostList = ({ page = 1, posts = [], postCount, siteInfo, tag, category }) => {
   const { isChinese, categoryOptions = [], tagOptions = [] } = useGlobal();
-  const POST_SUB_PATH = siteConfig('POST_SUB_PATH');
+
   const POSTS_PER_PAGE = parseInt(siteConfig('POSTS_PER_PAGE'));
   const TAG_SLUG_MAP = safeJSONParse(siteConfig('TAG_SLUG_MAP', {}));
   const CATEGORY_SLUG_MAP = safeJSONParse(siteConfig('CATEGORY_SLUG_MAP', {}));
@@ -107,13 +107,7 @@ const PostList = ({ page = 1, posts = [], postCount, siteInfo, tag, category }) 
         ) : (
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3 xl:gap-10">
             {posts.map((post, index) => (
-              <PaperPostCard
-                key={post.id}
-                post={post}
-                siteInfo={siteInfo}
-                postPath={POST_SUB_PATH}
-                priority={index === 0}
-              />
+              <PostCard key={post.id} post={post} siteInfo={siteInfo} priority={index === 0} />
             ))}
           </div>
         )}

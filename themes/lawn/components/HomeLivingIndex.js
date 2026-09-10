@@ -119,7 +119,7 @@ const HomeLivingIndex = ({ allNavPages = [] }) => {
 
           <div className="flex flex-col gap-24">
             {tags.length > 0 && (
-              <div className="lawn-tag-field -rotate-1 rounded-xl border border-teal-800 bg-stone-50 px-6 py-8 shadow-lg dark:border-teal-400/40 dark:bg-zinc-900 md:px-8">
+              <div className="lawn-tag-field rounded-xl border border-teal-800 bg-stone-50 px-6 py-8 shadow-lg dark:border-teal-400/40 dark:bg-zinc-900 md:px-8">
                 <div className="flex flex-wrap gap-3">
                   {tags.map((tag) => (
                     <Link

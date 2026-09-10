@@ -18,12 +18,13 @@ const useCategoryLabel = (name) => {
   return isChinese ? (CATEGORY_SLUG_MAP[name] ?? name) : name;
 };
 
-const PaperPostCard = ({ post, siteInfo, postPath, priority = false, rotate }) => {
+const PostCard = ({ post, siteInfo, priority = false }) => {
   const router = useRouter();
   const { isChinese } = useGlobal();
 
   const categoryLabel = useCategoryLabel(post.category);
 
+  const POST_PATH = siteConfig('POST_SUB_PATH');
   const TAG_SLUG_MAP = safeJSONParse(siteConfig('TAG_SLUG_MAP', {}));
   const LAWN_POST_LIST_COVER = siteConfig('LAWN_POST_LIST_COVER', null, CONFIG);
 
@@ -34,7 +35,7 @@ const PaperPostCard = ({ post, siteInfo, postPath, priority = false, rotate }) =
 
   const handleCardClick = (e) => {
     if (e.target.closest('a')) return;
-    router.push(`/${postPath}/${post.slug}`);
+    router.push(`/${POST_PATH}/${post.slug}`);
   };
 
   return (
@@ -46,8 +47,8 @@ const PaperPostCard = ({ post, siteInfo, postPath, priority = false, rotate }) =
         if (e.key === 'Enter') handleCardClick(e);
       }}
       className={clsx(
-        'group flex h-full cursor-pointer flex-col gap-4 rounded border border-teal-900 bg-stone-50 p-6 text-zinc-900 shadow-lg transition-transform duration-300 dark:border-white/20 dark:bg-zinc-900 dark:text-white',
-        rotate || 'hover:-translate-y-0.5'
+        'group flex h-full cursor-pointer flex-col gap-4 rounded border border-teal-900 bg-stone-50 p-6 text-zinc-900 shadow-lg transition-transform duration-300 dark:border-white/20 dark:bg-zinc-900 dark:text-white'
+        // rotate || 'hover:-translate-y-0.5'
       )}
     >
       <div className="flex items-center justify-between text-xs tracking-wider text-teal-900 dark:text-teal-100">
@@ -92,4 +93,4 @@ const PaperPostCard = ({ post, siteInfo, postPath, priority = false, rotate }) =
   );
 };
 
-export default PaperPostCard;
+export default PostCard;
