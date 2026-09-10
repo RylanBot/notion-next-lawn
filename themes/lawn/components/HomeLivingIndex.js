@@ -142,30 +142,34 @@ const HomeLivingIndex = ({ allNavPages = [] }) => {
               <div className="flex flex-col gap-4">
                 <div className="relative">
                   <div className="lawn-archive-rail pointer-events-none absolute left-[5px] right-[5px] top-[4.5px]" />
-                  <div className="relative flex justify-between gap-3 overflow-x-auto">
-                    {archiveYears.map((item, index) => (
-                      <Link
-                        key={item.year}
-                        href={`/archive#archive-year-${item.year}`}
-                        className="group flex min-w-24 flex-col items-end gap-1.5"
-                      >
-                        <span
+                  <div className="relative flex">
+                    {archiveYears.map((item, index) => {
+                      const isFirst = index === 0;
+                      const isLast = index === archiveYears.length - 1;
+                      return (
+                        <Link
+                          key={item.year}
+                          href={`/archive#archive-year-${item.year}`}
                           className={clsx(
-                            'relative z-10 h-2.5 w-2.5 rounded-full bg-teal-900 dark:bg-teal-400',
-                            index === 0 && 'self-start',
-                            index !== 0 && index !== archiveYears.length - 1 && 'self-center'
+                            'group flex min-w-0 flex-1 flex-col gap-1.5',
+                            archiveYears.length === 1 && 'items-center',
+                            archiveYears.length > 1 && isFirst && 'items-start',
+                            archiveYears.length > 1 && isLast && 'items-end',
+                            archiveYears.length > 1 && !isFirst && !isLast && 'items-center'
                           )}
-                        />
-                        <span className=" text-3xl leading-tight text-teal-900 group-hover:text-teal-700 dark:text-white">
-                          {item.year}
-                        </span>
-                        <span className="whitespace-nowrap text-sm text-stone-500 dark:text-zinc-400">
-                          <span className="tabular-nums">{item.count}</span>
-                          {isChinese ? '' : ' '}
-                          {locale.COMMON.POSTS}
-                        </span>
-                      </Link>
-                    ))}
+                        >
+                          <span className="relative z-10 h-2.5 w-2.5 rounded-full bg-teal-900 dark:bg-teal-400" />
+                          <span className="text-xl leading-tight text-teal-900 group-hover:text-teal-700 dark:text-white sm:text-2xl md:text-3xl">
+                            {item.year}
+                          </span>
+                          <span className="whitespace-nowrap text-sm text-stone-500 dark:text-zinc-400">
+                            <span className="tabular-nums">{item.count}</span>
+                            {isChinese ? '' : ' '}
+                            {locale.COMMON.POSTS}
+                          </span>
+                        </Link>
+                      );
+                    })}
                   </div>
                 </div>
               </div>

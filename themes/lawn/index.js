@@ -1,3 +1,5 @@
+import clsx from 'clsx';
+
 import { useRouter } from 'next/router';
 import { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
 
@@ -22,8 +24,8 @@ import {
   HomeLivingIndex,
   JumpToCommentButton,
   PaperArchive,
-  PaperPostList,
   PostHeader,
+  PostList,
   TagItemMini,
   TopNav
 } from './components';
@@ -77,7 +79,7 @@ export const LayoutBase = (props) => {
   return (
     <ThemeGlobalLawn.Provider value={{ searchModal }}>
       <TravellingsProvider>
-        <div id="theme-lawn" className={`${FONT_STYLE} scroll-smooth bg-lawn-bg ${layoutLoaded ? '' : 'opacity-0'}`}>
+        <div id="theme-lawn" className={clsx('scroll-smooth bg-lawn-bg', FONT_STYLE, !layoutLoaded && 'opacity-0')}>
           {/* 特定主题 CSS */}
           <Style />
 
@@ -125,7 +127,7 @@ export const LayoutIndex = (props) => {
  * 博客列表
  */
 export const LayoutPostList = (props) => {
-  return <PaperPostList {...props} />;
+  return <PostList {...props} />;
 };
 
 /**

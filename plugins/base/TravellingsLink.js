@@ -73,7 +73,7 @@ export const TravellingsModal = () => {
 
         <div
           ref={modalRef}
-          className="relative w-full max-w-md rounded-md border border-teal-900/15 bg-stone-50 p-8 shadow-lg max-sm:mb-10 dark:border-white/15 dark:bg-zinc-900"
+          className="relative w-full max-w-md rounded-md border-2 border-teal-600 bg-stone-50 p-8 shadow-lg max-sm:mb-10 dark:border-teal-700 dark:bg-zinc-900"
         >
           <button
             type="button"
@@ -85,7 +85,7 @@ export const TravellingsModal = () => {
 
           <div className="pr-8">
             <a
-              className="text-2xl text-zinc-900 transition-colors hover:text-teal-700 dark:text-white dark:hover:text-teal-500"
+              className="text-xl text-zinc-900 transition-colors hover:text-teal-700 dark:text-white dark:hover:text-teal-500"
               rel="noreferrer"
               target="_blank"
               href="https://www.travellings.cn/"

@@ -11,10 +11,10 @@ import PaginationNumber from './PaginationNumber';
 import PaperPostCard from './PaperPostCard';
 
 /**
- * 分类 / 标签 / 分页列表：纸质筛选条 + 三列卡片
+ * 文章列表
  */
-const PaperPostList = ({ page = 1, posts = [], postCount, siteInfo, tag, category }) => {
-  const { locale, isChinese, categoryOptions = [], tagOptions = [] } = useGlobal();
+const PostList = ({ page = 1, posts = [], postCount, siteInfo, tag, category }) => {
+  const { isChinese, categoryOptions = [], tagOptions = [] } = useGlobal();
   const POST_SUB_PATH = siteConfig('POST_SUB_PATH');
   const POSTS_PER_PAGE = parseInt(siteConfig('POSTS_PER_PAGE'));
   const TAG_SLUG_MAP = safeJSONParse(siteConfig('TAG_SLUG_MAP', {}));
@@ -83,7 +83,7 @@ const PaperPostList = ({ page = 1, posts = [], postCount, siteInfo, tag, categor
                 <span
                   className={clsx(
                     'inline-flex min-w-5 items-center justify-center rounded-full px-1.5 text-xs',
-                    pill.active ? 'bg-white/20 dark:bg-zinc-900/10' : 'bg-teal-900/10 dark:bg-white/10'
+                    pill.active ? 'bg-white/30 dark:bg-zinc-900/10' : 'bg-teal-900/10 dark:bg-white/10'
                   )}
                 >
                   {pill.count}
@@ -124,4 +124,4 @@ const PaperPostList = ({ page = 1, posts = [], postCount, siteInfo, tag, categor
   );
 };
 
-export default PaperPostList;
+export default PostList;

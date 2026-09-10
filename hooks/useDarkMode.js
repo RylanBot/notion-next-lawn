@@ -5,12 +5,13 @@ const CLASS_DARK = 'dark';
 const CLASS_LIGHT = 'light';
 const STYLE_ID = 'dark-mode-view-transition';
 
+let isSwitching = false;
+
 const injectViewTransition = () => {
-  if (document.getElementById(STYLE_ID)) return;
+  if (typeof document === 'undefined' || document.getElementById(STYLE_ID)) return;
 
   const style = document.createElement('style');
   style.id = STYLE_ID;
-
   style.textContent = `
 ::view-transition-old(root),
 ::view-transition-new(root) {
@@ -20,8 +21,27 @@ const injectViewTransition = () => {
 ::view-transition-old(root) { z-index: 1; }
 ::view-transition-new(root) { z-index: 2; }
 `;
-
   document.head.appendChild(style);
+};
+
+const applyTheme = (goingDark) => {
+  const html = document.documentElement;
+  html.classList.remove(goingDark ? CLASS_LIGHT : CLASS_DARK);
+  html.classList.add(goingDark ? CLASS_DARK : CLASS_LIGHT);
+  localStorage.setItem(STORAGE_KEY, String(goingDark));
+};
+
+const resolveOrigin = (event) => {
+  if (Number.isFinite(event?.clientX) && Number.isFinite(event?.clientY)) {
+    return { x: event.clientX, y: event.clientY };
+  }
+
+  const rect = event?.currentTarget?.getBoundingClientRect?.();
+  if (rect?.width) {
+    return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+  }
+
+  return null;
 };
 
 const useDarkMode = () => {
@@ -30,68 +50,63 @@ const useDarkMode = () => {
   useEffect(() => {
     injectViewTransition();
 
-    const htmlElement = document.documentElement;
+    const html = document.documentElement;
+    const sync = () => setDarkMode(html.classList.contains(CLASS_DARK));
+    sync();
 
-    const handleClassChange = () => {
-      setDarkMode(htmlElement.classList.contains(CLASS_DARK));
-    };
-
-    handleClassChange();
-
-    const observer = new MutationObserver(handleClassChange);
-    observer.observe(htmlElement, {
-      attributes: true,
-      attributeFilter: ['class']
-    });
-
-    return () => {
-      observer.disconnect();
-    };
+    const observer = new MutationObserver(sync);
+    observer.observe(html, { attributes: true, attributeFilter: ['class'] });
+    return () => observer.disconnect();
   }, []);
 
   const toggleDarkMode = (event) => {
-    const newDarkMode = !isDarkMode;
+    if (isSwitching) return;
 
-    const applyTheme = () => {
-      const htmlElement = document.documentElement;
-      htmlElement.classList.remove(newDarkMode ? CLASS_LIGHT : CLASS_DARK);
-      htmlElement.classList.add(newDarkMode ? CLASS_DARK : CLASS_LIGHT);
-      localStorage.setItem(STORAGE_KEY, newDarkMode.toString());
-    };
+    injectViewTransition();
 
-    // 点击坐标
-    const x = event?.clientX ?? 0;
-    const y = event?.clientY ?? 0;
-    const hasCoord = Number.isFinite(event?.clientX) && Number.isFinite(event?.clientY);
+    const goingDark = !document.documentElement.classList.contains(CLASS_DARK);
+    const origin = resolveOrigin(event);
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    if (!hasCoord || !document.startViewTransition) {
-      applyTheme();
+    if (!origin || typeof document.startViewTransition !== 'function' || reducedMotion) {
+      applyTheme(goingDark);
       return;
     }
 
-    const endRadius = Math.hypot(
-      Math.max(x, window.innerWidth - x),
-      Math.max(y, window.innerHeight - y)
-    );
+    const { x, y } = origin;
+    const xPct = `${(x / window.innerWidth) * 100}%`;
+    const yPct = `${(y / window.innerHeight) * 100}%`;
+    const endRadius = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
 
-    const transition = document.startViewTransition(applyTheme);
+    isSwitching = true;
 
-    transition.ready.then(() => {
-      const clipPath = [
-        `circle(0px at ${x}px ${y}px)`,
-        `circle(${endRadius}px at ${x}px ${y}px)`,
-      ];
+    try {
+      const transition = document.startViewTransition(() => applyTheme(goingDark));
 
-      document.documentElement.animate(
-        { clipPath },
-        {
-          duration: 400,
-          easing: 'ease-in',
-          fill: 'forwards',
-          pseudoElement: '::view-transition-new(root)',
-        }
-      );
-    });
+      transition.ready
+        .then(() => {
+          document.documentElement.animate(
+            {
+              clipPath: [`circle(0px at ${xPct} ${yPct})`, `circle(${endRadius}px at ${xPct} ${yPct})`]
+            },
+            {
+              duration: 400,
+              easing: 'ease-in',
+              pseudoElement: '::view-transition-new(root)'
+            }
+          );
+        })
+        .catch(() => {});
+
+      transition.finished.finally(() => {
+        isSwitching = false;
+        document.documentElement.style.removeProperty('clip-path');
+      });
+    } catch {
+      isSwitching = false;
+      document.documentElement.style.removeProperty('clip-path');
+      applyTheme(goingDark);
+    }
   };
 
   return { isDarkMode, toggleDarkMode };

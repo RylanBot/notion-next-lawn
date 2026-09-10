@@ -22,7 +22,7 @@ const SocialButton = ({ align = 'left' }) => {
 
   return (
     <div className={clsx('flex w-full flex-wrap', align === 'center' ? 'justify-center' : 'justify-start')}>
-      <div className="flex flex-wrap gap-2.5">
+      <div className="flex flex-wrap gap-1.5">
         {socialMedia.map(
           ({ name, icon, url }) =>
             url && (
@@ -32,12 +32,12 @@ const SocialButton = ({ align = 'left' }) => {
                 rel="noreferrer"
                 title={name}
                 href={url}
-                className="inline-flex h-12 w-12 items-center justify-center rounded-lg text-teal-900 transition-transform hover:-translate-y-0.5"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-md text-teal-900 transition-colors hover:text-teal-500 dark:text-amber-50 dark:hover:text-teal-300"
               >
                 <i
                   className={clsx(
                     icon,
-                    'text-md transform duration-150 hover:scale-125 hover:text-teal-500 dark:hover:text-teal-300'
+                    'text-xl transform duration-150 hover:scale-110'
                   )}
                 />
               </a>
