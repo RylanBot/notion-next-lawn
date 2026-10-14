@@ -1,11 +1,10 @@
-import { defaultMapImageUrl } from 'notion-utils';
 import BLOG from '@/blog.config';
 
 export function getPageCover(postInfo) {
   const pageCover = postInfo.format?.page_cover;
   if (pageCover) {
     if (pageCover.startsWith('/')) return BLOG.NOTION_HOST + pageCover;
-    if (pageCover.startsWith('http')) return defaultMapImageUrl(pageCover, postInfo);
+    if (pageCover.startsWith('http')) return mapImgUrl(pageCover, postInfo, 'block');
   }
 }
 
@@ -26,20 +25,34 @@ export const mapImgUrl = (img, block, type = 'block', needCompress = true) => {
   } else {
     ret = img;
   }
+  const sourceUrl = ret;
 
-  // react-notion-x 8 会先通过 getSignedFileUrl 换出带签名的地址
-  // 这类 URL 不能再拼接 query，否则签名失效，图片会一直停在 placeholder
+  const attachmentUrl = convertFileCdnUrl(ret);
+  if (attachmentUrl) {
+    ret = attachmentUrl;
+  }
+
   if (isSignedFileUrl(ret)) return ret;
 
   const hasConverted =
-    ret.indexOf('https://www.notion.so/image') === 0 || ret.includes('notion.site/images/page-cover/');
+    ret.indexOf('https://www.notion.so/image') === 0 ||
+    ret.indexOf(BLOG.NOTION_HOST + '/image/') === 0 ||
+    ret.includes('notion.site/images/page-cover/');
 
   // 需要转化的 URL：识别 aws 图床地址，或者 bookmark 类型的外链图片
   // Notion 新图床资源，格式为 attachment:${id}:${name}
+  const isExternalHttpImage = /^https?:\/\//i.test(ret);
   const needConvert =
-    (!hasConverted &&
-      (block.type === 'bookmark' || ret.includes('secure.notion-static.com') || ret.includes('prod-files-secure'))) ||
-    ret.indexOf('attachment') === 0;
+    !hasConverted &&
+    (block.type === 'bookmark' ||
+      isExternalHttpImage ||
+      ret.includes('secure.notion-static.com') ||
+      ret.includes('prod-files-secure') ||
+      ret.indexOf('attachment') === 0);
+
+  if (isExternalHttpImage && needCompress) {
+    ret = compressImage(ret, block?.format?.block_width);
+  }
 
   // Notion 旧图床
   if (needConvert) {
@@ -53,9 +66,8 @@ export const mapImgUrl = (img, block, type = 'block', needCompress = true) => {
       let isReplace = false;
       if (texts) {
         const textArr = texts.split(',');
-        // 判断是否包含替换的文本
         textArr.forEach((text) => {
-          if (ret.indexOf(text) > -1) {
+          if (sourceUrl.includes(text) || ret.includes(text)) {
             isReplace = true;
           }
         });
@@ -89,13 +101,25 @@ export const mapImgUrl = (img, block, type = 'block', needCompress = true) => {
  */
 function isSignedFileUrl(url) {
   if (!url || typeof url !== 'string') return false;
-  if (url.includes('X-Amz-Signature') || url.includes('X-Amz-Credential')) return true;
+  return url.includes('X-Amz-Signature') || url.includes('X-Amz-Credential');
+}
 
+/**
+ * 将 file.notion.com/file.notion.so 新 CDN 地址还原为 Notion attachment 标识。
+ */
+function convertFileCdnUrl(source) {
+  if (typeof source !== 'string') return null;
   try {
-    const hostname = new URL(url).hostname.toLowerCase();
-    return hostname === 'file.notion.so' || hostname === 'file.notion.com';
+    const url = new URL(source);
+    if (!/^file\.notion\.(?:com|so)$/i.test(url.hostname)) return null;
+    const parts = url.pathname.split('/');
+    if (parts.length < 6 || parts[1] !== 'f' || parts[2] !== 'f') return null;
+    const attachmentId = parts[4];
+    const fileName = parts.slice(5).join('/');
+    if (!attachmentId || !fileName) return null;
+    return `attachment:${attachmentId}:${decodeURIComponent(fileName)}`;
   } catch {
-    return false;
+    return null;
   }
 }
 
@@ -115,9 +139,39 @@ function isEmoji(str) {
  */
 export const compressImage = (image, width = 800, quality = 50, fmt = 'webp') => {
   if (!image) return null;
+  if (image.includes('.svg')) return image;
+
+  let urlObj;
+  try {
+    urlObj = new URL(image);
+  } catch {
+    return image;
+  }
+
+  // 放大图片时更新代理路径内的源图参数，保留外层代理信息
+  const proxyPrefix = [`${BLOG.NOTION_HOST}/image/`, 'https://www.notion.so/image/'].find((prefix) =>
+    image.startsWith(prefix)
+  );
+  if (proxyPrefix) {
+    const proxyPath = new URL(proxyPrefix).pathname;
+    let sourceUrl;
+    try {
+      sourceUrl = decodeURIComponent(urlObj.pathname.slice(proxyPath.length));
+    } catch {
+      return image;
+    }
+    if (sourceUrl.startsWith('https://images.unsplash.com/')) {
+      urlObj.pathname = proxyPath + encodeURIComponent(compressImage(sourceUrl, width, quality, fmt));
+      return urlObj.toString();
+    }
+  }
 
   if (image.indexOf(BLOG.NOTION_HOST) === 0 && image.indexOf('amazonaws.com') > 0) {
-    return `${image}&width=${width}&cache=v2`;
+    const params = new URLSearchParams(urlObj.search);
+    params.set('width', width);
+    params.set('cache', 'v2');
+    urlObj.search = params.toString();
+    return urlObj.toString();
   }
 
   // 压缩 unsplash 图片
