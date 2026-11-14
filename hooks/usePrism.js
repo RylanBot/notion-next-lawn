@@ -1,4 +1,4 @@
-import { useRouter } from 'next/navigation';
+import Router from 'next/router';
 import { useEffect } from 'react';
 
 import Prism from 'prismjs';
@@ -19,7 +19,6 @@ import { loadExternalResource } from '@/libs/common/util';
  * 代码美化
  */
 const usePrism = () => {
-  const router = useRouter();
   const { isDarkMode } = useDarkMode();
 
   const PRISM_AUTO_LOADER = siteConfig('PRISM_JS_AUTO_LOADER');
@@ -78,7 +77,17 @@ const usePrism = () => {
 
   useEffect(() => {
     initPrism();
-  }, [router, isDarkMode]);
+
+    /* RSS 在 getStaticProps 里使用 renderToString 渲染，
+       该阶段不存在 App Router，避免直接调用 useRouter 而导致异常。 */
+    const onRouteChange = () => {
+      initPrism();
+    };
+    Router.events.on('routeChangeComplete', onRouteChange);
+    return () => {
+      Router.events.off('routeChangeComplete', onRouteChange);
+    };
+  }, [isDarkMode]);
 
   return {
     highlightAllUnder

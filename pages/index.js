@@ -36,7 +36,7 @@ export async function getStaticProps() {
   }
 
   await generateRobotsTxt();
-  await generateRss(props?.latestPosts || []);
+  await generateRss(props?.latestPosts || [], props?.siteInfo);
 
   delete props.allPages;
 

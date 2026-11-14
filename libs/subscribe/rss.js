@@ -23,11 +23,16 @@ const createRssContent = async (post) => {
   }
 };
 
-export async function generateRss(posts) {
+const toFeedDate = (value) => {
+  const date = value instanceof Date ? value : new Date(value);
+  return Number.isNaN(date.getTime()) ? new Date() : date;
+};
+
+export async function generateRss(posts, siteInfo = {}) {
   const year = new Date().getFullYear();
   const feed = new Feed({
-    title: BLOG.TITLE,
-    description: BLOG.DESCRIPTION,
+    title: siteInfo.title || BLOG.TITLE,
+    description: siteInfo.description || BLOG.DESCRIPTION,
     link: `${BLOG.LINK}`,
     language: BLOG.LANG,
     favicon: `${BLOG.LINK}${BLOG.BLOG_FAVICON}`,
@@ -44,7 +49,7 @@ export async function generateRss(posts) {
       link: `${BLOG.LINK}/${BLOG.POST_SUB_PATH}/${post.slug}`,
       description: post.summary,
       content: await createRssContent(post),
-      date: post.date.start
+      date: toFeedDate(post?.date?.start)
     });
   }
 
@@ -57,5 +62,6 @@ export async function generateRss(posts) {
     // 在 vercel 运行环境是只读的，这里会报错；
     // 但在 vercel 编译阶段、或 VPS 等其他平台这行代码会成功执行
     // RSS 被高频词访问将大量消耗服务端资源，故作为静态文件
+    console.error('[RSS] failed to write feed files', error);
   }
 }
